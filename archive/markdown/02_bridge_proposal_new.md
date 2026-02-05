@@ -418,7 +418,7 @@ G(m) = -I(m;Y) - E[accuracy(m)]
 EBM formulation provides *continuous relaxations* of discrete blanket decisions:
 1. **Soft blanket boundaries**: Energy gradients indicate blanket sharpness
 2. **Continuous typology**: Mode positions can merge/split smoothly
-3. **Thermodynamic selection**: Fluctuation-based complexity without discrete search
+3. **Variational model selection**: Fluctuation-based complexity without discrete search
 
 ### When It Works Best
 
