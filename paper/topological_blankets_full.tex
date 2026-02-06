@@ -1,0 +1,2820 @@
+% Topological Blankets: Extracting Discrete Structure from Continuous Geometry
+% COMPREHENSIVE VERSION - Compiled from docs/01-07_*_new.md
+% Last updated: 2026-02-05
+
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage[margin=1in]{geometry}
+\usepackage{natbib}
+\usepackage{listings}
+\usepackage{longtable}
+
+% Theorem environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\newtheorem{example}[theorem]{Example}
+
+% Custom commands
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\grad}{\nabla}
+\newcommand{\Hess}{\nabla^2}
+\newcommand{\indep}{\perp\!\!\!\perp}
+\newcommand{\given}{\,|\,}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\KL}{\mathrm{KL}}
+\newcommand{\argmin}{\operatorname{argmin}}
+\newcommand{\argmax}{\operatorname{argmax}}
+
+% Code listing style
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    stringstyle=\color{green!60!black},
+    breaklines=true,
+    frame=single,
+    language=Python,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    xleftmargin=2em
+}
+
+% Title
+\title{\textbf{Topological Blankets:\\Extracting Discrete Markov Blanket Structure\\from Continuous Energy Landscape Geometry}}
+
+\author{Maxwell J. D. Ramstead\\Noumenal Labs}
+
+\date{February 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Structure learning in probabilistic models faces a fundamental challenge: the space of possible graph structures grows combinatorially, making discrete search intractable for complex domains. We present \textbf{Topological Blankets}, a method that reframes structure learning as the extraction of discrete Markov blanket topology from continuous energy-based model (EBM) landscapes. The core hypothesis is that Markov blankets (the boundaries separating conditionally independent subsystems) correspond to high-gradient ridges in the energy landscape, detectable via gradient magnitudes or spectral methods on Hessian estimates. This geometric approach provides a unifying framework for discrete structure learning methods (RGM, AXIOM, DMBD) and continuous EBM optimization, enabling post-hoc analysis of trained models without explicit structure search. We ground the method theoretically in the Free Energy Principle (Friston, 2025), which derives Markov blankets from sparse coupling in Langevin dynamics, and provide algorithms for gradient-based detection, spectral Laplacian partitioning, and recursive hierarchical extraction. The framework unifies EBM continuous optimization with Bayesian structure learning through the lens of Markov blanket discovery.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+%=============================================================================
+\section{Introduction: What is Structure?}
+\label{sec:structure-definitions}
+%=============================================================================
+
+\subsection{The Core Thesis}
+
+\begin{tcolorbox}[colback=blue!5,colframe=blue!50!black,title=Central Claim]
+\textbf{Structure learning IS Markov blanket discovery and typology.} Finding the right model structure is equivalent to finding the right way to partition the world into objects with distinct blanket statistics.
+\end{tcolorbox}
+
+This section formalizes what ``structure'' means in Bayesian models versus Energy-Based Models (EBMs), identifying the precise gap that structure learning must bridge.
+
+%-----------------------------------------------------------------------------
+\subsection{Mathematical Preliminaries: Structure as Preservation}
+%-----------------------------------------------------------------------------
+
+In mathematics, \textit{structure} on a set $X$ is additional data that restricts the ``allowed'' maps between objects. Structure is characterized by what preserves it.
+
+\subsubsection{Why ``Characterized by What Preserves It''?}
+
+This is a profound shift in perspective. We don't define structure by saying \textit{what it is}; we define it by saying \textit{what respects it}.
+
+\textbf{The naive approach} (what structure ``is''):
+\begin{quote}
+``A topology on $X$ is a collection $\tau$ of subsets satisfying: $\emptyset, X \in \tau$; closed under arbitrary unions; closed under finite intersections.''
+\end{quote}
+
+\textbf{The morphism-centric approach} (what preserves structure):
+\begin{quote}
+``A topology on $X$ is whatever makes continuous maps well-defined. Two spaces have `the same topology' iff they're homeomorphic.''
+\end{quote}
+
+These are equivalent, but the second view is more powerful because:
+
+\begin{enumerate}
+    \item \textbf{Structure becomes operational}: Instead of checking axioms, we check whether maps preserve the structure. The structure exists \textit{precisely to the extent} that there are non-trivial structure-preserving maps.
+
+    \item \textbf{Comparison becomes natural}: Two objects have ``the same structure'' iff there's an invertible structure-preserving map (isomorphism) between them.
+
+    \item \textbf{Forgetting structure is a functor}: When we say ``topology forgets metric structure,'' we mean there's a functor Metric $\to$ Topological that keeps the object but forgets which maps are allowed.
+
+    \item \textbf{Structure is relational, not intrinsic}: A set doesn't ``have'' a topology in isolation. It has a topology \textit{relative to} other topological spaces and continuous maps between them.
+\end{enumerate}
+
+\subsubsection{Klein's Erlangen Program (1872)}
+
+Felix Klein unified geometry by this principle:
+\begin{quote}
+\textit{``A geometry is the study of invariants under a group of transformations.''}
+\end{quote}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Geometry} & \textbf{Transformation group} & \textbf{What's preserved} \\
+\midrule
+Euclidean & Isometries (rotate, translate, reflect) & Distances, angles \\
+Affine & Affine maps (linear + translation) & Parallelism, ratios \\
+Projective & Projective transformations & Cross-ratio, incidence \\
+Topology & Homeomorphisms & Connectedness, holes \\
+\bottomrule
+\end{tabular}
+\caption{Hierarchy of geometric structures by preserved invariants.}
+\label{tab:klein}
+\end{table}
+
+Each row represents ``less structure'': more transformations are allowed, fewer properties are invariant.
+
+\textbf{For our project}: EBM geometry is characterized by what reparameterizations $\theta \to \theta'$ preserve. If basins and barriers are preserved, we have ``the same geometry.'' If only connectivity is preserved, we've dropped to topology.
+
+\subsubsection{The Yoneda Perspective}
+
+Category theory takes this further: an object is \emph{completely determined} by its morphisms.
+
+\begin{lemma}[Yoneda, informal]
+An object $X$ is characterized by the collection of all maps into it: $\mathrm{Hom}(-, X)$.
+\end{lemma}
+
+Two objects are isomorphic iff they have the same ``morphism profile.'' You never need to look ``inside'' an object; its relationships to other objects tell you everything.
+
+\textbf{For our project}: An EBM $E$ is characterized by:
+\begin{itemize}
+    \item Maps \emph{from} data to $E$ (inference: finding low-energy configurations)
+    \item Maps \emph{from} $E$ to other EBMs (reparameterization, coarse-graining)
+    \item Maps \emph{from} $E$ to graphs (the functor $F$ we define)
+\end{itemize}
+
+The structure of $E$ is not in ``what $E$ is'' but in ``how $E$ relates to everything else.''
+
+\subsubsection{Preservation as Definition}
+
+Consider: what IS a group homomorphism $\varphi: G \to H$?
+
+\textbf{Axiomatic}: $\varphi(g \cdot g') = \varphi(g) \cdot \varphi(g')$ for all $g, g' \in G$.
+
+\textbf{Preservation view}: $\varphi$ is a group homomorphism iff it preserves the group structure, meaning the group operation, identity, and inverses are respected.
+
+But here's the key: \textit{we could have defined it the other way around}.
+\begin{quote}
+``The group structure on $G$ is \textit{whatever} is preserved by group homomorphisms.''
+\end{quote}
+
+This circular-seeming definition actually works: the structure and its morphisms are \textit{co-defined}. You can't have one without the other.
+
+\subsubsection{Implications for Structure Learning}
+
+If structure is characterized by what preserves it, then \textit{structure learning is learning what should be preserved}.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Framework} & \textbf{Learning question} & \textbf{Morphism question} \\
+\midrule
+Bayesian & Which graph $G$ fits the data? & What CI should be preserved? \\
+EBM & Which energy $E$ fits the data? & What geometric features preserved? \\
+Our synthesis & Which $(E, G)$ pair fits? & What should $F$: EBM $\to$ Graph preserve? \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textit{Key insight}: When we extract topology from geometry, we're asking:
+\begin{quote}
+``What structure in the EBM should be preserved when we forget metric information?''
+\end{quote}
+
+The answer: \textit{conditional independence} (Markov blankets). The functor $F$ preserves CI structure while forgetting distances.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Domain} & \textbf{Structure on $X$} & \textbf{Preserved by} \\
+\midrule
+Topology & Open sets $\tau \subseteq \mathcal{P}(X)$ & Continuous maps \\
+Algebra & Operations $(\cdot, +, \ldots)$ & Homomorphisms \\
+Geometry & Metric $d: X \times X \to \R$ & Isometries \\
+Differential & Smooth atlas & Diffeomorphisms \\
+Order & Relation $\leq$ & Monotone maps \\
+\bottomrule
+\end{tabular}
+\caption{Structure types and their preserving morphisms.}
+\end{table}
+
+%-----------------------------------------------------------------------------
+\subsection{Worked Examples of Structure}
+%-----------------------------------------------------------------------------
+
+\begin{example}[Topological Structure]
+Consider $X = \R$ with two different topologies:
+\begin{itemize}
+    \item $\tau_{\text{std}}$ = standard topology (open intervals)
+    \item $\tau_{\text{disc}}$ = discrete topology (every subset is open)
+\end{itemize}
+
+The map $f(x) = x^2$ is:
+\begin{itemize}
+    \item Continuous in $(\R, \tau_{\text{std}}) \to (\R, \tau_{\text{std}})$ \checkmark
+    \item Continuous in $(\R, \tau_{\text{disc}}) \to (\R, \tau_{\text{std}})$ \checkmark (discrete is ``finer'')
+    \item NOT continuous in $(\R, \tau_{\text{std}}) \to (\R, \tau_{\text{disc}})$ $\times$
+\end{itemize}
+
+The structure (which sets are ``open'') determines which maps are allowed. A homeomorphism must preserve this structure in both directions; $(\R, \tau_{\text{std}})$ and $(\R, \tau_{\text{disc}})$ are NOT homeomorphic even though they have the same underlying set.
+\end{example}
+
+\begin{example}[Algebraic Structure]
+Consider two groups:
+\begin{itemize}
+    \item $(\Z, +)$ = integers under addition
+    \item $(\R_+, \times)$ = positive reals under multiplication
+\end{itemize}
+
+The map $\varphi: \Z \to \R_+$ defined by $\varphi(n) = e^n$ is a homomorphism:
+\[
+\varphi(n + m) = e^{n+m} = e^n \cdot e^m = \varphi(n) \cdot \varphi(m) \quad \checkmark
+\]
+
+The map $\psi(n) = n^2$ is NOT a homomorphism:
+\[
+\psi(2 + 3) = 25 \neq 4 \cdot 9 = \psi(2) \cdot \psi(3) \quad \times
+\]
+\end{example}
+
+\begin{example}[Geometric (Metric) Structure]
+Consider $\R^2$ with Euclidean metric $d(x,y) = \|x - y\|$.
+
+Rotation $R_\theta(x) = \begin{bmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{bmatrix} x$ is an isometry:
+\[
+d(R_\theta(x), R_\theta(y)) = \|R_\theta(x) - R_\theta(y)\| = \|R_\theta(x-y)\| = \|x-y\| = d(x,y) \quad \checkmark
+\]
+
+Scaling $S_\lambda(x) = \lambda x$ (for $\lambda \neq 1$) is NOT an isometry:
+\[
+d(S_\lambda(x), S_\lambda(y)) = |\lambda| \cdot \|x - y\| \neq \|x - y\| = d(x,y) \quad \times
+\]
+
+Scaling preserves topology (it's a homeomorphism) but destroys metric structure. This shows geometry is ``more structure'' than topology.
+\end{example}
+
+\begin{example}[Differential Structure]
+Consider $\R$ with its standard smooth structure.
+
+The map $f(x) = x^3$ is a diffeomorphism:
+\begin{itemize}
+    \item Smooth: $f'(x) = 3x^2$ exists and is continuous \checkmark
+    \item Bijective \checkmark
+    \item Inverse $f^{-1}(x) = x^{1/3}$ is smooth \checkmark
+\end{itemize}
+
+The map $g(x) = |x|$ is NOT smooth (not differentiable at 0):
+\[
+g'(0) = \lim_{h \to 0} \frac{|h| - 0}{h} \quad \text{does not exist} \quad \times
+\]
+\end{example}
+
+\begin{example}[Order Structure]
+Consider $(\R, \leq)$ with the usual ordering.
+
+The map $f(x) = 2x + 1$ is monotone (order-preserving):
+\[
+x \leq y \implies 2x + 1 \leq 2y + 1 \implies f(x) \leq f(y) \quad \checkmark
+\]
+
+The map $g(x) = -x$ is NOT monotone (it's order-reversing):
+\[
+x \leq y \implies -x \geq -y \implies g(x) \geq g(y) \quad \times
+\]
+\end{example}
+
+\textbf{The Pattern}: In each case:
+\begin{enumerate}
+    \item \textbf{Structure} = extra data beyond the bare set
+    \item \textbf{Morphisms} = maps that respect this data
+    \item \textbf{Isomorphism} = bijective morphism with morphism inverse
+    \item \textbf{More structure} = fewer allowed morphisms
+\end{enumerate}
+
+%-----------------------------------------------------------------------------
+\subsection{Structure in Probability}
+%-----------------------------------------------------------------------------
+
+For probabilistic models, what is the structure?
+
+\textbf{Option 1: The distribution itself}
+\begin{itemize}
+    \item Objects: Probability distributions $p(x)$
+    \item Morphisms: Measure-preserving maps? Sufficient statistics?
+    \item Problem: Too rigid (distributions rarely equal)
+\end{itemize}
+
+\textbf{Option 2: Conditional independence relations}
+\begin{itemize}
+    \item Objects: Sets of CI statements $\{X \indep Y \given Z\}$
+    \item Morphisms: Maps preserving CI structure
+    \item This is the \textit{graphoid} structure
+\end{itemize}
+
+\textbf{Option 3: The generative process}
+\begin{itemize}
+    \item Objects: Causal/generative models
+    \item Morphisms: Interventionally-equivalent transformations
+    \item This distinguishes correlation from causation
+\end{itemize}
+
+%-----------------------------------------------------------------------------
+\subsection{Two Kinds of Structure in Our Setting}
+%-----------------------------------------------------------------------------
+
+We're dealing with two distinct notions of structure:
+
+\textbf{Geometric structure} (EBMs):
+\begin{itemize}
+    \item Objects: Energy functions $E: \mathcal{X} \to \R$
+    \item Morphisms: Reparameterizations $\theta \to \theta'$ preserving level sets, critical points
+    \item Structure: Basins, barriers, curvature, geodesics
+\end{itemize}
+
+\textbf{Combinatorial/Topological structure} (Bayesian):
+\begin{itemize}
+    \item Objects: Graphs $G = (V, E)$
+    \item Morphisms: Graph homomorphisms preserving adjacency
+    \item Structure: Connectivity, paths, cuts, d-separation
+\end{itemize}
+
+%-----------------------------------------------------------------------------
+\subsection{The Functor Perspective}
+%-----------------------------------------------------------------------------
+
+\textit{Key insight}: Geometry $\to$ Topology extraction is a \textit{functor}.
+
+\begin{definition}[Topology Extraction Functor]
+\label{def:functor}
+Define $F: \mathbf{EBM} \to \mathbf{Graph}$ by:
+\begin{align}
+F(E) &= G_E \quad \text{where edge } (i,j) \iff \frac{\partial^2 E}{\partial x_i \partial x_j} \neq 0
+\end{align}
+\end{definition}
+
+\textbf{Unpacking the definition}: The functor $F$ takes an energy function $E(x_1, \ldots, x_n)$ and produces a graph $G_E$ whose nodes are the variables $\{x_1, \ldots, x_n\}$. Two variables $x_i$ and $x_j$ are connected by an edge if and only if the mixed partial derivative $\frac{\partial^2 E}{\partial x_i \partial x_j}$ is non-zero somewhere in the domain.
+
+\textbf{Why this criterion?} The Hessian entry $\frac{\partial^2 E}{\partial x_i \partial x_j}$ measures how the influence of $x_i$ on the energy changes as $x_j$ varies (and vice versa). If this is zero everywhere, then $x_i$ and $x_j$ interact only \textit{additively}:
+\begin{equation}
+\frac{\partial^2 E}{\partial x_i \partial x_j} = 0 \quad \Rightarrow \quad E(x) = f(x_i) + g(x_j) + h(x_{\setminus\{i,j\}})
+\end{equation}
+meaning $x_i$ and $x_j$ are conditionally independent given all other variables. Conversely, a non-zero mixed partial indicates a genuine interaction that cannot be factored away.
+
+\textbf{Example}: Consider the quadratic energy $E(x_1, x_2, x_3) = x_1^2 + x_1 x_2 + x_3^2$. The Hessian is:
+\begin{equation}
+H = \begin{pmatrix} 2 & 1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 2 \end{pmatrix}
+\end{equation}
+The extracted graph $G_E$ has edges $(1,2)$ only, since $H_{12} = 1 \neq 0$ while $H_{13} = H_{23} = 0$. This correctly captures that $x_3$ is independent of $(x_1, x_2)$.
+
+This functor \textit{forgets} geometric information (distances, curvature, barrier heights) and retains only combinatorial information (which variables directly interact).
+
+\textbf{Adjoint?} Is there a functor going the other way?
+
+Yes: Given graph $G$, define energy:
+\begin{equation}
+E_G(x) = \sum_{(i,j) \in E} \phi_{ij}(x_i, x_j) + \sum_i \psi_i(x_i)
+\end{equation}
+This is exactly how Markov Random Fields are constructed!
+
+The adjunction $F \dashv G$ (if it exists precisely) would formalize:
+\begin{itemize}
+    \item $G$ embeds graphs into EBMs (adds geometry)
+    \item $F$ extracts graphs from EBMs (forgets geometry)
+    \item The adjunction says these are ``optimally'' related
+\end{itemize}
+
+%-----------------------------------------------------------------------------
+\subsection{What Structure Learning Seeks}
+%-----------------------------------------------------------------------------
+
+Structure learning asks: \textbf{Which structure in the target category best explains the data?}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{llll}
+\toprule
+\textbf{Framework} & \textbf{Category} & \textbf{Structure} & \textbf{Learning seeks} \\
+\midrule
+Bayesian networks & Graph & Edges (d-separation) & Sparsest graph consistent with CI \\
+EBMs & Manifold & Geometry (curvature) & Landscape with right basins \\
+Our synthesis & Both & Geometry + Topology & Geometry whose induced topology is optimal \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%-----------------------------------------------------------------------------
+\subsection{Levels of Structure}
+%-----------------------------------------------------------------------------
+
+Structure comes in levels of ``rigidity'':
+
+\begin{center}
+\begin{tabular}{ccc}
+More rigid & & Less rigid \\
+$\downarrow$ & & $\downarrow$ \\
+Geometric & $\longrightarrow$ & Topological $\longrightarrow$ Set-theoretic \\
+(distances) & & (connectivity) \quad\quad (just elements)
+\end{tabular}
+\end{center}
+
+Each level forgets information:
+\begin{itemize}
+    \item Geometry $\to$ Topology: Forget distances, keep connectivity
+    \item Topology $\to$ Set: Forget connectivity, keep elements
+\end{itemize}
+
+\textbf{Our project}: Use the geometric level (EBMs) to discover the topological level (graphs), exploiting that geometry contains more information.
+
+%-----------------------------------------------------------------------------
+\subsection{Structure Preservation in Learning}
+%-----------------------------------------------------------------------------
+
+When we learn an EBM (update $\theta$), what structure is preserved?
+
+\textbf{Preserved} (ideally):
+\begin{itemize}
+    \item Number and type of basins (topology)
+    \item Qualitative barrier structure
+\end{itemize}
+
+\textbf{Not preserved}:
+\begin{itemize}
+    \item Exact energy values
+    \item Precise curvatures
+    \item Metric distances
+\end{itemize}
+
+Learning that \textit{changes topology} (basin birth/death) is qualitatively different from learning that refines geometry within fixed topology. This is the ``phase transition'' phenomenon.
+
+%=============================================================================
+\section{Structure in Bayesian Models}
+\label{sec:bayesian-structure}
+%=============================================================================
+
+Bayesian models maintain generative models of the form:
+\begin{equation}
+P(o, s \given m) = P(o \given s) P(s)
+\end{equation}
+where $o$ = observations, $s$ = hidden states, $m$ = model structure.
+
+\subsection{Components of Structure}
+
+\subsubsection{Graph Topology}
+\begin{itemize}
+    \item Which variables exist (state factors, observation modalities)
+    \item Directed edges encoding conditional dependencies
+    \item Example: Does velocity depend on position? Does reward depend on action?
+\end{itemize}
+
+\subsubsection{Temporal Depth}
+\begin{itemize}
+    \item How far into past/future the model reasons
+    \item $T$-step models with state transitions: $P(s_{t+1} \given s_t, a_t)$
+    \item Deeper = more planning horizon, but exponential state space
+\end{itemize}
+
+\subsubsection{Factorial Depth}
+\begin{itemize}
+    \item Factorization of state space: $s = (s^1, s^2, \ldots, s^K)$
+    \item Each factor captures independent aspect (location, object identity, context)
+    \item More factors = richer representation, but combinatorial explosion
+\end{itemize}
+
+\subsubsection{Hierarchical Depth}
+\begin{itemize}
+    \item Nested models at multiple timescales
+    \item Higher levels: slower dynamics, more abstract states
+    \item Lower levels: faster dynamics, sensorimotor details
+\end{itemize}
+
+\subsection{The Structure Learning Problem}
+
+The space of possible structures is:
+\begin{itemize}
+    \item \textbf{Discrete}: graphs, not continuous parameters
+    \item \textbf{Combinatorial}: $O(2^{n^2})$ possible DAGs for $n$ variables
+    \item \textbf{Non-differentiable}: can't gradient descend over graph topology
+\end{itemize}
+
+Current approaches:
+\begin{enumerate}
+    \item \textbf{Bayesian model comparison}: Compute $P(m|o)$ for candidate structures
+    \item \textbf{Bayesian model reduction}: Prune unnecessary components
+    \item \textbf{Score-based search}: Hill-climbing over graph space
+\end{enumerate}
+
+Key equation for model comparison:
+\begin{equation}
+\ln \frac{P(m|o)}{P(m'|o)} = \Delta F + \Delta G
+\end{equation}
+where $\Delta F$ = accuracy-complexity tradeoff, $\Delta G$ = expected information gain.
+
+%=============================================================================
+\section{Structure in Energy-Based Models}
+\label{sec:ebm-structure}
+%=============================================================================
+
+EBMs define a probability distribution via an energy function:
+\begin{align}
+E(x, y; \theta) &: \mathcal{X} \times \mathcal{Y} \times \Theta \to \R \\
+p(x, y \given \theta) &= \frac{\exp(-E(x, y; \theta))}{Z(\theta)}
+\end{align}
+
+\subsection{Components of Structure}
+
+\subsubsection{Energy Landscape Geometry}
+\begin{itemize}
+    \item The shape of $E(x; \theta)$ encodes all learned knowledge
+    \item Basins correspond to stable configurations
+    \item Barriers separate distinct modes
+\end{itemize}
+
+\subsubsection{Latent Structure}
+\begin{itemize}
+    \item Latent variables $z$ that explain observations $y$
+    \item $E(z, y; \theta)$ defines the joint energy
+    \item Inference = finding low-energy $z$ given $y$
+\end{itemize}
+
+\subsubsection{Parameter Structure}
+\begin{itemize}
+    \item $\theta$ parameterizes the energy function
+    \item Different parameterizations induce different landscape geometries
+    \item Learning = optimizing $\theta$ to fit data
+\end{itemize}
+
+\subsection{What EBMs Learn vs What They Assume}
+
+\textbf{Learned (continuous, differentiable)}:
+\begin{itemize}
+    \item Parameters $\theta$ shaping the landscape
+    \item Implicitly: basin structure, barrier heights, curvature
+\end{itemize}
+
+\textbf{Fixed (discrete, assumed)}:
+\begin{itemize}
+    \item Topology of the generative model (which variables exist)
+    \item Architecture (functional form of $E$)
+    \item Dimensionality of latent space
+\end{itemize}
+
+\subsection{The Key Insight}
+
+Bayesian models optimize \textit{within} a representational structure (fixed graph, optimize parameters).
+
+EBMs can optimize \textit{the representational structure itself}: the landscape shape IS the representation.
+
+But this is only partially true. EBMs optimize:
+\begin{itemize}
+    \item[\checkmark] Landscape shape (via $\theta$)
+    \item[\checkmark] Implicit basin structure
+    \item[$\times$] Whether to add more latent dimensions
+    \item[$\times$] Whether to add hierarchical levels
+    \item[$\times$] Whether the assumed topology is appropriate
+\end{itemize}
+
+\subsection{Comparison Table}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Aspect} & \textbf{Bayesian Model} & \textbf{EBM} \\
+\midrule
+What encodes knowledge & Hidden state beliefs $P(s|o)$ & Energy landscape $E(x;\theta)$ \\
+What learning optimizes & Model parameters given structure & Landscape params given topology \\
+Discrete structure & Graph topology, factors, hierarchy & Topology often fixed \\
+Continuous structure & Parameters within each factor & $\theta$ parameters \\
+Structure selection & Bayesian model comparison & Not typically addressed \\
+Inference mechanism & Belief updates (message passing) & Energy minimization (sampling) \\
+Free energy & Over beliefs about states & Over landscape parameters \\
+\bottomrule
+\end{tabular}
+\caption{Comparison of structure in Bayesian models vs EBMs.}
+\end{table}
+
+\subsection{The Precise Gap}
+
+\subsubsection{What EBMs Do Well}
+EBMs' continuous optimization elegantly handles ``within-topology'' structure:
+\begin{itemize}
+    \item Learning parameters shapes the energy landscape
+    \item Basins emerge naturally from optimization
+    \item The geometry encodes rich relational structure
+\end{itemize}
+
+\subsubsection{What EBMs Cannot Do (Natively)}
+EBMs cannot answer discrete structural questions:
+\begin{enumerate}
+    \item \textbf{Dimension selection}: How many latent dimensions?
+    \item \textbf{Topology selection}: What's the right generative structure?
+    \item \textbf{Hierarchical growth}: When should the model add depth?
+\end{enumerate}
+
+\subsubsection{The Bridge Needed}
+A mechanism to make discrete structural decisions using geometric criteria:
+\begin{itemize}
+    \item Use free energy (or expected free energy) to compare structures
+    \item Use gradient covariance and Hessian structure to estimate information gain from structure changes
+    \item Integrate with EBM's continuous learning in a three-timescale system:
+    \begin{itemize}
+        \item \textbf{Fast}: Sampling/optimization on latents (inference)
+        \item \textbf{Slow}: Gradient updates on $\theta$ (learning)
+        \item \textbf{Slowest}: Structure selection/growth (architecture search)
+    \end{itemize}
+\end{itemize}
+
+\subsection{Formal Statement of the Gap}
+
+Let $\mathcal{M} = \{m_1, m_2, \ldots\}$ be a space of model structures (topologies).
+
+\textbf{Bayesian approach} defines:
+\begin{equation}
+P(m \given o) \propto P(o \given m) P(m)
+\end{equation}
+and selects $m^* = \argmax_m P(m \given o)$.
+
+\textbf{EBM approach} implicitly assumes a fixed $m_0$ and optimizes:
+\begin{equation}
+\theta^* = \argmin_\theta F(\theta; m_0)
+\end{equation}
+where $F$ is the variational free energy.
+
+\textbf{The gap}: EBMs have no native mechanism for computing or comparing $P(m \given o)$ across different topologies $m$.
+
+\textbf{The opportunity}: Geometric quantities available from sampling (gradient magnitudes, empirical coupling structure) might provide a principled way to estimate marginal likelihoods $P(o \given m)$ without explicit integration.
+
+%=============================================================================
+\section{Structure as Markov Blanket Discovery}
+\label{sec:blanket-discovery}
+%=============================================================================
+
+\subsection{The Blanket Perspective}
+
+A Markov blanket $B$ separates internal states $Z$ from external states $S$:
+\begin{equation}
+p(s, z \given b) = p(s \given b) \cdot p(z \given b)
+\end{equation}
+
+\textit{Key insight}: Model structure = blanket structure. Choosing a model topology is choosing how to partition the world into conditionally independent subsystems.
+
+\subsection{Blanket Typology}
+
+From the ``ontological potential function'' perspective:
+\begin{itemize}
+    \item \textbf{Blanket statistics} $p(b_\tau)$ define object types
+    \item Two objects are \textit{same type} if they have same blanket statistics
+    \item Structure learning = discovering the right blanket typology
+\end{itemize}
+
+\subsection{Mapping to EBMs}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Blanket Concept} & \textbf{EBM Equivalent} \\
+\midrule
+Blanket boundary & Basin boundary in energy landscape \\
+Internal states $Z$ & Latent variables within a basin \\
+External states $S$ & Other basins / observations \\
+Blanket statistics & Energy landscape curvature, gradient flow \\
+Object type & Distinct basin / mode \\
+\bottomrule
+\end{tabular}
+\caption{Mapping Markov blanket concepts to EBM equivalents.}
+\end{table}
+
+\subsection{The Unified View}
+
+\textbf{Structure learning in EBMs} = discovering:
+\begin{enumerate}
+    \item \textbf{How many basins} (blankets) should exist
+    \item \textbf{Where basin boundaries} (blanket locations) should be
+    \item \textbf{What dynamics} (blanket statistics) each basin has
+\end{enumerate}
+
+This reframes the discrete structure problem as a continuous landscape sculpting problem with emergent discretization at basin boundaries.
+
+%=============================================================================
+\section{Mathematical Core: Structure as Partition}
+\label{sec:mathematical-core}
+%=============================================================================
+
+\subsection{The Fundamental Object}
+
+\begin{definition}[Structure as Partition]
+Let $X = \{x_1, x_2, \ldots, x_n\}$ be all variables. A \textit{structure} $m$ defines:
+\begin{equation}
+m : X \to \{1, 2, \ldots, K\}
+\end{equation}
+assigning each variable to one of $K$ groups, such that groups are conditionally independent given their boundaries.
+\end{definition}
+
+\subsection{In Bayesian Models}
+
+\subsubsection{Graphical Model Representation}
+
+Structure $m$ corresponds to a DAG $G = (V, E)$ where:
+\begin{itemize}
+    \item $V = X$ (variables are nodes)
+    \item $E$ encodes conditional dependencies
+\end{itemize}
+
+The joint factorizes:
+\begin{equation}
+p(x \given m) = \prod_i p(x_i \given \text{parents}(x_i, G))
+\end{equation}
+
+\subsubsection{Markov Blankets from Graphs}
+
+For variable $x_i$, its Markov blanket $B(x_i)$ consists of:
+\begin{itemize}
+    \item Parents of $x_i$
+    \item Children of $x_i$
+    \item Other parents of children of $x_i$ (co-parents)
+\end{itemize}
+
+\begin{proposition}
+$x_i \indep (X \setminus \{x_i, B(x_i)\}) \given B(x_i)$
+\end{proposition}
+
+\subsubsection{Structure Learning}
+
+Find $m^*$ maximizing:
+\begin{equation}
+p(m \given \text{data}) \propto p(\text{data} \given m) \cdot p(m)
+\end{equation}
+where $p(\text{data} \given m) = \int p(\text{data} \given \theta, m) p(\theta \given m) d\theta$
+
+\subsection{In Energy-Based Models}
+
+\subsubsection{Energy Function Representation}
+
+Structure is implicit in $E : \mathcal{X} \to \R$. The probability is:
+\begin{equation}
+p(x) = \frac{\exp(-E(x))}{Z}
+\end{equation}
+
+\subsubsection{Markov Blankets from Energy}
+
+\begin{definition}[Conditional Independence from Hessian]
+Variables $x_i$ and $x_j$ are conditionally independent given $B$ if:
+\begin{equation}
+\frac{\partial^2 E}{\partial x_i \partial x_j} = 0 \quad \text{when } B \text{ is fixed}
+\end{equation}
+\end{definition}
+
+More generally, the \textbf{interaction graph} has edge $(i,j)$ iff:
+\begin{equation}
+\frac{\partial^2 E}{\partial x_i \partial x_j} \neq 0
+\end{equation}
+
+\textbf{Basin interpretation}:
+\begin{itemize}
+    \item Each basin of $E$ corresponds to a ``state'' of the system
+    \item Basin boundaries are high-energy barriers
+    \item Variables in different basins are approximately independent (if barrier is high)
+\end{itemize}
+
+\subsubsection{Structure Learning}
+
+Minimize free energy:
+\begin{equation}
+F(\theta) = \E_q[E(x; \theta)] + H[q]
+\end{equation}
+
+Structure emerges from the optimized $E(\cdot; \theta^*)$.
+
+\subsection{The Bridge: Partition Free Energy}
+
+\subsubsection{Unified Objective}
+
+For any partition/structure $m$, define:
+\begin{equation}
+F(m) = \min_\theta F(\theta \given m) + \Omega(m)
+\end{equation}
+where:
+\begin{itemize}
+    \item $F(\theta \given m)$ = free energy of model with structure $m$ and parameters $\theta$
+    \item $\Omega(m)$ = complexity penalty for structure $m$
+\end{itemize}
+
+\subsubsection{Complexity from Blanket Statistics}
+
+\begin{proposition}[Blanket Complexity]
+Define complexity in terms of blanket information:
+\begin{equation}
+\Omega(m) = \sum_{\text{blankets } B \text{ in } m} I(B; X_{\text{internal}}(B))
+\end{equation}
+where $I$ is mutual information between each blanket and its internal variables.
+\end{proposition}
+
+\textbf{Interpretation}:
+\begin{itemize}
+    \item More complex structures have more ``informative'' blankets
+    \item Blankets that strongly constrain their internals = high complexity
+    \item Parsimony favors structures with ``simple'' blankets
+\end{itemize}
+
+\subsubsection{Geometric Estimation from Sampling}
+
+The key quantities can be estimated from Langevin sampling:
+
+\textbf{Blanket Strength} (how separated are regions):
+\begin{equation}
+B_{\text{strength}} = \E[\|\grad E\|^2] \text{ at basin boundaries}
+\end{equation}
+
+\subsection{The Three Representations of Structure}
+
+\subsubsection{As a Graph (Bayesian)}
+\begin{equation}
+m = G = (V, E)
+\end{equation}
+Nodes = variables, Edges = dependencies.
+
+\subsubsection{As a Partition (Abstract)}
+\begin{equation}
+m = \{S_1, S_2, \ldots, S_K\} \quad \text{where } \bigcup_i S_i = X, \; S_i \cap S_j = \emptyset
+\end{equation}
+Groups of conditionally independent variables.
+
+\subsubsection{As Landscape Geometry (EBM)}
+\begin{equation}
+m \longleftrightarrow \{\text{basins of } E, \text{ boundaries between basins}\}
+\end{equation}
+Basins = groups, Boundaries = blankets.
+
+\subsubsection{Equivalence}
+
+All three represent the same information:
+\begin{itemize}
+    \item Graph edges $\leftrightarrow$ non-zero Hessian entries $\leftrightarrow$ within-group connections
+    \item Graph cuts $\leftrightarrow$ partition boundaries $\leftrightarrow$ basin boundaries
+    \item d-separation $\leftrightarrow$ conditional independence $\leftrightarrow$ high energy barriers
+\end{itemize}
+
+\subsection{Structure Dynamics}
+
+\subsubsection{In Bayesian Models}
+
+Structure changes discretely:
+\begin{equation}
+m \to m' \quad \text{(add/remove edge, merge/split factor)}
+\end{equation}
+
+Accepted if:
+\begin{equation}
+p(m' \given \text{data}) > p(m \given \text{data})
+\end{equation}
+
+\subsubsection{In EBMs}
+
+Structure changes continuously (but with discrete effects):
+\begin{equation}
+\theta \to \theta + d\theta
+\end{equation}
+
+As $\theta$ changes:
+\begin{itemize}
+    \item Basins can merge (barrier drops below threshold)
+    \item Basins can split (new barrier emerges)
+    \item Blankets can sharpen or blur
+\end{itemize}
+
+\subsubsection{Unified Dynamics}
+
+Three timescales:
+\begin{align}
+\text{Fast:} \quad & x(t) \to \text{equilibrium in current basin} \\
+\text{Slow:} \quad & \theta(t) \to \text{optimal landscape given structure} \\
+\text{Slowest:} \quad & m(t) \to \text{optimal structure given } \theta \text{ dynamics}
+\end{align}
+
+\subsection{Key Equations}
+
+\subsubsection{Free Energy (Bayesian Form)}
+\begin{equation}
+F = \E_q[\log q(z) - \log p(z, x)] = \KL(q \| p_{\text{posterior}}) - \log p(x)
+\end{equation}
+
+\subsubsection{Free Energy (EBM Form)}
+\begin{equation}
+F = \E_q[E(z, x; \theta)] - H[q] = \langle E \rangle - S
+\end{equation}
+
+\subsubsection{Structure Comparison}
+\begin{equation}
+\log \frac{p(m|x)}{p(m'|x)} = F(m') - F(m) + \log \frac{p(m)}{p(m')} = \Delta F + \Delta \log \text{prior}
+\end{equation}
+
+\subsubsection{Geometric Structure Criterion}
+\begin{equation}
+F_{\text{structure}}(m) = \min_\theta \langle E \rangle_{m,\theta} + \lambda \cdot d_{\text{eff}}(m, \theta)
+\end{equation}
+
+\subsubsection{Blanket Emergence Condition}
+\begin{equation}
+\text{New blanket emerges when: } \frac{\partial^2 E}{\partial x_i \partial x_j} \to 0 \quad \text{for } i,j \text{ in different groups}
+\end{equation}
+i.e., when the Hessian becomes block-diagonal.
+
+\subsection{The Core Thesis (Mathematical Form)}
+
+\textit{Structure learning = optimizing a partition to minimize free energy.}
+
+In Bayesian models:
+\begin{equation}
+m^* = \argmin_m [F(m) + \Omega(m)] \quad \text{where } F(m) = -\log p(\text{data} \given m)
+\end{equation}
+
+In EBMs:
+\begin{align}
+\theta^* &= \argmin_\theta F(\theta) \\
+m^*(\theta) &= \text{partition induced by basins of } E(\cdot; \theta^*)
+\end{align}
+
+\textbf{The bridge}:
+\begin{equation}
+m^* \approx m^*(\theta^*) \quad \text{when:}
+\end{equation}
+\begin{enumerate}
+    \item EBM is expressive enough to represent optimal Bayesian structure
+    \item Optimization finds global minimum
+    \item Geometric criteria correctly identify basin structure
+\end{enumerate}
+
+\subsection{Open Mathematical Questions}
+
+\begin{enumerate}
+    \item \textbf{When does EBM basin structure match Bayesian optimal structure?}
+    \begin{itemize}
+        \item Sufficient conditions on $E$ parameterization?
+        \item Role of temperature $T$ in basin formation?
+    \end{itemize}
+
+    \item \textbf{How to formalize ``emergent blanket''?}
+    \begin{itemize}
+        \item Threshold on Hessian off-diagonal entries?
+        \item Information-theoretic criterion (mutual information)?
+    \end{itemize}
+
+    \item \textbf{What's the right complexity measure $\Omega(m)$?}
+    \begin{itemize}
+        \item Number of blankets?
+        \item Total blanket ``surface area''?
+        \item Description length of the partition?
+    \end{itemize}
+
+    \item \textbf{Can geometric features predict Bayesian model evidence?}
+    \begin{itemize}
+        \item Gradient covariance $\to$ Hessian structure $\to$ model complexity (via Laplace approximation)?
+        \item Is there an exact relation or just correlation?
+    \end{itemize}
+\end{enumerate}
+
+%=============================================================================
+\section{Geometric vs Topological Representations}
+\label{sec:geometric-topological}
+%=============================================================================
+
+\subsection{The Core Distinction}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lll}
+\toprule
+& \textbf{EBM (Geometric)} & \textbf{Bayesian (Topological)} \\
+\midrule
+Representation & Geometric & Topological \\
+Primitive & Energy $E(x)$ & Graph $G = (V, E)$ \\
+Structure lives in & Curvature, basins, barriers & Edges, paths, cuts \\
+Conditional independence & High energy barrier & Missing edge (d-separation) \\
+``How independent?'' & Barrier height (continuous) & Independent or not (binary) \\
+\bottomrule
+\end{tabular}
+\caption{Geometric vs Topological representations of structure.}
+\end{table}
+
+\subsection{Topological Structure (Bayesian)}
+
+\subsubsection{The Representation}
+
+A directed graph $G = (V, E)$:
+\begin{itemize}
+    \item \textbf{Nodes} $V$: Random variables
+    \item \textbf{Edges} $E$: Direct dependencies
+\end{itemize}
+
+\subsubsection{Key Properties}
+
+\begin{itemize}
+    \item \textbf{Discrete}: Edge exists or doesn't
+    \item \textbf{No metric}: No notion of ``how far'' between variables
+    \item \textbf{Connectivity matters}: Paths determine dependence
+    \item \textbf{d-separation}: Purely combinatorial criterion
+\end{itemize}
+
+\subsubsection{Structure Learning}
+
+Adding/removing edges = discrete topology changes:
+\begin{equation}
+G \to G' \quad \text{(add edge, remove edge, reverse edge)}
+\end{equation}
+
+This is fundamentally a \textit{combinatorial search} over graph structures.
+
+\subsection{Geometric Structure (EBM)}
+
+\subsubsection{The Representation}
+
+An energy function $E: \mathcal{X} \to \R$ defines:
+\begin{itemize}
+    \item \textbf{Manifold}: The space $\mathcal{X}$ with metric induced by the Hessian of the energy
+    \item \textbf{Scalar field}: $E(x)$ assigns energy to each point
+    \item \textbf{Gradient field}: $\grad E(x)$ points toward higher energy
+    \item \textbf{Curvature}: Hessian $\Hess E(x)$ describes local shape
+\end{itemize}
+
+\subsubsection{Key Properties}
+
+\begin{itemize}
+    \item \textbf{Continuous}: Energies vary smoothly
+    \item \textbf{Metric structure}: Distances, geodesics, curvature all defined
+    \item \textbf{Basins}: Regions flowing to same minimum
+    \item \textbf{Barriers}: High-energy ridges separating basins
+\end{itemize}
+
+\subsubsection{Structure Learning}
+
+Sculpting the landscape = continuous parameter changes:
+\begin{equation}
+\theta \to \theta + d\theta \quad \text{(gradient flow on parameters)}
+\end{equation}
+
+This is fundamentally a \textit{continuous optimization} over landscape shape.
+
+\subsection{How Geometry Induces Topology}
+
+The deep connection: \textit{geometry can induce topology}.
+
+\subsubsection{From Metric to Topology (Mathematics)}
+
+Every metric space $(X, d)$ induces a topology:
+\begin{itemize}
+    \item Open sets = unions of open balls
+    \item Connectivity = existence of continuous paths
+\end{itemize}
+
+But topology can exist without metric (purely combinatorial).
+
+\subsubsection{From Energy to Graph (Our Setting)}
+
+The EBM's Hessian induces a graph:
+\begin{equation}
+\text{Edge } (i,j) \text{ exists} \iff \frac{\partial^2 E}{\partial x_i \partial x_j} \neq 0
+\end{equation}
+
+\textit{The sparsity pattern of the Hessian IS the graph topology.}
+
+\subsubsection{Basin Boundaries as Topological Features}
+
+When energy barrier $B(i,j)$ between regions $i$ and $j$ satisfies:
+\begin{align}
+B(i,j) \to \infty &\implies \text{regions become topologically disconnected} \\
+B(i,j) \to 0 &\implies \text{regions merge (topological connection)}
+\end{align}
+
+Continuous geometry changes can induce discrete topology changes.
+
+\subsection{The Hierarchy}
+
+\begin{equation}
+\underbrace{\text{Geometry (EBM)}}_{\text{curvature, basins}}
+\xrightarrow{\text{induces}}
+\underbrace{\text{Topology (Graph)}}_{\text{edges, paths}}
+\xrightarrow{\text{determines}}
+\underbrace{\text{Conditional Independence}}_{\text{Markov Blankets}}
+\end{equation}
+
+\textbf{Going Up} (Geometry $\to$ Topology):
+\begin{itemize}
+    \item Hessian sparsity $\to$ graph edges
+    \item Basin structure $\to$ connected components
+    \item Barrier heights $\to$ edge ``strength'' (soft topology)
+\end{itemize}
+
+\textbf{Going Down} (Topology $\to$ Geometry):
+\begin{itemize}
+    \item Graph structure $\to$ constraints on $E$
+    \item Missing edge $(i,j)$ $\to$ require $\partial^2 E / \partial x_i \partial x_j = 0$
+    \item But many geometries compatible with same topology
+\end{itemize}
+
+\subsection{Soft vs Hard Structure}
+
+\subsubsection{Hard Structure (Topological)}
+\begin{equation}
+\frac{\partial^2 E}{\partial x_i \partial x_j} = 0 \quad \textit{exactly}
+\end{equation}
+Variables $i$ and $j$ are \textit{exactly} conditionally independent.
+
+\subsubsection{Soft Structure (Geometric)}
+\begin{equation}
+\frac{\partial^2 E}{\partial x_i \partial x_j} \approx 0 \quad \text{(small but nonzero)}
+\end{equation}
+Variables $i$ and $j$ are \textit{approximately} conditionally independent.
+
+\subsubsection{The Spectrum}
+\begin{center}
+\begin{tabular}{ccc}
+Strong dependence & $\longleftrightarrow$ & Independence \\
+$\downarrow$ & & $\downarrow$ \\
+High $|\partial^2 E / \partial x_i \partial x_j|$ & & $\partial^2 E / \partial x_i \partial x_j = 0$ \\
+(geometry) & & (topology)
+\end{tabular}
+\end{center}
+
+Geometry gives a continuous spectrum. Topology emerges at the limit.
+
+\subsection{Temperature and the Geometric-Topological Transition}
+
+In statistical physics, temperature controls the transition:
+
+\subsubsection{High Temperature ($T \to \infty$)}
+\begin{itemize}
+    \item All barriers are crossable
+    \item Single connected basin
+    \item Topology: fully connected graph
+    \item Geometry dominates
+\end{itemize}
+
+\subsubsection{Low Temperature ($T \to 0$)}
+\begin{itemize}
+    \item Only lowest-energy states matter
+    \item Distinct basins become isolated
+    \item Topology: disconnected components
+    \item Topology dominates
+\end{itemize}
+
+\subsubsection{Critical Temperature}
+\begin{itemize}
+    \item Phase transitions
+    \item Topology changes discontinuously
+    \item Geometric quantities diverge (susceptibility, correlation length)
+\end{itemize}
+
+\textbf{For structure learning}: Temperature (or regularization) controls how ``hard'' the emergent topology is.
+
+\subsection{Implications for Structure Learning}
+
+\subsubsection{Bayesian (Topological) Approach}
+
+\textbf{Pros}:
+\begin{itemize}
+    \item Structure is explicit and interpretable
+    \item Conditional independence is exact (not approximate)
+    \item Model comparison is principled (marginal likelihood)
+\end{itemize}
+
+\textbf{Cons}:
+\begin{itemize}
+    \item Discrete search over exponentially many graphs
+    \item No notion of ``almost independent'' (edge or no edge)
+    \item Hard to incorporate continuous uncertainty about structure
+\end{itemize}
+
+\subsubsection{EBM (Geometric) Approach}
+
+\textbf{Pros}:
+\begin{itemize}
+    \item Continuous optimization (gradient-based)
+    \item ``Soft'' structure (barriers can be any height)
+    \item Structure emerges naturally from learning
+    \item Richer representation (curvature, distances)
+\end{itemize}
+
+\textbf{Cons}:
+\begin{itemize}
+    \item Structure is implicit (must be extracted)
+    \item Conditional independence is approximate (finite barriers)
+    \item No canonical way to compare structures
+\end{itemize}
+
+\subsubsection{The Synthesis}
+
+Use geometric optimization with topological extraction:
+\begin{enumerate}
+    \item \textbf{Optimize} energy landscape (continuous)
+    \item \textbf{Monitor} Hessian sparsity, basin structure (geometric observables)
+    \item \textbf{Extract} topology when needed (threshold barriers $\to$ edges)
+    \item \textbf{Compare} structures using free energy (geometric criterion for topological choice)
+\end{enumerate}
+
+\subsection{Comparison with Recent Methods}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lllll}
+\toprule
+\textbf{Aspect} & \textbf{DMBD} & \textbf{AXIOM} & \textbf{RGM} & \textbf{Topological Blankets} \\
+\midrule
+Inference & Variational EM & Mixture growing & Renormalization & Sampling + features \\
+Blanket def & Role $\omega_i(t)$ & Slot boundaries & Path-augmented & High-gradient ridges \\
+Online/Offline & Dynamic & Online & Hierarchical & Offline \\
+Best for & Microscopic dyn. & RL/games & Scale-free & EBM diagnostics \\
+\bottomrule
+\end{tabular}
+\caption{Positioning Topological Blankets relative to recent active inference works.}
+\end{table}
+
+\subsubsection{When Each Method Excels}
+
+\textbf{DMBD (Beck \& Ramstead 2025)}:
+\begin{itemize}
+    \item Time-resolved microscopic trajectories
+    \item Traveling/exchanging-matter objects
+    \item Physical systems with continuous dynamics
+\end{itemize}
+
+\textbf{AXIOM (Heins et al. 2025)}:
+\begin{itemize}
+    \item Online RL with pixel observations
+    \item Sample-efficient games ($\sim$10k steps)
+    \item Active exploration with growing structure
+\end{itemize}
+
+\textbf{RGM (Friston et al. 2025)}:
+\begin{itemize}
+    \item Hierarchical, scale-free structure
+    \item Temporal depth via paths/orbits
+    \item Image/video/music compression
+\end{itemize}
+
+\textbf{Topological Blankets (This Project)}:
+\begin{itemize}
+    \item Post-hoc analysis of trained EBMs
+    \item Score-based / diffusion model diagnostics
+    \item Equilibrium landscapes with clear basins
+    \item No discrete search or online interaction needed
+\end{itemize}
+
+\subsubsection{Complementary Roles}
+
+The methods are \textit{complementary}, not competing:
+\begin{itemize}
+    \item Use Topological Blankets as \textit{diagnostic} for what structure AXIOM/RGM learned
+    \item Use Topological Blankets for \textit{geometric pre-partitioning} to initialize DMBD roles
+    \item Topological Blankets' geometric complexity measures (coupling strength, Hessian sparsity) as alternative to AXIOM's BMR
+\end{itemize}
+
+\subsection{Research Program}
+
+\begin{enumerate}
+    \item \textbf{Geometric $\to$ Topological}: When does EBM optimization discover the ``correct'' Bayesian graph?
+    \item \textbf{Topological $\to$ Geometric}: Given a target graph, what's the optimal energy landscape?
+    \item \textbf{Soft Structure}: Can we do inference/learning with continuous ``edge strengths'' instead of binary edges?
+    \item \textbf{Thermodynamic Topology}: Can temperature/annealing schedules guide topology discovery?
+    \item \textbf{Curvature as Complexity}: Is Hessian curvature the right geometric measure of structural complexity?
+    \item \textbf{Hybrid Methods}: Can geometric signals guide discrete structure search?
+    \item \textbf{Scaling}: Sparse/low-rank Hessian approximations for $n > 10^4$ variables?
+    \item \textbf{Dynamics Tracking}: Monitor topology birth/death during training (phase transitions)?
+\end{enumerate}
+
+%=============================================================================
+\section{Theoretical Foundation: Friston (2025)}
+\label{sec:friston-foundation}
+%=============================================================================
+
+This section establishes the rigorous theoretical grounding for Topological Blankets based on the Free Energy Principle as developed in \textit{A Free Energy Principle: On the Nature of Things} (Friston, 2025).
+
+\subsection{The Core Convergence}
+
+Friston (2025) derives Markov blankets as \textit{ontological primitives}: ``things'' emerge from sparse coupling in random dynamical systems. The Topological Blankets method operationalizes this in equilibrium EBMs:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Friston (2025)} & \textbf{Topological Blankets} \\
+\midrule
+Sparse Langevin flow & High-gradient ridges \\
+Zero Jacobian cross-blocks & Hessian sparsity pattern \\
+Spectral Laplacian modes & Coupling matrix clustering \\
+Surprisal gradients & Energy gradients \\
+Recursive blankets & Hierarchical basin refinement \\
+\bottomrule
+\end{tabular}
+\caption{Mapping between Friston (2025) and Topological Blankets.}
+\end{table}
+
+\textbf{Key insight}: The Free Energy Principle provides the \textit{why} (physics of emergence); we provide the \textit{how} (computational extraction from EBMs).
+
+\subsection{Langevin Dynamics as Foundation}
+
+\subsubsection{The FEP Formulation (Friston 2025, pp. 9-20, 41, 87, 90, 105, 119)}
+
+Random dynamical systems governed by Langevin equation:
+\begin{equation}
+\dot{x} = f(x) + \omega
+\end{equation}
+where:
+\begin{itemize}
+    \item $x \in \R^n$ is the state vector
+    \item $f(x)$ is the \textbf{particular flow} (deterministic drift)
+    \item $\omega \sim \mathcal{N}(0, 2\Gamma)$ is Gaussian fluctuations
+\end{itemize}
+
+The flow $f(x)$ can be decomposed (Helmholtz, pp. 112-119):
+\begin{equation}
+f(x) = (\Gamma + Q) \grad \ln p(x) = -(\Gamma + Q) \grad \tilde{\mathcal{S}}(x)
+\end{equation}
+where:
+\begin{itemize}
+    \item $\Gamma$ is the symmetric diffusion tensor (dissipative)
+    \item $Q$ is the antisymmetric solenoidal flow (conservative)
+    \item $\tilde{\mathcal{S}}(x) = -\ln p(x)$ is the \textbf{surprisal} (self-information)
+\end{itemize}
+
+\subsubsection{EBM Mapping}
+
+In energy-based models, the connection is direct:
+\begin{equation}
+E(x) \equiv \tilde{\mathcal{S}}(x) = -\ln p(x) + \text{const}
+\end{equation}
+
+Thus:
+\begin{equation}
+f(x) = -\Gamma \grad_x E(x)
+\end{equation}
+
+\begin{tcolorbox}[colback=yellow!5,colframe=yellow!50!black]
+\textbf{Key Mapping}: \textit{Our Langevin sampling IS the FEP dynamics}, i.e., gradient descent on energy with noise.
+\end{tcolorbox}
+
+\subsubsection{Implications for Blanket Detection}
+
+High $\|\grad E\|$ regions correspond to:
+\begin{itemize}
+    \item Steep surprisal gradients
+    \item Regions resisting flow across partitions
+    \item \textbf{Separatrices} between conditionally independent basins
+\end{itemize}
+
+This rigorously grounds our hypothesis: \textit{Blankets = high-gradient ridges}.
+
+\subsection{Markov Blanket Partition (The Core Mathematics)}
+
+\subsubsection{Partition Structure (pp. 25-27, 57, 216-217)}
+
+The FEP framework partitions state space into:
+\begin{itemize}
+    \item $\eta$: \textbf{External states} (environment)
+    \item $b = (s, a)$: \textbf{Blanket states} (sensory $s$ + active $a$)
+    \item $\mu$: \textbf{Internal states} (the ``thing'')
+\end{itemize}
+
+The dynamics become:
+\begin{equation}
+\begin{bmatrix} \dot{\eta} \\ \dot{b} \\ \dot{\mu} \end{bmatrix} =
+\begin{bmatrix} f_\eta(\eta, b) \\ f_b(\eta, b, \mu) \\ f_\mu(b, \mu) \end{bmatrix} + \omega
+\end{equation}
+
+\textbf{Critical structure}:
+\begin{itemize}
+    \item External $\eta$ only depends on $(\eta, b)$, with no direct $\mu$ influence
+    \item Internal $\mu$ only depends on $(b, \mu)$, with no direct $\eta$ influence
+    \item Blanket $b$ mediates all cross-partition interactions
+\end{itemize}
+
+\subsubsection{Conditional Independence Corollary (pp. 213-217)}
+
+\begin{theorem}[Friston, 2025]
+\label{thm:friston-ci}
+Internal states are conditionally independent of external states given blanket:
+\begin{equation}
+\mu \indep \eta \given b
+\end{equation}
+\textit{iff} the cross-Jacobian blocks are zero:
+\begin{equation}
+\grad_{\eta\mu} \tilde{\mathcal{S}} = 0 \quad \text{and} \quad \grad_{\mu\eta} \tilde{\mathcal{S}} = 0
+\end{equation}
+\end{theorem}
+
+Equivalently, in EBM terms:
+\begin{equation}
+\boxed{\frac{\partial^2 E}{\partial \eta_i \partial \mu_j} = 0 \quad \forall i, j}
+\end{equation}
+
+\textbf{This is exactly our Hessian sparsity criterion} (Definition~\ref{def:functor}).
+
+\subsubsection{Proof Sketch}
+
+From the Fokker-Planck equation, the steady-state density factorizes:
+\begin{equation}
+p(\eta, b, \mu) = p(\eta, b) \cdot p(\mu \given b)
+\end{equation}
+iff the flow admits no direct $\eta \leftrightarrow \mu$ coupling. The surprisal (energy) then decomposes:
+\begin{equation}
+\tilde{\mathcal{S}}(\eta, b, \mu) = \tilde{\mathcal{S}}(\eta, b) + \tilde{\mathcal{S}}(\mu \given b)
+\end{equation}
+with zero cross-derivatives.
+
+\subsection{Spectral Blanket Detection (FEP Method)}
+
+\subsubsection{Graph Laplacian Approach (pp. 48-51, 58-61, 67-70)}
+
+The spectral method for blanket detection from Friston (2025):
+
+\textbf{Step 1}: Construct adjacency matrix from Jacobian/coupling:
+\begin{equation}
+A_{ij} = \begin{cases} 1 & \text{if } |J_{ij}| > \epsilon \\ 0 & \text{otherwise} \end{cases}
+\end{equation}
+where $J = \grad_x f(x)$ is the Jacobian of flow.
+
+In EBMs: $J \approx -\Gamma H$ where $H = \Hess E$ is the Hessian.
+
+\textbf{Step 2}: Form graph Laplacian:
+\begin{equation}
+L = D - A
+\end{equation}
+where $D_{ii} = \sum_j A_{ij}$ is the degree matrix.
+
+\textbf{Step 3}: Eigen-decomposition:
+\begin{equation}
+L v_k = \lambda_k v_k
+\end{equation}
+with $0 = \lambda_0 \leq \lambda_1 \leq \cdots \leq \lambda_n$.
+
+\textbf{Step 4}: Interpret eigenmodes:
+\begin{itemize}
+    \item \textbf{Slow modes} (small $\lambda_k$): Internal states (stable, slowly mixing)
+    \item \textbf{Intermediate modes}: Blanket states (connecting structure)
+    \item \textbf{Fast modes} (large $\lambda_k$): External/noise (rapidly mixing)
+\end{itemize}
+
+\subsubsection{Spectral Clustering Interpretation}
+
+The \textbf{Fiedler vector} $v_1$ (second smallest eigenvalue) partitions the graph:
+\begin{itemize}
+    \item Sign of $v_1(i)$ indicates partition membership
+    \item Multiple eigenvectors $\to$ multi-way partition
+\end{itemize}
+
+For blanket detection:
+\begin{itemize}
+    \item Cluster on $(v_1, v_2, \ldots, v_k)$ using K-means
+    \item Intermediate cluster = blanket variables
+\end{itemize}
+
+\subsubsection{Advantages Over Gradient Thresholding}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Gradient Magnitude} & \textbf{Spectral Method} \\
+\midrule
+Local measure & Global structure \\
+Sensitive to scaling & Invariant to rescaling \\
+Requires threshold $\tau$ & Natural gaps in spectrum \\
+Fails on flat landscapes & Detects connectivity \\
+Single-scale & Multi-scale via eigengap \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Recommendation}: Use spectral as primary, gradient as validation/visualization.
+
+\subsection{Hierarchical/Recursive Blankets}
+
+\subsubsection{Nested Structure (pp. 10-14, 53-64)}
+
+The FEP framework emphasizes \textit{recursive} blanket structure:
+\begin{itemize}
+    \item Cells have membranes (blankets)
+    \item Organs contain cells (blankets of blankets)
+    \item Organisms contain organs
+    \item Societies contain organisms
+\end{itemize}
+
+Mathematically: Blankets at scale $n$ become \textit{particles} at scale $n+1$.
+
+\subsubsection{Adiabatic Elimination (pp. 58-64)}
+
+To coarse-grain:
+\begin{enumerate}
+    \item Identify fast (external) modes via spectral analysis
+    \item \textbf{Adiabatically eliminate} fast variables (average over their equilibrium)
+    \item Remaining slow modes = new particle at coarser scale
+    \item Repeat
+\end{enumerate}
+
+\textbf{Schur complement} formulation (for quadratic systems):
+
+If $H = \begin{bmatrix} H_{\text{fast}} & H_{\text{cross}} \\ H_{\text{cross}}^T & H_{\text{slow}} \end{bmatrix}$,
+
+the effective Hessian for slow modes is:
+\begin{equation}
+H_{\text{eff}} = H_{\text{slow}} - H_{\text{cross}}^T H_{\text{fast}}^{-1} H_{\text{cross}}
+\end{equation}
+
+\subsection{Gradient Flow on Surprisal}
+
+\subsubsection{Internal State Dynamics (pp. 112-114, 121-130)}
+
+Internal states perform gradient flow on surprisal (with solenoidal component):
+\begin{equation}
+\dot{\mu} = -\Gamma_\mu \grad_\mu \tilde{\mathcal{S}}(\mu, b) + Q_\mu \grad_\mu \tilde{\mathcal{S}}(\mu, b)
+\end{equation}
+
+The dissipative (gradient) part minimizes surprisal; solenoidal part conserves it.
+
+\subsubsection{Active States and Agency}
+
+Active states $a \subset b$ influence external states:
+\begin{equation}
+\dot{a} = -\Gamma_a \grad_a F(\mu, b)
+\end{equation}
+where $F$ is the \textbf{variational free energy}, representing internal states' beliefs about external states.
+
+\textbf{This is active inference}: Agents act to minimize expected surprisal.
+
+\subsubsection{Link to Expected Free Energy}
+
+For structure decisions (our structure learning problem):
+\begin{equation}
+G(\pi) = \E_{q(o|\pi)}[F(\mu, b)] + \text{epistemic value}
+\end{equation}
+
+The expected free energy $G$ guides discrete choices (policies, structures).
+
+\textbf{Geometric complexity criterion}: The Hessian-based complexity from Section~\ref{sec:partition-free-energy} approximates this:
+\begin{equation}
+\text{complexity}(m) \approx \frac{1}{2} \log \det H(\theta^*)
+\end{equation}
+where $H(\theta^*)$ is estimated from gradient covariance during sampling.
+
+\subsection{What the FEP Does NOT Cover (Our Novelty)}
+
+\subsubsection{Absences in Friston (2025)}
+
+Exhaustive search confirms NO mentions of:
+\begin{itemize}
+    \item ``Energy-based model'' / ``EBM''
+    \item ``Basin'' / ``basin of attraction''
+    \item ``Hessian'' (as computational object)
+    \item ``Gradient magnitude'' as blanket indicator
+    \item ``Threshold'' / ``Otsu''
+    \item ``Spectral clustering'' (uses spectral but not ML clustering)
+    \item ``Score-based model'' / ``diffusion model''
+\end{itemize}
+
+\subsubsection{Our Unique Contributions}
+
+\begin{enumerate}
+    \item \textbf{EBM framing}: Map surprisal to energy function directly
+    \item \textbf{Gradient magnitude hypothesis}: High $\|\grad E\|$ = blanket (operational criterion)
+    \item \textbf{Hessian-based coupling}: Empirical estimation from gradient covariance
+    \item \textbf{Threshold methods}: Otsu, percentile, information-theoretic for discrete partitioning
+    \item \textbf{Quadratic toy validation}: Controlled experiments with known structure
+    \item \textbf{Comparison to ML methods}: NOTEARS, DMBD, AXIOM, RGM benchmarks
+    \item \textbf{Application to modern EBMs}: Score-based, diffusion, VAE latent spaces
+\end{enumerate}
+
+\subsubsection{Synthesis Statement}
+
+\begin{quote}
+\textit{Topological Blankets operationalizes the FEP's physics of emergent things in the computational setting of energy-based models. Where the FEP derives blankets from sparse Langevin flow, we detect them via gradient magnitudes and Hessian sparsity in equilibrium samples. This bridges fundamental physics with practical ML structure discovery.}
+\end{quote}
+
+\subsection{Complete Mathematical Framework}
+
+\subsubsection{Unified Notation}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Symbol} & \textbf{Friston (2025)} & \textbf{Our Method} \\
+\midrule
+$x$ & Generalized states & EBM variables \\
+$\tilde{\mathcal{S}}(x)$ & Surprisal & Energy $E(x)$ \\
+$f(x)$ & Particular flow & $-\Gamma \grad E$ \\
+$J$ & Jacobian $\grad f$ & $-\Gamma H$ (Hessian) \\
+$L$ & Graph Laplacian & Coupling Laplacian \\
+$\mu, b, \eta$ & Internal, blanket, external & Objects, blankets, environment \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Core Equations Summary}
+
+\textbf{Langevin dynamics}:
+\begin{equation}
+dx = -\Gamma \grad_x E(x) \, dt + \sqrt{2\Gamma T} \, dW
+\end{equation}
+
+\textbf{Conditional independence} (Friston Corollary):
+\begin{equation}
+\mu \indep \eta \given b \iff \frac{\partial^2 E}{\partial \mu_i \partial \eta_j} = 0 \quad \forall i,j
+\end{equation}
+
+\textbf{Blanket criterion} (our hypothesis, Friston-grounded):
+\begin{equation}
+x_i \in \text{Blanket} \iff \E[\|\partial E / \partial x_i\|] > \tau
+\end{equation}
+
+\textbf{Spectral detection} (Friston method):
+\begin{equation}
+L = D - A, \quad A_{ij} = \mathbf{1}[|H_{ij}| > \epsilon]
+\end{equation}
+Blankets in intermediate Laplacian eigenmodes.
+
+\textbf{Hierarchical recursion}:
+\begin{equation}
+H^{(n+1)}_{\text{eff}} = H^{(n)}_{\text{slow}} - H^{(n)}_{\text{cross}}{}^T (H^{(n)}_{\text{fast}})^{-1} H^{(n)}_{\text{cross}}
+\end{equation}
+
+\textbf{Hessian complexity}:
+\begin{equation}
+\text{complexity}(m) \approx \frac{1}{2} \log \det \hat{H}, \quad \hat{H} = \Cov(\nabla_x E)
+\end{equation}
+
+%=============================================================================
+\section{Bridge Proposal: Integration with Active Inference}
+\label{sec:bridge-proposal}
+%=============================================================================
+
+\subsection{Key Related Works}
+
+\subsubsection{Da Costa (2024): Toward Universal and Interpretable World Models}
+\begin{itemize}
+    \item \textbf{Focus}: Expressive yet tractable Bayesian networks for open-ended learning agents
+    \item Sparse, compositional class of Bayes nets approximating diverse stochastic processes
+    \item Emphasis on interpretability, scalability, integration with structure learning
+    \item \textbf{Connection}: Defines a target class of ``interpretable'' sparse Bayes nets. Our method offers a way to discover approximations to this class geometrically from EBMs without explicit discrete search.
+\end{itemize}
+
+\subsubsection{Beck \& Ramstead (2025): Dynamic Markov Blanket Detection (DMBD)}
+\begin{itemize}
+    \item \textbf{Focus}: Variational Bayesian EM for dynamic blanket detection from microscopic dynamics
+    \item Uses blanket statistics to define object types and equivalence:
+    \begin{itemize}
+        \item \textbf{Weak equivalence}: Same steady-state/reward rate
+        \item \textbf{Strong equivalence}: Same boundary paths
+    \end{itemize}
+    \item Dynamic assignments $\omega_i(t)$ label elements as internal/blanket/external over time
+    \item \textbf{Connection}: Closest prior art. DMBD is a discrete variational approach to blanket partitioning. Our method is a continuous geometric alternative, using gradients/Hessians from Langevin sampling with no explicit role assignments or EM.
+\end{itemize}
+
+\subsubsection{Friston et al. (2025): Scale-Free Active Inference (RGM)}
+\begin{itemize}
+    \item \textbf{Focus}: Renormalizing Generative Models for scale-free hierarchical structure
+    \item Discrete POMDPs augmented with ``paths/orbits'' as latents for temporal depth
+    \item Scale-invariant via renormalization group
+    \item \textbf{Connection}: Focus on hierarchical, scale-free discrete structures. Our method could provide geometric diagnostics for trained RGMs (if cast as EBMs) or extract equivalent blanket partitions from their energy landscapes.
+\end{itemize}
+
+\subsubsection{Heins et al. (2025): AXIOM}
+\begin{itemize}
+    \item \textbf{Focus}: Object-centric architecture with expandable mixture models for RL
+    \item Four expandable mixtures:
+    \begin{itemize}
+        \item \textbf{sMM} (Slot): Parses pixels $\to$ object slots
+        \item \textbf{iMM} (Identity): Maps features $\to$ discrete types
+        \item \textbf{tMM} (Transition): Models dynamics as piecewise linear
+        \item \textbf{rMM} (Recurrent): Models object-object interactions
+    \end{itemize}
+    \item Online growing heuristic + periodic Bayesian model reduction (BMR)
+    \item \textbf{Connection}: Discrete expanding structure for object discovery in RL. Similar goal (partition into objects/types), but mixture-based and online discrete. Our approach is offline geometric analysis of a fixed EBM landscape.
+\end{itemize}
+
+\subsection{The Geometric Alternative: Topological Blankets}
+
+\subsubsection{How It Differs}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lll}
+\toprule
+\textbf{Aspect} & \textbf{DMBD / AXIOM / RGM} & \textbf{Topological Blankets} \\
+\midrule
+Inference type & Discrete variational (EM, mixtures) & Continuous geometric (gradients) \\
+Blanket definition & Explicit role assignments $\omega_i(t)$ & High-gradient ridges \\
+Object discovery & Mixture components, slots & Low-gradient basins \\
+Dynamics & Native time-evolving & Static snapshot \\
+Online/Offline & Online (AXIOM), dynamic (DMBD) & Offline, post-hoc \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Advantages of Geometric Approach}
+
+\begin{enumerate}
+    \item \textbf{Works directly on continuous EBMs}: No conversion to discrete structures needed
+    \item \textbf{No bespoke priors}: Post-hoc analysis via sampling, not mixture-specific growing rules
+    \item \textbf{Geometric diagnostics}: Hessian structure from gradient covariance estimates complexity
+    \item \textbf{Soft structure}: Energy barriers provide continuous ``edge strengths'' vs binary edges
+    \item \textbf{Scalable}: Sampling-based, no discrete search over exponentially many structures
+\end{enumerate}
+
+\subsubsection{Potential Synergies}
+
+\begin{itemize}
+    \item \textbf{Geometric pre-partitioning}: Use basin detection to initialize AXIOM slots or DMBD role assignments
+    \item \textbf{Diagnostic tool}: Apply to trained RGM/AXIOM models (convert to energy, extract topology)
+    \item \textbf{Hybrid approaches}: Guide discrete structure search with geometric signals
+    \item \textbf{Geometric BMR}: Use coupling strength and Hessian sparsity as alternative to AXIOM's BMR criteria
+\end{itemize}
+
+\subsection{Three-Timescale Dynamics (Unified Framework)}
+
+\begin{align}
+\text{Fast } (\tau_x): \quad & dx = -\Gamma_x \grad_x E \, dt + \sqrt{2\Gamma_x T_x} \, dW \\
+\text{Medium } (\tau_\theta): \quad & d\theta = -\Gamma_\theta \grad_\theta F \, dt \quad \text{(gradient descent on free energy)} \\
+\text{Slow } (\tau_m): \quad & \text{Monitor Hessian sparsity, detect blanket emergence}
+\end{align}
+
+\textbf{Level 1: Fast - Inference} (DMBD: microscopic dynamics)
+\begin{itemize}
+    \item Langevin sampling explores energy landscape
+    \item Collects geometric data: trajectories, gradients
+    \item Timescale: $\sim$10-100 steps
+\end{itemize}
+
+\textbf{Level 2: Medium - Learning} (AXIOM: mixture component updates)
+\begin{itemize}
+    \item Parameter updates sculpt landscape
+    \item Gradient descent on free energy
+    \item Timescale: $\sim$1000-10000 steps
+\end{itemize}
+
+\textbf{Level 3: Slowest - Structure Selection} (RGM: renormalization)
+\begin{itemize}
+    \item Topology extraction via Topological Blankets
+    \item Blanket detection, object clustering, graph construction
+    \item Triggered by convergence or stagnation
+\end{itemize}
+
+\subsection{Blanket Statistics from Gradients (DMBD Integration)}
+
+DMBD defines object types via blanket statistics (steady-state or path distributions for equivalence). We can proxy these geometrically from gradient samples.
+
+\subsubsection{Steady-State Statistics (Weak Equivalence)}
+
+Steady-state statistics characterize blanket ``activity level'' for weak equivalence (same reward rate / steady state).
+
+\begin{algorithm}[H]
+\caption{Compute Blanket Statistics}
+\label{alg:blanket-stats}
+\begin{algorithmic}[1]
+\Require Gradient samples $G \in \mathbb{R}^{N \times n}$, blanket mask $B \subseteq \{1, \ldots, n\}$
+\Ensure Steady-state statistics for blanket variables
+\State $G_B \gets G[:, B]$ \Comment{Extract blanket gradients}
+\State $\mu_i \gets \frac{1}{N} \sum_{t=1}^{N} G_B[t, i]$ for each $i \in B$ \Comment{Mean}
+\State $\sigma^2_i \gets \frac{1}{N} \sum_{t=1}^{N} (G_B[t, i] - \mu_i)^2$ for each $i \in B$ \Comment{Variance}
+\State $m_i \gets \frac{1}{N} \sum_{t=1}^{N} |G_B[t, i]|$ for each $i \in B$ \Comment{Mean magnitude}
+\State \Return $(\mu, \sigma^2, m)$
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Path Statistics (Strong Equivalence)}
+
+Path statistics capture temporal correlations for strong equivalence (same boundary paths). We compute autocorrelation of gradient trajectories.
+
+\begin{algorithm}[H]
+\caption{Compute Path Autocorrelation}
+\label{alg:path-autocorr}
+\begin{algorithmic}[1]
+\Require Gradient samples $G \in \mathbb{R}^{N \times n}$, blanket mask $B$, max lag $L$
+\Ensure Autocorrelation matrix $A \in \mathbb{R}^{|B| \times L}$
+\State $G_B \gets G[:, B]$
+\For{each blanket variable $i \in B$}
+    \For{$\ell = 0$ to $L-1$}
+        \State $A[i, \ell] \gets \text{Corr}(G_B[1:N-\ell, i], \; G_B[\ell+1:N, i])$
+    \EndFor
+\EndFor
+\State \Return $A$
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Object Typing via Blanket Similarity}
+
+Objects with similar blanket profiles (DMBD weak equivalence) represent the same ``kind of thing.'' We cluster objects by their blanket statistics.
+
+\begin{algorithm}[H]
+\caption{Type Objects by Blanket Statistics}
+\label{alg:object-typing}
+\begin{algorithmic}[1]
+\Require Blanket statistics $(\mu, \sigma^2, m)$, object assignments $\pi: \{1,\ldots,n\} \to \{1,\ldots,K\}$
+\Ensure Type labels $\tau: \{1,\ldots,K\} \to \{1,\ldots,T\}$
+\For{each object $k = 1$ to $K$}
+    \State $B_k \gets$ blanket variables bordering object $k$
+    \State $f_k \gets (\text{mean}(\sigma^2_{B_k}), \; \text{std}(\sigma^2_{B_k}))$ \Comment{Feature vector}
+\EndFor
+\State $F \gets [f_1, \ldots, f_K]$ \Comment{Feature matrix}
+\State $\tau \gets \text{AgglomerativeClustering}(F, \text{threshold}=\delta)$
+\State \Return $\tau$
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Model Comparison Criterion (Bayesian Foundation)}
+
+From Bayesian model comparison:
+\begin{equation}
+\ln \frac{P(m|o)}{P(m'|o)} = \Delta F + \Delta G
+\end{equation}
+where:
+\begin{itemize}
+    \item $\Delta F$ = difference in variational free energy (accuracy - complexity)
+    \item $\Delta G$ = difference in expected free energy (epistemic + pragmatic value)
+\end{itemize}
+
+\subsubsection{Translating to EBMs}
+
+\begin{equation}
+F(m) = \E_q[E(x;\theta)] + \text{complexity}(m)
+\end{equation}
+
+\textbf{Complexity estimation via Laplace approximation}:
+\begin{equation}
+\text{complexity}(m) \approx \frac{1}{2} \log \det H(\theta^*)
+\end{equation}
+where $H(\theta^*)$ is the Hessian of the energy at the mode, estimated empirically from the gradient covariance during sampling: $\hat{H} = \Cov(\nabla_x E)$.
+
+\subsection{Connection to AXIOM's Expanding Structure}
+
+AXIOM grows/prunes mixture components online. We can achieve similar effects geometrically:
+
+\subsubsection{Growth (Basin Splitting)}
+
+\textbf{AXIOM}: Add new mixture component if log evidence favors it.
+
+\textbf{Geometric analog}: Detect when a basin should split by checking for internal block structure.
+
+\begin{algorithm}[H]
+\caption{Basin Split Detection}
+\label{alg:basin-split}
+\begin{algorithmic}[1]
+\Require Coupling matrix $C$, object $k$, threshold $\delta$
+\Ensure Decision to split and proposed partition
+\State $V_k \gets$ variables assigned to object $k$
+\State $C_k \gets C[V_k, V_k]$ \Comment{Internal coupling submatrix}
+\State $(\ell_1, \ell_2) \gets \text{SpectralClustering}(C_k, k=2)$ \Comment{Bipartition}
+\State $s \gets \text{SilhouetteScore}(C_k, (\ell_1, \ell_2))$
+\If{$s > \delta$}
+    \State \Return $(\textsc{True}, (\ell_1, \ell_2))$ \Comment{Split is meaningful}
+\Else
+    \State \Return $(\textsc{False}, \textsc{None})$
+\EndIf
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Pruning (Basin Merging)}
+
+\textbf{AXIOM}: Bayesian Model Reduction merges similar components.
+
+\textbf{Geometric analog}: Detect when basins should merge (barrier too weak).
+
+\begin{algorithm}[H]
+\caption{Basin Merge Detection}
+\label{alg:basin-merge}
+\begin{algorithmic}[1]
+\Require Coupling matrix $C$, objects $i$ and $j$, threshold $\epsilon$
+\Ensure Decision to merge
+\State $V_i \gets$ variables assigned to object $i$
+\State $V_j \gets$ variables assigned to object $j$
+\State $C_{ij} \gets C[V_i, V_j]$ \Comment{Cross-coupling submatrix}
+\If{$\text{mean}(C_{ij}) > \epsilon$} \Comment{High coupling = weak separation}
+    \State \Return \textsc{True}
+\Else
+    \State \Return \textsc{False}
+\EndIf
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Geometric Alternative to BMR}
+
+Instead of comparing component marginal likelihoods, we compare free energies using Hessian-based coupling strength as a complexity measure.
+
+\begin{algorithm}[H]
+\caption{Geometric Model Reduction}
+\label{alg:geometric-bmr}
+\begin{algorithmic}[1]
+\Require Features $\mathcal{F}$ (including coupling matrix), object assignments $\pi$, regularization $\lambda$
+\Ensure Pruned object assignments
+\For{each object $k = 1$ to $K$}
+    \State $B_k \gets$ blanket variables for object $k$
+    \State $\Omega_k \gets |B_k| \cdot \text{mean}(\mathcal{F}.\text{coupling\_strength}[B_k])$ \Comment{Complexity}
+    \State $A_k \gets \text{AccuracyGain}(\mathcal{F}, k)$ \Comment{Coupling to other objects}
+    \If{$\lambda \cdot \Omega_k > A_k$} \Comment{Complexity exceeds benefit}
+        \State Merge object $k$ into neighboring objects
+    \EndIf
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Summary: Positioning Topological Blankets}
+
+\subsubsection{The Core Equivalence}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Traditional Framing} & \textbf{Markov Blanket Framing} \\
+\midrule
+``How many latent factors?'' & ``How many objects have distinct blankets?'' \\
+``What's the right topology?'' & ``What's the conditional independence structure?'' \\
+``Should I add a hierarchy level?'' & ``Are there blankets within blankets?'' \\
+``What dynamics model?'' & ``What are the blanket statistics?'' \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Three Approaches Unified by Topological Blankets}
+
+Topological Blankets provides a unifying geometric lens for three distinct approaches to structure learning:
+
+\textbf{Friston's RGMs (Renormalizing Generative Models)}:
+\begin{itemize}
+    \item Hierarchical, scale-free discrete POMDPs
+    \item Structure via renormalization group
+    \item \textit{Unified by}: Topological Blankets extracts equivalent blanket partitions from RGM energy landscapes
+\end{itemize}
+
+\textbf{AXIOM (Heins et al.)}:
+\begin{itemize}
+    \item Object-centric architecture with expandable mixtures
+    \item Structure via slot assignments and Bayesian Model Reduction
+    \item \textit{Unified by}: Topological Blankets provides geometric pre-partitioning to initialize slots
+\end{itemize}
+
+\textbf{Energy-Based Models}:
+\begin{itemize}
+    \item Continuous energy landscapes with implicit structure
+    \item Structure via gradient-based optimization
+    \item \textit{Unified by}: Topological Blankets makes implicit structure explicit via Hessian sparsity
+\end{itemize}
+
+\textbf{The Unification}: All three approaches implicitly or explicitly partition variables into objects separated by Markov blankets. Topological Blankets provides the common geometric language: blankets are high-gradient ridges, objects are low-energy basins, and topology emerges from the Hessian sparsity pattern.
+
+\subsubsection{The EBM Advantage}
+
+EBM formulation provides \textit{continuous relaxations} of discrete blanket decisions:
+\begin{enumerate}
+    \item \textbf{Soft blanket boundaries}: Energy gradients indicate blanket sharpness
+    \item \textbf{Continuous typology}: Mode positions can merge/split smoothly
+    \item \textbf{Variational model selection}: Hessian-based complexity without discrete search
+\end{enumerate}
+
+\subsubsection{When It Works Best}
+
+Topological Blankets is ideal for:
+\begin{itemize}
+    \item \textbf{Post-hoc analysis} of trained EBMs (score models, diffusion)
+    \item \textbf{Diagnostic tool} for understanding what structure models learned
+    \item \textbf{Equilibrium regimes} with clear basins and barriers
+    \item \textbf{Continuous landscapes} where discrete search is intractable
+\end{itemize}
+
+It complements (not replaces) discrete methods for:
+\begin{itemize}
+    \item Online learning with active exploration (use AXIOM)
+    \item Time-resolved dynamics with traveling objects (use DMBD)
+    \item Hierarchical scale-free structure (use RGM)
+\end{itemize}
+
+%=============================================================================
+\section{The Algorithm: Topological Blankets}
+\label{sec:algorithm}
+%=============================================================================
+
+\subsection{Problem Statement}
+
+\textbf{Given}: An energy-based model $E(x; \theta)$ over variables $x = (x_1, \ldots, x_n)$.
+
+\textbf{Find}: The Markov blanket structure, a partition of variables into objects and their boundaries.
+
+\subsection{Core Hypothesis}
+
+\begin{hypothesis}[Gradient-Blanket Correspondence]
+\label{hyp:gradient-blanket}
+Markov blankets correspond to high-gradient regions in the energy landscape:
+\begin{equation}
+x_i \in \text{Blanket} \iff \E[\|\partial E / \partial x_i\|] > \tau
+\end{equation}
+\end{hypothesis}
+
+\textbf{Intuition}:
+\begin{itemize}
+    \item Inside a basin: gradient is small (near minimum)
+    \item On basin boundary: gradient is large (steep slope between basins)
+    \item Blanket = the ``ridge'' separating conditionally independent regions
+\end{itemize}
+
+\textbf{Refinement}: It's not just magnitude, but also \textbf{connectivity}:
+\begin{equation}
+x_i \in \text{Blanket connecting } O_a \text{ and } O_b \iff \|\partial E / \partial x_i\| \text{ is high AND } x_i \text{ couples to both } O_a, O_b
+\end{equation}
+
+\section{From Static Geometry to Stochastic Dynamics}
+
+The geometric perspective (basins, ridges, curvature) provides one lens on structure. But an energy function $E(x)$ implicitly defines something richer: \textit{stochastic dynamics}. This suggests a deeper characterization of objects and blankets.
+
+\subsection{The Dynamical Perspective}
+
+An energy $E(x)$ induces Langevin dynamics:
+\begin{equation}
+dx = -\grad E(x) \, dt + \sqrt{2T} \, dW
+\end{equation}
+which samples from $p(x) \propto \exp(-E(x)/T)$. This dynamics has intrinsic structure:
+
+\begin{definition}[Metastable Regions]
+A region $\mathcal{R} \subset \mathcal{X}$ is \textbf{metastable} if the expected exit time $\tau_{\text{exit}}(\mathcal{R})$ is much larger than the internal mixing time $\tau_{\text{mix}}(\mathcal{R})$:
+\begin{equation}
+\frac{\tau_{\text{exit}}(\mathcal{R})}{\tau_{\text{mix}}(\mathcal{R})} \gg 1
+\end{equation}
+\end{definition}
+
+\textbf{Key insight}: Objects are metastable regions. The dynamics rapidly equilibrates \textit{within} an object but slowly transitions \textit{between} objects. Blankets are the transition bottlenecks.
+
+\subsection{Spectral Characterization of Metastability}
+
+The generator of Langevin dynamics is:
+\begin{equation}
+\mathcal{L} = -\grad E \cdot \grad + T \Delta
+\end{equation}
+Its spectrum reveals metastable structure:
+\begin{itemize}
+    \item \textbf{Spectral gap} $\lambda_1$: Inverse of slowest mixing time. Small gap $\Rightarrow$ metastability.
+    \item \textbf{Number of small eigenvalues}: Counts metastable regions (objects).
+    \item \textbf{Eigenfunctions}: The second eigenfunction $\psi_1$ partitions space into metastable regions (analogous to Fiedler vector).
+\end{itemize}
+
+\begin{equation}
+\boxed{\text{Objects} = \text{metastable regions} = \text{slow-mixing components of } \mathcal{L}}
+\end{equation}
+
+\subsection{Blankets as Information Flow Bottlenecks}
+
+From the dynamical view, blankets are where information flow is constrained:
+\begin{itemize}
+    \item \textbf{Probability current} $J(x) = p(x)[-\grad E(x)] - T \grad p(x)$ concentrates at blankets
+    \item \textbf{Committor functions} $q(x) = P(\text{reach } A \text{ before } B \mid x)$ change rapidly at blankets
+    \item \textbf{Transition path theory}: Blankets are the reactive flux bottlenecks
+\end{itemize}
+
+This connects conditional independence (the static/graphical view) to information flow (the dynamical view): $x_i \indep x_j \mid x_B$ means information cannot flow between $i$ and $j$ except through the blanket $B$.
+
+\subsection{Relating Geometry and Dynamics}
+
+The geometric and dynamical views are complementary:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Geometric (Static)} & \textbf{Dynamical (Stochastic)} \\
+\midrule
+Low-energy basins & Metastable regions \\
+High-gradient ridges & Transition state ensembles \\
+Hessian eigenvalues & Local relaxation rates \\
+Barrier height $\Delta E$ & Exit time $\tau \sim \exp(\Delta E / T)$ \\
+Curvature at saddle & Transition rate prefactor \\
+\bottomrule
+\end{tabular}
+\caption{Correspondence between geometric and dynamical structure.}
+\end{table}
+
+The Kramers escape rate formula makes this precise: for a particle in basin $A$ escaping over barrier $\Delta E$,
+\begin{equation}
+\tau_{\text{escape}} \approx \frac{2\pi}{\omega_A \omega_{\ddagger}} \exp(\Delta E / T)
+\end{equation}
+where $\omega_A$ and $\omega_{\ddagger}$ are curvatures at the basin minimum and saddle point.
+
+\textbf{Implication for Topological Blankets}: High gradient ridges (our geometric criterion) correspond to slow escape times (the dynamical criterion). Both identify the same blanket structure, but the dynamical view provides additional information about \textit{how separated} the objects are in terms of mixing times.
+
+\subsection{Path-Based Markov Blankets}
+
+The preceding discussion treats blankets as \textit{static} features of the dynamics, where variables are permanently assigned to internal, blanket, or external roles. However, recent work by Beck \& Ramstead (2025) \cite{beck2025dmbd} develops a more general \textit{path-based} formulation where conditional independence applies to entire trajectories, and blanket assignments can change over time.
+
+\textbf{Path-based conditional independence.} Rather than requiring conditional independence at each time point, the path-based view requires independence of \textit{paths}:
+\begin{equation}
+p(s_\tau, z_\tau \given b_\tau) = p(s_\tau \given b_\tau) \, p(z_\tau \given b_\tau)
+\label{eq:path-ci}
+\end{equation}
+where $s_\tau$, $b_\tau$, $z_\tau$ denote the full trajectories of external, blanket, and internal variables respectively. This is realized by Langevin dynamics with sparse coupling:
+\begin{align}
+ds &= f_s(s, b) \, dt + \eta_s \, dW_s \\
+db &= f_b(s, b, z) \, dt + \eta_b \, dW_b \\
+dz &= f_z(b, z) \, dt + \eta_z \, dW_z
+\end{align}
+where crucially $f_s$ does not depend on $z$ and $f_z$ does not depend on $s$. If the boundary path $b_\tau$ is observed, it acts as a known driving force to two independent subsystems.
+
+\begin{remark}[Static vs Path-Based Blankets]
+Dynamical systems with blanket structure (sparse coupling in the drift) do \textit{not} generally result in steady-state distributions that also have blanket structure. The path-based formulation is therefore more general: it applies to non-stationary and non-ergodic systems, including flames, traveling waves, and organisms with material turnover.
+\end{remark}
+
+\textbf{Object type equivalence.} The path-based view provides a rigorous definition of object \textit{type}: two objects are equivalent if their blanket path statistics $p(b_\tau)$ are identical. This is stronger than merely having the same steady-state boundary distribution:
+
+\begin{definition}[Systems Equivalence via Blanket Statistics]
+\label{def:blanket-equivalence}
+Two subsystems are:
+\begin{itemize}
+    \item \textbf{Weakly equivalent} if their blankets share the same steady-state statistics or reward rate: $\tilde{p}(b^{(1)}) = \tilde{p}(b^{(2)})$
+    \item \textbf{Strongly equivalent} if the time evolution of their boundaries has the same path statistics: $p(b^{(1)}_\tau) = p(b^{(2)}_\tau)$
+\end{itemize}
+\end{definition}
+
+This connects directly to systems identification theory: two agents with the same blanket path statistics have the same input-output relationship (policy), regardless of their internal structure.
+
+\subsection{Maximum Caliber and Ontological Potential Functions}
+
+Jaynes' principle of maximum caliber extends maximum entropy to the space of paths \cite{jaynes1980minimum, niven2010minimization}. Given prior dynamics $p(\dot{x}, x, t)$ and constraints on blanket expectations:
+\begin{equation}
+F_B(t) = \langle f_B(\dot{x}, x, t, \Omega_B(t)) \rangle
+\end{equation}
+the maximum caliber objective is:
+\begin{equation}
+S[q(\cdot), \lambda] = -\KL(q(\dot{x}, x, t) \| p(\dot{x}, x, t)) - \left\langle \int \lambda(t) \cdot f(\dot{x}, x, t) \, dt \right\rangle_{q(\cdot)}
+\end{equation}
+
+Optimization yields the free energy as an \textit{ontological potential function}:
+\begin{equation}
+S_{\max} = \log Z[\lambda(t)] + \int \lambda(t) \cdot F(t) \, dt = -\text{Free Energy} + \text{Energy}
+\end{equation}
+with associated Lagrangian $L(\dot{x}, x, t) = \log p(\dot{x}, x, t) + \lambda(t) f(\dot{x}, x, t)$.
+
+\begin{tcolorbox}[colback=green!5,colframe=green!50!black,title=Maximum Caliber Definition of an Object]
+An object is defined by:
+\begin{enumerate}
+    \item A time-dependent blanket $\Omega_B(t) \subset \mathcal{X}$ maintaining Markov blanket structure with respect to prior dynamics $p(\dot{x}, x)$
+    \item A set of instantaneous constraints applied to both $\Omega_B(t)$ and elements $x \in \Omega_B(t)$
+\end{enumerate}
+The constraints define \textit{object type}; the free energy functional is the \textit{ontological potential function}.
+\end{tcolorbox}
+
+\subsection{Dynamic Markov Blanket Detection}
+
+The path-based formulation enables \textit{dynamic} blanket detection, where microscopic elements can change their role over time. Beck \& Ramstead (2025) propose a generative model with:
+\begin{itemize}
+    \item \textbf{Macroscopic latents} $(s, b, z)$ summarizing collective dynamics with Markov blanket structure
+    \item \textbf{Assignment variables} $\omega_i(t) \in \{S, B_n, Z_n\}$ labeling each microscopic element's current role
+    \item \textbf{Constrained transitions}: Labels cannot jump directly from internal ($Z$) to external ($S$); transitions depend only on blanket variables
+\end{itemize}
+
+The transition dynamics obey:
+\begin{equation}
+\frac{d\mathbf{p}_i}{dt} = \mathbf{T}(\{b_n\}) \mathbf{p}_i
+\end{equation}
+where $\mathbf{T}$ is constrained such that $T_{SZ_n} = T_{Z_nS} = 0$, enforcing blanket structure.
+
+\textbf{Inference.} Dynamic Markov Blanket Detection (DMBD) uses variational Bayesian EM with factorized posterior:
+\begin{equation}
+q(s, b, z, \omega, \Theta) = q_{sbz}(s, b, z) \, q_\omega(\omega) \, q_\Theta(\Theta)
+\end{equation}
+The algorithm iterates:
+\begin{enumerate}
+    \item \textbf{Attend}: Update assignment posteriors $q_\omega(\omega)$ (which elements are internal/boundary/external?)
+    \item \textbf{Infer}: Update latent dynamics $q_{sbz}(s, b, z)$
+    \item \textbf{Repeat}: Update parameters $q_\Theta(\Theta)$
+\end{enumerate}
+
+\begin{algorithm}[H]
+\caption{Dynamic Markov Blanket Detection (DMBD)}
+\label{alg:dmbd}
+\begin{algorithmic}[1]
+\Require Observations $y_i(t)$ for $i = 1, \ldots, N$; number of objects $K$
+\Ensure Object labels $\omega_i(t)$, macroscopic dynamics $(s, b_1, \ldots, b_K, z_1, \ldots, z_K)$
+\State Initialize posteriors $q_{sbz}$, $q_\omega$, $q_\Theta$
+\For{epoch $= 1$ to max\_epochs}
+    \State \textbf{E-step (Attend):} Update $q_\omega(\omega) \propto \exp\langle \log p(y, \omega \given s, b, z, \Theta) \rangle_{q_{sbz}, q_\Theta}$
+    \State \textbf{E-step (Infer):} Update $q_{sbz}(s, b, z)$ via forward-backward on blanket-structured dynamics
+    \State \textbf{M-step:} Update $q_\Theta(\Theta)$ respecting blanket constraints on $A$, $C$
+    \State Compute ELBO; check convergence
+\EndFor
+\State \Return MAP estimates $\hat{\omega}_i(t)$, $(\hat{s}, \hat{b}, \hat{z})$
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{The observation model and roles.} The DMBD generative model assumes linear macroscopic dynamics with a switching observation model. Each microscopic element $i$ at time $t$ is linked to the macroscopic latents through an observation matrix that depends on its current role $\omega_i(t)$:
+\begin{equation}
+y_i(t) = C_{\omega_i(t)} \begin{pmatrix} s(t) \\ b(t) \\ z(t) \end{pmatrix} + \epsilon_i(t)
+\end{equation}
+A key feature is that roles are finer-grained than labels: the same label (e.g., ``external'') can have multiple roles with distinct observation matrices. This allows the model to capture the fact that, for instance, burned and unburned portions of a fuse are both ``environment'' but exhibit qualitatively different physical behavior.
+
+\textbf{Parsimony as the selection principle.} Among the exponentially many possible Markov blanket partitions of a system, DMBD selects the one that yields the simplest macroscopic description, as measured by the evidence lower bound (ELBO). This provides a principled answer to a persistent critique of the FEP literature: \textit{which} blanket partition should we use? The answer is the one that globally minimizes conditional entropy of future observations, i.e., the partition under which the data is least surprising. Labels play the explanatory role of testable hypotheses; a good hypothesis makes data unsurprising. This framing recasts the FEP's surprise minimization not as a tautological claim about what systems ``do,'' but as an empirical criterion for how \textit{we} should carve systems into objects.
+
+\textbf{Numerical demonstrations.} Beck \& Ramstead (2025) validate DMBD on four physical systems of increasing complexity:
+\begin{enumerate}
+    \item \textit{Newton's cradle}: DMBD discovers two natural percepts, either the moving balls form the object (with briefly-activated collision balls as boundary), or the stationary balls form the boundary separating left and right ball groups. Both solutions align with common human perception of the system. Notably, a static force-based algorithm discovers only a single object centered on the middle ball, regardless of the dynamics.
+
+    \item \textit{Burning fuse}: A combustion front traveling through an inhomogeneous medium. DMBD identifies the flame as an object, with separate roles for burned and unburned environment, and two blanket roles for the front and back of the reaction zone. The algorithm discovers approximately 6-dimensional macroscopic dynamics from high-dimensional observables ($200$ spatial locations $\times$ $3$ fields). The internal variable tracks heat release while the environmental variable correlates most strongly with flame position, illustrating that internal states need not encode the most ``obvious'' macroscopic quantity.
+
+    \item \textit{Lorenz attractor}: The chaotic switching between two attracting manifolds is interpreted as a phase transition. The trajectory near one attractor is labeled ``object,'' the other ``environment,'' and the transition region ``blanket.'' This demonstrates that DMBD can identify dynamic structure even in low-dimensional deterministic chaos.
+
+    \item \textit{Particle Lenia (synthetic cell)}: A self-organizing particle system that forms cell-like structures with nucleus, membrane, and flagella. DMBD discovers 5 distinct object types corresponding to disordered state, simple membrane, complex membrane, disordered nucleus, and tight nucleus, with individual particles transitioning between roles as the structure evolves. Inner particles regularly shift assignments from nucleus to organelle to membrane and back, demonstrating genuinely dynamic blanket structure.
+\end{enumerate}
+
+\textbf{Limitations of the current implementation.} The DMBD algorithm as presented relies on two simplifying assumptions: (i) linear macroscopic dynamics, with nonlinearities absorbed into the noise model, and (ii) decoupling of label dynamics from macroscopic dynamics. Together these mean that while DMBD discovers sensible partitions, it cannot yet be relied upon for \textit{prediction} of macroscopic dynamics from initial conditions. The linear assumption effectively enhances apparent diffusive strength, and the decoupled labels quickly diffuse to a uniform distribution in the absence of new observations. Extending DMBD to switching linear dynamical systems with coupled label-macroscopic dynamics is an active direction \cite{beck2025dmbd}.
+
+\textbf{Resolving critiques of static Markov blankets.} The move from static to dynamic blanket detection addresses several persistent criticisms in the FEP literature. Bruineberg et al.\ (2022) argued that blanket identification rests on nontrivial modeling decisions; DMBD makes these decisions explicit through Bayesian model selection via the ELBO. Raja et al.\ (2021) questioned whether blanket-based definitions are as straightforward as proponents claim; the path-based formulation provides a rigorous criterion (parsimony of macroscopic description) rather than relying on intuition. Di Paolo et al.\ and Biehl et al.\ argued that static blankets are inapplicable to strongly coupled, highly variable, or matter-exchanging systems; dynamic blanket assignments handle all three cases naturally, as the burning fuse (material turnover) and Particle Lenia (continuous role reassignment) examples demonstrate.
+
+\textbf{Connection to Topological Blankets.} The DMBD algorithm and Topological Blankets address complementary aspects of the blanket detection problem:
+\begin{itemize}
+    \item \textbf{Topological Blankets}: Given an energy $E(x)$, extract blanket structure from geometric features (gradients, Hessian). Operates on a single snapshot of the energy landscape. Yields static assignments.
+    \item \textbf{DMBD}: Given time-series observations $\{y_i(t)\}$, infer dynamic blanket assignments and macroscopic laws. Operates on trajectories. Yields time-varying assignments and macroscopic dynamical equations.
+\end{itemize}
+
+When an EBM is trained on sequential data, Topological Blankets can identify the \textit{static} blanket structure (which variables are typically at high-gradient ridges), while DMBD can reveal how blanket assignments \textit{evolve} during trajectories. The two methods can also be composed: Topological Blankets provides a fast initialization of blanket assignments that DMBD can then refine dynamically, and the geometric features (gradient magnitudes, coupling strengths) extracted by Topological Blankets can serve as informative priors on DMBD's observation model. The path-based formulation unifies both: objects are metastable regions with characteristic blanket statistics, identifiable either from energy geometry or path statistics.
+
+\subsection{Example: Flames and Traveling Waves}
+
+The path-based formulation elegantly handles objects that have traditionally seemed problematic for Markov blanket approaches. Consider a flame traveling down a fuse:
+
+\textbf{Static view (problematic)}: If we fix variables to roles, the flame ``boundary'' keeps changing as different material elements ignite. No static blanket exists.
+
+\textbf{Path-based view (natural)}: Define the blanket as the ignition front $y_b(t)$, with constraint that temperature at this point equals ignition temperature:
+\begin{equation}
+\theta_{\text{ig}} = \left\langle \int dy' \, \delta(y' - y_b(t)) \, T(y', t) \right\rangle
+\end{equation}
+
+This yields a Lagrangian with a point heat source at the moving boundary:
+\begin{equation}
+\left( \frac{\partial}{\partial t} - \frac{\partial^2}{\partial y^2} + h \right) T_{\text{MAP}} = \sigma_p^2 \lambda(t) \delta(y - y_b(t))
+\end{equation}
+
+The flame is an object precisely because it maintains characteristic blanket statistics (the temperature profile at the reaction zone) despite material turnover.
+
+\begin{remark}[From Geometry to Paths of the Learned Energy Landscape]
+Once an energy function $E(x)$ is learned, it defines not just a static landscape but a \textit{family of paths} through that landscape via Langevin dynamics:
+\begin{equation}
+dx = -\grad E(x) \, dt + \sqrt{2T} \, dW
+\end{equation}
+The path statistics over these trajectories capture richer structure than static geometric analysis of $E(x)$ alone:
+\begin{itemize}
+    \item \textit{Which} transitions actually occur (not just which are geometrically possible)
+    \item \textit{How fast} mixing happens within vs between regions (residence times, not just barrier heights)
+    \item \textit{Correlations} between variables along trajectories (not just instantaneous couplings)
+    \item \textit{Dynamic} boundaries that move through state space as the system evolves
+\end{itemize}
+
+\textbf{Practical implication}: Given a trained EBM, one can:
+\begin{enumerate}
+    \item Run Langevin sampling to generate trajectory data $\{x(t)\}$
+    \item Compute path statistics: transition rates, committor functions, mean first passage times
+    \item Use these to identify blankets as information flow bottlenecks rather than just geometric ridges
+\end{enumerate}
+Static geometry identifies \textit{potential} blankets; path statistics identify \textit{actual} blankets realized by the induced dynamics.
+\end{remark}
+
+\begin{algorithm}[H]
+\caption{Path-Based Blanket Detection from Learned Energy}
+\label{alg:path-based-blanket}
+\begin{algorithmic}[1]
+\Require Learned energy $E(x; \theta)$, temperature $T$, trajectory length $\tau$, number of trajectories $M$
+\Ensure Blanket indicator $\text{is\_blanket}[i]$, transition rate matrix $K$
+\Statex \textbf{Phase 1: Generate paths through energy landscape}
+\For{$m = 1$ to $M$}
+    \State Initialize $x^{(m)}(0) \sim p_0(x)$
+    \For{$t = 0$ to $\tau$ with step $dt$}
+        \State $x^{(m)}(t + dt) \gets x^{(m)}(t) - \grad E(x^{(m)}(t)) \, dt + \sqrt{2T \, dt} \, \xi$ \Comment{Langevin step}
+    \EndFor
+\EndFor
+\Statex \textbf{Phase 2: Identify metastable regions via clustering}
+\State Cluster trajectory points into regions $\{R_1, \ldots, R_K\}$ \Comment{e.g., by energy level or PCCA+}
+\Statex \textbf{Phase 3: Compute path statistics}
+\For{each pair of regions $(R_a, R_b)$}
+    \State $K_{ab} \gets$ (number of $a \to b$ transitions) / (total time in $R_a$) \Comment{Transition rate}
+    \State $q_{ab}(x) \gets P(\text{reach } R_b \text{ before } R_a \mid x)$ \Comment{Committor function}
+\EndFor
+\Statex \textbf{Phase 4: Identify blankets from path bottlenecks}
+\For{each variable $i$}
+    \State $\text{flux}[i] \gets \E_{x \in \text{transitions}}[|\partial q / \partial x_i|]$ \Comment{Reactive flux through $x_i$}
+\EndFor
+\State $\tau \gets \text{Otsu}(\text{flux})$ \Comment{Threshold for blanket membership}
+\State $\text{is\_blanket}[i] \gets \mathbf{1}[\text{flux}[i] > \tau]$
+\State \Return $\text{is\_blanket}$, $K$
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{Key insight}: This algorithm uses the \textit{dynamics induced by $E(x)$} rather than just the static geometry of $E(x)$. Variables that lie on high-reactive-flux paths between metastable regions are identified as blankets, whether or not they sit on geometric ridges.
+
+\subsection{Phase 1: Geometric Data Collection}
+
+\begin{algorithm}[H]
+\caption{Langevin Sampling for Geometric Data}
+\begin{algorithmic}[1]
+\Require Energy function $E$, parameters $\theta$, samples $N$, steps $T$, step size $\eta$, temperature $T_{\text{temp}}$
+\State Initialize $x \sim p_0(x)$
+\State $\text{trajectories} \gets [], \; \text{gradients} \gets []$
+\For{$i = 1$ to $N \cdot T$}
+    \State $g \gets \grad_x E(x; \theta)$
+    \State $\omega \gets \sqrt{2\eta T_{\text{temp}}} \cdot \mathcal{N}(0, I)$
+    \State $x \gets x - \eta \cdot g + \omega$
+    \If{$i \mod T = 0$}
+        \State Append $x$ to trajectories
+        \State Append $g$ to gradients
+    \EndIf
+\EndFor
+\State \Return trajectories, gradients
+\end{algorithmic}
+\end{algorithm}
+
+
+\subsection{Phase 2: Geometric Feature Computation}
+
+\textbf{Per-variable features}:
+\begin{align}
+\text{grad\_magnitude}[i] &= \E[|g_i|] \\
+\text{grad\_variance}[i] &= \Var[g_i] \\
+H_{\text{est}} &= \Cov(g) \quad \text{(empirical Hessian estimate)} \\
+\text{coupling}[i,j] &= \frac{|H_{\text{est}}[i,j]|}{\sqrt{H_{\text{est}}[i,i] \cdot H_{\text{est}}[j,j]}}
+\end{align}
+
+\begin{algorithm}[H]
+\caption{Compute Geometric Features}
+\label{alg:compute-features}
+\begin{algorithmic}[1]
+\Require Gradient samples $G \in \mathbb{R}^{N \times n}$
+\Ensure Feature dictionary $\mathcal{F}$
+\State $m_i \gets \frac{1}{N}\sum_{t=1}^N |G[t,i]|$ for each $i$ \Comment{Gradient magnitude}
+\State $v_i \gets \Var_t[G[t,i]]$ for each $i$ \Comment{Gradient variance}
+\State $H \gets \Cov(G^\top)$ \Comment{Empirical Hessian estimate}
+\State $D \gets \text{diag}(\sqrt{H_{11}}, \ldots, \sqrt{H_{nn}})$
+\State $C_{ij} \gets |H_{ij}| / (D_{ii} \cdot D_{jj})$ for $i \neq j$, else $0$ \Comment{Normalized coupling}
+\State \Return $\mathcal{F} = (m, v, H, C)$
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Phase 3: Blanket Detection}
+
+\subsubsection{Method A: Gradient Magnitude (Original)}
+
+Use Otsu's method or percentile threshold on gradient magnitude:
+\begin{equation}
+\text{is\_blanket}[i] = \mathbf{1}[\text{grad\_magnitude}[i] > \tau]
+\end{equation}
+
+\begin{algorithm}[H]
+\caption{Otsu's Threshold}
+\label{alg:otsu}
+\begin{algorithmic}[1]
+\Require Scores $s \in \mathbb{R}^n$
+\Ensure Optimal threshold $\tau^*$
+\State Compute histogram $(h, c)$ with $B$ bins \Comment{$h$ = counts, $c$ = centers}
+\State $\tau^* \gets 0$, $\sigma^*_{\text{between}} \gets 0$
+\For{each candidate threshold $\tau = c_k$}
+    \State $w_0 \gets \sum_{j \leq k} h_j / n$ \Comment{Background weight}
+    \State $w_1 \gets 1 - w_0$ \Comment{Foreground weight}
+    \State $\mu_0 \gets \sum_{j \leq k} h_j c_j / (w_0 n)$ \Comment{Background mean}
+    \State $\mu_1 \gets \sum_{j > k} h_j c_j / (w_1 n)$ \Comment{Foreground mean}
+    \State $\sigma^2_{\text{between}} \gets w_0 w_1 (\mu_0 - \mu_1)^2$
+    \If{$\sigma^2_{\text{between}} > \sigma^*_{\text{between}}$}
+        \State $\tau^* \gets \tau$, $\sigma^*_{\text{between}} \gets \sigma^2_{\text{between}}$
+    \EndIf
+\EndFor
+\State \Return $\tau^*$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption{Gradient-Based Blanket Detection}
+\label{alg:blanket-gradient}
+\begin{algorithmic}[1]
+\Require Features $\mathcal{F}$, method $\in \{\text{otsu}, \text{percentile}\}$
+\Ensure Blanket mask $B$, threshold $\tau$
+\State $s_i \gets m_i / \text{median}(m)$ for each $i$ \Comment{Normalized blanket score}
+\If{method = otsu}
+    \State $\tau \gets \text{OtsuThreshold}(s)$
+\Else
+    \State $\tau \gets \text{Percentile}(s, 80)$
+\EndIf
+\State $B \gets \{i : s_i > \tau\}$
+\State \Return $B$, $\tau$
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Method B: Spectral Laplacian (Friston)}
+
+\begin{algorithm}[H]
+\caption{Spectral Blanket Detection (FEP Method)}
+\label{alg:blanket-spectral}
+\begin{algorithmic}[1]
+\Require Features $\mathcal{F}$, partitions $K$, sparsity threshold $\epsilon$
+\Ensure Blanket mask $B$, eigenvalues $\lambda$
+\State $A_{ij} \gets \mathbf{1}[|H_{ij}| > \epsilon]$ for $i \neq j$ \Comment{Adjacency from Hessian}
+\State $D \gets \text{diag}(\sum_j A_{1j}, \ldots, \sum_j A_{nj})$ \Comment{Degree matrix}
+\State $L \gets D - A$ \Comment{Graph Laplacian}
+\State $(\lambda, V) \gets \text{Eigendecompose}(L)$ \Comment{Sorted by $\lambda$}
+\State $E \gets V[:, 1:K+1]$ \Comment{Spectral embedding (skip trivial $\lambda_0$)}
+\State labels $\gets \text{KMeans}(E, K)$
+\For{$c = 0$ to $K-1$}
+    \State $\sigma^2_c \gets \Var(V[\text{labels} = c, 1:4])$ \Comment{Eigenvector variance}
+\EndFor
+\State $c^* \gets \arg\max_c \sigma^2_c$ \Comment{Blanket = highest variance cluster}
+\State $B \gets \{i : \text{labels}_i = c^*\}$
+\State \Return $B$, $\lambda$
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Method C: Hybrid (Recommended)}
+
+\begin{algorithm}[H]
+\caption{Hybrid Blanket Detection (Recommended)}
+\label{alg:blanket-hybrid}
+\begin{algorithmic}[1]
+\Require Features $\mathcal{F}$, eigengap threshold $\gamma$
+\Ensure Blanket mask $B$, method used
+\State $(B_{\text{spectral}}, \lambda) \gets \text{SpectralDetection}(\mathcal{F})$
+\State $\Delta \gets \max_{k \leq 5}(\lambda_{k+1} - \lambda_k)$ \Comment{Largest eigengap}
+\If{$\Delta > \gamma$} \Comment{Clear spectral structure}
+    \State \Return $B_{\text{spectral}}$, ``spectral''
+\Else \Comment{Fall back to gradient method}
+    \State $(B_{\text{grad}}, \tau) \gets \text{GradientDetection}(\mathcal{F})$
+    \State \Return $B_{\text{grad}}$, ``gradient''
+\EndIf
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Phase 4: Object Clustering}
+
+Cluster non-blanket variables by coupling matrix:
+\begin{equation}
+\text{object\_labels} = \text{SpectralClustering}(C_{\text{internal}}, k)
+\end{equation}
+
+\begin{algorithm}[H]
+\caption{Object Clustering}
+\label{alg:cluster-objects}
+\begin{algorithmic}[1]
+\Require Features $\mathcal{F}$, blanket mask $B$, number of clusters $K$ (optional)
+\Ensure Object assignments $\pi: \{1,\ldots,n\} \to \{-1, 0, \ldots, K-1\}$
+\State $I \gets \{1,\ldots,n\} \setminus B$ \Comment{Internal (non-blanket) variables}
+\State $C_I \gets C[I, I]$ \Comment{Coupling submatrix for internal variables}
+\If{$K$ not specified}
+    \State $K \gets \text{EstimateNumClusters}(C_I)$ \Comment{e.g., eigengap heuristic}
+\EndIf
+\State labels $\gets \text{SpectralClustering}(C_I, K)$
+\State $\pi_i \gets -1$ for all $i$ \Comment{Initialize: $-1$ denotes blanket}
+\State $\pi_i \gets \text{labels}_j$ for $i \in I$ \Comment{Assign cluster labels to internals}
+\State \Return $\pi$
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Phase 5: Blanket Assignment}
+
+Assign blanket variables to objects they border:
+\begin{algorithm}[H]
+\caption{Blanket Assignment}
+\label{alg:assign-blankets}
+\begin{algorithmic}[1]
+\Require Features $\mathcal{F}$, object assignments $\pi$, blanket mask $B$, threshold $\epsilon$
+\Ensure Blanket membership $M: B \to 2^{\{0,\ldots,K-1\}}$
+\For{each blanket variable $b \in B$}
+    \State $M[b] \gets \emptyset$
+    \For{each variable $i$ with $\pi_i \geq 0$} \Comment{$i$ is internal to some object}
+        \If{$C_{bi} > \epsilon$}
+            \State $M[b] \gets M[b] \cup \{\pi_i\}$ \Comment{$b$ borders object $\pi_i$}
+        \EndIf
+    \EndFor
+\EndFor
+\State \Return $M$
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Phase 6: Topology Extraction}
+
+Build the graph:
+\begin{algorithm}[H]
+\caption{Topology Extraction}
+\label{alg:extract-topology}
+\begin{algorithmic}[1]
+\Require Object assignments $\pi$, blanket membership $M$
+\Ensure Graph $G = (V, E)$
+\State $V \gets \{0, 1, \ldots, K-1\}$ \Comment{Nodes = objects}
+\State $E \gets \emptyset$
+\For{each blanket variable $b$ with $M[b] = \{o_1, o_2, \ldots\}$}
+    \For{each pair $(o_i, o_j)$ with $o_i < o_j$ in $M[b]$}
+        \State $E \gets E \cup \{(o_i, o_j)\}$ \Comment{Objects sharing blanket are neighbors}
+    \EndFor
+\EndFor
+\State \Return $(V, E)$
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Full Algorithm}
+
+\begin{algorithm}[H]
+\caption{Topological Blankets: Full Algorithm}
+\label{alg:topological-blankets}
+\begin{algorithmic}[1]
+\Require Energy function $E(x; \theta)$, parameters $\theta$, config (samples $N$, steps $T$)
+\Ensure Topology $\mathcal{T} = (\text{objects}, \text{blankets}, \text{graph}, \text{features})$
+\Statex
+\Statex \textbf{Phase 1: Geometric Data Collection}
+\State $(X, G) \gets \text{LangevinSampling}(E, \theta, N, T)$ \Comment{Alg.~\ref{alg:langevin}}
+\Statex
+\Statex \textbf{Phase 2: Feature Computation}
+\State $\mathcal{F} \gets \text{ComputeFeatures}(G)$ \Comment{Alg.~\ref{alg:compute-features}}
+\Statex
+\Statex \textbf{Phase 3: Blanket Detection}
+\State $(B, \text{method}) \gets \text{HybridDetection}(\mathcal{F})$ \Comment{Alg.~\ref{alg:blanket-hybrid}}
+\Statex
+\Statex \textbf{Phase 4: Object Clustering}
+\State $\pi \gets \text{ClusterObjects}(\mathcal{F}, B)$ \Comment{Alg.~\ref{alg:cluster-objects}}
+\Statex
+\Statex \textbf{Phase 5: Blanket Assignment}
+\State $M \gets \text{AssignBlankets}(\mathcal{F}, \pi, B)$ \Comment{Alg.~\ref{alg:assign-blankets}}
+\Statex
+\Statex \textbf{Phase 6: Topology Extraction}
+\State $(V, E) \gets \text{ExtractTopology}(\pi, M)$ \Comment{Alg.~\ref{alg:extract-topology}}
+\Statex
+\State objects $\gets [\{i : \pi_i = k\}$ for $k = 0, \ldots, K-1]$
+\State \Return $\mathcal{T} = (\text{objects}, M, (V,E), \mathcal{F}, B, \text{method})$
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Recursive Hierarchical Detection}
+
+\begin{algorithm}[H]
+\caption{Recursive Blanket Detection (Friston)}
+\begin{algorithmic}[1]
+\Require Hessian $H$, max levels $L$
+\State hierarchy $\gets []$
+\State $H_{\text{current}} \gets H$
+\For{$\ell = 0$ to $L-1$}
+    \State $(A, L) \gets$ BuildLaplacian($H_{\text{current}}$)
+    \State $(\lambda, v) \gets$ Eigendecompose($L$)
+    \State labels $\gets$ Cluster$(v)$
+    \State Identify internal, blanket, external clusters
+    \State Append to hierarchy
+    \State $H_{\text{current}} \gets$ SchurComplement($H_{\text{current}}$, keep=internal$\cup$blanket)
+\EndFor
+\State \Return hierarchy
+\end{algorithmic}
+\end{algorithm}
+
+
+\subsection{Robustness and Failure Modes}
+
+\subsubsection{When It May Fail}
+
+\begin{enumerate}
+    \item \textbf{Rough multi-modal landscapes}: Gradients high everywhere $\to$ everything classified as blanket
+
+    \item \textbf{Flat landscapes}: Gradients uniformly low $\to$ no blankets detected, single merged basin
+
+    \item \textbf{Sampling issues}: Noise swamps signal at high temperatures; insufficient samples for reliable Hessian estimates
+
+    \item \textbf{Threshold sensitivity}: Heavy-tailed gradient distributions; multi-modal histograms defeat Otsu's method
+\end{enumerate}
+
+\subsubsection{Scaling Concerns}
+
+Coupling matrix is $O(n^2)$: for $n = 10^4$ variables $\to$ 800 GB.
+
+\textbf{Mitigations}:
+\begin{itemize}
+    \item Sparse/low-rank Hessian approximations (diagonal + low-rank)
+    \item Subsample variables for coupling estimation
+    \item Work in learned representation spaces, not raw pixels
+\end{itemize}
+
+\subsubsection{Relationship to Spectral Graph Theory}
+
+The Hessian $H$ relates to the graph Laplacian $L$:
+\begin{itemize}
+    \item For undirected graph: $L = D - A$ (degree minus adjacency)
+    \item Hessian plays similar role: encodes variable interactions
+\end{itemize}
+
+\textbf{Connection}:
+\begin{equation}
+H_{ij} \neq 0 \iff \text{edge } (i,j) \text{ in interaction graph}
+\end{equation}
+
+Spectral clustering on $H$ (or derived coupling matrix) is natural.
+
+\subsubsection{Information-Theoretic Interpretation}
+
+\textbf{Claim}: Blankets are minimal sufficient statistics for conditional independence.
+
+If $B$ is blanket for $Z$ (internal) with respect to $S$ (external):
+\begin{equation}
+I(Z; S \given B) = 0
+\end{equation}
+
+\textbf{Gradient connection}:
+\begin{equation}
+\text{High } \|\grad_B E\| \implies B \text{ is ``informative'' about } E \implies B \text{ mediates between } Z \text{ and } S
+\end{equation}
+
+%=============================================================================
+\section{Empirical Validation Strategy}
+\label{sec:validation}
+%=============================================================================
+
+\subsection{Progressive Experiment Levels}
+
+\subsubsection{Level 1: Quadratic EBMs (Easiest)}
+\begin{itemize}
+    \item Analytic gradients/Hessians, exact sampling
+    \item Full control over barrier separation
+    \item Energy: $E(x) = \frac{1}{2} x^T \Theta x$ with block structure
+    \item Test: Recovery as function of blanket\_strength
+\end{itemize}
+
+\subsubsection{Level 2: Mixture-Based EBMs}
+\begin{itemize}
+    \item GMM as EBM: $E(x) = -\log(\sum_k \pi_k \mathcal{N}(x; \mu_k, \Sigma_k))$
+    \item Ground truth: $K$ components = objects
+    \item Test: Does method recover $K$ without being told?
+\end{itemize}
+
+\subsubsection{Level 3: Graphical Models as EBMs}
+\begin{itemize}
+    \item Ising: $E(x) = -\sum J_{ij} x_i x_j - \sum h_i x_i$
+    \item Gaussian graphical model: precision matrix = Hessian
+    \item Compare to NOTEARS, DAGMA, PC algorithm
+\end{itemize}
+
+\subsubsection{Level 4: Real Trained EBMs}
+\begin{itemize}
+    \item Pretrained score-based models on MNIST/CIFAR
+    \item VAE latent spaces as EBMs
+    \item Proxy ground truth from class labels
+\end{itemize}
+
+\subsection{Metrics}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{llll}
+\toprule
+\textbf{Category} & \textbf{Metric} & \textbf{Description} & \textbf{Ideal} \\
+\midrule
+Object Partition & ARI & Adjusted Rand Index vs ground truth & 1.0 \\
+Blanket Detection & F1 & Precision/recall of blanket classification & 1.0 \\
+Induced Graph & SHD & Structural Hamming Distance & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Baselines}
+
+\begin{enumerate}
+    \item Standard structure learning: NOTEARS, DAGMA, PC/GES
+    \item Spectral clustering on raw Hessian
+    \item Random partitioning (lower bound)
+    \item DMBD-style role clustering
+    \item AXIOM-style GMM components
+\end{enumerate}
+
+%=============================================================================
+\section{Summary and Conclusions}
+\label{sec:conclusions}
+%=============================================================================
+
+\subsection{Core Equations Summary}
+
+\begin{tcolorbox}[colback=blue!5,colframe=blue!50!black,title=Key Equations]
+\textbf{Langevin dynamics}:
+$dx = -\Gamma \grad_x E(x) \, dt + \sqrt{2\Gamma T} \, dW$
+
+\textbf{Conditional independence} (Friston):
+$\mu \indep \eta \given b \iff \partial^2 E / \partial \mu_i \partial \eta_j = 0$
+
+\textbf{Blanket criterion} (gradient):
+$x_i \in \text{Blanket} \iff \E[\|\partial E / \partial x_i\|] > \tau$
+
+\textbf{Graph functor}:
+$F(E) = G_E$ where edge $(i,j) \iff \partial^2 E / \partial x_i \partial x_j \neq 0$
+\end{tcolorbox}
+
+\subsection{Positioning Statement}
+
+\begin{quote}
+\textit{Topological Blankets operationalizes the FEP's physics of emergent things in energy-based models, detecting Markov blankets via gradient magnitudes and spectral methods on Hessian estimates. It provides a unifying geometric framework for RGM, AXIOM, and EBM approaches, directly extracting blanket topology from energy landscapes.}
+\end{quote}
+
+\subsection{What We Have}
+
+\begin{enumerate}
+    \item Formal algorithm for extracting topology from EBM geometry
+    \item Multiple detection methods: gradient, spectral, hybrid
+    \item DMBD-style blanket statistics integration
+    \item Recursive hierarchical detection (Friston)
+    \item Rigorous theoretical grounding in FEP
+    \item Empirical validation strategy with progressive levels
+\end{enumerate}
+
+\subsection{Future Directions}
+
+\begin{enumerate}
+    \item Scale to large $n$ via sparse Hessian approximations
+    \item Track topology dynamics during training
+    \item Apply to modern score-based / diffusion models
+    \item Compare with NOTEARS, PC algorithm on same problems
+    \item Extend to causal structure discovery
+    \item \textbf{Full dynamical analysis}: Move beyond static geometry to spectral analysis of the Langevin generator $\mathcal{L}$, using metastable decomposition and transition path theory to identify objects as slow-mixing regions and blankets as reactive flux bottlenecks
+    \item Connect to Markov State Models (MSMs) from computational chemistry, which use similar spectral decomposition to identify metastable states in molecular dynamics
+\end{enumerate}
+
+%=============================================================================
+% References
+%=============================================================================
+
+\bibliographystyle{plainnat}
+
+\begin{thebibliography}{10}
+
+\bibitem[Beck and Ramstead(2025)]{beck2025dmbd}
+J.~Beck and M.~J.~D. Ramstead.
+\newblock Dynamic {M}arkov blanket detection for macroscopic physics discovery.
+\newblock \emph{arXiv:2502.21217}, 2025.
+
+\bibitem[Da~Costa(2024)]{dacosta2024universal}
+L.~Da~Costa.
+\newblock Toward universal and interpretable world models.
+\newblock \emph{Preprint}, 2024.
+
+\bibitem[Friston(2025)]{friston2025fep}
+K.~Friston.
+\newblock \emph{A Free Energy Principle: On the Nature of Things}.
+\newblock Book manuscript, 2025.
+
+\bibitem[Friston et~al.(2025)]{friston2025rgm}
+K.~Friston et~al.
+\newblock From pixels to planning: Scale-free active inference.
+\newblock \emph{Preprint}, 2025.
+
+\bibitem[Heins et~al.(2025)]{heins2025axiom}
+C.~Heins et~al.
+\newblock {AXIOM}: Expandable object-centric architecture for RL.
+\newblock \emph{Preprint}, 2025.
+
+\bibitem[Zheng et~al.(2018)]{zheng2018notears}
+X.~Zheng et~al.
+\newblock {DAGs} with {NO TEARS}.
+\newblock In \emph{NeurIPS}, 2018.
+
+\bibitem[Sch{\"u}tte and Sarich(2013)]{schutte2013metastability}
+C.~Sch{\"u}tte and M.~Sarich.
+\newblock Metastability and {M}arkov state models in molecular dynamics.
+\newblock \emph{Courant Lecture Notes}, 2013.
+
+\bibitem[Jaynes(1980)]{jaynes1980minimum}
+E.~T. Jaynes.
+\newblock The minimum entropy production principle.
+\newblock \emph{Annual Review of Physical Chemistry}, 31:579--601, 1980.
+
+\bibitem[Niven(2010)]{niven2010minimization}
+R.~K. Niven.
+\newblock Minimization of a free-energy-like potential for non-equilibrium flow systems at steady state.
+\newblock \emph{Phil.\ Trans.\ R.\ Soc.\ B}, 365:1323--1331, 2010.
+
+\bibitem[Davis and Gonz{\'a}lez(2015)]{davis2015hamiltonian}
+S.~Davis and D.~Gonz{\'a}lez.
+\newblock Hamiltonian formalism and path entropy maximization.
+\newblock \emph{J.\ Phys.\ A: Math.\ Theor.}, 48:425003, 2015.
+
+\end{thebibliography}
+
+\end{document}
+
