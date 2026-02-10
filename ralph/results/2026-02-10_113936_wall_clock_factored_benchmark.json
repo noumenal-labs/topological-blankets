@@ -1,0 +1,201 @@
+{
+  "timestamp": "2026-02-10T11:39:36.035557",
+  "experiment_name": "wall_clock_factored_benchmark",
+  "config": {
+    "dimensions": [
+      8,
+      64,
+      128,
+      256,
+      512,
+      1024
+    ],
+    "n_iterations": 1000,
+    "n_objects": 3,
+    "blanket_fraction": 0.15
+  },
+  "metrics": {
+    "cpu_results": {
+      "8": {
+        "mono_mean": 4.226899589411914e-06,
+        "mono_std": 1.0907500637360744e-05,
+        "mono_median": 3.700028173625469e-06,
+        "fact_mean": 0.00044090910034719856,
+        "fact_std": 0.0005064045624125056,
+        "fact_median": 0.00027959997532889247,
+        "actual_speedup": 0.009586782368709098,
+        "theoretical_speedup": 2.0,
+        "max_error": 0.03374436773459277,
+        "partition": {
+          "n_objects": 3,
+          "object_sizes": [
+            3,
+            2,
+            2
+          ],
+          "n_blanket": 1
+        },
+        "theory": {
+          "monolithic_flops": 64.0,
+          "factored_flops": 32.0,
+          "theoretical_speedup": 2.0,
+          "intra_cost": 17.0,
+          "blanket_self_cost": 1.0,
+          "cross_cost": 14.0
+        }
+      },
+      "64": {
+        "mono_mean": 7.4125003302469845e-06,
+        "mono_std": 3.131026399153361e-05,
+        "mono_median": 4.700035788118839e-06,
+        "fact_mean": 0.0004072058997116983,
+        "fact_std": 0.0004300413739227733,
+        "fact_median": 0.00022289995104074478,
+        "actual_speedup": 0.018203322534116113,
+        "theoretical_speedup": 1.903345724907063,
+        "max_error": 0.13372954241963364,
+        "partition": {
+          "n_objects": 3,
+          "object_sizes": [
+            18,
+            18,
+            18
+          ],
+          "n_blanket": 10
+        },
+        "theory": {
+          "monolithic_flops": 4096.0,
+          "factored_flops": 2152.0,
+          "theoretical_speedup": 1.903345724907063,
+          "intra_cost": 972.0,
+          "blanket_self_cost": 100.0,
+          "cross_cost": 1080.0
+        }
+      },
+      "128": {
+        "mono_mean": 2.3401101236231626e-05,
+        "mono_std": 8.966020165614108e-05,
+        "mono_median": 8.100061677396297e-06,
+        "fact_mean": 0.0005332443000515923,
+        "fact_std": 0.0004948324766530667,
+        "fact_median": 0.00029779999749735,
+        "actual_speedup": 0.04388439076417231,
+        "theoretical_speedup": 1.9357277882797732,
+        "max_error": 0.2428749713650853,
+        "partition": {
+          "n_objects": 3,
+          "object_sizes": [
+            37,
+            36,
+            36
+          ],
+          "n_blanket": 19
+        },
+        "theory": {
+          "monolithic_flops": 16384.0,
+          "factored_flops": 8464.0,
+          "theoretical_speedup": 1.9357277882797732,
+          "intra_cost": 3961.0,
+          "blanket_self_cost": 361.0,
+          "cross_cost": 4142.0
+        }
+      },
+      "256": {
+        "mono_mean": 4.591569991316646e-05,
+        "mono_std": 0.00010746958977537948,
+        "mono_median": 2.4900014977902174e-05,
+        "fact_mean": 0.0006330412997631356,
+        "fact_std": 0.0005990630809735262,
+        "fact_median": 0.0004668000037781894,
+        "actual_speedup": 0.07253191842356366,
+        "theoretical_speedup": 1.9358421456844095,
+        "max_error": 0.43944206477371606,
+        "partition": {
+          "n_objects": 3,
+          "object_sizes": [
+            73,
+            73,
+            72
+          ],
+          "n_blanket": 38
+        },
+        "theory": {
+          "monolithic_flops": 65536.0,
+          "factored_flops": 33854.0,
+          "theoretical_speedup": 1.9358421456844095,
+          "intra_cost": 15842.0,
+          "blanket_self_cost": 1444.0,
+          "cross_cost": 16568.0
+        }
+      },
+      "512": {
+        "mono_mean": 0.00010551270027644932,
+        "mono_std": 7.406482298076207e-05,
+        "mono_median": 9.26000066101551e-05,
+        "fact_mean": 0.0015965881010051816,
+        "fact_std": 0.0010448503832022871,
+        "fact_median": 0.0014084000140428543,
+        "actual_speedup": 0.06608636266925735,
+        "theoretical_speedup": 1.9276144535788344,
+        "max_error": 0.5868789595062197,
+        "partition": {
+          "n_objects": 3,
+          "object_sizes": [
+            145,
+            145,
+            145
+          ],
+          "n_blanket": 77
+        },
+        "theory": {
+          "monolithic_flops": 262144.0,
+          "factored_flops": 135994.0,
+          "theoretical_speedup": 1.9276144535788344,
+          "intra_cost": 63075.0,
+          "blanket_self_cost": 5929.0,
+          "cross_cost": 66990.0
+        }
+      },
+      "1024": {
+        "mono_mean": 0.000600891099893488,
+        "mono_std": 0.00035125550621158114,
+        "mono_median": 0.0004947999259456992,
+        "fact_mean": 0.010997342499205842,
+        "fact_std": 0.0028638661619130507,
+        "fact_median": 0.010763350001070648,
+        "actual_speedup": 0.05463966407674223,
+        "theoretical_speedup": 1.9276144535788344,
+        "max_error": 0.9170608635996391,
+        "partition": {
+          "n_objects": 3,
+          "object_sizes": [
+            290,
+            290,
+            290
+          ],
+          "n_blanket": 154
+        },
+        "theory": {
+          "monolithic_flops": 1048576.0,
+          "factored_flops": 543976.0,
+          "theoretical_speedup": 1.9276144535788344,
+          "intra_cost": 252300.0,
+          "blanket_self_cost": 23716.0,
+          "cross_cost": 267960.0
+        }
+      }
+    },
+    "gpu_results": null,
+    "crossover_dimension": null,
+    "realtime_feasibility": {
+      "target_ms": 10.0,
+      "factored_mean_ms": 0.6330412997631356,
+      "factored_p99_ms": 3.259916023816913,
+      "monolithic_mean_ms": 0.04591569991316646,
+      "feasible_mean": true,
+      "feasible_p99": true,
+      "headroom_factor": 15.79675765821549
+    }
+  },
+  "notes": "US-053: Wall-clock benchmark comparing factored vs monolithic forward pass across dimensions. Factored pass uses TB partition structure to decompose the full n x n multiply into k smaller intra-object blocks plus blanket coupling terms."
+}

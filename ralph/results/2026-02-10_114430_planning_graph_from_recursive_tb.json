@@ -1,0 +1,325 @@
+{
+  "timestamp": "2026-02-10T11:44:30.368379",
+  "experiment_name": "planning_graph_from_recursive_tb",
+  "config": {
+    "n_samples": 5000,
+    "coupling_strength": 0.25,
+    "noise_scale": 0.02,
+    "max_levels": 3,
+    "method": "coupling (with hybrid fallback)",
+    "n_objects": 2,
+    "state_labels": [
+      "x",
+      "y",
+      "vx",
+      "vy",
+      "theta",
+      "omega",
+      "contact_L",
+      "contact_R"
+    ],
+    "gt_obj0": [
+      1,
+      3,
+      6,
+      7
+    ],
+    "gt_obj1": [
+      0,
+      2,
+      4
+    ],
+    "gt_blanket": [
+      5
+    ]
+  },
+  "metrics": {
+    "recursive_decomposition": {
+      "n_levels": 3,
+      "vars_per_level": [
+        8,
+        7,
+        6
+      ],
+      "eigengaps": [
+        4.381966011250095,
+        3.999999999999994,
+        3.9999999999999982
+      ],
+      "hierarchy_details": [
+        {
+          "level": 0,
+          "n_vars": 8,
+          "internals": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "blanket": [
+            0
+          ],
+          "external": [],
+          "eigengap": 4.381966011250095
+        },
+        {
+          "level": 1,
+          "n_vars": 7,
+          "internals": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            7
+          ],
+          "blanket": [
+            6
+          ],
+          "external": [],
+          "eigengap": 3.999999999999994
+        },
+        {
+          "level": 2,
+          "n_vars": 6,
+          "internals": [
+            1,
+            3,
+            4,
+            5,
+            7
+          ],
+          "blanket": [
+            2
+          ],
+          "external": [],
+          "eigengap": 3.9999999999999982
+        }
+      ]
+    },
+    "flat_decomposition": {
+      "n_objects": 2,
+      "n_blanket_vars": 1,
+      "object_dims": {
+        "object_0": 4,
+        "object_1": 3
+      },
+      "blanket_indices": [
+        5
+      ],
+      "assignment": [
+        1,
+        0,
+        1,
+        0,
+        1,
+        -1,
+        0,
+        0
+      ]
+    },
+    "dimensionality_reduction": {
+      "full_dim": 8,
+      "max_sub_dim": 4,
+      "reduction_ratio": 2.0,
+      "factored_dims": [
+        4,
+        3,
+        1
+      ],
+      "factored_sum": 8
+    },
+    "coupling_analysis": {
+      "blanket_coupling_mean": 0.10416843339626143,
+      "blanket_coupling_max": 0.2171502456360601,
+      "within_object_coupling_mean": 0.8125286457017954,
+      "cross_object_coupling_mean": 0.03481325944227832,
+      "separation_ratio": 23.339631471422496
+    },
+    "ground_truth_agreement": {
+      "blanket_precision": 1.0,
+      "blanket_recall": 1.0,
+      "detected_blanket_vars": [
+        5
+      ],
+      "gt_blanket_vars": [
+        5
+      ]
+    },
+    "planning_scenario": {
+      "goal": "Land safely at the pad center",
+      "goal_decomposition": {
+        "sub_goal_0": {
+          "subsystem": "Object 0 (vertical/landing)",
+          "variables": [
+            "y",
+            "vy",
+            "contact_L",
+            "contact_R"
+          ],
+          "target": "y -> 0 (ground), vy -> 0 (soft), contacts -> 1 (both legs)",
+          "actions": "Fire main thruster to control descent rate"
+        },
+        "sub_goal_1": {
+          "subsystem": "Object 1 (lateral/orient)",
+          "variables": [
+            "x",
+            "vx",
+            "theta"
+          ],
+          "target": "x -> 0 (center), vx -> 0 (stopped), theta -> 0 (upright)",
+          "actions": "Fire side thrusters to correct drift and orientation"
+        },
+        "blanket_coordination": {
+          "subsystem": "Blanket (coupling)",
+          "variable": "omega",
+          "target": "omega -> 0 (no angular velocity)",
+          "role": "omega mediates between lateral control and vertical stability. The planner must ensure omega is near zero before final descent, because nonzero omega couples angular momentum into vertical dynamics."
+        }
+      },
+      "abstract_plan": [
+        "Phase 1 (high altitude): Focus on Object 1 sub-goal. Correct lateral drift (x, vx) and orientation (theta).",
+        "Phase 2 (blanket transition): Drive omega toward zero via side thrusters. This decouples the two subsystems.",
+        "Phase 3 (low altitude): Focus on Object 0 sub-goal. Control descent rate (vy), achieve soft landing (contacts).",
+        "Phase 4 (terminal): Verify both contacts. Mission complete."
+      ],
+      "dimensionality_benefit": {
+        "full_state_dim": 8,
+        "obj0_dim": 4,
+        "obj1_dim": 3,
+        "blanket_dim": 1,
+        "max_subproblem_dim": 4,
+        "reduction_ratio": 2.0,
+        "explanation": "Instead of planning in a single 8D continuous space, the planner operates in at most 4D at a time. The blanket variable provides a 1D \"switch\" that controls which subsystem the planner is actively engaging."
+      }
+    },
+    "goal_type_analysis": {
+      "highly_beneficial": {
+        "sequential_goals": "Goals that can be decomposed into sequential phases acting on different subsystems (e.g., \"first align, then descend\"). The blanket variable is the natural handoff point.",
+        "factored_goals": "Goals where success criteria decompose cleanly along the partition boundary (e.g., \"land upright and centered\"). Each criterion maps to exactly one subsystem.",
+        "safety_constrained": "Goals with safety constraints on one subsystem while optimizing another (e.g., \"minimize fuel while staying below max angular velocity\"). The blanket variable is the natural constraint boundary."
+      },
+      "moderately_beneficial": {
+        "coupled_dynamics": "Goals requiring simultaneous control of both subsystems (e.g., \"maintain hover at a specific position\"). The factored representation still helps, but the blanket variable must be actively monitored."
+      },
+      "minimally_beneficial": {
+        "single_subsystem": "Goals that involve only one subsystem (e.g., \"reach height y=10\"). The abstraction adds no benefit because the problem is already low-dimensional.",
+        "adversarial_coupling": "Goals where the blanket variable is actively driven to extreme values (e.g., \"spin as fast as possible\"). These goals break the assumption that the blanket is a stable mediator."
+      }
+    },
+    "planning_graph": {
+      "n_nodes": 6,
+      "n_edges": 8,
+      "node_ids": [
+        "L0_internal",
+        "L0_blanket",
+        "L1_internal",
+        "L1_blanket",
+        "L2_internal",
+        "L2_blanket"
+      ],
+      "node_details": {
+        "L0_internal": {
+          "level": 0,
+          "role": "internal",
+          "variables": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "labels": [
+            "y",
+            "vx",
+            "vy",
+            "theta",
+            "omega",
+            "contact_L",
+            "contact_R"
+          ],
+          "dim": 7
+        },
+        "L0_blanket": {
+          "level": 0,
+          "role": "blanket",
+          "variables": [
+            0
+          ],
+          "labels": [
+            "x"
+          ],
+          "dim": 1
+        },
+        "L1_internal": {
+          "level": 1,
+          "role": "internal",
+          "variables": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            7
+          ],
+          "labels": [
+            "y",
+            "vx",
+            "vy",
+            "theta",
+            "omega",
+            "contact_R"
+          ],
+          "dim": 6
+        },
+        "L1_blanket": {
+          "level": 1,
+          "role": "blanket",
+          "variables": [
+            6
+          ],
+          "labels": [
+            "contact_L"
+          ],
+          "dim": 1
+        },
+        "L2_internal": {
+          "level": 2,
+          "role": "internal",
+          "variables": [
+            1,
+            3,
+            4,
+            5,
+            7
+          ],
+          "labels": [
+            "y",
+            "vy",
+            "theta",
+            "omega",
+            "contact_R"
+          ],
+          "dim": 5
+        },
+        "L2_blanket": {
+          "level": 2,
+          "role": "blanket",
+          "variables": [
+            2
+          ],
+          "labels": [
+            "vx"
+          ],
+          "dim": 1
+        }
+      }
+    }
+  },
+  "notes": "US-058: Planning graph from recursive TB decomposition of LunarLander 8D state space. Shows hierarchical planning graph, abstract state projections, dimensionality reduction, and a concrete \"land safely\" planning scenario."
+}

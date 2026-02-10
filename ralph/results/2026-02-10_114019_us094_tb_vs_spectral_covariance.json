@@ -1,0 +1,873 @@
+{
+  "timestamp": "2026-02-10T11:40:19.943527",
+  "experiment_name": "us094_tb_vs_spectral_covariance",
+  "config": {
+    "n_seeds": 3,
+    "methods": [
+      "TB_hybrid",
+      "Spectral_Cov"
+    ],
+    "datasets": [
+      "quadratic_ebm_8d",
+      "quadratic_ebm_50d",
+      "lunarlander_8d",
+      "fetchpush_25d",
+      "ising_6x6"
+    ]
+  },
+  "metrics": {
+    "raw": {
+      "TB_hybrid|quadratic_ebm_8d": [
+        {
+          "ARI": 1.0,
+          "blanket_F1": 0.8,
+          "NMI": 0.786013103263073,
+          "wall_clock_seconds": 5.300104700028896,
+          "peak_memory_mb": 0.7762222290039062,
+          "seed": 0
+        },
+        {
+          "ARI": 1.0,
+          "blanket_F1": 1.0,
+          "NMI": 1.0,
+          "wall_clock_seconds": 0.774496000027284,
+          "peak_memory_mb": 0.2747173309326172,
+          "seed": 1
+        },
+        {
+          "ARI": 0.7058823529411765,
+          "blanket_F1": 0.0,
+          "NMI": 0.786013103263073,
+          "wall_clock_seconds": 0.7629004999762401,
+          "peak_memory_mb": 0.27470970153808594,
+          "seed": 2
+        }
+      ],
+      "Spectral_Cov|quadratic_ebm_8d": [
+        {
+          "ARI": 0.11764705882352941,
+          "blanket_F1": 0.0,
+          "NMI": 0.7358200241578853,
+          "wall_clock_seconds": 0.2572632000083104,
+          "peak_memory_mb": 0.2700653076171875,
+          "seed": 0
+        },
+        {
+          "ARI": 0.7058823529411765,
+          "blanket_F1": 0.0,
+          "NMI": 0.9119400080526284,
+          "wall_clock_seconds": 0.4744770999532193,
+          "peak_memory_mb": 0.2700653076171875,
+          "seed": 1
+        },
+        {
+          "ARI": 1.0,
+          "blanket_F1": 0.0,
+          "NMI": 1.0,
+          "wall_clock_seconds": 0.09489479998592287,
+          "peak_memory_mb": 0.2700653076171875,
+          "seed": 2
+        }
+      ],
+      "TB_hybrid|quadratic_ebm_50d": [
+        {
+          "ARI": 0.03772241992882562,
+          "blanket_F1": 0.0,
+          "NMI": 0.3230152802821364,
+          "wall_clock_seconds": 0.20313989999704063,
+          "peak_memory_mb": 2.051450729370117,
+          "seed": 0
+        },
+        {
+          "ARI": 0.19310344827586207,
+          "blanket_F1": 1.0,
+          "NMI": 0.6700130387970169,
+          "wall_clock_seconds": 0.18475839996244758,
+          "peak_memory_mb": 2.0709848403930664,
+          "seed": 1
+        },
+        {
+          "ARI": 0.19310344827586207,
+          "blanket_F1": 1.0,
+          "NMI": 0.6700130387970169,
+          "wall_clock_seconds": 0.4152248000027612,
+          "peak_memory_mb": 2.0707578659057617,
+          "seed": 2
+        }
+      ],
+      "Spectral_Cov|quadratic_ebm_50d": [
+        {
+          "ARI": 0.11702309666381523,
+          "blanket_F1": 0.14285714285714285,
+          "NMI": 0.532203060863457,
+          "wall_clock_seconds": 0.1716818999266252,
+          "peak_memory_mb": 1.9714279174804688,
+          "seed": 0
+        },
+        {
+          "ARI": -0.017191639682072418,
+          "blanket_F1": 0.17391304347826086,
+          "NMI": 0.2965645011162871,
+          "wall_clock_seconds": 0.3385503999888897,
+          "peak_memory_mb": 1.9714279174804688,
+          "seed": 1
+        },
+        {
+          "ARI": 0.01036208419193406,
+          "blanket_F1": 0.17391304347826086,
+          "NMI": 0.3367704169249304,
+          "wall_clock_seconds": 0.4052978999679908,
+          "peak_memory_mb": 1.9714279174804688,
+          "seed": 2
+        }
+      ],
+      "TB_hybrid|lunarlander_8d": [
+        {
+          "ARI": 0.4444444444444444,
+          "blanket_F1": 0.6666666666666666,
+          "NMI": 0.6358654960676691,
+          "wall_clock_seconds": 0.506485200021416,
+          "peak_memory_mb": 0.19020652770996094,
+          "seed": 0
+        },
+        {
+          "ARI": 0.4444444444444444,
+          "blanket_F1": 0.6666666666666666,
+          "NMI": 0.6786620902057692,
+          "wall_clock_seconds": 0.385883399983868,
+          "peak_memory_mb": 0.19019126892089844,
+          "seed": 1
+        },
+        {
+          "ARI": 1.0,
+          "blanket_F1": 0.0,
+          "NMI": 0.8571428571428573,
+          "wall_clock_seconds": 0.47319980000611395,
+          "peak_memory_mb": 0.1901836395263672,
+          "seed": 2
+        }
+      ],
+      "Spectral_Cov|lunarlander_8d": [
+        {
+          "ARI": 0.7619047619047619,
+          "blanket_F1": 0.0,
+          "NMI": 0.9411764705882353,
+          "wall_clock_seconds": 0.1497211999958381,
+          "peak_memory_mb": 0.18614959716796875,
+          "seed": 0
+        },
+        {
+          "ARI": 1.0,
+          "blanket_F1": 0.0,
+          "NMI": 1.0,
+          "wall_clock_seconds": 0.14678150007966906,
+          "peak_memory_mb": 0.18614959716796875,
+          "seed": 1
+        },
+        {
+          "ARI": 1.0,
+          "blanket_F1": 0.0,
+          "NMI": 1.0,
+          "wall_clock_seconds": 0.3240739000029862,
+          "peak_memory_mb": 0.18614959716796875,
+          "seed": 2
+        }
+      ],
+      "TB_hybrid|fetchpush_25d": [
+        {
+          "ARI": 0.62,
+          "blanket_F1": 0.8888888888888888,
+          "NMI": 0.6366587740093792,
+          "wall_clock_seconds": 0.5341720000142232,
+          "peak_memory_mb": 0.4673442840576172,
+          "seed": 0
+        },
+        {
+          "ARI": 0.46434494195688225,
+          "blanket_F1": 0.8888888888888888,
+          "NMI": 0.6208321952972298,
+          "wall_clock_seconds": 0.6575290000764653,
+          "peak_memory_mb": 0.46733665466308594,
+          "seed": 1
+        },
+        {
+          "ARI": 0.3303964757709251,
+          "blanket_F1": 1.0,
+          "NMI": 0.7043877260104356,
+          "wall_clock_seconds": 0.6890767000149935,
+          "peak_memory_mb": 0.4673290252685547,
+          "seed": 2
+        }
+      ],
+      "Spectral_Cov|fetchpush_25d": [
+        {
+          "ARI": 0.09523809523809523,
+          "blanket_F1": 0.0,
+          "NMI": 0.47992543196181414,
+          "wall_clock_seconds": 0.24907559994608164,
+          "peak_memory_mb": 0.44554901123046875,
+          "seed": 0
+        },
+        {
+          "ARI": -0.017306652244456464,
+          "blanket_F1": 0.0,
+          "NMI": 0.5369720168833021,
+          "wall_clock_seconds": 0.43896589998621494,
+          "peak_memory_mb": 0.44554901123046875,
+          "seed": 1
+        },
+        {
+          "ARI": -0.046255506607929514,
+          "blanket_F1": 0.0,
+          "NMI": 0.4896271898510971,
+          "wall_clock_seconds": 0.3161134999245405,
+          "peak_memory_mb": 0.44554901123046875,
+          "seed": 2
+        }
+      ],
+      "TB_hybrid|ising_6x6": [
+        {
+          "ARI": 0.0,
+          "blanket_F1": 0.0,
+          "NMI": 0.0,
+          "wall_clock_seconds": 0.1585801999317482,
+          "peak_memory_mb": 0.3265361785888672,
+          "seed": 0
+        },
+        {
+          "ARI": 0.0,
+          "blanket_F1": 0.0,
+          "NMI": 0.0,
+          "wall_clock_seconds": 0.3433260000310838,
+          "peak_memory_mb": 0.32652854919433594,
+          "seed": 1
+        },
+        {
+          "ARI": 0.0,
+          "blanket_F1": 0.0,
+          "NMI": 0.0,
+          "wall_clock_seconds": 0.4845695999683812,
+          "peak_memory_mb": 0.3265209197998047,
+          "seed": 2
+        }
+      ],
+      "Spectral_Cov|ising_6x6": [
+        {
+          "ARI": 0.0,
+          "blanket_F1": 0.0,
+          "NMI": 0.0,
+          "wall_clock_seconds": 0.2729962000157684,
+          "peak_memory_mb": 0.28386688232421875,
+          "seed": 0
+        },
+        {
+          "ARI": 0.0,
+          "blanket_F1": 0.0,
+          "NMI": 0.0,
+          "wall_clock_seconds": 0.20366950007155538,
+          "peak_memory_mb": 0.28386688232421875,
+          "seed": 1
+        },
+        {
+          "ARI": 0.0,
+          "blanket_F1": 0.0,
+          "NMI": 0.0,
+          "wall_clock_seconds": 0.28957120003178716,
+          "peak_memory_mb": 0.28386688232421875,
+          "seed": 2
+        }
+      ]
+    },
+    "summary": {
+      "TB_hybrid|quadratic_ebm_8d": {
+        "method": "TB_hybrid",
+        "dataset": "quadratic_ebm_8d",
+        "n_seeds": 3,
+        "ARI_mean": 0.9019607843137255,
+        "ARI_std": 0.13864838846795047,
+        "ARI_values": [
+          1.0,
+          1.0,
+          0.7058823529411765
+        ],
+        "blanket_F1_mean": 0.6,
+        "blanket_F1_std": 0.43204937989385733,
+        "blanket_F1_values": [
+          0.8,
+          1.0,
+          0.0
+        ],
+        "NMI_mean": 0.8573420688420487,
+        "NMI_std": 0.10087439051183103,
+        "NMI_values": [
+          0.786013103263073,
+          1.0,
+          0.786013103263073
+        ],
+        "wall_clock_seconds_mean": 2.2791670666774735,
+        "wall_clock_seconds_std": 2.136130731385532,
+        "wall_clock_seconds_values": [
+          5.300104700028896,
+          0.774496000027284,
+          0.7629004999762401
+        ],
+        "peak_memory_mb_mean": 0.4418830871582031,
+        "peak_memory_mb_std": 0.23641347443570526,
+        "peak_memory_mb_values": [
+          0.7762222290039062,
+          0.2747173309326172,
+          0.27470970153808594
+        ]
+      },
+      "Spectral_Cov|quadratic_ebm_8d": {
+        "method": "Spectral_Cov",
+        "dataset": "quadratic_ebm_8d",
+        "n_seeds": 3,
+        "ARI_mean": 0.607843137254902,
+        "ARI_std": 0.36682915556607265,
+        "ARI_values": [
+          0.11764705882352941,
+          0.7058823529411765,
+          1.0
+        ],
+        "blanket_F1_mean": 0.0,
+        "blanket_F1_std": 0.0,
+        "blanket_F1_values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "NMI_mean": 0.8825866774035046,
+        "NMI_std": 0.10983010644971222,
+        "NMI_values": [
+          0.7358200241578853,
+          0.9119400080526284,
+          1.0
+        ],
+        "wall_clock_seconds_mean": 0.27554503331581753,
+        "wall_clock_seconds_std": 0.1555020893405793,
+        "wall_clock_seconds_values": [
+          0.2572632000083104,
+          0.4744770999532193,
+          0.09489479998592287
+        ],
+        "peak_memory_mb_mean": 0.2700653076171875,
+        "peak_memory_mb_std": 0.0,
+        "peak_memory_mb_values": [
+          0.2700653076171875,
+          0.2700653076171875,
+          0.2700653076171875
+        ]
+      },
+      "TB_hybrid|quadratic_ebm_50d": {
+        "method": "TB_hybrid",
+        "dataset": "quadratic_ebm_50d",
+        "n_seeds": 3,
+        "ARI_mean": 0.14130977216018326,
+        "ARI_std": 0.07324731920795242,
+        "ARI_values": [
+          0.03772241992882562,
+          0.19310344827586207,
+          0.19310344827586207
+        ],
+        "blanket_F1_mean": 0.6666666666666666,
+        "blanket_F1_std": 0.4714045207910317,
+        "blanket_F1_values": [
+          0.0,
+          1.0,
+          1.0
+        ],
+        "NMI_mean": 0.5543471192920567,
+        "NMI_std": 0.1635763120682694,
+        "NMI_values": [
+          0.3230152802821364,
+          0.6700130387970169,
+          0.6700130387970169
+        ],
+        "wall_clock_seconds_mean": 0.26770769998741645,
+        "wall_clock_seconds_std": 0.10457992472612625,
+        "wall_clock_seconds_values": [
+          0.20313989999704063,
+          0.18475839996244758,
+          0.4152248000027612
+        ],
+        "peak_memory_mb_mean": 2.0643978118896484,
+        "peak_memory_mb_std": 0.009155438772668974,
+        "peak_memory_mb_values": [
+          2.051450729370117,
+          2.0709848403930664,
+          2.0707578659057617
+        ]
+      },
+      "Spectral_Cov|quadratic_ebm_50d": {
+        "method": "Spectral_Cov",
+        "dataset": "quadratic_ebm_50d",
+        "n_seeds": 3,
+        "ARI_mean": 0.036731180391225624,
+        "ARI_std": 0.057878584346167584,
+        "ARI_values": [
+          0.11702309666381523,
+          -0.017191639682072418,
+          0.01036208419193406
+        ],
+        "blanket_F1_mean": 0.16356107660455485,
+        "blanket_F1_std": 0.014639891950032041,
+        "blanket_F1_values": [
+          0.14285714285714285,
+          0.17391304347826086,
+          0.17391304347826086
+        ],
+        "NMI_mean": 0.3885126596348915,
+        "NMI_std": 0.10292174201927252,
+        "NMI_values": [
+          0.532203060863457,
+          0.2965645011162871,
+          0.3367704169249304
+        ],
+        "wall_clock_seconds_mean": 0.3051767332945019,
+        "wall_clock_seconds_std": 0.0982495465309396,
+        "wall_clock_seconds_values": [
+          0.1716818999266252,
+          0.3385503999888897,
+          0.4052978999679908
+        ],
+        "peak_memory_mb_mean": 1.9714279174804688,
+        "peak_memory_mb_std": 0.0,
+        "peak_memory_mb_values": [
+          1.9714279174804688,
+          1.9714279174804688,
+          1.9714279174804688
+        ]
+      },
+      "TB_hybrid|lunarlander_8d": {
+        "method": "TB_hybrid",
+        "dataset": "lunarlander_8d",
+        "n_seeds": 3,
+        "ARI_mean": 0.6296296296296297,
+        "ARI_std": 0.2618914004394621,
+        "ARI_values": [
+          0.4444444444444444,
+          0.4444444444444444,
+          1.0
+        ],
+        "blanket_F1_mean": 0.4444444444444444,
+        "blanket_F1_std": 0.31426968052735443,
+        "blanket_F1_values": [
+          0.6666666666666666,
+          0.6666666666666666,
+          0.0
+        ],
+        "NMI_mean": 0.7238901478054318,
+        "NMI_std": 0.09583005974737646,
+        "NMI_values": [
+          0.6358654960676691,
+          0.6786620902057692,
+          0.8571428571428573
+        ],
+        "wall_clock_seconds_mean": 0.45518946667046595,
+        "wall_clock_seconds_std": 0.050855859205012226,
+        "wall_clock_seconds_values": [
+          0.506485200021416,
+          0.385883399983868,
+          0.47319980000611395
+        ],
+        "peak_memory_mb_mean": 0.19019381205240884,
+        "peak_memory_mb_std": 9.51552680148809e-06,
+        "peak_memory_mb_values": [
+          0.19020652770996094,
+          0.19019126892089844,
+          0.1901836395263672
+        ]
+      },
+      "Spectral_Cov|lunarlander_8d": {
+        "method": "Spectral_Cov",
+        "dataset": "lunarlander_8d",
+        "n_seeds": 3,
+        "ARI_mean": 0.9206349206349206,
+        "ARI_std": 0.11223917161691233,
+        "ARI_values": [
+          0.7619047619047619,
+          1.0,
+          1.0
+        ],
+        "blanket_F1_mean": 0.0,
+        "blanket_F1_std": 0.0,
+        "blanket_F1_values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "NMI_mean": 0.9803921568627452,
+        "NMI_std": 0.027729677693590107,
+        "NMI_values": [
+          0.9411764705882353,
+          1.0,
+          1.0
+        ],
+        "wall_clock_seconds_mean": 0.20685886669283113,
+        "wall_clock_seconds_std": 0.08289223318793647,
+        "wall_clock_seconds_values": [
+          0.1497211999958381,
+          0.14678150007966906,
+          0.3240739000029862
+        ],
+        "peak_memory_mb_mean": 0.18614959716796875,
+        "peak_memory_mb_std": 0.0,
+        "peak_memory_mb_values": [
+          0.18614959716796875,
+          0.18614959716796875,
+          0.18614959716796875
+        ]
+      },
+      "TB_hybrid|fetchpush_25d": {
+        "method": "TB_hybrid",
+        "dataset": "fetchpush_25d",
+        "n_seeds": 3,
+        "ARI_mean": 0.47158047257593577,
+        "ARI_std": 0.11834079316104974,
+        "ARI_values": [
+          0.62,
+          0.46434494195688225,
+          0.3303964757709251
+        ],
+        "blanket_F1_mean": 0.9259259259259259,
+        "blanket_F1_std": 0.05237828008789243,
+        "blanket_F1_values": [
+          0.8888888888888888,
+          0.8888888888888888,
+          1.0
+        ],
+        "NMI_mean": 0.6539595651056815,
+        "NMI_std": 0.03623874268983214,
+        "NMI_values": [
+          0.6366587740093792,
+          0.6208321952972298,
+          0.7043877260104356
+        ],
+        "wall_clock_seconds_mean": 0.6269259000352273,
+        "wall_clock_seconds_std": 0.06683950338775557,
+        "wall_clock_seconds_values": [
+          0.5341720000142232,
+          0.6575290000764653,
+          0.6890767000149935
+        ],
+        "peak_memory_mb_mean": 0.46733665466308594,
+        "peak_memory_mb_std": 6.229374549314316e-06,
+        "peak_memory_mb_values": [
+          0.4673442840576172,
+          0.46733665466308594,
+          0.4673290252685547
+        ]
+      },
+      "Spectral_Cov|fetchpush_25d": {
+        "method": "Spectral_Cov",
+        "dataset": "fetchpush_25d",
+        "n_seeds": 3,
+        "ARI_mean": 0.010558645461903085,
+        "ARI_std": 0.061032592129333534,
+        "ARI_values": [
+          0.09523809523809523,
+          -0.017306652244456464,
+          -0.046255506607929514
+        ],
+        "blanket_F1_mean": 0.0,
+        "blanket_F1_std": 0.0,
+        "blanket_F1_values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "NMI_mean": 0.5021748795654045,
+        "NMI_std": 0.02492203309892721,
+        "NMI_values": [
+          0.47992543196181414,
+          0.5369720168833021,
+          0.4896271898510971
+        ],
+        "wall_clock_seconds_mean": 0.33471833328561235,
+        "wall_clock_seconds_std": 0.0786307250406519,
+        "wall_clock_seconds_values": [
+          0.24907559994608164,
+          0.43896589998621494,
+          0.3161134999245405
+        ],
+        "peak_memory_mb_mean": 0.44554901123046875,
+        "peak_memory_mb_std": 0.0,
+        "peak_memory_mb_values": [
+          0.44554901123046875,
+          0.44554901123046875,
+          0.44554901123046875
+        ]
+      },
+      "TB_hybrid|ising_6x6": {
+        "method": "TB_hybrid",
+        "dataset": "ising_6x6",
+        "n_seeds": 3,
+        "ARI_mean": 0.0,
+        "ARI_std": 0.0,
+        "ARI_values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "blanket_F1_mean": 0.0,
+        "blanket_F1_std": 0.0,
+        "blanket_F1_values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "NMI_mean": 0.0,
+        "NMI_std": 0.0,
+        "NMI_values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "wall_clock_seconds_mean": 0.32882526664373773,
+        "wall_clock_seconds_std": 0.1334790262816326,
+        "wall_clock_seconds_values": [
+          0.1585801999317482,
+          0.3433260000310838,
+          0.4845695999683812
+        ],
+        "peak_memory_mb_mean": 0.32652854919433594,
+        "peak_memory_mb_std": 6.229374549314316e-06,
+        "peak_memory_mb_values": [
+          0.3265361785888672,
+          0.32652854919433594,
+          0.3265209197998047
+        ]
+      },
+      "Spectral_Cov|ising_6x6": {
+        "method": "Spectral_Cov",
+        "dataset": "ising_6x6",
+        "n_seeds": 3,
+        "ARI_mean": 0.0,
+        "ARI_std": 0.0,
+        "ARI_values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "blanket_F1_mean": 0.0,
+        "blanket_F1_std": 0.0,
+        "blanket_F1_values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "NMI_mean": 0.0,
+        "NMI_std": 0.0,
+        "NMI_values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "wall_clock_seconds_mean": 0.25541230003970367,
+        "wall_clock_seconds_std": 0.03720815921085597,
+        "wall_clock_seconds_values": [
+          0.2729962000157684,
+          0.20366950007155538,
+          0.28957120003178716
+        ],
+        "peak_memory_mb_mean": 0.28386688232421875,
+        "peak_memory_mb_std": 0.0,
+        "peak_memory_mb_values": [
+          0.28386688232421875,
+          0.28386688232421875,
+          0.28386688232421875
+        ]
+      }
+    },
+    "statistical_comparisons": {
+      "TB_hybrid_vs_Spectral_Cov|quadratic_ebm_8d": {
+        "ARI": {
+          "metric": "ARI",
+          "n_seeds": 3,
+          "mean_diff": 0.2941176470588235,
+          "std_diff": 0.5882352941176471,
+          "cohens_d": 0.4999999999999999,
+          "effect_size": "small",
+          "test": "wilcoxon",
+          "statistic": 1.5,
+          "p_value": 0.75
+        },
+        "blanket_F1": {
+          "metric": "blanket_F1",
+          "n_seeds": 3,
+          "mean_diff": 0.6,
+          "std_diff": 0.5291502622129182,
+          "cohens_d": 1.1338934190276815,
+          "effect_size": "large",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 0.5
+        },
+        "NMI": {
+          "metric": "NMI",
+          "n_seeds": 3,
+          "mean_diff": -0.025244608561455866,
+          "std_diff": 0.16454851649690988,
+          "cohens_d": -0.15341741815053037,
+          "effect_size": "negligible",
+          "test": "wilcoxon",
+          "statistic": 3.0,
+          "p_value": 1.0
+        }
+      },
+      "TB_hybrid_vs_Spectral_Cov|quadratic_ebm_50d": {
+        "ARI": {
+          "metric": "ARI",
+          "n_seeds": 3,
+          "mean_diff": 0.10457859176895762,
+          "std_diff": 0.15983895321226077,
+          "cohens_d": 0.6542747538522775,
+          "effect_size": "medium",
+          "test": "wilcoxon",
+          "statistic": 1.0,
+          "p_value": 0.5
+        },
+        "blanket_F1": {
+          "metric": "blanket_F1",
+          "n_seeds": 3,
+          "mean_diff": 0.5031055900621118,
+          "std_diff": 0.5594201366060969,
+          "cohens_d": 0.8993340731607633,
+          "effect_size": "large",
+          "test": "wilcoxon",
+          "statistic": 1.0,
+          "p_value": 0.5
+        },
+        "NMI": {
+          "metric": "NMI",
+          "n_seeds": 3,
+          "mean_diff": 0.1658344596571652,
+          "std_diff": 0.32540035252227734,
+          "cohens_d": 0.5096320835909726,
+          "effect_size": "medium",
+          "test": "wilcoxon",
+          "statistic": 1.0,
+          "p_value": 0.5
+        }
+      },
+      "TB_hybrid_vs_Spectral_Cov|lunarlander_8d": {
+        "ARI": {
+          "metric": "ARI",
+          "n_seeds": 3,
+          "mean_diff": -0.291005291005291,
+          "std_diff": 0.278720998752718,
+          "cohens_d": -1.0440737953277488,
+          "effect_size": "large",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 0.5
+        },
+        "blanket_F1": {
+          "metric": "blanket_F1",
+          "n_seeds": 3,
+          "mean_diff": 0.4444444444444444,
+          "std_diff": 0.3849001794597505,
+          "cohens_d": 1.1547005383792515,
+          "effect_size": "large",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 0.5
+        },
+        "NMI": {
+          "metric": "NMI",
+          "n_seeds": 3,
+          "mean_diff": -0.25650200905731324,
+          "std_diff": 0.0987450372110293,
+          "cohens_d": -2.5976192455033407,
+          "effect_size": "large",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 0.25
+        }
+      },
+      "TB_hybrid_vs_Spectral_Cov|fetchpush_25d": {
+        "ARI": {
+          "metric": "ARI",
+          "n_seeds": 3,
+          "mean_diff": 0.46102182711403267,
+          "std_diff": 0.07617957563964013,
+          "cohens_d": 6.051777307015339,
+          "effect_size": "large",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 0.25
+        },
+        "blanket_F1": {
+          "metric": "blanket_F1",
+          "n_seeds": 3,
+          "mean_diff": 0.9259259259259259,
+          "std_diff": 0.06415002990995845,
+          "cohens_d": 14.433756729740637,
+          "effect_size": "large",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 0.25
+        },
+        "NMI": {
+          "metric": "NMI",
+          "n_seeds": 3,
+          "mean_diff": 0.1517846855402771,
+          "std_diff": 0.06559034086959359,
+          "cohens_d": 2.314131677437913,
+          "effect_size": "large",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 0.25
+        }
+      },
+      "TB_hybrid_vs_Spectral_Cov|ising_6x6": {
+        "ARI": {
+          "metric": "ARI",
+          "n_seeds": 3,
+          "mean_diff": 0.0,
+          "std_diff": 0.0,
+          "cohens_d": 0.0,
+          "effect_size": "negligible",
+          "test": "all_equal",
+          "p_value": 1.0
+        },
+        "blanket_F1": {
+          "metric": "blanket_F1",
+          "n_seeds": 3,
+          "mean_diff": 0.0,
+          "std_diff": 0.0,
+          "cohens_d": 0.0,
+          "effect_size": "negligible",
+          "test": "all_equal",
+          "p_value": 1.0
+        },
+        "NMI": {
+          "metric": "NMI",
+          "n_seeds": 3,
+          "mean_diff": 0.0,
+          "std_diff": 0.0,
+          "cohens_d": 0.0,
+          "effect_size": "negligible",
+          "test": "all_equal",
+          "p_value": 1.0
+        }
+      }
+    },
+    "config": {
+      "n_seeds": 3,
+      "methods": [
+        "TB_hybrid",
+        "Spectral_Cov"
+      ],
+      "datasets": [
+        "quadratic_ebm_8d",
+        "quadratic_ebm_50d",
+        "lunarlander_8d",
+        "fetchpush_25d",
+        "ising_6x6"
+      ]
+    }
+  },
+  "notes": "US-094: Benchmark TB (hybrid) vs spectral clustering on raw covariance"
+}
