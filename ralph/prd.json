@@ -2091,6 +2091,64 @@
         "US-084"
       ],
       "notes": "Per Alec: train first, then demo with the trained model. Training command: cd pandas && python train.py --env-id FetchPush-v4 --max-episode-steps 50 --reward-mode dense --ensemble-size 5 --run-dir ./data/fetchpush_50step --iterations 100 --symbolic-task push --no-train-use-epistemic-bonus --no-eval-use-epistemic-bonus. Evaluation: python eval.py --run-dir ./data/fetchpush_50step --env-id FetchPush-v4 --eval-episodes 20 --symbolic-task push --no-use-epistemic-bonus. Then demo: cd topological-blankets && python ralph/experiments/wednesday_demo.py --planner tb --max-steps 50. The 50-step episode budget is tighter than the default 200; the symbolic push planner should still work since FetchPush is relatively quick to solve. If training convergence is slow at 50 steps, try increasing iterations to 150."
+    },
+    {
+      "id": "US-097",
+      "title": "Split demo GIFs into 3-phase segments for presentation",
+      "description": "As a demo presenter, I need both the action trajectory GIF and the imagined rollout GIF partitioned into 3 separate segments: (1) normal autonomous behavior pre-perturbation, (2) uncertainty spike and human intervention, (3) return to autonomous completion. Each segment should play at 3 fps for readability, with a color-coded border (green/red/green) and phase label overlay. A splitting utility (sharing/alec_2026-02-10/split_demo_gif.py) already exists; this story applies it to actual demo outputs and validates the results.",
+      "acceptanceCriteria": [
+        "Action trajectory GIF split into 3 files: *_phase1_autonomous_behavior.gif, *_phase2_uncertainty_spike*.gif, *_phase3_autonomous_completion.gif",
+        "Imagined rollout GIF split into the same 3 phases",
+        "Each segment plays at 3 fps (configurable via --fps)",
+        "Phase label and color-coded border visible on each frame",
+        "Split points align with actual perturbation and release timesteps from the demo metadata",
+        "All 6 output GIFs saved to results/ or sharing/"
+      ],
+      "priority": 97,
+      "passes": false,
+      "phase": 12,
+      "dependencies": [
+        "US-096"
+      ],
+      "notes": "Per Alec: the current single-GIF playback is too fast and hard to follow. The 3-GIF partition makes the demo narrative clearer for presentation. The split_demo_gif.py utility handles the mechanics; this story validates it on real outputs. Split ratios should match the Wednesday demo phase boundaries (roughly 25% / 40% / 35% of frames for the 50-step episode)."
+    },
+    {
+      "id": "US-098",
+      "title": "Improve action trajectory visualization with trail rendering and phase colors",
+      "description": "As a demo viewer, I need the FetchPush action trajectory GIF to be more readable: fading trail of the last 5-10 actions instead of rendering every vector independently, phase color-coding (green=auto, yellow=advisory, red=human, green=resumed), a text overlay showing current phase name and step number, and optionally a zoomed inset panel of the gripper neighborhood.",
+      "acceptanceCriteria": [
+        "Action arrows use a fading trail: 100% opacity for current action, linearly decreasing to 20% for the 10th-oldest",
+        "Gripper trajectory color-coded by phase: green (autonomous), yellow (elevated uncertainty/advisory), red (human takeover), green (resumed autonomous)",
+        "Text overlay in corner: phase name + step number, updated per frame",
+        "FPS set to 3-5 for readability (each frame visible for ~200-300ms)",
+        "Output GIF saved and visually inspected for clarity"
+      ],
+      "priority": 98,
+      "passes": false,
+      "phase": 12,
+      "dependencies": [
+        "US-096"
+      ],
+      "notes": "Per Alec: the action trajectory visualization did not look great. The key issues are speed (too fast) and clutter (too many action vectors at once). The trail approach reduces clutter; the phase colors tell the narrative. The Wednesday demo already classifies each step into phases, so the metadata is available to drive the overlay. This is a visualization improvement on eval.py or a post-processing script; coordinate with Alec on where best to implement."
+    },
+    {
+      "id": "US-099",
+      "title": "Enhance CEM ensemble rollout forecast with perturbation markers and TB labels",
+      "description": "As a demo viewer, I need the 6-panel CEM Ensemble Rollout Forecast visualization enhanced with: (1) a red dashed vertical line at the perturbation timestep across all panels, (2) panel grouping labels connecting to TB partition (top row: 'Gripper (TB Object 0)', bottom row: 'Object (TB Object 1)'), and (3) a mode indicator badge that switches from green 'AUTO' to red 'HUMAN' during intervention.",
+      "acceptanceCriteria": [
+        "Red dashed vertical line at perturbation timestep visible across all 6 panels",
+        "Panel group labels added: 'Gripper (TB Object 0)' for top row (obs[0:2]), 'Object (TB Object 1)' for bottom row (achieved goal)",
+        "Mode badge switches between green 'AUTO' and red 'HUMAN' at the appropriate timesteps",
+        "Ensemble disagreement bands (±1sigma) visibly widen at perturbation and narrow after intervention",
+        "Output GIF saved at 3 fps for each of the 3 phase segments"
+      ],
+      "priority": 99,
+      "passes": false,
+      "phase": 12,
+      "dependencies": [
+        "US-096"
+      ],
+      "notes": "Per Alec: the 6-panel dark background design already looks good. These enhancements connect the visualization to the TB narrative (the panels group by discovered partition) and make the perturbation event visually anchored. The mode indicator already exists as a green AUTO badge; adding the HUMAN variant and transition is straightforward. Coordinate with Alec on whether these changes go into eval.py or a separate post-processing script."
     }
   ]
 }
