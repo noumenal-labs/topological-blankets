@@ -146,6 +146,18 @@ try:
 except ImportError:
     HAS_PANDA_ENV = False
 
+# Attempt to import TB-guided planner
+try:
+    from panda.learned_planner import (
+        TBGuidedPlanner,
+        make_tb_guided_planner,
+        make_fetchpush_ground_truth_partition,
+    )
+    from panda.tb_discovery import discover_or_fallback
+    HAS_TB_PLANNER = True
+except ImportError:
+    HAS_TB_PLANNER = False
+
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
@@ -193,7 +205,7 @@ OBS_LABELS_SHORT = [
 # ---------------------------------------------------------------------------
 @dataclass
 class WednesdayDemoConfig:
-    max_steps: int = 60
+    max_steps: int = 80
     seed: int = 42
     env_id: str = "FetchPush-v4"
     reward_mode: str = "dense"
@@ -215,10 +227,10 @@ class WednesdayDemoConfig:
     tb_update_interval: int = 10
 
     # Phase boundaries (step indices)
-    perturbation_step: int = 15
-    first_goal_step: int = 24
-    second_goal_step: int = 32
-    release_step: int = 40
+    perturbation_step: int = 20
+    first_goal_step: int = 32
+    second_goal_step: int = 42
+    release_step: int = 52
 
     # Ghost trajectory parameters
     ghost_horizon: int = 15
@@ -893,10 +905,22 @@ def run_dry_run_demo(cfg: WednesdayDemoConfig) -> tuple[list[StepRecord], list[n
 # ---------------------------------------------------------------------------
 # Full demo runner (live mode with environment)
 # ---------------------------------------------------------------------------
-def run_live_demo(cfg: WednesdayDemoConfig) -> tuple[list[StepRecord], list[np.ndarray]]:
+def run_live_demo(
+    cfg: WednesdayDemoConfig,
+    planner_mode: str = "symbolic",
+) -> tuple[list[StepRecord], list[np.ndarray]]:
     """Run the demo with actual FetchPush environment and teleop/bridge.
 
     Falls back to dry-run if any component is unavailable.
+
+    Parameters
+    ----------
+    cfg:
+        Demo configuration.
+    planner_mode:
+        Which planner to use: 'symbolic' (default hardcoded planner),
+        'tb' (TB-guided with ground-truth partition), or 'tb-discover'
+        (full TB discovery pipeline from ensemble Jacobians).
     """
     if not HAS_GYM or not HAS_PANDA_ENV or not HAS_PANDA_BRIDGE:
         print("  Live mode unavailable (missing gym/panda components). Falling back to dry-run.")
@@ -914,18 +938,37 @@ def run_live_demo(cfg: WednesdayDemoConfig) -> tuple[list[StepRecord], list[np.n
     action_low, action_high = action_bounds(env)
     goal_thr = distance_threshold(env)
 
-    # Symbolic planner
-    sym_cfg = SymbolicPlannerConfig(
-        task=cfg.symbolic_task,
-        gripper_indices=cfg.gripper_indices,
-    )
-    sym_planner = make_symbolic_planner(
-        sym_cfg, env_id=cfg.env_id, default_goal_threshold=goal_thr,
-    )
+    # Build planner based on mode
+    if planner_mode in ("tb", "tb-discover") and HAS_TB_PLANNER:
+        if planner_mode == "tb-discover":
+            print("  Planner: TB-guided (full discovery pipeline)")
+            partition = discover_or_fallback(
+                model=None, env=env, seed=cfg.seed,
+            )
+        else:
+            print("  Planner: TB-guided (ground-truth partition)")
+            partition = make_fetchpush_ground_truth_partition()
+        planner = make_tb_guided_planner(
+            partition=partition,
+            gripper_pos_indices=cfg.gripper_indices,
+            default_goal_threshold=goal_thr,
+        )
+    else:
+        if planner_mode != "symbolic":
+            print(f"  Planner '{planner_mode}' unavailable; falling back to symbolic.")
+        else:
+            print("  Planner: symbolic (hardcoded)")
+        sym_cfg = SymbolicPlannerConfig(
+            task=cfg.symbolic_task,
+            gripper_indices=cfg.gripper_indices,
+        )
+        planner = make_symbolic_planner(
+            sym_cfg, env_id=cfg.env_id, default_goal_threshold=goal_thr,
+        )
 
     # Teleop interface
     teleop = TeleopInterface(
-        symbolic_planner=sym_planner,
+        symbolic_planner=planner,
         gripper_indices=cfg.gripper_indices,
         goal_reached_threshold=0.04,
     )
@@ -1035,6 +1078,8 @@ def run_live_demo(cfg: WednesdayDemoConfig) -> tuple[list[StepRecord], list[np.n
             is_key, key_label = True, "uncertainty_spike"
         elif step == cfg.first_goal_step:
             is_key, key_label = True, "human_takeover"
+        elif step == cfg.second_goal_step:
+            is_key, key_label = True, "second_goal"
         elif step == cfg.release_step:
             is_key, key_label = True, "collaborative_completion"
         elif step == cfg.max_steps - 1:
@@ -1088,8 +1133,15 @@ def run_live_demo(cfg: WednesdayDemoConfig) -> tuple[list[StepRecord], list[np.n
             frame = render_structure_frame(coupling_before, coupling_after, cfg, step)
         frames.append(frame)
 
-        # Step environment
-        action = rng.uniform(action_low * 0.3, action_high * 0.3).astype(np.float32)
+        # Step environment: proportional controller following the planner decision
+        objective = decision.objective
+        if objective.gripper_target is not None:
+            gripper_pos = obs_vec[list(objective.gripper_indices)]
+            delta = objective.gripper_target - gripper_pos
+            action = np.zeros(4, dtype=np.float32)
+            action[:3] = np.clip(delta * 10.0, action_low[:3], action_high[:3])
+        else:
+            action = np.zeros(4, dtype=np.float32)
         record.action = action.copy()
         next_obs, _, terminated, truncated, _ = env.step(action)
         obs = next_obs
@@ -1281,14 +1333,18 @@ def main():
     )
     parser.add_argument("--dry-run", action="store_true", default=False,
                         help="Use synthetic data (no MuJoCo, no trained model)")
-    parser.add_argument("--max-steps", type=int, default=60,
-                        help="Maximum episode steps (default: 60)")
+    parser.add_argument("--max-steps", type=int, default=80,
+                        help="Maximum episode steps (default: 80)")
     parser.add_argument("--seed", type=int, default=42,
                         help="Random seed")
     parser.add_argument("--gif-fps", type=int, default=2,
                         help="GIF frames per second (default: 2)")
     parser.add_argument("--dpi", type=int, default=100,
                         help="Output DPI (default: 100)")
+    parser.add_argument("--planner", type=str, default="symbolic",
+                        choices=["symbolic", "tb", "tb-discover"],
+                        help="Planner mode: symbolic (default), tb (ground-truth "
+                             "partition), or tb-discover (full pipeline)")
     args = parser.parse_args()
 
     # Auto-detect dry-run if gym is unavailable
@@ -1303,17 +1359,18 @@ def main():
     )
 
     # Adjust phase boundaries proportionally if max_steps differs from default
-    if args.max_steps != 60:
-        ratio = args.max_steps / 60.0
-        cfg.perturbation_step = max(5, int(15 * ratio))
-        cfg.first_goal_step = max(cfg.perturbation_step + 9, int(24 * ratio))
-        cfg.second_goal_step = max(cfg.first_goal_step + 5, int(32 * ratio))
-        cfg.release_step = max(cfg.second_goal_step + 5, int(40 * ratio))
+    if args.max_steps != 80:
+        ratio = args.max_steps / 80.0
+        cfg.perturbation_step = max(5, int(20 * ratio))
+        cfg.first_goal_step = max(cfg.perturbation_step + 9, int(32 * ratio))
+        cfg.second_goal_step = max(cfg.first_goal_step + 5, int(42 * ratio))
+        cfg.release_step = max(cfg.second_goal_step + 5, int(52 * ratio))
 
     print("=" * 65)
     print("  US-081: Wednesday Demo -- End-to-End Narrated Scenario")
     print("=" * 65)
     print(f"  Mode:           {'DRY-RUN (synthetic)' if cfg.dry_run else 'LIVE (FetchPush)'}")
+    print(f"  Planner:        {args.planner}")
     print(f"  Max steps:      {cfg.max_steps}")
     print(f"  Seed:           {cfg.seed}")
     print(f"  GIF FPS:        {cfg.gif_fps}")
@@ -1329,7 +1386,7 @@ def main():
     if cfg.dry_run:
         records, frames = run_dry_run_demo(cfg)
     else:
-        records, frames = run_live_demo(cfg)
+        records, frames = run_live_demo(cfg, planner_mode=args.planner)
 
     elapsed_run = time.time() - t0
     print(f"\nEpisode complete: {len(records)} steps, {len(frames)} frames in {elapsed_run:.1f}s")

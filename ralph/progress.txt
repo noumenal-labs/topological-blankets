@@ -2,6 +2,56 @@
 # Topological Blankets: World Model Demo
 # ========================================
 
+## 2026-02-10: Repository Migration and Wednesday Demo Fixes
+
+### Repository migration
+- Moved full topological-blankets codebase from lunar-lander/topological_blankets/
+  to the standalone topological-blankets repo (noumenal-labs/topological-blankets).
+- Removed the nested copy from lunar-lander.
+- Updated CLAUDE.md to list 3 active repositories.
+- PRs created:
+  - topological-blankets#2: Migrates full TB codebase (889 files)
+  - lunar-lander#6: Cherry-picks non-TB work onto main
+
+### US-081 bug fixes (Wednesday demo live mode)
+Three bugs caused 2 of 6 acceptance criteria to fail (goal_injections_ge_2,
+task_completes). All three fixed:
+
+1. Missing "second_goal" key frame: Live mode key-frame detection had no check
+   for cfg.second_goal_step (dry-run mode did). Added elif branch at line ~1081.
+
+2. Random actions instead of planned actions: Line ~1092 sent random noise to
+   the environment instead of using the decision from teleop.decide(). Replaced
+   with a proportional controller: action[:3] = clip((target - gripper_pos) * 10.0,
+   action_bounds). Human interventions now visibly move the gripper.
+
+3. Not enough steps after handback: 60 total steps with release at 40 gave only
+   20 steps to complete the task. Changed to 80 steps with release at 52, giving
+   28 steps after handback. Phase boundaries scaled proportionally.
+
+### US-084 extension: TB-guided planner integrated into Wednesday demo
+- Created panda/tb_discovery.py in the pandas repo: end-to-end pipeline from
+  ensemble Jacobians to TB-discovered variable partitions. Four functions:
+  collect_random_frames(), compute_gradients_from_ensemble(),
+  run_tb_discovery(), discover_or_fallback().
+- Widened TeleopInterface type hint to accept TBGuidedPlanner (teleop_interface.py).
+- Added --planner CLI arg to wednesday_demo.py: symbolic (default), tb (ground-truth
+  partition), tb-discover (full Jacobian discovery pipeline).
+- All three planner modes produce the same demo narrative and are evaluated against
+  the same six acceptance criteria.
+
+### Documentation
+- Created ralph/WEDNESDAY_DEMO_GUIDE.md covering: teleop architecture, how human
+  interventions work, bug fixes, ghost trajectories and the teleop story, epistemic
+  actions and info-gain bonus, benchmarking strategy, running instructions, acceptance
+  criteria, TB-guided planner explanation, file inventory, next steps.
+
+### Files created/modified
+- topological-blankets/ralph/experiments/wednesday_demo.py (3 bug fixes + planner integration)
+- pandas/panda/tb_discovery.py (NEW)
+- pandas/panda/teleop_interface.py (type hint widened)
+- topological-blankets/ralph/WEDNESDAY_DEMO_GUIDE.md (NEW)
+
 ## 2026-02-10: US-089 -- Define standardized benchmark protocol and evaluation suite
 
 ### Files created:

@@ -1,0 +1,685 @@
+% Wednesday Demo: Teleoperation + TB-Guided Planning
+% Technical companion document
+% Last updated: 2026-02-10
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{longtable}
+
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    stringstyle=\color{green!60!black},
+    breaklines=true,
+    frame=single,
+    language=Python,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    xleftmargin=2em
+}
+
+\title{Wednesday Demo: Teleoperation + TB-Guided Planning\\
+\large Technical Companion Document}
+\author{Noumenal Labs}
+\date{February 2026}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+%=============================================================================
+\section{What This Demo Shows}
+\label{sec:overview}
+%=============================================================================
+
+The Wednesday demo runs a narrated six-phase scenario on FetchPush-v4,
+illustrating the full pipeline from autonomous operation through human-in-the-loop
+intervention and back to autonomous completion. It produces a single
+presentation-ready GIF with phase banners, imagined trajectory overlays, and
+catastrophe signal indicators.
+
+The six narrative phases:
+
+\begin{enumerate}
+    \item \textit{Autonomous Push}: The pre-trained ensemble solves the push task with low uncertainty.
+    \item \textit{Novel Configuration}: A perturbation displaces the object to an unfamiliar position.
+    \item \textit{Uncertainty Spike}: Ensemble members disagree; the catastrophe signal fires. Imagined trajectories visualize prediction divergence.
+    \item \textit{Human Takeover}: A human operator injects corrective subgoals via the teleop interface.
+    \item \textit{Collaborative Completion}: The task completes with human-agent collaboration.
+    \item \textit{Structure Analysis}: TB coupling matrices compare pre- vs.\ post-perturbation structure.
+\end{enumerate}
+
+%=============================================================================
+\section{How Human Interventions Work}
+\label{sec:interventions}
+%=============================================================================
+
+Previously, the demo had a bug where human-injected goals were computed but
+never actually used to control the gripper (random noise was sent to the
+environment instead). This has been fixed. The interventions are now visible
+and directly responsible for task completion.
+
+\subsection{The Teleop Architecture}
+
+\begin{verbatim}
+Human Operator
+    |
+    |  inject_goal(target_xyz)      <- injects a 3D workspace coordinate
+    v
+TeleopInterface
+    |
+    |  decide(obs, achieved, desired)  <- returns SymbolicDecision
+    v                                     with a PlanningObjective
+Proportional Controller
+    |
+    |  action = clip((target - gripper_pos) * gain, action_bounds)
+    v
+FetchPush Environment
+\end{verbatim}
+
+The \texttt{TeleopInterface} sits between the human operator and the planner. In
+\textit{agent mode}, it delegates to whatever planner is active (symbolic or
+TB-guided). In \textit{human mode}, it overrides the planner with a
+\texttt{PlanningObjective} that drives the gripper toward the injected target
+position.
+
+The proportional controller then translates that objective into environment
+actions:
+
+\begin{lstlisting}
+delta = objective.gripper_target - current_gripper_position
+action[:3] = clip(delta * 10.0, action_low, action_high)
+\end{lstlisting}
+
+This means each human-injected goal visibly moves the gripper toward that
+position. The gain of 10.0 produces responsive but stable tracking within the
+FetchPush action bounds.
+
+\subsection{What Each Intervention Does in the Demo}
+
+The demo scripts two goal injections:
+
+\begin{enumerate}
+    \item \textit{First goal} (step 32): \texttt{[1.30, 0.75, 0.44]}, positions the gripper
+    above the displaced object, correcting for the perturbation that knocked
+    the object off its expected trajectory.
+
+    \item \textit{Second goal} (step 42): \texttt{[1.35, 0.82, 0.42]}, moves the gripper to
+    the push-approach position behind the object along the goal direction,
+    setting up a clean push.
+\end{enumerate}
+
+After step 52, control returns to the autonomous planner, which drives the push
+to completion. The agent now has 28 steps after handback (previously only 20,
+which was insufficient).
+
+\subsection{Why Interventions Now Visibly Help}
+
+Three bugs were fixed:
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{p{3.5cm}p{4.5cm}p{5.5cm}}
+\toprule
+\textbf{Bug} & \textbf{Symptom} & \textbf{Fix} \\
+\midrule
+Random actions sent to env & Gripper wandered randomly regardless of human goals & Proportional controller follows \texttt{decision.objective.gripper\_target} \\
+\addlinespace
+Missing ``second\_goal'' key frame & Only 1 goal injection counted; \texttt{goal\_injections\_ge\_2} failed & Added \texttt{second\_goal\_step} check in live-mode key-frame detection \\
+\addlinespace
+Not enough post-handback steps & 60 total steps, release at 40, only 20 to finish & Increased to 80 steps; release at 52, giving 28 steps \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%=============================================================================
+\section{Imagined Trajectories and the Teleop Story}
+\label{sec:imagined-trajectories}
+%=============================================================================
+
+Each ensemble member maintains its own dynamics model, producing a distinct
+prediction of the gripper's future path. These per-member rollouts are called
+\textit{imagined trajectories} (also referred to as counterfactual trajectories in
+the planning literature). The demo renders them as an overlay during phases 2
+through 4: each imagined trajectory appears as a semi-transparent colored line
+on the trajectory panel. The overlay is generated by \texttt{\_overlay\_ghosts()} in
+\texttt{wednesday\_demo.py} and included in every frame of the main GIF (no separate
+file needed).
+
+\subsection{What the Imagined Trajectories Communicate}
+
+\begin{itemize}
+    \item During \textit{Phase 1} (autonomous), trajectories are tightly clustered, conveying
+    that the ensemble agrees on what will happen next.
+    \item During \textit{Phase 3} (uncertainty spike), trajectories diverge widely, visually
+    showing the ensemble's disagreement. This is the moment the catastrophe
+    signal fires and motivates the handoff.
+    \item During \textit{Phase 4} (human takeover), trajectories show moderate spread, reflecting
+    partial re-convergence as the human steers toward a corrective position.
+\end{itemize}
+
+\subsection{Why This Matters for the Latency/Miscalibration Narrative}
+
+The key point for external audiences: the human does not intervene on where
+the robot is right now. The human intervenes on where the robot \textit{expects to
+go}. The imagined trajectories make this visible. When latency or
+miscalibration exists in teleoperation, acting on the robot's current state
+leads to oscillation and lag. Acting on the robot's projected future (the
+ensemble's $t+1$ prediction) absorbs that latency. The trajectory overlay is the
+visual evidence that the system exposes its predictions to the operator, and
+the operator's injected goals redirect those predictions rather than
+fighting them.
+
+This is already integrated into the single demo GIF. No separate visualization
+is needed, though individual trajectory frames can be extracted from the
+key-frame PNGs saved to \texttt{ralph/results/}.
+
+%=============================================================================
+\section{Epistemic Actions and the Info-Gain Bonus}
+\label{sec:epistemic}
+%=============================================================================
+
+The current demo does not use epistemic actions (the information-gain
+exploration bonus is turned off). This is intentional for the teleop
+demonstration, where the narrative focuses on human intervention rather than
+autonomous exploration.
+
+However, the infrastructure fully supports it. The CEM planner
+(\texttt{panda/planner.py}) has an \texttt{epistemic\_bonus\_weight} parameter in \texttt{CEMConfig}:
+
+\begin{lstlisting}
+@dataclass(frozen=True)
+class CEMConfig:
+    ...
+    epistemic_bonus_weight: float   # 0.0 = off, > 0.0 = info-gain exploration
+    ...
+\end{lstlisting}
+
+When \texttt{epistemic\_bonus\_weight > 0}, the planner adds ensemble disagreement as a
+bonus to the CEM objective. This causes the agent to seek out states where
+the ensemble disagrees, i.e., states where it can learn the most. The
+\texttt{evaluate\_sequences()} function already computes
+\texttt{epistemic\_bonus\_weight * ensemble\_disagreement} and adds it to the planning
+score.
+
+\subsection{Where to Demonstrate Epistemic Actions}
+
+The FetchReach task is the cleanest environment for showing the benefit of
+epistemic actions, because it has no high-level planner and reward alone may
+not drive efficient exploration under sparse reward. A comparison matrix:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Condition} & \textbf{Sparse Reward} & \textbf{Dense Reward} \\
+\midrule
+Without info-gain & Slow to discover goal region & Reaches goal, no exploration benefit \\
+With info-gain & Actively explores, finds goal faster & Mild benefit (reward already informative) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The clearest signal is sparse reward with vs.\ without info-gain. The existing
+lunar-lander demo already shows this benefit in a different environment; the
+robotics version would strengthen the story by showing the same principle
+transfers.
+
+Note: FetchReach is relatively easy even with sparse reward, so the effect may
+be subtle. FetchPush with sparse reward is harder and would show a larger gap,
+but requires the high-level planner (symbolic or TB-guided) to decompose the
+task. The \texttt{--planner tb} mode makes this benchmarkable without hardcoded task
+knowledge.
+
+%=============================================================================
+\section{Benchmarking Strategy}
+\label{sec:benchmarking}
+%=============================================================================
+
+\subsection{What Can Be Independently Validated}
+
+The system supports two categories of comparison that an external evaluator
+could reproduce:
+
+\begin{enumerate}
+    \item \textit{Model-free baseline (e.g.\ SAC):} Compare sample efficiency. The ensemble
+    world model should reach equivalent performance in far fewer environment
+    interactions than a model-free method like Soft Actor-Critic. This is the
+    standard ``model-based vs.\ model-free'' argument and is straightforward to
+    set up using any standard SAC implementation on the same task.
+
+    \item \textit{Ablation of uncertainty components:} Compare the same ensemble agent
+    with vs.\ without the uncertainty-driven parts (epistemic bonus,
+    catastrophe signal, imagined trajectories). This is a more subtle comparison
+    but arguably more important; it isolates the contribution of the
+    uncertainty-aware architecture rather than just showing ``world models are
+    more sample efficient,'' which is well-established.
+\end{enumerate}
+
+\subsection{FetchReach vs.\ FetchPush for Benchmarking}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lcp{8cm}}
+\toprule
+\textbf{Task} & \textbf{Benchmarkable?} & \textbf{Notes} \\
+\midrule
+FetchReach & Yes, fully apples-to-apples & No high-level planner needed. TB-guided planner produces a single-phase reach plan automatically. All methods see the same problem. \\
+\addlinespace
+FetchPush & Yes, with \texttt{--planner tb} & The TB-guided planner learns the approach-then-push decomposition from structure rather than hardcoding it. This makes the comparison fair, since the decomposition is discovered not given. Without \texttt{--planner tb}, the symbolic planner's hardcoded knowledge is an unfair advantage. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A practical presentation strategy: show benchmarks on FetchReach (clean,
+apples-to-apples, no decomposition needed) and the handoff demo on
+FetchPush (richer narrative, demonstrates teleop + structure discovery).
+This separates the quantitative claim (sample efficiency, uncertainty
+calibration) from the qualitative story (human-in-the-loop intervention,
+TB-guided planning).
+
+\subsection{The OpenAI DDPG+HER Baseline}
+
+The strongest existing baseline for FetchPush is DDPG with Hindsight Experience
+Replay (Andrychowicz et al., 2017). The official OpenAI results show:
+
+\begin{itemize}
+    \item Median success rate approaching 1.0 within $\sim$50 epochs
+    \item $\sim$5--8 million total environment steps (19 MPI workers)
+    \item DDPG \textit{without} HER fails completely on FetchPush with sparse reward
+    \item W\&B logs for the official runs are available
+\end{itemize}
+
+The comparison should log the same metrics (mean reward per env step, mean
+success rate per env step) and plot side by side.
+
+\subsection{Environment Version Note (v1 vs v4)}
+
+The OpenAI baselines were run on FetchPush-v1; the current codebase uses v4.
+The task definition (observation space, action space, reward function, MuJoCo
+XML model) is identical across versions. The differences are:
+
+\begin{itemize}
+    \item v1 $\to$ v2: migrated from \texttt{mujoco\_py} to DeepMind's \texttt{mujoco} bindings
+    \item v3: fixed a bug where \texttt{env.reset()} did not properly reset internal state
+    \item v4: fixed initial state to match documented specification
+\end{itemize}
+
+Results are \textit{qualitatively} comparable (the task is the same), but the
+reset bug means v1 initial-state distributions may differ slightly from v4.
+For a rigorous comparison, the DDPG+HER baseline should ideally be re-run on
+v4, or at minimum the version difference should be noted.
+
+\subsection{Selecting Comparison Methods}
+
+Two good choices:
+
+\begin{itemize}
+    \item \textit{DDPG+HER} (model-free, the established SOTA for FetchPush). Official W\&B
+    logs available for direct comparison. This is the strongest apples-to-apples
+    baseline since it was specifically tuned for these tasks.
+    \item A \textit{recently prominent} method: DreamerV3 or TD-MPC2 (model-based, well-known
+    in the 2024--2025 literature). This shows that the uncertainty-aware
+    components add value even relative to other world-model approaches.
+\end{itemize}
+
+For either comparison, publicly available implementations on Gymnasium robotics
+tasks exist, which makes reproducibility straightforward. The key is that each
+method needs some task-specific tuning, so starting with methods that have
+existing FetchReach/FetchPush results or readily available configs is practical.
+
+%=============================================================================
+\section{Running the Demo}
+\label{sec:running}
+%=============================================================================
+
+\subsection{Prerequisites}
+
+The demo has two modes with different dependency requirements.
+
+\textit{Dry-run mode} (no external dependencies beyond numpy and matplotlib):
+\begin{verbatim}
+pip install numpy matplotlib imageio
+\end{verbatim}
+
+\textit{Live mode} (requires MuJoCo and the pandas ensemble codebase):
+\begin{verbatim}
+pip install gymnasium[mujoco] gymnasium-robotics imageio
+\end{verbatim}
+
+The pandas repo must be on \texttt{sys.path}. The script handles this automatically if the repo is at the expected location (\texttt{../../../pandas} relative to the script, or at \texttt{C:/Users/citiz/Documents/noumenal-labs/pandas}).
+
+For the \texttt{--planner tb-discover} mode, the \texttt{topological\_blankets} package and a trained JAX ensemble checkpoint are also needed:
+\begin{verbatim}
+pip install jax jaxlib equinox
+\end{verbatim}
+
+If \texttt{gymnasium} is not installed, the script automatically falls back to dry-run mode and prints a notice.
+
+\subsection{Basic (Dry-Run, No MuJoCo Needed)}
+
+\begin{verbatim}
+cd topological-blankets/ralph
+python experiments/wednesday_demo.py --dry-run
+\end{verbatim}
+
+This uses synthetic data and produces a GIF demonstrating the full narrative
+without requiring a trained model or MuJoCo installation. The synthetic mode
+generates plausible gripper/object trajectories, uncertainty curves, and
+imagined trajectory overlays so the visual output closely resembles a live run.
+
+Expected console output:
+\begin{verbatim}
+=================================================================
+  Wednesday Demo -- End-to-End Narrated Scenario
+=================================================================
+  Mode:           DRY-RUN (synthetic)
+  Planner:        symbolic
+  Max steps:      80
+  ...
+
+Episode complete: 80 steps, 80 frames in 12.3s
+Saving outputs...
+  GIF saved: ralph/results/20260210_143022_wednesday_demo.gif
+  GIF duration: 40.0s (80 frames at 2 fps)
+  Key frame PNGs: 8 saved
+
+Acceptance Criteria:
+  [PASS] all_phases_covered
+  [PASS] catastrophe_within_5
+  [PASS] goal_injections_ge_2
+  [PASS] task_completes
+  [PASS] gif_duration_ok
+  [PASS] has_saved_files
+\end{verbatim}
+
+\subsection{Live Mode (Requires gymnasium-robotics)}
+
+\begin{verbatim}
+python experiments/wednesday_demo.py
+\end{verbatim}
+
+Runs on the actual FetchPush-v4 environment with the symbolic planner. The
+script creates the environment, loads any available trained model, and runs a
+single episode with scripted perturbation and human goal injections. Rendering
+uses MuJoCo's offscreen renderer (EGL on headless Linux, native on macOS/Windows).
+
+The script looks for a model at \texttt{pandas/data/push\_demo/model.eqx} by default. If no checkpoint exists, the CEM planner still runs but with a randomly initialized ensemble (useful for testing the pipeline, though task completion is unlikely).
+
+\subsection{With TB-Guided Planner}
+
+\begin{verbatim}
+# Ground-truth TB partition (no trained model needed)
+python experiments/wednesday_demo.py --planner tb
+
+# Full discovery pipeline (requires trained ensemble + TB package)
+python experiments/wednesday_demo.py --planner tb-discover
+\end{verbatim}
+
+The \texttt{--planner} flag selects the planning backend:
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lp{5.5cm}p{5cm}}
+\toprule
+\textbf{Mode} & \textbf{Description} & \textbf{Requirements} \\
+\midrule
+\texttt{symbolic} (default) & Hardcoded approach-then-push decomposition & \texttt{panda.symbolic\_planner} \\
+\addlinespace
+\texttt{tb} & TB-guided planner using the known FetchPush variable partition & \texttt{panda.learned\_planner} \\
+\addlinespace
+\texttt{tb-discover} & Full pipeline: collect frames, compute Jacobian sensitivities from ensemble, run TB discovery, build planner & \texttt{panda.tb\_discovery} + trained ensemble + \texttt{topological\_blankets} package \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All three modes produce the same demo narrative and are evaluated against the
+same six acceptance criteria. The difference is how the planner decomposes
+the task internally.
+
+The \texttt{tb-discover} mode prints additional output showing the discovery pipeline:
+\begin{verbatim}
+[tb_discovery] Collecting 10000 random frames...
+[tb_discovery] Computing Jacobian sensitivities...
+[tb_discovery] Running TB discovery on 2500 gradient samples (25D)...
+[tb_discovery] Discovered 2 objects, 3 blanket variables.
+\end{verbatim}
+
+If the TB package or trained model is unavailable, \texttt{tb-discover} falls back to
+the ground-truth partition automatically (equivalent to \texttt{--planner tb}).
+
+\subsection{Adjusting Episode Length}
+
+The default is 80 steps. Phase boundaries scale proportionally when
+\texttt{--max-steps} is changed:
+
+\begin{verbatim}
+# Shorter episode (faster, but agent has less time to complete)
+python experiments/wednesday_demo.py --max-steps 60
+
+# Longer episode (more time for autonomous completion after handback)
+python experiments/wednesday_demo.py --max-steps 120
+\end{verbatim}
+
+The script prints the computed phase boundaries at startup so there is no
+ambiguity about when perturbation, goal injection, and release occur.
+
+\subsection{CLI Options}
+
+\begin{verbatim}
+--dry-run          Use synthetic data (no environment)
+--max-steps N      Total episode steps (default: 80)
+--seed N           Random seed (default: 42)
+--gif-fps N        GIF frame rate (default: 2)
+--dpi N            Output resolution (default: 100)
+--planner MODE     Planner: symbolic | tb | tb-discover
+\end{verbatim}
+
+\subsection{Output Files}
+
+Each run produces a timestamped set of files in \texttt{ralph/results/}:
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{p{5.5cm}p{8cm}}
+\toprule
+\textbf{File} & \textbf{Description} \\
+\midrule
+\texttt{*\_wednesday\_demo.gif} & Presentation-ready GIF with phase banners, imagined trajectory overlays, and catastrophe indicators. Duration is \texttt{max\_steps / gif\_fps} seconds. \\
+\addlinespace
+\texttt{*\_wednesday\_demo.json} & Results JSON containing per-step metrics, acceptance criteria results, episode configuration, and file paths. \\
+\addlinespace
+\texttt{*\_wednesday\_autonomous\_push\_*.png} & Key-frame PNG at the start of Phase~1. \\
+\texttt{*\_wednesday\_perturbation\_*.png} & Key-frame PNG at the perturbation event. \\
+\texttt{*\_wednesday\_catastrophe\_*.png} & Key-frame PNG when the catastrophe signal fires. \\
+\texttt{*\_wednesday\_human\_takeover\_*.png} & Key-frame PNG at the first human goal injection. \\
+\texttt{*\_wednesday\_second\_goal\_*.png} & Key-frame PNG at the second human goal injection. \\
+\texttt{*\_wednesday\_release\_*.png} & Key-frame PNG when control returns to the agent. \\
+\texttt{*\_wednesday\_structure\_*.png} & Key-frame PNG showing the TB coupling matrix comparison. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The JSON file is structured for programmatic consumption. Key fields include:
+
+\begin{lstlisting}[language={}]
+{
+  "config": { "max_steps": 80, "seed": 42, "planner": "symbolic" },
+  "metrics": {
+    "final_goal_distance": 0.087,
+    "catastrophe_step": 22,
+    "n_goal_injections": 2,
+    "autonomy_fraction": 0.75
+  },
+  "acceptance_criteria": {
+    "all_phases_covered": true,
+    "catastrophe_within_5": true,
+    "goal_injections_ge_2": true,
+    "task_completes": true,
+    "gif_duration_ok": true,
+    "has_saved_files": true
+  }
+}
+\end{lstlisting}
+
+\subsection{Troubleshooting}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{p{3.5cm}p{4cm}p{5.5cm}}
+\toprule
+\textbf{Symptom} & \textbf{Likely Cause} & \textbf{Fix} \\
+\midrule
+\texttt{ModuleNotFoundError: gymnasium} & MuJoCo not installed & Run with \texttt{--dry-run}, or install \texttt{gymnasium[mujoco]} \\
+\addlinespace
+Falls back to dry-run unexpectedly & \texttt{gymnasium} import fails silently & Verify \texttt{pip install gymnasium[mujoco]} succeeded; on Linux, MuJoCo may need \texttt{libGL} \\
+\addlinespace
+\texttt{task\_completes} fails & Not enough post-handback steps & Try \texttt{--max-steps 120}; check that a trained checkpoint exists \\
+\addlinespace
+\texttt{gif\_duration\_ok} fails & GIF too short or too long & Adjust \texttt{--gif-fps} (lower = longer) or \texttt{--max-steps} \\
+\addlinespace
+\texttt{catastrophe\_within\_5} fails & Perturbation too mild & Model handles the perturbation gracefully; try a different \texttt{--seed} \\
+\addlinespace
+Black frames in GIF & Offscreen rendering failed & On headless Linux, set \texttt{MUJOCO\_GL=egl} \\
+\addlinespace
+TB discovery falls back & No trained model available & Expected; train a checkpoint first via pandas \texttt{train.py} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%=============================================================================
+\section{Acceptance Criteria}
+\label{sec:criteria}
+%=============================================================================
+
+The demo verifies six criteria automatically at the end of each run:
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{llp{5.5cm}}
+\toprule
+\textbf{Criterion} & \textbf{Description} & \textbf{What Triggers a FAIL} \\
+\midrule
+\texttt{all\_phases\_covered} & All 6 narrative phases appear & A phase was skipped (\texttt{max\_steps} too low) \\
+\texttt{catastrophe\_within\_5} & Catastrophe fires within 5 steps of perturbation & Ensemble too confident about the perturbed state \\
+\texttt{goal\_injections\_ge\_2} & At least 2 human goal injections recorded & Second goal injection not detected as key frame \\
+\texttt{task\_completes} & Final goal distance $< 0.15$ & Agent could not push object close enough after handback \\
+\texttt{gif\_duration\_ok} & GIF between 15 and 120 seconds & Adjust \texttt{--gif-fps} or \texttt{--max-steps} \\
+\texttt{has\_saved\_files} & At least one output file saved & Disk write failed or results directory missing \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All six should PASS. The results JSON is saved to \texttt{ralph/results/} alongside
+the GIF and key-frame PNGs.
+
+%=============================================================================
+\section{TB-Guided Planner: How It Replaces the Hardcoded Planner}
+\label{sec:tb-planner}
+%=============================================================================
+
+The symbolic planner (\texttt{panda/symbolic\_planner.py}) hardcodes the FetchPush task
+decomposition: ``approach from behind the object, then push.'' It knows which
+variables are the gripper and which are the object because those indices are
+written into the code.
+
+The TB-guided planner (\texttt{panda/learned\_planner.py}) discovers this same
+decomposition from structure. Given a \texttt{TBPartition} that assigns observation
+variables to objects and a blanket:
+
+\begin{enumerate}
+    \item It infers causal ordering from coupling strengths (the object with higher
+    outgoing coupling to blanket variables is the ``upstream'' actuator, i.e.\ the
+    gripper).
+    \item For a two-object system, it produces the same two-phase plan (approach, then
+    push) without any task-specific knowledge.
+    \item For a single-object system (e.g.\ FetchReach), it produces a single-phase
+    reach plan automatically.
+\end{enumerate}
+
+The \texttt{tb\_discovery.py} module handles the pipeline for discovering the partition
+from a trained ensemble model:
+
+\begin{verbatim}
+Random frames --> Jacobian sensitivities --> TopologicalBlankets.fit() --> TBPartition
+                  (column norms of                                           |
+                   d(delta_pred)/d(obs))                                     v
+                                                                     TBGuidedPlanner
+\end{verbatim}
+
+When \texttt{--planner tb} is used, the ground-truth FetchPush partition is provided
+directly (useful for testing the planner logic without needing a trained model).
+When \texttt{--planner tb-discover} is used, the full pipeline runs, with graceful
+fallback to ground-truth if any component is unavailable.
+
+%=============================================================================
+\section{File Inventory}
+\label{sec:files}
+%=============================================================================
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{p{6.5cm}p{7cm}}
+\toprule
+\textbf{File} & \textbf{Purpose} \\
+\midrule
+\texttt{topological-blankets/ralph/ experiments/wednesday\_demo.py} & Main demo script \\
+\texttt{pandas/panda/teleop\_interface.py} & TeleopInterface: human goal injection layer \\
+\texttt{pandas/panda/symbolic\_planner.py} & Hardcoded FetchPush symbolic planner \\
+\texttt{pandas/panda/learned\_planner.py} & TB-guided planner (task-agnostic) \\
+\texttt{pandas/panda/tb\_discovery.py} & Jacobian sensitivity + TB discovery pipeline \\
+\texttt{pandas/panda/planner.py} & CEM planner, \texttt{CEMConfig}, \texttt{epistemic\_bonus\_weight} \\
+\texttt{pandas/panda/catastrophe\_bridge.py} & Catastrophe signal evaluation \\
+\texttt{topological-blankets/ topological\_blankets/core.py} & TopologicalBlankets class \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%=============================================================================
+\section{Next Steps}
+\label{sec:next}
+%=============================================================================
+
+\begin{itemize}
+    \item Wire the trained ensemble model into \texttt{--planner tb-discover} so it runs the
+    full Jacobian discovery pipeline rather than falling back to ground truth.
+
+    \item Add a telecorder connector so goal injection comes from the physical teleop
+    interface rather than scripted coordinates.
+
+    \item Implement a real-time remote control mode so human teleoperators can control
+    the arm live (not just via scripted coordinates). The proportional controller
+    already tracks injected goals at 10Hz-equivalent gain; the missing piece is a
+    streaming input adapter (e.g.\ gamepad, spacemouse, or telecorder UI) that
+    continuously calls \texttt{inject\_goal()} with updated target positions.
+
+    \item Run the FetchReach benchmark suite: with/without \texttt{epistemic\_bonus\_weight},
+    sparse vs.\ dense reward, compared against SAC and optionally DreamerV3.
+
+    \item Consider an attention overlay showing which variables the TB partition
+    identified as the blanket, rendered on the demo GIF in real time.
+
+    \item Prepare a ``pop quiz'' package: the benchmark environment and configs packaged
+    so an external evaluator can run comparisons on their own hardware.
+\end{itemize}
+
+\end{document}

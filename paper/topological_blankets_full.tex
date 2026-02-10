@@ -1,6 +1,6 @@
 % Topological Blankets: Extracting Discrete Structure from Continuous Geometry
 % COMPREHENSIVE VERSION - Compiled from docs/01-07_*_new.md
-% Last updated: 2026-02-05
+% Last updated: 2026-02-10
 
 \documentclass[11pt,a4paper]{article}
 
@@ -76,7 +76,7 @@
 \maketitle
 
 \begin{abstract}
-Structure learning in probabilistic models faces a fundamental challenge: the space of possible graph structures grows combinatorially, making discrete search intractable for complex domains. We present \textbf{Topological Blankets}, a method that reframes structure learning as the extraction of discrete Markov blanket topology from continuous energy-based model (EBM) landscapes. The core hypothesis is that Markov blankets (the boundaries separating conditionally independent subsystems) correspond to high-gradient ridges in the energy landscape, detectable via gradient magnitudes or spectral methods on Hessian estimates. This geometric approach provides a unifying framework for discrete structure learning methods (RGM, AXIOM, DMBD) and continuous EBM optimization, enabling post-hoc analysis of trained models without explicit structure search. We ground the method theoretically in the Free Energy Principle (Friston, 2025), which derives Markov blankets from sparse coupling in Langevin dynamics, and provide algorithms for gradient-based detection, spectral Laplacian partitioning, and recursive hierarchical extraction. We validate the method through a progressive empirical path: from synthetic quadratic EBMs with controlled barrier geometry, through mixture models, Ising systems, and Gaussian graphical models, to trained robotics world models operating in LunarLander-v3. Applied to Active Inference ensemble dynamics and Dreamer latent-space representations, Topological Blankets recovers physically interpretable state-space structure (position, velocity, orientation, contact groupings) from learned dynamics without supervision. The resulting factored representation enables over $25\times$ computational savings for near-edge deployment, while the discovered blanket boundaries identify precisely where model uncertainty concentrates, providing a foundation for uncertainty-aware human-robot collaboration in which agents operate autonomously within well-characterized subsystems and request human guidance at structurally meaningful decision boundaries. The framework thus connects theoretical structure learning to a practical platform capability for autonomous robotic intelligence, applicable across robotic form factors from vegetation management to dexterous manipulation.
+Structure learning in probabilistic models faces a fundamental challenge: the space of possible graph structures grows combinatorially, making discrete search intractable for complex domains. We present \textbf{Topological Blankets}, a method that reframes structure learning as the extraction of discrete Markov blanket topology from continuous energy-based model (EBM) landscapes. The core hypothesis is that Markov blankets (the boundaries separating conditionally independent subsystems) correspond to high-gradient ridges in the energy landscape, detectable via gradient magnitudes or spectral methods on Hessian estimates. This geometric approach provides a unifying framework for discrete structure learning methods (RGM, AXIOM, DMBD) and continuous EBM optimization, enabling post-hoc analysis of trained models without explicit structure search. We ground the method theoretically in the Free Energy Principle (Friston, 2025), which derives Markov blankets from sparse coupling in Langevin dynamics, and provide algorithms for gradient-based detection, spectral Laplacian partitioning, and recursive hierarchical extraction. We validate the method through a progressive empirical path: from synthetic quadratic EBMs with controlled barrier geometry, through mixture models, Ising systems, and Gaussian graphical models, to trained robotics world models operating in LunarLander-v3. Applied to Active Inference ensemble dynamics and Dreamer latent-space representations, Topological Blankets recovers physically interpretable state-space structure (position, velocity, orientation, contact groupings) from learned dynamics without supervision. The resulting factored representation enables over $25\times$ computational savings for near-edge deployment, while the discovered blanket boundaries identify precisely where model uncertainty concentrates, providing a foundation for uncertainty-aware human-robot collaboration in which agents operate autonomously within well-characterized subsystems and request human guidance at structurally meaningful decision boundaries. Extended to a continuous manipulation task (FetchPush, 25D observation, 5-member ensemble), the discovered partition enables a task-agnostic planner that infers approach-then-push decomposition from coupling structure alone, matching handcrafted planner performance. The framework thus connects theoretical structure learning to a practical platform capability for autonomous robotic intelligence, applicable across robotic form factors from vegetation management to dexterous manipulation.
 \end{abstract}
 
 \tableofcontents
@@ -3018,6 +3018,7 @@ Table~\ref{tab:validation-results} summarizes the empirical results across all v
 4 & Dreamer 64D latent (trained AE) & --- & --- & NMI=0.517; eigengap=59.8 \\
 4 & Pixel encoder 64D latent (CNN) & --- & --- & NMI=0.281; eigengap=30.0 \\
 4 & World model temperature & --- & --- & Graceful degradation in both models \\
+4 & FetchPush 25D ensemble (5 members) & 0.295 & 0.500 & Task-relevant coupling; TB-guided planner=100\% \\
 \midrule
 5 & Laplace vs TB: unimodal & --- & --- & NMI=0.830; Laplace exact, TB converges \\
 5 & Laplace vs TB: multimodal & --- & --- & NMI=0.373; TB sees inter-basin coupling \\
@@ -3069,7 +3070,7 @@ Table~\ref{tab:validation-results} summarizes the empirical results across all v
 18 & Topo loss: LunarLander ($\lambda{=}0.1$) & --- & --- & Spectral gap $48\times$; recon.~$+$47\% \\
 \bottomrule
 \end{tabular}
-\caption{Summary of empirical results across all validation levels. Levels 1--4: synthetic validation, bridge experiments, statistical models, and robotics world models. Level 5: method extensions. Level 7: formal stability guarantees. Level 8: multi-scale noise hierarchy. Level 9: high-dimensional scaling. Level 10: $L_1$-regularized sparsification. Level 11: cross-environment comparison. Level 12: diffusion model structure crystallization. Level 13: interventional structure discovery. Level 14: transfer operator and metastable decomposition. Level 15: eigengap trajectory during training. Level 16: sliced score matching for high-dimensional TB. Level 17: KSD partition validation. Level 18: differentiable topological loss. $^*$Active Inference dynamics partition: Object~0=\{$y, v_y$, $c_L, c_R$\}, Object~1=\{$x, v_x, \theta$\}, Blanket=\{$\dot\theta$\}, matching known LunarLander physics. The variational Laplace comparison (Level 5) confirms that TB and single-point Laplace converge for unimodal landscapes but diverge for multimodal and non-Gaussian cases, where TB's stochastic averaging captures global structure. The rank-based covariance estimator (Level 5) maintains perfect recovery on non-Gaussian landscapes where the Pearson estimator fails. The bottleneck stability analysis (Level 7) certifies that all detected structures are statistically significant with probability $\geq 0.95$, requiring as few as $N=146$ samples for $d=8$.}
+\caption{Summary of empirical results across all validation levels. Levels 1--4: synthetic validation, bridge experiments, statistical models, and robotics world models. Level 5: method extensions. Level 7: formal stability guarantees. Level 8: multi-scale noise hierarchy. Level 9: high-dimensional scaling. Level 10: $L_1$-regularized sparsification. Level 11: cross-environment comparison. Level 12: diffusion model structure crystallization. Level 13: interventional structure discovery. Level 14: transfer operator and metastable decomposition. Level 15: eigengap trajectory during training. Level 16: sliced score matching for high-dimensional TB. Level 17: KSD partition validation. Level 18: differentiable topological loss. $^*$Active Inference dynamics partition: Object~0=\{$y, v_y$, $c_L, c_R$\}, Object~1=\{$x, v_x, \theta$\}, Blanket=\{$\dot\theta$\}, matching known LunarLander physics. FetchPush partition reflects task-relevant coupling (push dynamics) rather than pure entity boundaries; the TB-guided planner infers approach-then-push decomposition from the partition and matches the handcrafted planner at 100\% success. The variational Laplace comparison (Level 5) confirms that TB and single-point Laplace converge for unimodal landscapes but diverge for multimodal and non-Gaussian cases, where TB's stochastic averaging captures global structure. The rank-based covariance estimator (Level 5) maintains perfect recovery on non-Gaussian landscapes where the Pearson estimator fails. The bottleneck stability analysis (Level 7) certifies that all detected structures are statistically significant with probability $\geq 0.95$, requiring as few as $N=146$ samples for $d=8$.}
 \label{tab:validation-results}
 \end{table}
 
@@ -3297,6 +3298,37 @@ TB analysis of the pixel latent space (Figure~\ref{fig:pixel-to-structure}) reve
 
 The weaker structure preservation (NMI $= 0.281$ vs 0.517 for Dreamer) is consistent with the different training objectives: the pixel encoder optimizes for temporal prediction in latent space, not for faithful reconstruction of physical state, and therefore has less incentive to preserve the conditional independence structure of the underlying physics. This comparison (Table~\ref{tab:multi-scale}) provides a concrete recommendation for world model design: \textit{reconstruction-based training objectives better preserve Markov blanket structure in learned representations}.
 
+\subsection{Continuous Manipulation: FetchPush 25D Ensemble}
+\label{sec:fetchpush}
+
+The preceding applications operate on a single agent with 8D state or 64D latent space. To test whether TB generalizes to multi-object manipulation with continuous actions, we apply it to a Bayes ensemble world model trained on the Gymnasium Robotics FetchPush-v4 task. The ensemble comprises 5 independent JAX/Equinox MLPs, each predicting state deltas $(\Delta \text{obs}, \Delta \text{ag})$ from a 25-dimensional observation vector, 3D achieved goal, and 4D continuous action. The 25D observation decomposes into gripper position (3), object position (3), relative position (3), gripper state (2), object rotation (3), object linear velocity (3), object angular velocity (3), and gripper velocity (2), with a known ground-truth partition: Object~0 = gripper, Object~1 = manipulated object, Blanket = relative position.
+
+\subsubsection{Procedure}
+
+Jacobian sensitivity profiles are computed for each ensemble member via automatic differentiation:
+\begin{equation}
+S_{ij} = \left\| \frac{\partial [\Delta\text{obs}, \Delta\text{ag}]}{\partial \text{obs}_j} \right\|_2
+\end{equation}
+where column norms of the Jacobian $\partial(\text{prediction})/\partial(\text{observation})$ provide per-variable sensitivity. Stacking all ensemble members yields an $(E \times N) \times 25$ gradient sample matrix passed to the TB pipeline.
+
+\subsubsection{Results}
+
+TB analysis on the FetchPush ensemble discovers meaningful variable groupings with best ARI = 0.295 (sensitivity-coupling method, 2 objects) and blanket F1 = 0.500 (Fisher coupling method). Multiple analysis methods discover genuine structure (positive ARI), though the learned coupling reflects task-relevant dynamics (push direction) rather than pure entity boundaries. This is expected: the ensemble's dynamics model emphasizes the causal relationships most relevant to task completion rather than the static physical decomposition of the scene.
+
+\subsubsection{TB-Guided Task Decomposition}
+
+The most significant finding concerns hierarchical planning. Given a \texttt{TBPartition} assigning observation variables to objects and blanket, a task-agnostic planner infers causal ordering from coupling strengths: the object with higher outgoing coupling to blanket variables is the upstream actuator (the gripper). For a two-object system, this produces a two-phase plan (approach, then push) identical to the handcrafted symbolic planner, without any task-specific knowledge. For a single-object system (FetchReach), it produces a single-phase reach plan automatically. In ablation across 50 simulated episodes, both the hardcoded and TB-guided planners achieve 100\% success, while a flat (undecomposed) CEM planner achieves only 20\%.
+
+This result closes a loop: TB discovers structure in the learned world model, and that structure enables hierarchical planning that matches hand-engineered task decomposition. The decomposition is a consequence of the gradient geometry, not a human prior.
+
+\paragraph{Baseline context.} The strongest existing baseline for FetchPush is DDPG with Hindsight Experience Replay \citep{andrychowicz2017her}. The official OpenAI results show a median success rate approaching 1.0 within approximately 50 epochs (5--8 million environment steps across 19 MPI workers). Notably, DDPG \textit{without} HER fails completely on FetchPush with sparse reward, underscoring the difficulty of the task. Our ensemble planner is not directly comparable in sample efficiency (different architecture, model-based vs.\ model-free), but the DDPG+HER results establish the performance ceiling that any FetchPush method should be measured against.
+
+\paragraph{Environment version note.} The OpenAI baselines were run on FetchPush-v1; the current codebase uses FetchPush-v4. The task definition (observation space, action space, reward function, MuJoCo XML model) is identical across versions. Version changes: v1$\to$v2 migrated from \texttt{mujoco\_py} to DeepMind's \texttt{mujoco} bindings; v3 fixed a bug where \texttt{env.reset()} did not properly reset internal state; v4 fixed initial state to match the documented specification. Results are qualitatively comparable, but the reset bug means v1 initial-state distributions may differ slightly from v4. For rigorous comparison, the DDPG+HER baseline should ideally be re-run on v4, or at minimum the version difference should be noted.
+
+\subsubsection{Uncertainty-Driven Human-Robot Collaboration}
+
+The FetchPush ensemble also demonstrates the teleoperation story outlined in Section~\ref{sec:product-connection}. An ensemble disagreement bridge converts epistemic uncertainty into a severity signal (weighted combination of ensemble disagreement, CEM plan spread, and planner stall detection), with configurable thresholds for advisory (yellow) and handover (red) regimes. When a perturbation displaces the object to an unfamiliar configuration, ensemble members disagree on the gripper's future trajectory; this disagreement fires the catastrophe signal, triggering human takeover. Imagined trajectories (per-member rollouts of the CEM plan) visualize the prediction divergence, making uncertainty intuitive for the operator. After the human injects corrective subgoals, the agent resumes and completes the task. In the end-to-end demo, all six acceptance criteria pass: all phases covered, catastrophe fires within 5 steps of perturbation, at least 2 human goal injections, task completes (goal distance $< 0.15$), and output artifacts generated.
+
 \subsection{Edge-Compute Factorization}
 \label{sec:edge-compute}
 
@@ -3408,6 +3440,7 @@ $F(E) = G_E$ where edge $(i,j) \iff \partial^2 E / \partial x_i \partial x_j \ne
     \item Robustness validation: cross-checkpoint ARI=1.0 (identical partition across 3 model variants), stable structure above 1000 transitions (bootstrap ARI=0.62), graceful degradation under noise rather than sudden structural collapse
     \item Computational factorization analysis quantifying 25.9$\times$ speedup at 4096 dimensions with 97\% memory reduction, with favorable parallelism properties for near-edge accelerator hardware
     \item Pixel-to-structure pipeline: TB applied to CNN encoder latent space (64D) from raw $84 \times 84$ camera frames, demonstrating structure discovery from visual observations (NMI = 0.281) and establishing that reconstruction-trained representations preserve $1.84\times$ more Markov blanket structure than temporal-consistency encoders
+    \item FetchPush manipulation demo (25D, continuous actions): TB-discovered variable partition enables a task-agnostic planner that infers the approach-then-push decomposition from coupling structure alone, matching handcrafted planner performance (100\% success vs 20\% for undecomposed CEM). Ensemble disagreement drives uncertainty-aware human-robot collaboration with catastrophe signaling, imagined trajectory visualization, and scripted teleoperation
     \item DMBD-style blanket statistics integration and recursive hierarchical detection (Friston) for multi-scale structural decomposition, with hierarchical levels detected in both synthetic and real-world latent spaces
     \item Rigorous theoretical grounding in the Free Energy Principle, connecting gradient-based blanket detection to conditional independence in Langevin dynamics
 \end{enumerate}
@@ -3438,10 +3471,10 @@ $F(E) = G_E$ where edge $(i,j) \iff \partial^2 E / \partial x_i \partial x_j \ne
 \begin{enumerate}
     \item Apply to score-based and diffusion models, which learn the score function $\nabla_x \log p(x)$ directly, providing immediate access to energy landscape gradients without Langevin sampling
     \item Deploy factored world model inference on near-edge hardware: validate that the theoretical speedup translates to wall-clock improvements on target accelerator platforms, with emphasis on real-time control loops ($<$10ms inference latency)
-    \item Structure-aware teleoperation: use TB-discovered blanket boundaries to route human attention to decision boundaries where the world model is most uncertain, transforming teleoperation from continuous demonstration to targeted guidance at structurally meaningful intervention points
+    \item Structure-aware teleoperation: use TB-discovered blanket boundaries to route human attention to decision boundaries where the world model is most uncertain, transforming teleoperation from continuous demonstration to targeted guidance at structurally meaningful intervention points. \textit{Partially demonstrated}: the FetchPush demo (Section~\ref{sec:fetchpush}) implements this pipeline end-to-end with ensemble disagreement triggering human handover, imagined trajectories visualizing prediction divergence, and human-injected subgoals resolving uncertainty. Remaining work includes integration with physical teleop hardware and validation on longer-horizon tasks
     \item Cross-task and cross-embodiment transfer via blanket alignment: when two robotic systems share blanket structure (e.g., similar contact dynamics), transfer learned dynamics within shared objects while adapting only the differing subsystems
     \item Continuous structure monitoring for autonomous systems: run TB periodically on the world model during deployment to detect structural drift (new objects appearing, blankets dissolving) as an early warning signal that the operating environment has changed
-    \item Integration with hierarchical planning frameworks: use recursive blanket decomposition to generate planning abstractions automatically, with high-level plans operating over inter-object transitions and low-level controllers handling intra-object dynamics
+    \item Integration with hierarchical planning frameworks: use recursive blanket decomposition to generate planning abstractions automatically, with high-level plans operating over inter-object transitions and low-level controllers handling intra-object dynamics. \textit{Partially demonstrated}: the TB-guided planner (Section~\ref{sec:fetchpush}) infers causal ordering from coupling strengths and produces task decompositions matching handcrafted planners on FetchPush (approach, then push) and FetchReach (single-phase reach). Scaling to longer-horizon tasks with deeper hierarchies remains future work
 \end{enumerate}
 
 %=============================================================================
@@ -3451,6 +3484,11 @@ $F(E) = G_E$ where edge $(i,j) \iff \partial^2 E / \partial x_i \partial x_j \ne
 \bibliographystyle{plainnat}
 
 \begin{thebibliography}{10}
+
+\bibitem[Andrychowicz et~al.(2017)]{andrychowicz2017her}
+M.~Andrychowicz, F.~Wolski, A.~Ray, J.~Schneider, R.~Fong, P.~Welinder, B.~McGrew, J.~Tobin, P.~Abbeel, and W.~Zaremba.
+\newblock Hindsight experience replay.
+\newblock In \emph{NeurIPS}, 2017.
 
 \bibitem[Beck and Ramstead(2025)]{beck2025dmbd}
 J.~Beck and M.~J.~D. Ramstead.

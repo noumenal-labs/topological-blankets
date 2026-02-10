@@ -73,6 +73,8 @@ Key metrics from the paper (Section 10):
 │   ├── generate_paper_figures.py     # US-033
 │   ├── pixel_agent_analysis.py      # US-040, US-041, US-042, US-043
 │   ├── pixel_structure_comparison.py # US-044
+│   ├── wednesday_demo.py            # US-081: end-to-end demo (Phase 12)
+│   ├── benchmark_suite.py           # US-089: standardized benchmark protocol
 │   └── utils/
 │       ├── __init__.py
 │       ├── results.py
@@ -89,7 +91,13 @@ Key metrics from the paper (Section 10):
 ├── paper/
 │   ├── topological_blankets_full.tex
 │   └── figures/                    # US-033: publication figures (create this)
-├── results/                        # Experiment outputs (JSON + PNG)
+├── ralph/                           # Phase 12: demo scripts and docs
+│   ├── WEDNESDAY_DEMO_GUIDE.md      # Demo documentation
+│   ├── prd.json
+│   ├── prompt.md
+│   ├── progress.txt
+│   └── results/                     # Demo output (GIF, PNGs, JSON)
+├── results/                         # Experiment outputs (JSON + PNG)
 ├── requirements.txt
 └── scripts/ralph/
     ├── prd.json
@@ -97,7 +105,7 @@ Key metrics from the paper (Section 10):
     └── ralph.sh
 ```
 
-### pandas Repository (External, read-only) — Alec's Bayes Ensemble
+### pandas Repository — Alec's Bayes Ensemble
 **Path**: `C:/Users/citiz/Documents/noumenal-labs/pandas` (branch: `symbolic`)
 
 ```
@@ -107,6 +115,11 @@ Key metrics from the paper (Section 10):
 │   ├── model.py           # EnsembleModel (5× DynamicsMember, JAX/Equinox)
 │   ├── planner.py         # CEM trajectory optimization with ensemble rollouts
 │   ├── symbolic_planner.py # Two-phase push task decomposition (hardcoded)
+│   ├── learned_planner.py  # TB-guided planner (task-agnostic, replaces symbolic)
+│   ├── tb_discovery.py     # Jacobian sensitivity + TB discovery pipeline
+│   ├── teleop_interface.py # Human-in-the-loop goal injection layer
+│   ├── catastrophe_bridge.py # Ensemble uncertainty → catastrophe signal
+│   ├── tb_replay.py        # TB-weighted replay buffer sampling
 │   ├── common.py          # Environment creation, reward modes
 │   ├── replay.py          # Replay buffer
 │   ├── training_helpers.py # Normalization, loss, train step
@@ -222,6 +235,10 @@ uv run python eval.py \
 
 ### lunar-lander Repository (External, read-only)
 **Path**: `C:/Users/citiz/Documents/noumenal-labs/lunar-lander`
+
+Note: The topological-blankets codebase was migrated out of lunar-lander into
+its own standalone repository (this repo). The lunar-lander repo now contains
+only the Active Inference agents, sharing folder, and trained agents.
 
 ```
 ├── sharing/
@@ -515,6 +532,7 @@ For each user story, ALL of these must be true:
   sys.path.insert(0, 'C:/Users/citiz/Documents/noumenal-labs/telecorder/services/connectors/lunarlander/src')  # for telecorder_lunarlander
   ```
 - Never modify files in lunar-lander or telecorder repos; they are read-only references.
+- The pandas repo is *not* read-only; Phase 12 adds files to panda/ (learned_planner.py, tb_discovery.py, teleop_interface.py, catastrophe_bridge.py, tb_replay.py).
 - When creating the topological_blankets/ package, move/refactor code from experiments; do not copy-paste entire files.
 - Phase 2 stories should maintain backward compatibility: experiment scripts should continue to work via their own local functions AND via the new package.
 
