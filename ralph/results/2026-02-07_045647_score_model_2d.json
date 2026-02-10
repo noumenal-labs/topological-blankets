@@ -1,0 +1,110 @@
+{
+  "timestamp": "2026-02-07T04:56:47.501329",
+  "experiment_name": "score_model_2d",
+  "config": {
+    "datasets": [
+      "moons",
+      "circles",
+      "blobs",
+      "aniso"
+    ],
+    "n_samples": 3000,
+    "score_model": "MLPRegressor(128,128)",
+    "noise_levels": [
+      0.1,
+      0.3,
+      0.5
+    ]
+  },
+  "metrics": {
+    "moons": {
+      "n_objects": 2,
+      "variable_assignment": [
+        0,
+        -1
+      ],
+      "variable_blanket": [
+        false,
+        true
+      ],
+      "hessian_est": [
+        [
+          1.9316893528987873,
+          -0.05546579176135354
+        ],
+        [
+          -0.05546579176135354,
+          1.8077882135940428
+        ]
+      ],
+      "sample_ari": -0.004970566367348083
+    },
+    "circles": {
+      "n_objects": 2,
+      "variable_assignment": [
+        0,
+        -1
+      ],
+      "variable_blanket": [
+        false,
+        true
+      ],
+      "hessian_est": [
+        [
+          2.438484291124693,
+          0.00033557180806825776
+        ],
+        [
+          0.00033557180806825776,
+          2.10965093559563
+        ]
+      ],
+      "sample_ari": 0.0014148521854453805
+    },
+    "blobs": {
+      "n_objects": 3,
+      "variable_assignment": [
+        -1,
+        0
+      ],
+      "variable_blanket": [
+        true,
+        false
+      ],
+      "hessian_est": [
+        [
+          8.557715247568959,
+          0.3144978659442541
+        ],
+        [
+          0.3144978659442541,
+          8.663453610257298
+        ]
+      ],
+      "sample_ari": -0.0035489392798491956
+    },
+    "aniso": {
+      "n_objects": 2,
+      "variable_assignment": [
+        0,
+        -1
+      ],
+      "variable_blanket": [
+        false,
+        true
+      ],
+      "hessian_est": [
+        [
+          1.3655481537755951,
+          -0.07383357929159996
+        ],
+        [
+          -0.07383357929159996,
+          0.8106921791170495
+        ]
+      ],
+      "sample_ari": 0.0351982934160768
+    }
+  },
+  "notes": "US-019: 2D score model demo. TB applied to learned score fields."
+}

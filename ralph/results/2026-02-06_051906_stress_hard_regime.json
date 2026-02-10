@@ -1,0 +1,228 @@
+{
+  "timestamp": "2026-02-06T05:19:06.975952",
+  "experiment_name": "stress_hard_regime",
+  "config": {
+    "n_trials": 5,
+    "n_objects": 2,
+    "vars_per_object": 3
+  },
+  "metrics": {
+    "Very weak coupling (0.05)": {
+      "blanket_strength": 0.05,
+      "intra_strength": 6.0,
+      "temperature": 0.1,
+      "coupling_ratio": 120.0,
+      "mean_ari": 1.0,
+      "std_ari": 0.0,
+      "mean_f1": 0.96,
+      "std_f1": 0.07999999999999999,
+      "per_trial_ari": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "per_trial_f1": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.8
+      ]
+    },
+    "Extremely weak coupling (0.01)": {
+      "blanket_strength": 0.01,
+      "intra_strength": 6.0,
+      "temperature": 0.1,
+      "coupling_ratio": 600.0,
+      "mean_ari": 1.0,
+      "std_ari": 0.0,
+      "mean_f1": 0.96,
+      "std_f1": 0.07999999999999999,
+      "per_trial_ari": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "per_trial_f1": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.8
+      ]
+    },
+    "Strong coupling (3.0, ratio 2:1)": {
+      "blanket_strength": 3.0,
+      "intra_strength": 6.0,
+      "temperature": 0.1,
+      "coupling_ratio": 2.0,
+      "mean_ari": 1.0,
+      "std_ari": 0.0,
+      "mean_f1": 0.7799999999999999,
+      "std_f1": 0.16,
+      "per_trial_ari": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "per_trial_f1": [
+        1.0,
+        0.8,
+        0.5,
+        0.8,
+        0.8
+      ]
+    },
+    "Near-equal coupling (5.0, ratio 1.2:1)": {
+      "blanket_strength": 5.0,
+      "intra_strength": 6.0,
+      "temperature": 0.1,
+      "coupling_ratio": 1.2,
+      "mean_ari": 1.0,
+      "std_ari": 0.0,
+      "mean_f1": 0.8400000000000001,
+      "std_f1": 0.07999999999999999,
+      "per_trial_ari": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "per_trial_f1": [
+        0.8,
+        1.0,
+        0.8,
+        0.8,
+        0.8
+      ]
+    },
+    "High temperature (T=5.0)": {
+      "blanket_strength": 0.8,
+      "intra_strength": 6.0,
+      "temperature": 5.0,
+      "coupling_ratio": 7.5,
+      "mean_ari": 1.0,
+      "std_ari": 0.0,
+      "mean_f1": 0.8,
+      "std_f1": 0.0,
+      "per_trial_ari": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "per_trial_f1": [
+        0.8,
+        0.8,
+        0.8,
+        0.8,
+        0.8
+      ]
+    },
+    "Very high temperature (T=10.0)": {
+      "blanket_strength": 0.8,
+      "intra_strength": 6.0,
+      "temperature": 10.0,
+      "coupling_ratio": 7.5,
+      "mean_ari": 1.0,
+      "std_ari": 0.0,
+      "mean_f1": 0.8,
+      "std_f1": 0.0,
+      "per_trial_ari": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "per_trial_f1": [
+        0.8,
+        0.8,
+        0.8,
+        0.8,
+        0.8
+      ]
+    },
+    "Weak intra-coupling (2.0)": {
+      "blanket_strength": 0.8,
+      "intra_strength": 2.0,
+      "temperature": 0.1,
+      "coupling_ratio": 2.5,
+      "mean_ari": 1.0,
+      "std_ari": 0.0,
+      "mean_f1": 0.8,
+      "std_f1": 0.0,
+      "per_trial_ari": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "per_trial_f1": [
+        0.8,
+        0.8,
+        0.8,
+        0.8,
+        0.8
+      ]
+    },
+    "Very weak intra (1.5, ratio 1.9:1)": {
+      "blanket_strength": 0.8,
+      "intra_strength": 1.5,
+      "temperature": 0.1,
+      "coupling_ratio": 1.88,
+      "mean_ari": 1.0,
+      "std_ari": 0.0,
+      "mean_f1": 1.0,
+      "std_f1": 0.0,
+      "per_trial_ari": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "per_trial_f1": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "Worst case: weak coupling + high T": {
+      "blanket_strength": 0.05,
+      "intra_strength": 6.0,
+      "temperature": 5.0,
+      "coupling_ratio": 120.0,
+      "mean_ari": 1.0,
+      "std_ari": 0.0,
+      "mean_f1": 0.8799999999999999,
+      "std_f1": 0.0979795897113271,
+      "per_trial_ari": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "per_trial_f1": [
+        1.0,
+        0.8,
+        1.0,
+        0.8,
+        0.8
+      ]
+    }
+  },
+  "notes": "Stress test: extreme coupling ratios, temperatures, weak intra"
+}

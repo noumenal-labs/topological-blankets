@@ -1,0 +1,59 @@
+{
+  "timestamp": "2026-02-07T08:59:28.319434",
+  "experiment_name": "pixel_to_structure_viz",
+  "config": {
+    "checkpoint": "C:\\Users\\citiz\\Documents\\lunar-lander\\trained_agents\\pixel_lunarlander_best.tar"
+  },
+  "metrics": {
+    "frame_labels": [
+      "Launch",
+      "Mid-flight",
+      "Descent",
+      "Near ground"
+    ],
+    "frame_states": [
+      [
+        0.002297020051628351,
+        1.41813063621521,
+        0.232647106051445,
+        0.3204666078090668,
+        -0.002654880052432418,
+        -0.0526980459690094,
+        0.0,
+        0.0
+      ],
+      [
+        0.07123450934886932,
+        1.356016993522644,
+        0.23241737484931946,
+        -0.4795500338077545,
+        -0.08057918399572372,
+        -0.051875822246074677,
+        0.0,
+        0.0
+      ],
+      [
+        0.14167232811450958,
+        0.7853885889053345,
+        0.24247214198112488,
+        -1.2230578660964966,
+        -0.15619227290153503,
+        -0.06690775603055954,
+        0.0,
+        0.0
+      ],
+      [
+        0.19138088822364807,
+        0.0754997581243515,
+        0.23683924973011017,
+        -1.7475993633270264,
+        -0.23268353939056396,
+        -0.08250296860933304,
+        0.0,
+        0.0
+      ]
+    ],
+    "figure_path": "C:\\Users\\citiz\\Documents\\research\\Noumenal\\paper\\figures\\fig10_pixel_to_structure.png"
+  },
+  "notes": "US-045: End-to-end pixel-to-structure visualization. Multi-panel hero figure for paper and pitch deck."
+}

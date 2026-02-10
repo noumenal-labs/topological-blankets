@@ -1,0 +1,382 @@
+{
+  "timestamp": "2026-02-07T19:22:58.921676",
+  "experiment_name": "ksd_partition_validation",
+  "config": {
+    "n_bootstrap": 1000,
+    "max_samples": 500,
+    "quadratic_config": {
+      "n_objects": 2,
+      "vars_per_object": 3,
+      "vars_per_blanket": 3,
+      "intra_strength": 6.0,
+      "blanket_strength": 0.8,
+      "n_samples": 3000
+    }
+  },
+  "metrics": {
+    "quadratic_validation": {
+      "config": {
+        "n_objects": 2,
+        "vars_per_object": 3,
+        "vars_per_blanket": 3,
+        "intra_strength": 6.0,
+        "blanket_strength": 0.8,
+        "n_samples": 3000
+      },
+      "correct_partition": {
+        "idx_A": [
+          0,
+          1,
+          2
+        ],
+        "idx_B": [
+          3,
+          4,
+          5
+        ],
+        "idx_M": [
+          6,
+          7,
+          8
+        ],
+        "ksd_stat": 40.69805496165727,
+        "p_value": 0.0,
+        "reject_at_005": true,
+        "bandwidth": 0.27171511635935247,
+        "time": 0.3680438995361328
+      },
+      "random_partition": {
+        "idx_A": [
+          7,
+          0,
+          5
+        ],
+        "idx_B": [
+          6,
+          3,
+          1
+        ],
+        "idx_M": [
+          8,
+          4,
+          2
+        ],
+        "ksd_stat": 17.586696617781385,
+        "p_value": 0.0,
+        "reject_at_005": true,
+        "bandwidth": 0.40939822578009766,
+        "time": 0.4323127269744873
+      },
+      "tb_detected_partition": {
+        "idx_A": [
+          0,
+          1,
+          2,
+          7
+        ],
+        "idx_B": [
+          3,
+          4,
+          5
+        ],
+        "idx_M": [
+          6,
+          8
+        ],
+        "ksd_stat": 27.034899042812828,
+        "p_value": 0.0,
+        "reject_at_005": true,
+        "bandwidth": 0.36058102272753056,
+        "time": 1.6263279914855957
+      }
+    },
+    "power_analysis": {
+      "100": {
+        "correct_rejection_rate": 1.0,
+        "random_rejection_rate": 1.0,
+        "correct_mean_pvalue": 0.0,
+        "correct_std_pvalue": 0.0,
+        "random_mean_pvalue": 0.0,
+        "random_std_pvalue": 0.0,
+        "correct_pvals": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "random_pvals": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "200": {
+        "correct_rejection_rate": 1.0,
+        "random_rejection_rate": 1.0,
+        "correct_mean_pvalue": 0.0,
+        "correct_std_pvalue": 0.0,
+        "random_mean_pvalue": 0.0,
+        "random_std_pvalue": 0.0,
+        "correct_pvals": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "random_pvals": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "500": {
+        "correct_rejection_rate": 1.0,
+        "random_rejection_rate": 1.0,
+        "correct_mean_pvalue": 0.0,
+        "correct_std_pvalue": 0.0,
+        "random_mean_pvalue": 0.0,
+        "random_std_pvalue": 0.0,
+        "correct_pvals": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "random_pvals": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "1000": {
+        "correct_rejection_rate": 1.0,
+        "random_rejection_rate": 1.0,
+        "correct_mean_pvalue": 0.0,
+        "correct_std_pvalue": 0.0,
+        "random_mean_pvalue": 0.0,
+        "random_std_pvalue": 0.0,
+        "correct_pvals": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "random_pvals": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "2000": {
+        "correct_rejection_rate": 1.0,
+        "random_rejection_rate": 1.0,
+        "correct_mean_pvalue": 0.0,
+        "correct_std_pvalue": 0.0,
+        "random_mean_pvalue": 0.0,
+        "random_std_pvalue": 0.0,
+        "correct_pvals": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "random_pvals": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "3000": {
+        "correct_rejection_rate": 1.0,
+        "random_rejection_rate": 1.0,
+        "correct_mean_pvalue": 0.0,
+        "correct_std_pvalue": 0.0,
+        "random_mean_pvalue": 0.0,
+        "random_std_pvalue": 0.0,
+        "correct_pvals": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "random_pvals": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "lunarlander_validation": {
+      "n_samples": 3000,
+      "n_vars": 8,
+      "state_labels": [
+        "x",
+        "y",
+        "vx",
+        "vy",
+        "angle",
+        "ang_vel",
+        "left_leg",
+        "right_leg"
+      ],
+      "data_source": "synthetic_lunarlander_8d",
+      "tb_partition": {
+        "assignment": [
+          0,
+          0,
+          -1,
+          0,
+          1,
+          -1,
+          -1,
+          0
+        ],
+        "is_blanket": [
+          false,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "blanket_vars": [
+          2,
+          5,
+          6
+        ]
+      },
+      "tb_validation": {
+        "partition_valid": false,
+        "min_pvalue": 0.0,
+        "mean_pvalue": 0.0,
+        "pair_results": {
+          "obj0_vs_obj1": {
+            "ksd_stat": 5.58072809500771,
+            "p_value": 0.0,
+            "bandwidth": 0.6583537382306597,
+            "n_samples_used": 500,
+            "dim_A": 4,
+            "dim_B": 1,
+            "dim_M": 3,
+            "reject_at_005": true,
+            "reject_at_001": true
+          }
+        }
+      },
+      "random_validation": {
+        "partition_valid": false,
+        "min_pvalue": 0.0,
+        "mean_pvalue": 0.0,
+        "pair_results": {
+          "obj0_vs_obj1": {
+            "ksd_stat": 6.52366729329214,
+            "p_value": 0.0,
+            "bandwidth": 0.6805987788862665,
+            "n_samples_used": 500,
+            "dim_A": 3,
+            "dim_B": 3,
+            "dim_M": 2,
+            "reject_at_005": true,
+            "reject_at_001": true
+          }
+        }
+      }
+    },
+    "integration_test": {
+      "partition_valid": false,
+      "mean_pvalue": 0.0,
+      "min_pvalue": 0.0
+    },
+    "summary": {
+      "acceptance_criteria": {
+        "correct_partition_not_rejected": false,
+        "random_partition_rejected": true,
+        "tb_partition_not_rejected": false,
+        "power_crossover_N": 100,
+        "integration_works": false
+      },
+      "total_time_seconds": 127.66077399253845
+    }
+  },
+  "notes": "US-074: KSD goodness-of-fit test for partition validation. Correct partition p=0.0000 (not rejected=False), random partition p=0.0000 (rejected=True), TB partition p=0.0000 (not rejected=False). Power crossover at N=100. Integration test: valid=False."
+}

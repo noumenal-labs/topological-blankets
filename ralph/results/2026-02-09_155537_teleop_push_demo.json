@@ -1,0 +1,83 @@
+{
+  "experiment": "teleop_push_demo",
+  "timestamp": "2026-02-09T15:55:37",
+  "mode": "dry-run",
+  "config": {
+    "env_id": "FetchPush-v4",
+    "episodes": 3,
+    "max_episode_steps": 50,
+    "seed": 42,
+    "run_dir": null
+  },
+  "aggregate": {
+    "total_episodes": 3,
+    "total_steps": 150,
+    "human_steps": 27,
+    "interventions": 3,
+    "autonomy_pct": 82.0,
+    "success_count": 0,
+    "success_rate": 0.0,
+    "elapsed_seconds": 0.36
+  },
+  "episodes": [
+    {
+      "episode": 0,
+      "steps": 50,
+      "total_return": -11.22634,
+      "success": false,
+      "interventions": 1,
+      "human_steps": 10,
+      "autonomy_pct": 80.0,
+      "schedule": [
+        {
+          "inject_step": 5,
+          "target_xyz": [
+            1.3,
+            0.75,
+            0.45
+          ],
+          "release_step": 15
+        }
+      ]
+    },
+    {
+      "episode": 1,
+      "steps": 50,
+      "total_return": -8.77782,
+      "success": false,
+      "interventions": 2,
+      "human_steps": 17,
+      "autonomy_pct": 66.0,
+      "schedule": [
+        {
+          "inject_step": 3,
+          "target_xyz": [
+            1.25,
+            0.8,
+            0.43
+          ],
+          "release_step": 10
+        },
+        {
+          "inject_step": 25,
+          "target_xyz": [
+            1.35,
+            0.7,
+            0.42
+          ],
+          "release_step": 35
+        }
+      ]
+    },
+    {
+      "episode": 2,
+      "steps": 50,
+      "total_return": -11.18735,
+      "success": false,
+      "interventions": 0,
+      "human_steps": 0,
+      "autonomy_pct": 100.0,
+      "schedule": []
+    }
+  ]
+}

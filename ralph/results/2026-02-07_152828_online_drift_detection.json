@@ -1,0 +1,121 @@
+{
+  "timestamp": "2026-02-07T15:28:28.187609",
+  "experiment_name": "online_drift_detection",
+  "config": {
+    "n_steps": 2500,
+    "perturbation_step": 1000,
+    "window_size": 500,
+    "stride": 50,
+    "cusum_threshold": 4.731987845787315,
+    "cusum_calibrated_from_baseline": true,
+    "seed": 42,
+    "tb_method": "hybrid",
+    "n_objects": 2
+  },
+  "metrics": {
+    "baseline": {
+      "scenario": "Baseline (unperturbed)",
+      "n_windows": 41,
+      "n_cusum_alarms": 1,
+      "n_tp_alarms": 0,
+      "n_fp_alarms": 1,
+      "detection_delay_steps": null,
+      "baseline_stability": {
+        "eigengap_mean": 7.272727272727266,
+        "eigengap_std": 1.2128785512842135,
+        "n_clusters_mode": 1,
+        "n_clusters_std": 0.0
+      },
+      "cusum_threshold": 4.731987845787315,
+      "baseline_drift_mean": -0.17014445811317752
+    },
+    "gravity": {
+      "scenario": "Gravity Change (-10 -> -11.5)",
+      "n_windows": 41,
+      "n_cusum_alarms": 2,
+      "n_tp_alarms": 2,
+      "n_fp_alarms": 0,
+      "detection_delay_steps": 0,
+      "baseline_stability": {
+        "eigengap_mean": 7.272727272727266,
+        "eigengap_std": 1.2128785512842135,
+        "n_clusters_mode": 1,
+        "n_clusters_std": 0.0
+      },
+      "cusum_threshold": 4.731987845787315,
+      "baseline_drift_mean": -0.21057972012217266
+    },
+    "engine_failure": {
+      "scenario": "Engine Failure (main engine disabled)",
+      "n_windows": 41,
+      "n_cusum_alarms": 3,
+      "n_tp_alarms": 3,
+      "n_fp_alarms": 0,
+      "detection_delay_steps": 0,
+      "baseline_stability": {
+        "eigengap_mean": 7.272727272727266,
+        "eigengap_std": 1.2128785512842135,
+        "n_clusters_mode": 1,
+        "n_clusters_std": 0.0
+      },
+      "cusum_threshold": 4.731987845787315,
+      "baseline_drift_mean": -0.2593457293803237
+    },
+    "wind": {
+      "scenario": "Strong Wind Enabled",
+      "n_windows": 41,
+      "n_cusum_alarms": 2,
+      "n_tp_alarms": 1,
+      "n_fp_alarms": 1,
+      "detection_delay_steps": 1150,
+      "baseline_stability": {
+        "eigengap_mean": 7.272727272727266,
+        "eigengap_std": 1.2128785512842135,
+        "n_clusters_mode": 1,
+        "n_clusters_std": 0.0
+      },
+      "cusum_threshold": 4.731987845787315,
+      "baseline_drift_mean": -0.2906262024156064
+    },
+    "window_size_sensitivity": {
+      "200": {
+        "n_alarms": 1,
+        "n_tp": 1,
+        "n_fp": 0,
+        "detection_delay": 500,
+        "drift_score_std_baseline": 0.7109040741296573,
+        "calibrated_threshold": 4.607451603926371
+      },
+      "500": {
+        "n_alarms": 3,
+        "n_tp": 2,
+        "n_fp": 1,
+        "detection_delay": 250,
+        "drift_score_std_baseline": 0.7134241893452803,
+        "calibrated_threshold": 3.434770987212842
+      },
+      "1000": {
+        "n_alarms": 1,
+        "n_tp": 1,
+        "n_fp": 0,
+        "detection_delay": 250,
+        "drift_score_std_baseline": 0.0,
+        "calibrated_threshold": 7.2532117963392775
+      }
+    },
+    "acceptance_criteria": {
+      "sliding_window_tb_implemented": true,
+      "baseline_stable": true,
+      "gravity_detected": true,
+      "engine_failure_detected": true,
+      "wind_detected": false,
+      "drift_score_defined": true,
+      "alarm_triggers_within_500": true,
+      "low_false_positive_rate": false,
+      "plots_generated": true,
+      "results_saved": true
+    },
+    "all_criteria_pass": false
+  },
+  "notes": "US-057: Online sliding-window TB with structural drift detection. Tested on LunarLander-v3 with gravity change, engine failure, and wind perturbations. CUSUM detector on composite drift score (Frobenius distance + eigengap change + partition NMI deficit)."
+}

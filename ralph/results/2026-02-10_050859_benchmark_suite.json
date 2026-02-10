@@ -1,0 +1,870 @@
+{
+  "timestamp": "2026-02-10T05:08:59.485134",
+  "experiment_name": "benchmark_suite",
+  "config": {
+    "n_seeds": 3,
+    "methods": [
+      "TB_hybrid",
+      "TB_gradient"
+    ],
+    "datasets": [
+      "quadratic_ebm_8d",
+      "quadratic_ebm_50d",
+      "lunarlander_8d",
+      "fetchpush_25d",
+      "ising_6x6"
+    ]
+  },
+  "metrics": {
+    "raw": {
+      "TB_hybrid|quadratic_ebm_8d": [
+        {
+          "ARI": 1.0,
+          "blanket_F1": 0.8,
+          "NMI": 0.786013103263073,
+          "wall_clock_seconds": 3.748498300090432,
+          "peak_memory_mb": 0.7759904861450195,
+          "seed": 0
+        },
+        {
+          "ARI": 1.0,
+          "blanket_F1": 1.0,
+          "NMI": 1.0,
+          "wall_clock_seconds": 0.17816600005608052,
+          "peak_memory_mb": 0.2747173309326172,
+          "seed": 1
+        },
+        {
+          "ARI": 0.7058823529411765,
+          "blanket_F1": 0.0,
+          "NMI": 0.786013103263073,
+          "wall_clock_seconds": 0.17677749996073544,
+          "peak_memory_mb": 0.27470970153808594,
+          "seed": 2
+        }
+      ],
+      "TB_gradient|quadratic_ebm_8d": [
+        {
+          "ARI": 1.0,
+          "blanket_F1": 0.8,
+          "NMI": 0.786013103263073,
+          "wall_clock_seconds": 0.18318759999237955,
+          "peak_memory_mb": 0.2747020721435547,
+          "seed": 0
+        },
+        {
+          "ARI": 1.0,
+          "blanket_F1": 1.0,
+          "NMI": 1.0,
+          "wall_clock_seconds": 0.05626980005763471,
+          "peak_memory_mb": 0.27469444274902344,
+          "seed": 1
+        },
+        {
+          "ARI": 1.0,
+          "blanket_F1": 0.5,
+          "NMI": 0.7120773331708393,
+          "wall_clock_seconds": 0.06227340002078563,
+          "peak_memory_mb": 0.2746868133544922,
+          "seed": 2
+        }
+      ],
+      "TB_hybrid|quadratic_ebm_50d": [
+        {
+          "ARI": 0.03772241992882562,
+          "blanket_F1": 0.0,
+          "NMI": 0.3230152802821364,
+          "wall_clock_seconds": 0.4454244999215007,
+          "peak_memory_mb": 2.0514278411865234,
+          "seed": 0
+        },
+        {
+          "ARI": 0.19310344827586207,
+          "blanket_F1": 1.0,
+          "NMI": 0.6700130387970169,
+          "wall_clock_seconds": 0.42522099998313934,
+          "peak_memory_mb": 2.0718870162963867,
+          "seed": 1
+        },
+        {
+          "ARI": 0.19310344827586207,
+          "blanket_F1": 1.0,
+          "NMI": 0.6700130387970169,
+          "wall_clock_seconds": 0.17718040000181645,
+          "peak_memory_mb": 2.0714759826660156,
+          "seed": 2
+        }
+      ],
+      "TB_gradient|quadratic_ebm_50d": [
+        {
+          "ARI": 0.19310344827586207,
+          "blanket_F1": 1.0,
+          "NMI": 0.6700130387970169,
+          "wall_clock_seconds": 0.1638824000256136,
+          "peak_memory_mb": 2.0513973236083984,
+          "seed": 0
+        },
+        {
+          "ARI": 0.19310344827586207,
+          "blanket_F1": 1.0,
+          "NMI": 0.6700130387970169,
+          "wall_clock_seconds": 0.2626197000499815,
+          "peak_memory_mb": 2.051389694213867,
+          "seed": 1
+        },
+        {
+          "ARI": 0.19310344827586207,
+          "blanket_F1": 1.0,
+          "NMI": 0.6700130387970169,
+          "wall_clock_seconds": 0.18848659994546324,
+          "peak_memory_mb": 2.051382064819336,
+          "seed": 2
+        }
+      ],
+      "TB_hybrid|lunarlander_8d": [
+        {
+          "ARI": 0.4444444444444444,
+          "blanket_F1": 0.6666666666666666,
+          "NMI": 0.6358654960676691,
+          "wall_clock_seconds": 0.22700499999336898,
+          "peak_memory_mb": 0.1901531219482422,
+          "seed": 0
+        },
+        {
+          "ARI": 0.4444444444444444,
+          "blanket_F1": 0.6666666666666666,
+          "NMI": 0.6786620902057692,
+          "wall_clock_seconds": 0.12449840002227575,
+          "peak_memory_mb": 0.19014549255371094,
+          "seed": 1
+        },
+        {
+          "ARI": 1.0,
+          "blanket_F1": 0.0,
+          "NMI": 0.8571428571428573,
+          "wall_clock_seconds": 0.153362299897708,
+          "peak_memory_mb": 0.1901378631591797,
+          "seed": 2
+        }
+      ],
+      "TB_gradient|lunarlander_8d": [
+        {
+          "ARI": 0.4444444444444444,
+          "blanket_F1": 0.6666666666666666,
+          "NMI": 0.6358654960676691,
+          "wall_clock_seconds": 0.09841129998676479,
+          "peak_memory_mb": 0.1901226043701172,
+          "seed": 0
+        },
+        {
+          "ARI": 0.4444444444444444,
+          "blanket_F1": 0.6666666666666666,
+          "NMI": 0.6786620902057692,
+          "wall_clock_seconds": 0.1377212000079453,
+          "peak_memory_mb": 0.1901226043701172,
+          "seed": 1
+        },
+        {
+          "ARI": 0.4444444444444444,
+          "blanket_F1": 0.6666666666666666,
+          "NMI": 0.6358654960676691,
+          "wall_clock_seconds": 0.1127198999747634,
+          "peak_memory_mb": 0.1901226043701172,
+          "seed": 2
+        }
+      ],
+      "TB_hybrid|fetchpush_25d": [
+        {
+          "ARI": 0.62,
+          "blanket_F1": 0.8888888888888888,
+          "NMI": 0.6366587740093792,
+          "wall_clock_seconds": 0.23397010006010532,
+          "peak_memory_mb": 0.46729087829589844,
+          "seed": 0
+        },
+        {
+          "ARI": 0.46434494195688225,
+          "blanket_F1": 0.8888888888888888,
+          "NMI": 0.6208321952972298,
+          "wall_clock_seconds": 0.26834329997655004,
+          "peak_memory_mb": 0.46729087829589844,
+          "seed": 1
+        },
+        {
+          "ARI": 0.3303964757709251,
+          "blanket_F1": 1.0,
+          "NMI": 0.7043877260104356,
+          "wall_clock_seconds": 0.29254469997249544,
+          "peak_memory_mb": 0.46729087829589844,
+          "seed": 2
+        }
+      ],
+      "TB_gradient|fetchpush_25d": [
+        {
+          "ARI": 0.62,
+          "blanket_F1": 0.8888888888888888,
+          "NMI": 0.6366587740093792,
+          "wall_clock_seconds": 0.15658890001941472,
+          "peak_memory_mb": 0.46729087829589844,
+          "seed": 0
+        },
+        {
+          "ARI": 0.46434494195688225,
+          "blanket_F1": 0.8888888888888888,
+          "NMI": 0.6208321952972298,
+          "wall_clock_seconds": 0.057511999970301986,
+          "peak_memory_mb": 0.46729087829589844,
+          "seed": 1
+        },
+        {
+          "ARI": 0.3303964757709251,
+          "blanket_F1": 1.0,
+          "NMI": 0.7043877260104356,
+          "wall_clock_seconds": 0.05302820005454123,
+          "peak_memory_mb": 0.46729087829589844,
+          "seed": 2
+        }
+      ],
+      "TB_hybrid|ising_6x6": [
+        {
+          "ARI": 0.0,
+          "blanket_F1": 0.0,
+          "NMI": 0.0,
+          "wall_clock_seconds": 0.252397199976258,
+          "peak_memory_mb": 0.3265056610107422,
+          "seed": 0
+        },
+        {
+          "ARI": 0.0,
+          "blanket_F1": 0.0,
+          "NMI": 0.0,
+          "wall_clock_seconds": 0.25347120000515133,
+          "peak_memory_mb": 0.3264617919921875,
+          "seed": 1
+        },
+        {
+          "ARI": 0.0,
+          "blanket_F1": 0.0,
+          "NMI": 0.0,
+          "wall_clock_seconds": 0.2848951999330893,
+          "peak_memory_mb": 0.3265056610107422,
+          "seed": 2
+        }
+      ],
+      "TB_gradient|ising_6x6": [
+        {
+          "ARI": 0.0,
+          "blanket_F1": 0.0,
+          "NMI": 0.0,
+          "wall_clock_seconds": 0.14840850001201034,
+          "peak_memory_mb": 0.3265056610107422,
+          "seed": 0
+        },
+        {
+          "ARI": 0.0,
+          "blanket_F1": 0.0,
+          "NMI": 0.0,
+          "wall_clock_seconds": 0.13022129994351417,
+          "peak_memory_mb": 0.3265056610107422,
+          "seed": 1
+        },
+        {
+          "ARI": 0.0,
+          "blanket_F1": 0.0,
+          "NMI": 0.0,
+          "wall_clock_seconds": 0.1101257000118494,
+          "peak_memory_mb": 0.3264617919921875,
+          "seed": 2
+        }
+      ]
+    },
+    "summary": {
+      "TB_hybrid|quadratic_ebm_8d": {
+        "method": "TB_hybrid",
+        "dataset": "quadratic_ebm_8d",
+        "n_seeds": 3,
+        "ARI_mean": 0.9019607843137255,
+        "ARI_std": 0.13864838846795047,
+        "ARI_values": [
+          1.0,
+          1.0,
+          0.7058823529411765
+        ],
+        "blanket_F1_mean": 0.6,
+        "blanket_F1_std": 0.43204937989385733,
+        "blanket_F1_values": [
+          0.8,
+          1.0,
+          0.0
+        ],
+        "NMI_mean": 0.8573420688420487,
+        "NMI_std": 0.10087439051183103,
+        "NMI_values": [
+          0.786013103263073,
+          1.0,
+          0.786013103263073
+        ],
+        "wall_clock_seconds_mean": 1.3678139333690826,
+        "wall_clock_seconds_std": 1.683398155011999,
+        "wall_clock_seconds_values": [
+          3.748498300090432,
+          0.17816600005608052,
+          0.17677749996073544
+        ],
+        "peak_memory_mb_mean": 0.4418058395385742,
+        "peak_memory_mb_std": 0.23630422980437452,
+        "peak_memory_mb_values": [
+          0.7759904861450195,
+          0.2747173309326172,
+          0.27470970153808594
+        ]
+      },
+      "TB_gradient|quadratic_ebm_8d": {
+        "method": "TB_gradient",
+        "dataset": "quadratic_ebm_8d",
+        "n_seeds": 3,
+        "ARI_mean": 1.0,
+        "ARI_std": 0.0,
+        "ARI_values": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "blanket_F1_mean": 0.7666666666666666,
+        "blanket_F1_std": 0.20548046676563256,
+        "blanket_F1_values": [
+          0.8,
+          1.0,
+          0.5
+        ],
+        "NMI_mean": 0.8326968121446375,
+        "NMI_std": 0.12209120095160546,
+        "NMI_values": [
+          0.786013103263073,
+          1.0,
+          0.7120773331708393
+        ],
+        "wall_clock_seconds_mean": 0.1005769333569333,
+        "wall_clock_seconds_std": 0.058465958668807216,
+        "wall_clock_seconds_values": [
+          0.18318759999237955,
+          0.05626980005763471,
+          0.06227340002078563
+        ],
+        "peak_memory_mb_mean": 0.27469444274902344,
+        "peak_memory_mb_std": 6.229374549314316e-06,
+        "peak_memory_mb_values": [
+          0.2747020721435547,
+          0.27469444274902344,
+          0.2746868133544922
+        ]
+      },
+      "TB_hybrid|quadratic_ebm_50d": {
+        "method": "TB_hybrid",
+        "dataset": "quadratic_ebm_50d",
+        "n_seeds": 3,
+        "ARI_mean": 0.14130977216018326,
+        "ARI_std": 0.07324731920795242,
+        "ARI_values": [
+          0.03772241992882562,
+          0.19310344827586207,
+          0.19310344827586207
+        ],
+        "blanket_F1_mean": 0.6666666666666666,
+        "blanket_F1_std": 0.4714045207910317,
+        "blanket_F1_values": [
+          0.0,
+          1.0,
+          1.0
+        ],
+        "NMI_mean": 0.5543471192920567,
+        "NMI_std": 0.1635763120682694,
+        "NMI_values": [
+          0.3230152802821364,
+          0.6700130387970169,
+          0.6700130387970169
+        ],
+        "wall_clock_seconds_mean": 0.34927529996881884,
+        "wall_clock_seconds_std": 0.12196867438931265,
+        "wall_clock_seconds_values": [
+          0.4454244999215007,
+          0.42522099998313934,
+          0.17718040000181645
+        ],
+        "peak_memory_mb_mean": 2.064930280049642,
+        "peak_memory_mb_std": 0.009549140575657873,
+        "peak_memory_mb_values": [
+          2.0514278411865234,
+          2.0718870162963867,
+          2.0714759826660156
+        ]
+      },
+      "TB_gradient|quadratic_ebm_50d": {
+        "method": "TB_gradient",
+        "dataset": "quadratic_ebm_50d",
+        "n_seeds": 3,
+        "ARI_mean": 0.1931034482758621,
+        "ARI_std": 2.7755575615628914e-17,
+        "ARI_values": [
+          0.19310344827586207,
+          0.19310344827586207,
+          0.19310344827586207
+        ],
+        "blanket_F1_mean": 1.0,
+        "blanket_F1_std": 0.0,
+        "blanket_F1_values": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "NMI_mean": 0.6700130387970168,
+        "NMI_std": 1.1102230246251565e-16,
+        "NMI_values": [
+          0.6700130387970169,
+          0.6700130387970169,
+          0.6700130387970169
+        ],
+        "wall_clock_seconds_mean": 0.20499623334035277,
+        "wall_clock_seconds_std": 0.04196577653398658,
+        "wall_clock_seconds_values": [
+          0.1638824000256136,
+          0.2626197000499815,
+          0.18848659994546324
+        ],
+        "peak_memory_mb_mean": 2.051389694213867,
+        "peak_memory_mb_std": 6.229374549314316e-06,
+        "peak_memory_mb_values": [
+          2.0513973236083984,
+          2.051389694213867,
+          2.051382064819336
+        ]
+      },
+      "TB_hybrid|lunarlander_8d": {
+        "method": "TB_hybrid",
+        "dataset": "lunarlander_8d",
+        "n_seeds": 3,
+        "ARI_mean": 0.6296296296296297,
+        "ARI_std": 0.2618914004394621,
+        "ARI_values": [
+          0.4444444444444444,
+          0.4444444444444444,
+          1.0
+        ],
+        "blanket_F1_mean": 0.4444444444444444,
+        "blanket_F1_std": 0.31426968052735443,
+        "blanket_F1_values": [
+          0.6666666666666666,
+          0.6666666666666666,
+          0.0
+        ],
+        "NMI_mean": 0.7238901478054318,
+        "NMI_std": 0.09583005974737646,
+        "NMI_values": [
+          0.6358654960676691,
+          0.6786620902057692,
+          0.8571428571428573
+        ],
+        "wall_clock_seconds_mean": 0.16828856663778424,
+        "wall_clock_seconds_std": 0.04315859001794323,
+        "wall_clock_seconds_values": [
+          0.22700499999336898,
+          0.12449840002227575,
+          0.153362299897708
+        ],
+        "peak_memory_mb_mean": 0.19014549255371094,
+        "peak_memory_mb_std": 6.229374549314316e-06,
+        "peak_memory_mb_values": [
+          0.1901531219482422,
+          0.19014549255371094,
+          0.1901378631591797
+        ]
+      },
+      "TB_gradient|lunarlander_8d": {
+        "method": "TB_gradient",
+        "dataset": "lunarlander_8d",
+        "n_seeds": 3,
+        "ARI_mean": 0.4444444444444444,
+        "ARI_std": 0.0,
+        "ARI_values": [
+          0.4444444444444444,
+          0.4444444444444444,
+          0.4444444444444444
+        ],
+        "blanket_F1_mean": 0.6666666666666666,
+        "blanket_F1_std": 0.0,
+        "blanket_F1_values": [
+          0.6666666666666666,
+          0.6666666666666666,
+          0.6666666666666666
+        ],
+        "NMI_mean": 0.6501310274470358,
+        "NMI_std": 0.020174507951159357,
+        "NMI_values": [
+          0.6358654960676691,
+          0.6786620902057692,
+          0.6358654960676691
+        ],
+        "wall_clock_seconds_mean": 0.11628413332315783,
+        "wall_clock_seconds_std": 0.016244894160733644,
+        "wall_clock_seconds_values": [
+          0.09841129998676479,
+          0.1377212000079453,
+          0.1127198999747634
+        ],
+        "peak_memory_mb_mean": 0.1901226043701172,
+        "peak_memory_mb_std": 0.0,
+        "peak_memory_mb_values": [
+          0.1901226043701172,
+          0.1901226043701172,
+          0.1901226043701172
+        ]
+      },
+      "TB_hybrid|fetchpush_25d": {
+        "method": "TB_hybrid",
+        "dataset": "fetchpush_25d",
+        "n_seeds": 3,
+        "ARI_mean": 0.47158047257593577,
+        "ARI_std": 0.11834079316104974,
+        "ARI_values": [
+          0.62,
+          0.46434494195688225,
+          0.3303964757709251
+        ],
+        "blanket_F1_mean": 0.9259259259259259,
+        "blanket_F1_std": 0.05237828008789243,
+        "blanket_F1_values": [
+          0.8888888888888888,
+          0.8888888888888888,
+          1.0
+        ],
+        "NMI_mean": 0.6539595651056815,
+        "NMI_std": 0.03623874268983214,
+        "NMI_values": [
+          0.6366587740093792,
+          0.6208321952972298,
+          0.7043877260104356
+        ],
+        "wall_clock_seconds_mean": 0.26495270000305027,
+        "wall_clock_seconds_std": 0.024032867284330506,
+        "wall_clock_seconds_values": [
+          0.23397010006010532,
+          0.26834329997655004,
+          0.29254469997249544
+        ],
+        "peak_memory_mb_mean": 0.46729087829589844,
+        "peak_memory_mb_std": 0.0,
+        "peak_memory_mb_values": [
+          0.46729087829589844,
+          0.46729087829589844,
+          0.46729087829589844
+        ]
+      },
+      "TB_gradient|fetchpush_25d": {
+        "method": "TB_gradient",
+        "dataset": "fetchpush_25d",
+        "n_seeds": 3,
+        "ARI_mean": 0.47158047257593577,
+        "ARI_std": 0.11834079316104974,
+        "ARI_values": [
+          0.62,
+          0.46434494195688225,
+          0.3303964757709251
+        ],
+        "blanket_F1_mean": 0.9259259259259259,
+        "blanket_F1_std": 0.05237828008789243,
+        "blanket_F1_values": [
+          0.8888888888888888,
+          0.8888888888888888,
+          1.0
+        ],
+        "NMI_mean": 0.6539595651056815,
+        "NMI_std": 0.03623874268983214,
+        "NMI_values": [
+          0.6366587740093792,
+          0.6208321952972298,
+          0.7043877260104356
+        ],
+        "wall_clock_seconds_mean": 0.08904303334808598,
+        "wall_clock_seconds_std": 0.047797204895313236,
+        "wall_clock_seconds_values": [
+          0.15658890001941472,
+          0.057511999970301986,
+          0.05302820005454123
+        ],
+        "peak_memory_mb_mean": 0.46729087829589844,
+        "peak_memory_mb_std": 0.0,
+        "peak_memory_mb_values": [
+          0.46729087829589844,
+          0.46729087829589844,
+          0.46729087829589844
+        ]
+      },
+      "TB_hybrid|ising_6x6": {
+        "method": "TB_hybrid",
+        "dataset": "ising_6x6",
+        "n_seeds": 3,
+        "ARI_mean": 0.0,
+        "ARI_std": 0.0,
+        "ARI_values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "blanket_F1_mean": 0.0,
+        "blanket_F1_std": 0.0,
+        "blanket_F1_values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "NMI_mean": 0.0,
+        "NMI_std": 0.0,
+        "NMI_values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "wall_clock_seconds_mean": 0.2635878666381662,
+        "wall_clock_seconds_std": 0.015072938402342565,
+        "wall_clock_seconds_values": [
+          0.252397199976258,
+          0.25347120000515133,
+          0.2848951999330893
+        ],
+        "peak_memory_mb_mean": 0.3264910380045573,
+        "peak_memory_mb_std": 2.0680053669345337e-05,
+        "peak_memory_mb_values": [
+          0.3265056610107422,
+          0.3264617919921875,
+          0.3265056610107422
+        ]
+      },
+      "TB_gradient|ising_6x6": {
+        "method": "TB_gradient",
+        "dataset": "ising_6x6",
+        "n_seeds": 3,
+        "ARI_mean": 0.0,
+        "ARI_std": 0.0,
+        "ARI_values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "blanket_F1_mean": 0.0,
+        "blanket_F1_std": 0.0,
+        "blanket_F1_values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "NMI_mean": 0.0,
+        "NMI_std": 0.0,
+        "NMI_values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "wall_clock_seconds_mean": 0.1295851666557913,
+        "wall_clock_seconds_std": 0.015635359352716996,
+        "wall_clock_seconds_values": [
+          0.14840850001201034,
+          0.13022129994351417,
+          0.1101257000118494
+        ],
+        "peak_memory_mb_mean": 0.3264910380045573,
+        "peak_memory_mb_std": 2.0680053669345337e-05,
+        "peak_memory_mb_values": [
+          0.3265056610107422,
+          0.3265056610107422,
+          0.3264617919921875
+        ]
+      }
+    },
+    "statistical_comparisons": {
+      "TB_hybrid_vs_TB_gradient|quadratic_ebm_8d": {
+        "ARI": {
+          "metric": "ARI",
+          "n_seeds": 3,
+          "mean_diff": -0.0980392156862745,
+          "std_diff": 0.16980890270283108,
+          "cohens_d": -0.5773502691896257,
+          "effect_size": "medium",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 1.0
+        },
+        "blanket_F1": {
+          "metric": "blanket_F1",
+          "n_seeds": 3,
+          "mean_diff": -0.16666666666666666,
+          "std_diff": 0.2886751345948129,
+          "cohens_d": -0.5773502691896256,
+          "effect_size": "medium",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 1.0
+        },
+        "NMI": {
+          "metric": "NMI",
+          "n_seeds": 3,
+          "mean_diff": 0.024645256697411244,
+          "std_diff": 0.04268683676549343,
+          "cohens_d": 0.5773502691896257,
+          "effect_size": "medium",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 1.0
+        }
+      },
+      "TB_hybrid_vs_TB_gradient|quadratic_ebm_50d": {
+        "ARI": {
+          "metric": "ARI",
+          "n_seeds": 3,
+          "mean_diff": -0.05179367611567881,
+          "std_diff": 0.08970927854312234,
+          "cohens_d": -0.5773502691896258,
+          "effect_size": "medium",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 1.0
+        },
+        "blanket_F1": {
+          "metric": "blanket_F1",
+          "n_seeds": 3,
+          "mean_diff": -0.3333333333333333,
+          "std_diff": 0.5773502691896258,
+          "cohens_d": -0.5773502691896256,
+          "effect_size": "medium",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 1.0
+        },
+        "NMI": {
+          "metric": "NMI",
+          "n_seeds": 3,
+          "mean_diff": -0.11566591950496018,
+          "std_diff": 0.200339249286763,
+          "cohens_d": -0.5773502691896258,
+          "effect_size": "medium",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 1.0
+        }
+      },
+      "TB_hybrid_vs_TB_gradient|lunarlander_8d": {
+        "ARI": {
+          "metric": "ARI",
+          "n_seeds": 3,
+          "mean_diff": 0.1851851851851852,
+          "std_diff": 0.3207501495497921,
+          "cohens_d": 0.5773502691896258,
+          "effect_size": "medium",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 1.0
+        },
+        "blanket_F1": {
+          "metric": "blanket_F1",
+          "n_seeds": 3,
+          "mean_diff": -0.2222222222222222,
+          "std_diff": 0.3849001794597505,
+          "cohens_d": -0.5773502691896257,
+          "effect_size": "medium",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 1.0
+        },
+        "NMI": {
+          "metric": "NMI",
+          "n_seeds": 3,
+          "mean_diff": 0.07375912035839609,
+          "std_diff": 0.12775454398232994,
+          "cohens_d": 0.5773502691896258,
+          "effect_size": "medium",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 1.0
+        }
+      },
+      "TB_hybrid_vs_TB_gradient|fetchpush_25d": {
+        "ARI": {
+          "metric": "ARI",
+          "n_seeds": 3,
+          "mean_diff": 0.0,
+          "std_diff": 0.0,
+          "cohens_d": 0.0,
+          "effect_size": "negligible",
+          "test": "all_equal",
+          "p_value": 1.0
+        },
+        "blanket_F1": {
+          "metric": "blanket_F1",
+          "n_seeds": 3,
+          "mean_diff": 0.0,
+          "std_diff": 0.0,
+          "cohens_d": 0.0,
+          "effect_size": "negligible",
+          "test": "all_equal",
+          "p_value": 1.0
+        },
+        "NMI": {
+          "metric": "NMI",
+          "n_seeds": 3,
+          "mean_diff": 0.0,
+          "std_diff": 0.0,
+          "cohens_d": 0.0,
+          "effect_size": "negligible",
+          "test": "all_equal",
+          "p_value": 1.0
+        }
+      },
+      "TB_hybrid_vs_TB_gradient|ising_6x6": {
+        "ARI": {
+          "metric": "ARI",
+          "n_seeds": 3,
+          "mean_diff": 0.0,
+          "std_diff": 0.0,
+          "cohens_d": 0.0,
+          "effect_size": "negligible",
+          "test": "all_equal",
+          "p_value": 1.0
+        },
+        "blanket_F1": {
+          "metric": "blanket_F1",
+          "n_seeds": 3,
+          "mean_diff": 0.0,
+          "std_diff": 0.0,
+          "cohens_d": 0.0,
+          "effect_size": "negligible",
+          "test": "all_equal",
+          "p_value": 1.0
+        },
+        "NMI": {
+          "metric": "NMI",
+          "n_seeds": 3,
+          "mean_diff": 0.0,
+          "std_diff": 0.0,
+          "cohens_d": 0.0,
+          "effect_size": "negligible",
+          "test": "all_equal",
+          "p_value": 1.0
+        }
+      }
+    },
+    "config": {
+      "n_seeds": 3,
+      "methods": [
+        "TB_hybrid",
+        "TB_gradient"
+      ],
+      "datasets": [
+        "quadratic_ebm_8d",
+        "quadratic_ebm_50d",
+        "lunarlander_8d",
+        "fetchpush_25d",
+        "ising_6x6"
+      ]
+    }
+  },
+  "notes": "US-089: Standardized benchmark protocol results"
+}

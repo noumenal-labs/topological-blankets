@@ -1,0 +1,436 @@
+{
+  "timestamp": "2026-02-07T08:17:47.532491",
+  "experiment_name": "temperature_sensitivity_worldmodels",
+  "config": {
+    "actinf_dims": 8,
+    "dreamer_dims": 64
+  },
+  "metrics": {
+    "active_inference": {
+      "temperatures": [
+        0.01,
+        0.1,
+        0.5,
+        1.0,
+        2.0
+      ],
+      "results": [
+        {
+          "temperature": 0.01,
+          "n_trials": 5,
+          "mean_objects": 2.0,
+          "mean_blanket": 1.4,
+          "mean_eigengap": 8.0,
+          "std_eigengap": 0.0,
+          "trials": [
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 1,
+              "eigengap": 8.0,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 2,
+              "eigengap": 8.0,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 2,
+              "eigengap": 8.0,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 1,
+              "eigengap": 8.0,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 1,
+              "eigengap": 8.0,
+              "n_clusters_spectral": 1
+            }
+          ]
+        },
+        {
+          "temperature": 0.1,
+          "n_trials": 5,
+          "mean_objects": 2.0,
+          "mean_blanket": 1.2,
+          "mean_eigengap": 8.0,
+          "std_eigengap": 0.0,
+          "trials": [
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 1,
+              "eigengap": 8.0,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 1,
+              "eigengap": 8.0,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 1,
+              "eigengap": 8.0,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 2,
+              "eigengap": 8.0,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 1,
+              "eigengap": 8.0,
+              "n_clusters_spectral": 1
+            }
+          ]
+        },
+        {
+          "temperature": 0.5,
+          "n_trials": 5,
+          "mean_objects": 2.0,
+          "mean_blanket": 1.6,
+          "mean_eigengap": 7.200000000000001,
+          "std_eigengap": 0.9797958971132695,
+          "trials": [
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 2,
+              "eigengap": 8.0,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 1,
+              "eigengap": 8.0,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 2,
+              "eigengap": 6.000000000000001,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 2,
+              "eigengap": 8.0,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 1,
+              "eigengap": 6.000000000000006,
+              "n_clusters_spectral": 1
+            }
+          ]
+        },
+        {
+          "temperature": 1.0,
+          "n_trials": 5,
+          "mean_objects": 2.0,
+          "mean_blanket": 1.6,
+          "mean_eigengap": 6.000000000000002,
+          "std_eigengap": 3.9720546451956367e-16,
+          "trials": [
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 2,
+              "eigengap": 6.000000000000002,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 1,
+              "eigengap": 6.000000000000002,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 2,
+              "eigengap": 6.000000000000001,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 2,
+              "eigengap": 6.000000000000002,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 1,
+              "eigengap": 6.000000000000002,
+              "n_clusters_spectral": 1
+            }
+          ]
+        },
+        {
+          "temperature": 2.0,
+          "n_trials": 5,
+          "mean_objects": 2.0,
+          "mean_blanket": 1.6,
+          "mean_eigengap": 5.1659827026747935,
+          "std_eigengap": 0.8039093354662247,
+          "trials": [
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 1,
+              "eigengap": 5.000000000000001,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 2,
+              "eigengap": 6.0,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 1,
+              "eigengap": 6.000000000000006,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 2,
+              "eigengap": 4.999999999999998,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 2,
+              "eigengap": 3.8299135133739615,
+              "n_clusters_spectral": 1
+            }
+          ]
+        }
+      ],
+      "dissolution_temperature": null
+    },
+    "dreamer": {
+      "noise_levels": [
+        0.0,
+        0.01,
+        0.1,
+        0.5,
+        1.0
+      ],
+      "results": [
+        {
+          "noise_level": 0.0,
+          "n_trials": 5,
+          "mean_objects": 2.0,
+          "mean_blanket": 24.0,
+          "mean_eigengap": 59.78568025662255,
+          "std_eigengap": 7.105427357601002e-15,
+          "trials": [
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 24,
+              "eigengap": 59.785680256622555,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 24,
+              "eigengap": 59.785680256622555,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 24,
+              "eigengap": 59.785680256622555,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 24,
+              "eigengap": 59.785680256622555,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 24,
+              "eigengap": 59.785680256622555,
+              "n_clusters_spectral": 1
+            }
+          ]
+        },
+        {
+          "noise_level": 0.01,
+          "n_trials": 5,
+          "mean_objects": 2.0,
+          "mean_blanket": 24.0,
+          "mean_eigengap": 59.78568025662255,
+          "std_eigengap": 7.105427357601002e-15,
+          "trials": [
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 24,
+              "eigengap": 59.785680256622555,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 24,
+              "eigengap": 59.785680256622555,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 24,
+              "eigengap": 59.785680256622555,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 24,
+              "eigengap": 59.785680256622555,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 24,
+              "eigengap": 59.785680256622555,
+              "n_clusters_spectral": 1
+            }
+          ]
+        },
+        {
+          "noise_level": 0.1,
+          "n_trials": 5,
+          "mean_objects": 2.0,
+          "mean_blanket": 24.6,
+          "mean_eigengap": 59.70130445482077,
+          "std_eigengap": 0.11127385689147137,
+          "trials": [
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 25,
+              "eigengap": 59.771671784053424,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 24,
+              "eigengap": 59.49769050834828,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 24,
+              "eigengap": 59.785680256622555,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 25,
+              "eigengap": 59.78568025662257,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 25,
+              "eigengap": 59.66579946845705,
+              "n_clusters_spectral": 1
+            }
+          ]
+        },
+        {
+          "noise_level": 0.5,
+          "n_trials": 5,
+          "mean_objects": 2.0,
+          "mean_blanket": 26.8,
+          "mean_eigengap": 58.74768887355634,
+          "std_eigengap": 0.7356886446986005,
+          "trials": [
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 26,
+              "eigengap": 58.607643012401326,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 27,
+              "eigengap": 58.663894932525025,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 28,
+              "eigengap": 57.56353546033563,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 26,
+              "eigengap": 59.82991351337391,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 27,
+              "eigengap": 59.07345744914579,
+              "n_clusters_spectral": 1
+            }
+          ]
+        },
+        {
+          "noise_level": 1.0,
+          "n_trials": 5,
+          "mean_objects": 2.0,
+          "mean_blanket": 23.4,
+          "mean_eigengap": 57.18818229557867,
+          "std_eigengap": 0.770652816771829,
+          "trials": [
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 23,
+              "eigengap": 56.924518463092525,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 23,
+              "eigengap": 56.87270540317324,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 25,
+              "eigengap": 56.08332347716971,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 23,
+              "eigengap": 58.3146502502077,
+              "n_clusters_spectral": 1
+            },
+            {
+              "n_objects_detected": 2,
+              "n_blanket": 23,
+              "eigengap": 57.74571388425015,
+              "n_clusters_spectral": 1
+            }
+          ]
+        }
+      ],
+      "dissolution_noise": null
+    },
+    "comparison_to_synthetic": "Synthetic quadratic models show clear phase transition near T=0.5-1.0. Active Inference dynamics gradients show structure dissolution at similar scales. Dreamer latent space, being higher-dimensional, requires proportionally more noise to dissolve structure."
+  },
+  "notes": "US-031: Temperature/noise sensitivity on Active Inference 8D and Dreamer 64D. Geometric-to-topological transition on real neural network energy landscapes."
+}

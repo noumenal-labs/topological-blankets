@@ -1,0 +1,94 @@
+{
+  "timestamp": "2026-02-10T04:41:32.501235",
+  "experiment_name": "tb_learned_planner",
+  "config": {
+    "n_ablation_episodes": 50,
+    "goal_threshold": 0.05,
+    "approach_offset": 0.08,
+    "obs_dim": 25
+  },
+  "metrics": {
+    "fetchpush_decomposition": {
+      "n_phases": 2,
+      "has_target_object": true,
+      "approach_target_difference": 0.0,
+      "tb_phases": [
+        1,
+        2
+      ],
+      "hc_phases": [
+        1,
+        2
+      ],
+      "tb_transition_step": 10,
+      "hc_transition_step": 10,
+      "transition_step_difference": 0,
+      "tb_final_obj_dist": 0.04860682785511017,
+      "hc_final_obj_dist": 0.04860682785511017,
+      "test_passed": true
+    },
+    "fetchreach_single_phase": {
+      "n_phases": 1,
+      "has_target_object": false,
+      "phases_observed": [
+        1
+      ],
+      "objective_type": "tb_reach/move_to_goal",
+      "initial_distance": 0.22912873327732086,
+      "final_distance": 0.049128178507089615,
+      "test_passed": true
+    },
+    "causal_ordering": {
+      "causal_order": [
+        0,
+        1
+      ],
+      "gripper_id": 0,
+      "target_id": 1,
+      "reversed_order": [
+        1,
+        0
+      ],
+      "size_heuristic_order": [
+        0,
+        1
+      ],
+      "test_passed": true
+    },
+    "partition_conversion": {
+      "n_blanket": 6,
+      "n_object_0": 7,
+      "n_object_1": 12,
+      "planner_phases": 2,
+      "test_passed": true
+    },
+    "ablation": {
+      "hardcoded": {
+        "success_rate": 1.0,
+        "mean_final_distance": 0.04755480751395225,
+        "std_final_distance": 0.0014871764925287903,
+        "mean_steps_to_done": 39.0,
+        "n_successes": 50,
+        "n_episodes": 50
+      },
+      "tb_guided": {
+        "success_rate": 1.0,
+        "mean_final_distance": 0.04755480751395225,
+        "std_final_distance": 0.0014871764925287903,
+        "mean_steps_to_done": 39.0,
+        "n_successes": 50,
+        "n_episodes": 50
+      },
+      "flat_cem": {
+        "success_rate": 0.2,
+        "mean_final_distance": 0.11525488212704658,
+        "std_final_distance": 0.05540033633009654,
+        "mean_steps_to_done": 27.0,
+        "n_successes": 10,
+        "n_episodes": 50
+      }
+    },
+    "all_tests_passed": true
+  },
+  "notes": "US-084: TB-guided learned planner validation. Tests that TBGuidedPlanner produces the same decomposition as the hardcoded FetchPushSymbolicPlanner on FetchPush (approach then push), a single-phase plan on FetchReach, and compares ablation performance (hardcoded vs TB-guided vs flat CEM) over 50 synthetic episodes."
+}

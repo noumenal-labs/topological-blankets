@@ -1,0 +1,440 @@
+{
+  "experiment": "wednesday_demo",
+  "timestamp": "2026-02-10T06:07:07",
+  "config": {
+    "max_steps": 60,
+    "seed": 42,
+    "env_id": "FetchPush-v4",
+    "dry_run": false,
+    "gif_fps": 2,
+    "perturbation_step": 15,
+    "first_goal_step": 24,
+    "second_goal_step": 32,
+    "release_step": 40
+  },
+  "demo_metrics": {
+    "total_steps": 60,
+    "total_frames": 60,
+    "gif_duration_sec": 30.0,
+    "max_disagreement": 0.2207082380043523,
+    "max_severity": 0.7721364474311656,
+    "human_steps": 16,
+    "agent_steps": 44,
+    "catastrophe_within_5_of_perturbation": true,
+    "first_red_step": 15,
+    "goal_injections": 1,
+    "final_goal_distance": 0.244,
+    "task_complete": false,
+    "phases_covered": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "narrative_events": [
+    {
+      "step": 0,
+      "label": "autonomous_start",
+      "phase": 1
+    },
+    {
+      "step": 15,
+      "label": "perturbation",
+      "phase": 2
+    },
+    {
+      "step": 19,
+      "label": "uncertainty_spike",
+      "phase": 3
+    },
+    {
+      "step": 24,
+      "label": "human_takeover",
+      "phase": 4
+    },
+    {
+      "step": 40,
+      "label": "collaborative_completion",
+      "phase": 5
+    },
+    {
+      "step": 59,
+      "label": "episode_end",
+      "phase": 6
+    }
+  ],
+  "severity_timeline": [
+    {
+      "step": 0,
+      "severity": 0.0868,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 1,
+      "severity": 0.1031,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 2,
+      "severity": 0.0627,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 3,
+      "severity": 0.0894,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 4,
+      "severity": 0.0847,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 5,
+      "severity": 0.1035,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 6,
+      "severity": 0.0974,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 7,
+      "severity": 0.0895,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 8,
+      "severity": 0.0879,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 9,
+      "severity": 0.0985,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 10,
+      "severity": 0.0841,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 11,
+      "severity": 0.1013,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 12,
+      "severity": 0.0836,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 13,
+      "severity": 0.0975,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 14,
+      "severity": 0.0967,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 15,
+      "severity": 0.658,
+      "level": "red",
+      "phase": 2
+    },
+    {
+      "step": 16,
+      "severity": 0.6125,
+      "level": "red",
+      "phase": 2
+    },
+    {
+      "step": 17,
+      "severity": 0.6195,
+      "level": "red",
+      "phase": 2
+    },
+    {
+      "step": 18,
+      "severity": 0.5849,
+      "level": "yellow",
+      "phase": 3
+    },
+    {
+      "step": 19,
+      "severity": 0.7717,
+      "level": "red",
+      "phase": 3
+    },
+    {
+      "step": 20,
+      "severity": 0.7721,
+      "level": "red",
+      "phase": 3
+    },
+    {
+      "step": 21,
+      "severity": 0.742,
+      "level": "red",
+      "phase": 3
+    },
+    {
+      "step": 22,
+      "severity": 0.7361,
+      "level": "red",
+      "phase": 3
+    },
+    {
+      "step": 23,
+      "severity": 0.7303,
+      "level": "red",
+      "phase": 3
+    },
+    {
+      "step": 24,
+      "severity": 0.5328,
+      "level": "yellow",
+      "phase": 4
+    },
+    {
+      "step": 25,
+      "severity": 0.5138,
+      "level": "yellow",
+      "phase": 4
+    },
+    {
+      "step": 26,
+      "severity": 0.48,
+      "level": "yellow",
+      "phase": 4
+    },
+    {
+      "step": 27,
+      "severity": 0.4679,
+      "level": "yellow",
+      "phase": 4
+    },
+    {
+      "step": 28,
+      "severity": 0.4594,
+      "level": "yellow",
+      "phase": 4
+    },
+    {
+      "step": 29,
+      "severity": 0.436,
+      "level": "yellow",
+      "phase": 4
+    },
+    {
+      "step": 30,
+      "severity": 0.4084,
+      "level": "yellow",
+      "phase": 4
+    },
+    {
+      "step": 31,
+      "severity": 0.4077,
+      "level": "yellow",
+      "phase": 4
+    },
+    {
+      "step": 32,
+      "severity": 0.3955,
+      "level": "yellow",
+      "phase": 4
+    },
+    {
+      "step": 33,
+      "severity": 0.3671,
+      "level": "yellow",
+      "phase": 4
+    },
+    {
+      "step": 34,
+      "severity": 0.3602,
+      "level": "yellow",
+      "phase": 4
+    },
+    {
+      "step": 35,
+      "severity": 0.3257,
+      "level": "green",
+      "phase": 4
+    },
+    {
+      "step": 36,
+      "severity": 0.3181,
+      "level": "green",
+      "phase": 4
+    },
+    {
+      "step": 37,
+      "severity": 0.3104,
+      "level": "green",
+      "phase": 4
+    },
+    {
+      "step": 38,
+      "severity": 0.2889,
+      "level": "green",
+      "phase": 4
+    },
+    {
+      "step": 39,
+      "severity": 0.2792,
+      "level": "green",
+      "phase": 4
+    },
+    {
+      "step": 40,
+      "severity": 0.2075,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 41,
+      "severity": 0.1987,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 42,
+      "severity": 0.1933,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 43,
+      "severity": 0.3156,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 44,
+      "severity": 0.3156,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 45,
+      "severity": 0.3021,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 46,
+      "severity": 0.2794,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 47,
+      "severity": 0.2466,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 48,
+      "severity": 0.2411,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 49,
+      "severity": 0.247,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 50,
+      "severity": 0.2407,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 51,
+      "severity": 0.2259,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 52,
+      "severity": 0.2028,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 53,
+      "severity": 0.1902,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 54,
+      "severity": 0.1882,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 55,
+      "severity": 0.1845,
+      "level": "green",
+      "phase": 6
+    },
+    {
+      "step": 56,
+      "severity": 0.1526,
+      "level": "green",
+      "phase": 6
+    },
+    {
+      "step": 57,
+      "severity": 0.1534,
+      "level": "green",
+      "phase": 6
+    },
+    {
+      "step": 58,
+      "severity": 0.1469,
+      "level": "green",
+      "phase": 6
+    },
+    {
+      "step": 59,
+      "severity": 0.3477,
+      "level": "green",
+      "phase": 6
+    }
+  ],
+  "saved_files": [
+    "C:\\Users\\citiz\\Documents\\noumenal-labs\\lunar-lander\\topological_blankets\\ralph\\results\\2026-02-10_060701_wednesday_demo.gif",
+    "C:\\Users\\citiz\\Documents\\noumenal-labs\\lunar-lander\\topological_blankets\\ralph\\results\\2026-02-10_060701_wednesday_autonomous_start_step000.png",
+    "C:\\Users\\citiz\\Documents\\noumenal-labs\\lunar-lander\\topological_blankets\\ralph\\results\\2026-02-10_060701_wednesday_perturbation_step015.png",
+    "C:\\Users\\citiz\\Documents\\noumenal-labs\\lunar-lander\\topological_blankets\\ralph\\results\\2026-02-10_060701_wednesday_uncertainty_spike_step019.png",
+    "C:\\Users\\citiz\\Documents\\noumenal-labs\\lunar-lander\\topological_blankets\\ralph\\results\\2026-02-10_060701_wednesday_human_takeover_step024.png",
+    "C:\\Users\\citiz\\Documents\\noumenal-labs\\lunar-lander\\topological_blankets\\ralph\\results\\2026-02-10_060701_wednesday_collaborative_completion_step040.png",
+    "C:\\Users\\citiz\\Documents\\noumenal-labs\\lunar-lander\\topological_blankets\\ralph\\results\\2026-02-10_060701_wednesday_episode_end_step059.png"
+  ]
+}

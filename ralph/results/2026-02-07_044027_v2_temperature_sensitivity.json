@@ -1,0 +1,1228 @@
+{
+  "timestamp": "2026-02-07T04:40:27.523918",
+  "experiment_name": "v2_temperature_sensitivity",
+  "config": {
+    "version": "v2",
+    "temperatures": [
+      0.01,
+      0.05,
+      0.1,
+      0.5,
+      1.0,
+      2.0
+    ],
+    "n_trials": 5,
+    "blanket_strength": 0.8,
+    "tc_methods": [
+      "gradient",
+      "spectral",
+      "hybrid",
+      "coupling"
+    ],
+    "n_objects": 2,
+    "vars_per_object": 3
+  },
+  "metrics": {
+    "0.01": {
+      "gradient": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 0.0,
+            "blanket_f1": 0.5,
+            "full_ari": 0.22580645161290322
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          }
+        ],
+        "mean_ari": 0.8,
+        "std_ari": 0.4,
+        "mean_f1": 0.86,
+        "std_f1": 0.19595917942265426
+      },
+      "spectral": {
+        "per_trial": [
+          {
+            "object_ari": 0.16666666666666666,
+            "blanket_f1": 0.6,
+            "full_ari": 0.07692307692307693
+          },
+          {
+            "object_ari": 0.0,
+            "blanket_f1": 0.4,
+            "full_ari": -0.02564102564102564
+          },
+          {
+            "object_ari": 0.16666666666666666,
+            "blanket_f1": 0.6,
+            "full_ari": 0.07692307692307693
+          },
+          {
+            "object_ari": -0.1111111111111111,
+            "blanket_f1": 0.6,
+            "full_ari": -0.02564102564102564
+          },
+          {
+            "object_ari": 0.16666666666666666,
+            "blanket_f1": 0.6,
+            "full_ari": 0.07692307692307693
+          }
+        ],
+        "mean_ari": 0.07777777777777777,
+        "std_ari": 0.11439589045541111,
+        "mean_f1": 0.56,
+        "std_f1": 0.07999999999999999
+      },
+      "hybrid": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 0.0,
+            "blanket_f1": 0.5,
+            "full_ari": 0.22580645161290322
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          }
+        ],
+        "mean_ari": 0.8,
+        "std_ari": 0.4,
+        "mean_f1": 0.86,
+        "std_f1": 0.19595917942265426
+      },
+      "coupling": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 0.0,
+            "blanket_f1": 1.0,
+            "full_ari": 0.4838709677419355
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.0,
+            "full_ari": 1.0
+          }
+        ],
+        "mean_ari": 0.8,
+        "std_ari": 0.4,
+        "mean_f1": 0.4,
+        "std_f1": 0.48989794855663565
+      },
+      "dmbd": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 0.0,
+            "blanket_f1": 1.0,
+            "full_ari": 0.4838709677419355
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          }
+        ],
+        "mean_ari": 0.8,
+        "std_ari": 0.4,
+        "mean_f1": 1.0,
+        "std_f1": 0.0
+      },
+      "axiom": {
+        "per_trial": [
+          {
+            "object_ari": 0.11764705882352941,
+            "blanket_f1": 0.0,
+            "full_ari": 0.35714285714285715
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.5,
+            "full_ari": 0.4838709677419355
+          },
+          {
+            "object_ari": 0.32432432432432434,
+            "blanket_f1": 0.0,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 0.7058823529411765,
+            "blanket_f1": 0.0,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.0,
+            "full_ari": 1.0
+          }
+        ],
+        "mean_ari": 0.629570747217806,
+        "std_ari": 0.356510971845214,
+        "mean_f1": 0.1,
+        "std_f1": 0.20000000000000004
+      }
+    },
+    "0.05": {
+      "gradient": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          }
+        ],
+        "mean_ari": 1.0,
+        "std_ari": 0.0,
+        "mean_f1": 0.96,
+        "std_f1": 0.07999999999999999
+      },
+      "spectral": {
+        "per_trial": [
+          {
+            "object_ari": 0.16666666666666666,
+            "blanket_f1": 0.6,
+            "full_ari": 0.07692307692307693
+          },
+          {
+            "object_ari": 0.7058823529411765,
+            "blanket_f1": 0.0,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": -0.1111111111111111,
+            "blanket_f1": 0.6,
+            "full_ari": -0.02564102564102564
+          },
+          {
+            "object_ari": 0.7058823529411765,
+            "blanket_f1": 0.4,
+            "full_ari": 0.26666666666666666
+          },
+          {
+            "object_ari": -0.1111111111111111,
+            "blanket_f1": 0.6,
+            "full_ari": -0.02564102564102564
+          }
+        ],
+        "mean_ari": 0.2712418300653595,
+        "std_ari": 0.3690930170848497,
+        "mean_f1": 0.44000000000000006,
+        "std_f1": 0.233238075793812
+      },
+      "hybrid": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 0.7058823529411765,
+            "blanket_f1": 0.0,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 0.7058823529411765,
+            "blanket_f1": 0.4,
+            "full_ari": 0.26666666666666666
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          }
+        ],
+        "mean_ari": 0.8823529411764707,
+        "std_ari": 0.14408763192842222,
+        "mean_f1": 0.6799999999999999,
+        "std_f1": 0.41182520563948
+      },
+      "coupling": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          }
+        ],
+        "mean_ari": 1.0,
+        "std_ari": 0.0,
+        "mean_f1": 0.8,
+        "std_f1": 0.4
+      },
+      "dmbd": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          }
+        ],
+        "mean_ari": 1.0,
+        "std_ari": 0.0,
+        "mean_f1": 1.0,
+        "std_f1": 0.0
+      },
+      "axiom": {
+        "per_trial": [
+          {
+            "object_ari": 0.32432432432432434,
+            "blanket_f1": 0.0,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.5,
+            "full_ari": 0.4838709677419355
+          },
+          {
+            "object_ari": 0.7058823529411765,
+            "blanket_f1": 0.6666666666666666,
+            "full_ari": 0.4074074074074074
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 0.7058823529411765,
+            "blanket_f1": 0.6666666666666666,
+            "full_ari": 0.35714285714285715
+          }
+        ],
+        "mean_ari": 0.7472178060413355,
+        "std_ari": 0.2490196022042597,
+        "mean_f1": 0.3666666666666666,
+        "std_f1": 0.30550504633038933
+      }
+    },
+    "0.1": {
+      "gradient": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          }
+        ],
+        "mean_ari": 1.0,
+        "std_ari": 0.0,
+        "mean_f1": 0.96,
+        "std_f1": 0.07999999999999999
+      },
+      "spectral": {
+        "per_trial": [
+          {
+            "object_ari": 0.16666666666666666,
+            "blanket_f1": 0.6,
+            "full_ari": 0.07692307692307693
+          },
+          {
+            "object_ari": -0.1111111111111111,
+            "blanket_f1": 0.6,
+            "full_ari": -0.02564102564102564
+          },
+          {
+            "object_ari": 0.7058823529411765,
+            "blanket_f1": 0.4,
+            "full_ari": 0.35714285714285715
+          },
+          {
+            "object_ari": 0.7058823529411765,
+            "blanket_f1": 0.4,
+            "full_ari": 0.26666666666666666
+          },
+          {
+            "object_ari": -0.1111111111111111,
+            "blanket_f1": 0.6,
+            "full_ari": -0.02564102564102564
+          }
+        ],
+        "mean_ari": 0.2712418300653595,
+        "std_ari": 0.3690930170848497,
+        "mean_f1": 0.52,
+        "std_f1": 0.0979795897113271
+      },
+      "hybrid": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 0.7058823529411765,
+            "blanket_f1": 0.4,
+            "full_ari": 0.35714285714285715
+          },
+          {
+            "object_ari": 0.7058823529411765,
+            "blanket_f1": 0.4,
+            "full_ari": 0.26666666666666666
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          }
+        ],
+        "mean_ari": 0.8823529411764707,
+        "std_ari": 0.14408763192842222,
+        "mean_f1": 0.76,
+        "std_f1": 0.29393876913398137
+      },
+      "coupling": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          }
+        ],
+        "mean_ari": 1.0,
+        "std_ari": 0.0,
+        "mean_f1": 1.0,
+        "std_f1": 0.0
+      },
+      "dmbd": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          }
+        ],
+        "mean_ari": 1.0,
+        "std_ari": 0.0,
+        "mean_f1": 1.0,
+        "std_f1": 0.0
+      },
+      "axiom": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.5,
+            "full_ari": 0.4838709677419355
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 0.7058823529411765,
+            "blanket_f1": 0.6666666666666666,
+            "full_ari": 0.35714285714285715
+          },
+          {
+            "object_ari": 0.32432432432432434,
+            "blanket_f1": 0.0,
+            "full_ari": 0.6428571428571429
+          }
+        ],
+        "mean_ari": 0.8060413354531002,
+        "std_ari": 0.26643685602675743,
+        "mean_f1": 0.5533333333333333,
+        "std_f1": 0.2978441053825157
+      }
+    },
+    "0.5": {
+      "gradient": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          }
+        ],
+        "mean_ari": 1.0,
+        "std_ari": 0.0,
+        "mean_f1": 0.8800000000000001,
+        "std_f1": 0.0979795897113271
+      },
+      "spectral": {
+        "per_trial": [
+          {
+            "object_ari": -0.1111111111111111,
+            "blanket_f1": 0.6,
+            "full_ari": -0.02564102564102564
+          },
+          {
+            "object_ari": -0.1111111111111111,
+            "blanket_f1": 0.6,
+            "full_ari": -0.02564102564102564
+          },
+          {
+            "object_ari": -0.1111111111111111,
+            "blanket_f1": 0.6,
+            "full_ari": -0.02564102564102564
+          },
+          {
+            "object_ari": -0.1111111111111111,
+            "blanket_f1": 0.6,
+            "full_ari": -0.02564102564102564
+          },
+          {
+            "object_ari": -0.1111111111111111,
+            "blanket_f1": 0.6,
+            "full_ari": -0.02564102564102564
+          }
+        ],
+        "mean_ari": -0.11111111111111112,
+        "std_ari": 1.3877787807814457e-17,
+        "mean_f1": 0.6,
+        "std_f1": 0.0
+      },
+      "hybrid": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          }
+        ],
+        "mean_ari": 1.0,
+        "std_ari": 0.0,
+        "mean_f1": 0.8800000000000001,
+        "std_f1": 0.0979795897113271
+      },
+      "coupling": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          }
+        ],
+        "mean_ari": 1.0,
+        "std_ari": 0.0,
+        "mean_f1": 1.0,
+        "std_f1": 0.0
+      },
+      "dmbd": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          }
+        ],
+        "mean_ari": 1.0,
+        "std_ari": 0.0,
+        "mean_f1": 1.0,
+        "std_f1": 0.0
+      },
+      "axiom": {
+        "per_trial": [
+          {
+            "object_ari": 0.7058823529411765,
+            "blanket_f1": 0.6666666666666666,
+            "full_ari": 0.4074074074074074
+          },
+          {
+            "object_ari": 0.7058823529411765,
+            "blanket_f1": 0.8571428571428571,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 0.11764705882352941,
+            "blanket_f1": 0.0,
+            "full_ari": 0.35714285714285715
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.5,
+            "full_ari": 0.4838709677419355
+          }
+        ],
+        "mean_ari": 0.7058823529411765,
+        "std_ari": 0.32218973970892123,
+        "mean_f1": 0.5647619047619047,
+        "std_f1": 0.30801242723110733
+      }
+    },
+    "1.0": {
+      "gradient": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          }
+        ],
+        "mean_ari": 1.0,
+        "std_ari": 0.0,
+        "mean_f1": 0.8800000000000001,
+        "std_f1": 0.0979795897113271
+      },
+      "spectral": {
+        "per_trial": [
+          {
+            "object_ari": -0.1111111111111111,
+            "blanket_f1": 0.6,
+            "full_ari": -0.02564102564102564
+          },
+          {
+            "object_ari": -0.1111111111111111,
+            "blanket_f1": 0.6,
+            "full_ari": -0.02564102564102564
+          },
+          {
+            "object_ari": 0.16666666666666666,
+            "blanket_f1": 0.6,
+            "full_ari": 0.07692307692307693
+          },
+          {
+            "object_ari": -0.1111111111111111,
+            "blanket_f1": 0.6,
+            "full_ari": -0.02564102564102564
+          },
+          {
+            "object_ari": -0.1111111111111111,
+            "blanket_f1": 0.6,
+            "full_ari": -0.02564102564102564
+          }
+        ],
+        "mean_ari": -0.05555555555555556,
+        "std_ari": 0.1111111111111111,
+        "mean_f1": 0.6,
+        "std_f1": 0.0
+      },
+      "hybrid": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          }
+        ],
+        "mean_ari": 1.0,
+        "std_ari": 0.0,
+        "mean_f1": 0.8800000000000001,
+        "std_f1": 0.0979795897113271
+      },
+      "coupling": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          }
+        ],
+        "mean_ari": 1.0,
+        "std_ari": 0.0,
+        "mean_f1": 1.0,
+        "std_f1": 0.0
+      },
+      "dmbd": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          }
+        ],
+        "mean_ari": 1.0,
+        "std_ari": 0.0,
+        "mean_f1": 1.0,
+        "std_f1": 0.0
+      },
+      "axiom": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 0.7058823529411765,
+            "blanket_f1": 0.8571428571428571,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.5,
+            "full_ari": 0.4838709677419355
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.5,
+            "full_ari": 0.4838709677419355
+          },
+          {
+            "object_ari": 0.7058823529411765,
+            "blanket_f1": 0.6666666666666666,
+            "full_ari": 0.35714285714285715
+          }
+        ],
+        "mean_ari": 0.8823529411764707,
+        "std_ari": 0.14408763192842222,
+        "mean_f1": 0.6647619047619047,
+        "std_f1": 0.14805159363011677
+      }
+    },
+    "2.0": {
+      "gradient": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          }
+        ],
+        "mean_ari": 1.0,
+        "std_ari": 0.0,
+        "mean_f1": 0.8800000000000001,
+        "std_f1": 0.0979795897113271
+      },
+      "spectral": {
+        "per_trial": [
+          {
+            "object_ari": -0.1111111111111111,
+            "blanket_f1": 0.6,
+            "full_ari": -0.02564102564102564
+          },
+          {
+            "object_ari": -0.1111111111111111,
+            "blanket_f1": 0.6,
+            "full_ari": -0.02564102564102564
+          },
+          {
+            "object_ari": -0.1111111111111111,
+            "blanket_f1": 0.6,
+            "full_ari": -0.02564102564102564
+          },
+          {
+            "object_ari": -0.1111111111111111,
+            "blanket_f1": 0.6,
+            "full_ari": -0.02564102564102564
+          },
+          {
+            "object_ari": -0.1111111111111111,
+            "blanket_f1": 0.6,
+            "full_ari": -0.02564102564102564
+          }
+        ],
+        "mean_ari": -0.11111111111111112,
+        "std_ari": 1.3877787807814457e-17,
+        "mean_f1": 0.6,
+        "std_f1": 0.0
+      },
+      "hybrid": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          }
+        ],
+        "mean_ari": 1.0,
+        "std_ari": 0.0,
+        "mean_f1": 0.8800000000000001,
+        "std_f1": 0.0979795897113271
+      },
+      "coupling": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          }
+        ],
+        "mean_ari": 1.0,
+        "std_ari": 0.0,
+        "mean_f1": 1.0,
+        "std_f1": 0.0
+      },
+      "dmbd": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 1.0,
+            "full_ari": 1.0
+          }
+        ],
+        "mean_ari": 1.0,
+        "std_ari": 0.0,
+        "mean_f1": 1.0,
+        "std_f1": 0.0
+      },
+      "axiom": {
+        "per_trial": [
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.8,
+            "full_ari": 0.6428571428571429
+          },
+          {
+            "object_ari": 1.0,
+            "blanket_f1": 0.5,
+            "full_ari": 0.4838709677419355
+          }
+        ],
+        "mean_ari": 1.0,
+        "std_ari": 0.0,
+        "mean_f1": 0.74,
+        "std_f1": 0.12000000000000002
+      }
+    }
+  },
+  "notes": "US-016: v2 temperature sweep with all TC methods + improved baselines."
+}

@@ -1,0 +1,68 @@
+{
+  "timestamp": "2026-02-07T08:46:44.081123",
+  "experiment_name": "pixel_agent_diagnosis",
+  "config": {
+    "checkpoint": "C:\\Users\\citiz\\Documents\\lunar-lander\\trained_agents\\pixel_lunarlander_best.tar",
+    "agent_version": "V1"
+  },
+  "metrics": {
+    "checkpoint": {
+      "path": "C:\\Users\\citiz\\Documents\\lunar-lander\\trained_agents\\pixel_lunarlander_best.tar",
+      "exists": true,
+      "issues": [],
+      "loaded": true,
+      "keys": [
+        "encoder",
+        "ensemble",
+        "reward_model",
+        "config",
+        "pixel_config",
+        "episode"
+      ],
+      "episode": 299
+    },
+    "imports": {
+      "issues": [],
+      "all_pass": true
+    },
+    "agent_loading": {
+      "issues": [],
+      "loaded": true
+    },
+    "environment": {
+      "issues": [],
+      "all_pass": true
+    },
+    "encoding": {
+      "issues": [],
+      "all_pass": true
+    },
+    "episode": {
+      "total_reward": -128.82237215806595,
+      "n_steps": 89,
+      "latent_shape": [
+        89,
+        64
+      ],
+      "latent_active_dims": 0
+    },
+    "multi_episode": {
+      "n_episodes": 5,
+      "rewards": [
+        -128.82237215806595,
+        -161.08618651103956,
+        -97.96646387679019,
+        -168.9102570356792,
+        -93.40347171247876
+      ],
+      "mean_reward": -130.03775025881075,
+      "std_reward": 31.135806061709683,
+      "total_transitions": 376,
+      "latent_active_dims": 0
+    },
+    "status": "PASS",
+    "summary": "V1 pixel agent loads and runs. No fixes needed.",
+    "all_issues": []
+  },
+  "notes": "US-040: Pixel agent V1 diagnosis. Tested checkpoint loading, imports, encoding, and episode collection."
+}

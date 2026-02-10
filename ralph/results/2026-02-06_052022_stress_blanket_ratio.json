@@ -1,0 +1,237 @@
+{
+  "timestamp": "2026-02-06T05:20:22.285908",
+  "experiment_name": "stress_blanket_ratio",
+  "config": {
+    "n_trials": 5,
+    "intra_strength": 6.0,
+    "blanket_strength": 0.8
+  },
+  "metrics": {
+    "Tiny blanket: 1 var": {
+      "n_objects": 2,
+      "vars_per_object": 5,
+      "vars_per_blanket": 1,
+      "total_dimension": 11,
+      "blanket_ratio": 0.1,
+      "mean_ari": 1.0,
+      "std_ari": 0.0,
+      "mean_f1": 1.0,
+      "std_f1": 0.0,
+      "per_trial_ari": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "per_trial_f1": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "Small blanket: 2 vars": {
+      "n_objects": 2,
+      "vars_per_object": 5,
+      "vars_per_blanket": 2,
+      "total_dimension": 12,
+      "blanket_ratio": 0.2,
+      "mean_ari": 1.0,
+      "std_ari": 0.0,
+      "mean_f1": 0.7999999999999999,
+      "std_f1": 0.16329931618554522,
+      "per_trial_ari": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "per_trial_f1": [
+        1.0,
+        0.6666666666666666,
+        0.6666666666666666,
+        0.6666666666666666,
+        1.0
+      ]
+    },
+    "Equal blanket: 5 vars (=vpo)": {
+      "n_objects": 2,
+      "vars_per_object": 5,
+      "vars_per_blanket": 5,
+      "total_dimension": 15,
+      "blanket_ratio": 0.5,
+      "mean_ari": 1.0,
+      "std_ari": 0.0,
+      "mean_f1": 0.9777777777777779,
+      "std_f1": 0.04444444444444447,
+      "per_trial_ari": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "per_trial_f1": [
+        1.0,
+        1.0,
+        0.8888888888888888,
+        1.0,
+        1.0
+      ]
+    },
+    "Large blanket: 8 vars": {
+      "n_objects": 2,
+      "vars_per_object": 5,
+      "vars_per_blanket": 8,
+      "total_dimension": 18,
+      "blanket_ratio": 0.8,
+      "mean_ari": 1.0,
+      "std_ari": 0.0,
+      "mean_f1": 0.9466666666666667,
+      "std_f1": 0.02666666666666666,
+      "per_trial_ari": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "per_trial_f1": [
+        0.9333333333333333,
+        0.9333333333333333,
+        1.0,
+        0.9333333333333333,
+        0.9333333333333333
+      ]
+    },
+    "Huge blanket: 10 vars (=total internal)": {
+      "n_objects": 2,
+      "vars_per_object": 5,
+      "vars_per_blanket": 10,
+      "total_dimension": 20,
+      "blanket_ratio": 1.0,
+      "mean_ari": 1.0,
+      "std_ari": 0.0,
+      "mean_f1": 0.9578947368421054,
+      "std_f1": 0.02105263157894739,
+      "per_trial_ari": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "per_trial_f1": [
+        0.9473684210526315,
+        0.9473684210526315,
+        0.9473684210526315,
+        1.0,
+        0.9473684210526315
+      ]
+    },
+    "Oversized blanket: 15 vars (> internal)": {
+      "n_objects": 2,
+      "vars_per_object": 5,
+      "vars_per_blanket": 15,
+      "total_dimension": 25,
+      "blanket_ratio": 1.5,
+      "mean_ari": 0.0,
+      "std_ari": 0.0,
+      "mean_f1": 0.06153846153846154,
+      "std_f1": 0.03076923076923077,
+      "per_trial_ari": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "per_trial_f1": [
+        0.07692307692307693,
+        0.0,
+        0.07692307692307693,
+        0.07692307692307693,
+        0.07692307692307693
+      ]
+    },
+    "3obj, tiny blanket: 1 var": {
+      "n_objects": 3,
+      "vars_per_object": 4,
+      "vars_per_blanket": 1,
+      "total_dimension": 13,
+      "blanket_ratio": 0.083,
+      "mean_ari": 1.0,
+      "std_ari": 0.0,
+      "mean_f1": 1.0,
+      "std_f1": 0.0,
+      "per_trial_ari": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "per_trial_f1": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "3obj, equal blanket: 6 vars (=vpo*1.5)": {
+      "n_objects": 3,
+      "vars_per_object": 4,
+      "vars_per_blanket": 6,
+      "total_dimension": 18,
+      "blanket_ratio": 0.5,
+      "mean_ari": 1.0,
+      "std_ari": 0.0,
+      "mean_f1": 0.9636363636363636,
+      "std_f1": 0.04453617714151235,
+      "per_trial_ari": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "per_trial_f1": [
+        0.9090909090909091,
+        1.0,
+        1.0,
+        0.9090909090909091,
+        1.0
+      ]
+    },
+    "3obj, huge blanket: 12 vars (=total internal)": {
+      "n_objects": 3,
+      "vars_per_object": 4,
+      "vars_per_blanket": 12,
+      "total_dimension": 24,
+      "blanket_ratio": 1.0,
+      "mean_ari": 1.0,
+      "std_ari": 0.0,
+      "mean_f1": 0.9540372670807453,
+      "std_f1": 0.052203481712921,
+      "per_trial_ari": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "per_trial_f1": [
+        0.9565217391304348,
+        0.8571428571428571,
+        1.0,
+        1.0,
+        0.9565217391304348
+      ]
+    }
+  },
+  "notes": "Stress test: blanket size from 1 var to > total internal"
+}

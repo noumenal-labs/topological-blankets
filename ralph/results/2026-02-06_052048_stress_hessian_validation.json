@@ -1,0 +1,82 @@
+{
+  "timestamp": "2026-02-06T05:20:48.184638",
+  "experiment_name": "stress_hessian_validation",
+  "config": {
+    "intra_strength": 6.0,
+    "blanket_strength": 0.8,
+    "temp": 0.1
+  },
+  "metrics": {
+    "Small (dim=9, 3k samples)": {
+      "n_objects": 2,
+      "vars_per_object": 3,
+      "total_dimension": 9,
+      "n_samples": 3000,
+      "frobenius_relative_error": 0.0824,
+      "sparsity_pattern_match": 1.0,
+      "coupling_correlation": 0.9838,
+      "sampling_time_s": 0.69
+    },
+    "Small (dim=9, 10k samples)": {
+      "n_objects": 2,
+      "vars_per_object": 3,
+      "total_dimension": 9,
+      "n_samples": 10000,
+      "frobenius_relative_error": 0.0476,
+      "sparsity_pattern_match": 1.0,
+      "coupling_correlation": 0.9967,
+      "sampling_time_s": 2.01
+    },
+    "Small (dim=9, 50k samples)": {
+      "n_objects": 2,
+      "vars_per_object": 3,
+      "total_dimension": 9,
+      "n_samples": 50000,
+      "frobenius_relative_error": 0.0195,
+      "sparsity_pattern_match": 1.0,
+      "coupling_correlation": 0.9991,
+      "sampling_time_s": 10.11
+    },
+    "Medium (dim=18, 5k samples)": {
+      "n_objects": 3,
+      "vars_per_object": 5,
+      "total_dimension": 18,
+      "n_samples": 5000,
+      "frobenius_relative_error": 0.2157,
+      "sparsity_pattern_match": 0.9753,
+      "coupling_correlation": 0.9012,
+      "sampling_time_s": 1.02
+    },
+    "Medium (dim=18, 20k samples)": {
+      "n_objects": 3,
+      "vars_per_object": 5,
+      "total_dimension": 18,
+      "n_samples": 20000,
+      "frobenius_relative_error": 0.0764,
+      "sparsity_pattern_match": 1.0,
+      "coupling_correlation": 0.9872,
+      "sampling_time_s": 4.24
+    },
+    "Large (dim=30, 5k samples)": {
+      "n_objects": 5,
+      "vars_per_object": 5,
+      "total_dimension": 30,
+      "n_samples": 5000,
+      "frobenius_relative_error": 0.2653,
+      "sparsity_pattern_match": 0.9689,
+      "coupling_correlation": 0.8591,
+      "sampling_time_s": 1.13
+    },
+    "Large (dim=30, 30k samples)": {
+      "n_objects": 5,
+      "vars_per_object": 5,
+      "total_dimension": 30,
+      "n_samples": 30000,
+      "frobenius_relative_error": 0.0601,
+      "sparsity_pattern_match": 1.0,
+      "coupling_correlation": 0.9936,
+      "sampling_time_s": 6.68
+    }
+  },
+  "notes": "Stress test: gradient covariance vs true Hessian"
+}

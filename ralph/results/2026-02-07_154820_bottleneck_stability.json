@@ -1,0 +1,167 @@
+{
+  "timestamp": "2026-02-07T15:48:20.491668",
+  "experiment_name": "bottleneck_stability",
+  "config": {
+    "standard_cfg": {
+      "n_objects": 3,
+      "vars_per_object": 4,
+      "vars_per_blanket": 3,
+      "blanket_strength": 0.8
+    },
+    "delta": 0.05,
+    "C_calibrated": 20.017801563717523,
+    "L_estimated": 1.08725128137137
+  },
+  "metrics": {
+    "concentration_calibration": {
+      "C_calibrated": 20.017801563717523,
+      "H_op_norm": 42.612561314486356,
+      "results_per_N": {
+        "200": {
+          "mean_error": 77.53512372586047,
+          "std_error": 2.7878530736942304,
+          "p95_error": 81.40917497618021,
+          "max_error": 88.20418518388111
+        },
+        "500": {
+          "mean_error": 77.90915606163183,
+          "std_error": 1.673874174431448,
+          "p95_error": 79.78359508283052,
+          "max_error": 79.98255770693048
+        },
+        "1000": {
+          "mean_error": 79.08926967438596,
+          "std_error": 1.0999251584473866,
+          "p95_error": 80.44030474615707,
+          "max_error": 80.86920731443315
+        },
+        "2000": {
+          "mean_error": 80.08052487322833,
+          "std_error": 0.6348324108182604,
+          "p95_error": 80.73619207905915,
+          "max_error": 80.85165106860944
+        },
+        "5000": {
+          "mean_error": 80.71340450852125,
+          "std_error": 0.2653312954985604,
+          "p95_error": 80.99062475565758,
+          "max_error": 81.00746131509158
+        }
+      },
+      "ratios_mean": 10.242063768229295,
+      "ratios_p95": 20.017801563717523
+    },
+    "lipschitz_estimation": {
+      "L_estimated": 1.08725128137137,
+      "L_mean": 0.03305373256081086,
+      "L_median": 0.024959188920742066,
+      "L_p95": 0.07259792743987593,
+      "n_perturbations": 80
+    },
+    "standard_quadratic_d15": {
+      "N": 5000,
+      "d": 15,
+      "delta": 0.05,
+      "tau": 175.84339869854074,
+      "epsilon": 80.86603424221595,
+      "max_persistence": 1.8828871386481074,
+      "persistence_to_tau_ratio": 0.010707749921713342,
+      "n_significant": 0,
+      "n_total_features": 14
+    },
+    "sample_size_sweep": {
+      "d": 15,
+      "delta": 0.05,
+      "crossover_N": null,
+      "results": [
+        {
+          "N": 100,
+          "tau": 1243.4005964662788,
+          "epsilon": 571.8092118033445,
+          "n_features_above_tau": 0,
+          "n_features_total": 14,
+          "fraction_above_tau": 0.0,
+          "max_persistence": 1.719243350731984,
+          "median_persistence": 1.3687761436829002
+        },
+        {
+          "N": 200,
+          "tau": 879.2169934927038,
+          "epsilon": 404.33017121107974,
+          "n_features_above_tau": 0,
+          "n_features_total": 14,
+          "fraction_above_tau": 0.0,
+          "max_persistence": 1.812931455823171,
+          "median_persistence": 1.5111398952792003
+        },
+        {
+          "N": 500,
+          "tau": 556.0656513924769,
+          "epsilon": 255.7208535505707,
+          "n_features_above_tau": 0,
+          "n_features_total": 14,
+          "fraction_above_tau": 0.0,
+          "max_persistence": 1.7333076101542293,
+          "median_persistence": 1.6520398896079893
+        },
+        {
+          "N": 1000,
+          "tau": 393.1977928845351,
+          "epsilon": 180.82194963642053,
+          "n_features_above_tau": 0,
+          "n_features_total": 14,
+          "fraction_above_tau": 0.0,
+          "max_persistence": 1.8333416932742335,
+          "median_persistence": 1.6834707043067438
+        },
+        {
+          "N": 2000,
+          "tau": 278.03282569623843,
+          "epsilon": 127.86042677528535,
+          "n_features_above_tau": 0,
+          "n_features_total": 14,
+          "fraction_above_tau": 0.0,
+          "max_persistence": 1.8880850488311252,
+          "median_persistence": 1.685829465861553
+        },
+        {
+          "N": 5000,
+          "tau": 175.84339869854074,
+          "epsilon": 80.86603424221595,
+          "n_features_above_tau": 0,
+          "n_features_total": 14,
+          "fraction_above_tau": 0.0,
+          "max_persistence": 1.8828871386481074,
+          "median_persistence": 1.7081860370451913
+        },
+        {
+          "N": 10000,
+          "tau": 124.34005964662788,
+          "epsilon": 57.18092118033445,
+          "n_features_above_tau": 0,
+          "n_features_total": 14,
+          "fraction_above_tau": 0.0,
+          "max_persistence": 1.8885835248700518,
+          "median_persistence": 1.7182880541482954
+        }
+      ]
+    },
+    "minimum_sample_sizes": {
+      "d8_LunarLander": {
+        "d": 8,
+        "N_min": 1000000,
+        "target_persistence": 1.8252196042098012,
+        "L": 6.7237545156941305,
+        "H_op_norm": 30.28150935130111
+      },
+      "d64_Dreamer": {
+        "d": 64,
+        "N_min": 54207,
+        "target_persistence": 1.8586655712846505,
+        "L": 0.009489344002121725,
+        "H_op_norm": 82.2626900554195
+      }
+    }
+  },
+  "notes": "US-073: Bottleneck stability guarantees. Chain: (1) Vershynin covariance concentration -> (2) Lipschitz coupling-to-filtration -> (3) Cohen-Steiner bottleneck stability. Result: tau(N=5000, d=15, delta=0.05) = 175.843399. Max persistence / tau = 0.01x. Min N for d=8: 1000000, d=64: 54207."
+}

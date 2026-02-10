@@ -1,0 +1,289 @@
+# Ralph Progress Log
+# Topological Blankets: World Model Demo
+# ========================================
+
+## 2026-02-10: US-089 -- Define standardized benchmark protocol and evaluation suite
+
+### Files created:
+- ralph/experiments/benchmark_suite.py: BenchmarkSuite class implementing the
+  standardized evaluation protocol for structure discovery methods.
+
+### Implementation details:
+- BenchmarkSuite.register_method(name, callable) registers a method that takes
+  (samples, gradients) and returns a label array (-1 for blanket).
+- BenchmarkSuite.register_dataset(name, data_generator, ground_truth) registers
+  a dataset with seed-parameterized generators for reproducibility.
+- BenchmarkSuite.run(n_seeds=10) runs all (method, dataset, seed) triples with
+  timing (time.perf_counter) and memory tracking (tracemalloc).
+- Metrics per run: ARI, blanket_F1, NMI, wall_clock_seconds, peak_memory_mb.
+- Statistical comparison: paired t-test (n>=10) or Wilcoxon (n<10) across seeds,
+  with Cohen's d effect size (negligible/small/medium/large).
+- Output: results JSON (raw + summary), formatted summary table, radar chart PNG.
+- 5 benchmark datasets registered:
+  (1) quadratic_ebm_8d: 2 objects x 3 vars + 3 blanket = 9D
+  (2) quadratic_ebm_50d: 5 objects x 8 vars + 10 blanket = 50D
+  (3) lunarlander_8d: 3 objects x 2 vars + 2 blanket = 8D
+  (4) fetchpush_25d: 2 objects x 10 vars + 5 blanket = 25D
+  (5) ising_6x6: 36 spins, domain walls as blankets
+- TB registered as default method (both hybrid and gradient variants).
+- Protocol documented in header docstring.
+
+### Quick test (n_seeds=3):
+- All 5 datasets and 2 methods ran without errors.
+- Results JSON and radar chart PNG saved to results/.
+- Quadratic EBM 8D: ARI=1.000 (gradient), 0.902 (hybrid).
+- FetchPush 25D: blanket_F1=0.926 for both methods.
+- Ising 6x6: low metrics expected (stochastic domain walls at finite lattice size).
+
+## 2026-02-10: US-087 -- Uncertainty-Guided Replay Weighting from TB Partition
+
+### Files created:
+- panda/tb_replay.py (in pandas repo): TBWeightedSampler class with structural
+  surprise computation, per-sample coupling matrices from ensemble Jacobians,
+  configurable boost factor / temperature / min_weight, and diagnostics
+- ralph/experiments/tb_replay_comparison.py: A/B comparison training script,
+  15 iterations x 100 steps on FetchPush-v4
+
+### Results:
+- Structural surprise: Frobenius norm of coupling matrix change between consecutive
+  timesteps within each episode. Mean surprise = 3.01, max = 4.42.
+- Weight distribution: ESS ratio = 0.989 (near-uniform, expected for random
+  exploration data; real training would produce sharper differentiation).
+  Boost ratio = 1.44x for highest-surprise transitions.
+- Training loss convergence: TB-weighted condition converges faster in raw
+  training loss (0.028 vs 0.045 at iteration 14).
+- AUC-based convergence gain: +1.4% (modest, expected for stretch goal with
+  random exploration data rather than on-policy experience).
+- Plots saved: learning_curves.png, surprise_distribution.png,
+  convergence_comparison.png
+- Results JSON saved with full per-iteration metrics for both conditions.
+
+### Key design decisions:
+- TBWeightedSampler.compute_per_sample_coupling() builds per-transition coupling
+  matrices from ensemble Jacobians via J^T @ J averaged over members
+- compute_structural_surprise() handles episode boundaries correctly, assigning
+  mean episode surprise to first transitions (no predecessor)
+- Weight formula: min_weight + (boost_factor - min_weight) * (s_norm^temperature),
+  producing 2-3x boost for high-surprise transitions
+- Periodic recomputation of TB weights every 5 iterations as model changes
+- Transitions not in Jacobian sample get mean weight (graceful degradation)
+- weight_statistics() provides ESS, boost ratio, concentration metrics
+
+### PRD updated: US-087 passes = true
+
+## 2026-02-10: US-084 -- Learned Symbolic Planner via TB-Guided Goal Decomposition
+
+### Files created:
+- panda/learned_planner.py (in pandas repo): TBGuidedPlanner class with TBPartition,
+  TBGuidedPlannerConfig, causal ordering inference, and per-object subgoal sequencing
+- ralph/experiments/tb_learned_planner_test.py: Validation and ablation test script
+
+### Results:
+- FetchPush decomposition: TB-guided planner produces identical phase sequence to
+  hardcoded planner (approach then push). Zero difference in approach targets,
+  identical phase transition timing (step 10), identical final distances (0.0486).
+- FetchReach: Single-phase plan (reach only, no push phase). Correct for tasks
+  with a single controllable object.
+- Causal ordering: Correctly infers upstream (gripper) from coupling matrix strength,
+  falls back to size heuristic when coupling matrix unavailable.
+- Ablation (50 synthetic episodes):
+  - Hardcoded:  100% success, mean dist=0.0476, mean steps=39.0
+  - TB-guided:  100% success, mean dist=0.0476, mean steps=39.0
+  - Flat CEM:    20% success, mean dist=0.1153, mean steps=27.0
+- Plots: phase comparison and ablation bar charts saved to results/
+
+### Key design decisions:
+- TBPartition dataclass holds objects (dict[int, list[int]]), blanket (list[int]),
+  optional coupling_matrix, and optional obs_labels
+- infer_causal_order() uses coupling-to-blanket strength to order objects;
+  higher coupling to blanket = more upstream (actuator/gripper)
+- classify_objects() identifies gripper (upstream) and target (downstream)
+- Two-object plan: approach (low object weight, high gripper weight) then push
+  (high object weight, low gripper weight), matching hardcoded structure
+- Single-object plan: reach directly to goal (single phase)
+- partition_from_tb_result() converts raw TB labels (array of -1/0/1/...) to
+  TBPartition for integration with TB analysis pipeline
+- Factory helpers for ground-truth FetchPush and FetchReach partitions
+
+### PRD updated: US-084 passes = true
+
+## 2026-02-06: PRD Sync and Status Update
+
+### Completed Stories (28 of 39)
+
+Phase 1 (all complete): US-001 through US-009
+Phase 2 (all complete): US-010 through US-017
+Phase 3 (all complete): US-018 through US-023
+Phase 4 (partial):
+  - US-024: Active Inference checkpoint loaded (n_ensemble=5, sharing/ path)
+  - US-025: TB on 8D state space -- Dynamics Object 0={y,vy,left_leg,right_leg}, Object 1={x,vx,angle}, Blanket={ang_vel}
+  - US-026: Ensemble disagreement analysis -- Blanket={y,vy}
+  - US-027: Reward landscape analysis -- Blanket={vx,vy,angle}
+Phase 5 (partial):
+  - US-034: Edge-compute factorization -- 25.9x speedup at 4096D, 97% memory savings
+
+### Remaining Stories (17 of 45)
+
+Next up (dependency-ready):
+  - US-028: Train Dreamer autoencoder from scratch (NO pretrained checkpoint exists!)
+  - US-036: NOTEARS comparison (depends on US-018 + US-025, both done)
+  - US-037: Robustness analysis (depends on US-025, done)
+  - US-040: Diagnose and fix pixel agent V1 (depends on US-010, done)
+
+Blocked on US-028:
+  - US-029: TB on 64D latent (depends on US-028)
+  - US-030: Multi-scale comparison (depends on US-025 + US-029)
+  - US-031: Temperature sensitivity (depends on US-025 + US-029)
+
+Blocked until Phase 4 completes:
+  - US-032: Demo notebook
+  - US-033: Paper figures
+  - US-035: Update paper
+  - US-038: Final registry
+  - US-039: Pitch data
+
+Phase 6 (pixel-to-structure):
+  - US-040 through US-045 (6 new stories added Feb 7)
+
+### Key Corrections Applied
+1. Import path: lunar-lander/src -> lunar-lander/sharing
+2. n_ensemble: 10 -> 5 (actual checkpoint value)
+3. US-016/017 live in run_level1_experiments.py (not separate files)
+4. Workflow: Ralphs commit locally, create PRs via gh pr create, never push directly
+5. CRITICAL: NO Dreamer checkpoint exists. All telecorder .pt files are PyTorch ensemble models. US-028 must train Encoder+Decoder from scratch.
+6. zenoh not available on pip for Windows; telecorder_lunarlander import requires mock module bypass
+7. JAX 0.9.0.1, Equinox 0.13.4, optax 0.2.7 installed and verified working
+
+### Files Created/Modified This Session
+- experiments/run_level1_experiments.py (US-016 v2 + US-017 ablation)
+- experiments/ggm_benchmark.py (US-018)
+- experiments/score_model_2d.py (US-019)
+- experiments/ising_model.py (US-020)
+- experiments/non_gaussian_landscapes.py (US-021)
+- experiments/scaling_benchmark.py (US-022)
+- experiments/cross_validation.py (US-023)
+- experiments/world_model_analysis.py (US-024/025/026/027)
+- experiments/edge_compute_analysis.py (US-034)
+- topological_blankets/ package (US-010, US-011, US-012)
+- tests/ (US-013, 61 tests passing)
+
+### Registry Stats
+- 44 experiments in results/
+- 61 unit tests passing
+
+## 2026-02-07: US-028 + US-029 Dreamer Autoencoder and Latent TB Analysis
+
+### US-028: Train Dreamer Autoencoder
+- Created experiments/dreamer_analysis.py
+- Trained Encoder(8->64->64->64) + Decoder(64->64->64->8) from telecorder thrml_wm_mini/models.py
+- 500 epochs, Adam 1e-3, batch_size=256 on 4508 normalized transitions
+- Final reconstruction MSE: 0.000375 (target was < 0.01)
+- All 64 latent dimensions active (variance range 0.13-0.95)
+- Per-dimension MSE: all < 0.001 (best: vy at 0.000107, worst: vx at 0.000581)
+- Zenoh bypass: types.ModuleType stub for telecorder_lunarlander
+- Saved: dreamer_latents.npy (4508,64), dreamer_latent_gradients.npy (4508,64)
+
+### US-029: TB on 64D Latent Space
+- TB pipeline applied to reconstruction loss gradients in 64D latent space
+- Spectral analysis: eigengap=59.79, single dominant cluster (n_clusters=1)
+- Gradient method: 1 object (40 dims), 24 blanket dims
+- Coupling method: 1 object (36 dims), 28 blanket dims
+- Hierarchical detection: 3 levels
+- Decoder Jacobian computed at 500 representative z-points
+- Latent-to-physical correlation: each physical variable maps to 5-12 latent dims
+  - Strongest correlations: vy (0.911), vx (0.899), x (0.897), angle (0.886)
+- Saved: coupling matrix, eigenvalue spectrum, correlation heatmap, Jacobian heatmap PNGs
+
+### Files Created/Modified
+- experiments/dreamer_analysis.py (NEW: US-028/029)
+- results/trajectory_data/dreamer_latents.npy
+- results/trajectory_data/dreamer_latent_gradients.npy
+- results/trajectory_data/dreamer_states_norm.npy
+- results/2026-02-07_*dreamer*.json (2 result files)
+- results/2026-02-07_*dreamer*.png (6 plot files)
+
+### US-030 through US-039: Phase 5 Completion
+- US-030: Multi-scale comparison (NMI=0.517 between state and projected latent partition)
+- US-031: Temperature sensitivity on world models (graceful degradation, no sudden dissolution)
+- US-032: End-to-end demo notebook (demo/topological_blankets_demo.ipynb, jupyter nbconvert verified)
+- US-033: Publication-quality figures (9 figures at 300 DPI in paper/figures/)
+- US-035: Paper sections updated with validation results
+- US-036: NOTEARS comparison (TB F1=0.947 vs NOTEARS 0.000 vs GLasso 0.750)
+- US-037: Robustness analysis (cross-checkpoint ARI=1.0)
+- US-038: Final registry (50 experiments, all PASS)
+- US-039: Pitch data compiled
+
+### Files Created This Session (continued)
+- demo/topological_blankets_demo.ipynb (US-032)
+- demo/README.md (US-032)
+
+### Phase 6: Pixel-to-Structure Pipeline (all complete)
+- US-040: Pixel agent V1 diagnosis (PASS, only fix: sys.path for checkpoint unpickling)
+- US-041: Train pixel agent (SKIPPED, US-040 succeeded with existing checkpoint)
+- US-042: Pixel trajectory collection (50 episodes, 3503 transitions, dynamics gradients)
+- US-043: TB on pixel encoder 64D (eigengap=29.95, 1 object + 19 blanket, NMI=0.281)
+- US-044: Multi-representation comparison (State 8D vs Pixel 64D vs Dreamer 64D)
+  - Dreamer preserves more structure (NMI=0.517) than pixel encoder (NMI=0.281)
+  - Key finding: reconstruction-trained representations > temporal-consistency-trained
+- US-045: Pixel-to-structure hero figure (paper/figures/fig10_pixel_to_structure.png)
+
+### Files Created (Phase 6)
+- experiments/pixel_agent_analysis.py (US-040)
+- experiments/pixel_trajectory_collection.py (US-042)
+- experiments/pixel_tb_analysis.py (US-043)
+- experiments/pixel_structure_comparison.py (US-044)
+- experiments/pixel_to_structure_viz.py (US-045)
+- paper/figures/fig10_pixel_to_structure.png (US-045)
+- results/trajectory_data/pixel_*_50ep.npy (latents, states, actions, gradients)
+
+### ALL USER STORIES COMPLETE
+- Phase 1 (US-001-009): Core package extraction
+- Phase 2 (US-010-017): Method engineering + unit tests
+- Phase 3 (US-018-023): Bridge experiments (GGM, score model, Ising, etc.)
+- Phase 4 (US-024-031): World model analysis (Active Inference + Dreamer)
+- Phase 5 (US-032-039): Demo, paper, figures, registry, pitch data
+- Phase 6 (US-040-045): Pixel-to-structure pipeline
+- Total: 45 user stories, all passing
+
+## 2026-02-09: US-077 Catastrophe Signal Bridge (Phase 12)
+
+### US-077: Build ensemble disagreement to catastrophe signal bridge
+- Created panda/catastrophe_bridge.py in the pandas repo
+- CatastropheBridge class converts ensemble epistemic uncertainty into
+  telecorder-compatible CatastropheSignal
+- Severity = 0.5*epistemic + 0.3*plan_spread + 0.2*symbolic_stall
+  - epistemic: ensemble disagreement normalized via running max
+  - plan_spread: CEM plan spread normalized via running max
+  - symbolic_stall: detects same-phase repetition over configurable window
+- Thresholds: yellow=0.4, red=0.7 (configurable via BridgeConfig)
+- safe_action: CEM mean action when yellow, zero vector when red
+- Handover state machine mirrors telecorder-core (AgentControl,
+  WaitingForOperator, HumanControl, SafeStop, AgentResuming)
+- Python enums: CatastropheReason, HandoverState
+- Data classes: CatastropheMetrics, CatastropheSignal (with to_dict()),
+  BridgeConfig
+- 24 unit tests passing (test_catastrophe_bridge.py)
+  - TestLowUncertainty: 2 tests (green severity, no safe_action)
+  - TestMediumUncertainty: 4 tests (yellow, CEM mean action returned)
+  - TestHighUncertainty: 3 tests (red, zero action returned)
+  - TestSymbolicStall: 4 tests (stall window, phase changes, reset on done)
+  - TestSeverityWeights: 2 tests (component isolation)
+  - TestHandoverStateMachine: 4 tests (transitions, accept/release)
+  - TestReset: 1 test (episode-level reset)
+  - TestSerialization: 2 tests (to_dict round-trip)
+  - TestReasons: 2 tests (reason attribution)
+- Integration test (test_catastrophe_integration.py): runs 10 FetchPush
+  episodes with CEM planner, logs catastrophe signals per step
+
+### Files Created
+- C:/Users/citiz/Documents/noumenal-labs/pandas/panda/catastrophe_bridge.py
+- C:/Users/citiz/Documents/noumenal-labs/pandas/tests/__init__.py
+- C:/Users/citiz/Documents/noumenal-labs/pandas/tests/conftest.py
+- C:/Users/citiz/Documents/noumenal-labs/pandas/tests/test_catastrophe_bridge.py
+- C:/Users/citiz/Documents/noumenal-labs/pandas/tests/test_catastrophe_integration.py
+
+### Next Up (dependency-ready after US-077)
+- US-078: Human-in-the-loop goal injection (depends on US-077)
+- US-079: Live uncertainty visualization panel (depends on US-076 + US-077 + US-078)
+- US-080: Structure emergence during learning (depends on US-076)
+- US-085: Ghost trajectories for manipulation (depends on US-076)

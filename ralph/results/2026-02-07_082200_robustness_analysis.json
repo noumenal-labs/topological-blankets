@@ -1,0 +1,1080 @@
+{
+  "timestamp": "2026-02-07T08:22:00.091819",
+  "experiment_name": "robustness_analysis",
+  "config": {},
+  "metrics": {
+    "sample_efficiency": [
+      {
+        "n_samples": 100,
+        "n_trials": 5,
+        "mean_objects": 2.0,
+        "mean_eigengap": 7.6,
+        "std_eigengap": 0.7999999999999993,
+        "stability": {
+          "mean_ari": 0.15778269745350887,
+          "std_ari": 0.22268244526434836,
+          "min_ari": -0.043478260869565216,
+          "max_ari": 0.7469879518072289,
+          "n_comparisons": 10
+        },
+        "trials": [
+          {
+            "n_objects": 2,
+            "n_blanket": 2,
+            "eigengap": 8.0,
+            "assignment": [
+              0,
+              -1,
+              0,
+              1,
+              0,
+              -1,
+              0,
+              1
+            ],
+            "objects": {
+              "0": [
+                "x",
+                "vx",
+                "angle",
+                "left_leg"
+              ],
+              "1": [
+                "vy",
+                "right_leg"
+              ]
+            },
+            "blanket_vars": [
+              "y",
+              "ang_vel"
+            ]
+          },
+          {
+            "n_objects": 2,
+            "n_blanket": 3,
+            "eigengap": 8.0,
+            "assignment": [
+              -1,
+              0,
+              -1,
+              1,
+              1,
+              1,
+              -1,
+              0
+            ],
+            "objects": {
+              "0": [
+                "y",
+                "right_leg"
+              ],
+              "1": [
+                "vy",
+                "angle",
+                "ang_vel"
+              ]
+            },
+            "blanket_vars": [
+              "x",
+              "vx",
+              "left_leg"
+            ]
+          },
+          {
+            "n_objects": 2,
+            "n_blanket": 1,
+            "eigengap": 6.000000000000002,
+            "assignment": [
+              1,
+              0,
+              1,
+              -1,
+              1,
+              0,
+              1,
+              0
+            ],
+            "objects": {
+              "0": [
+                "y",
+                "ang_vel",
+                "right_leg"
+              ],
+              "1": [
+                "x",
+                "vx",
+                "angle",
+                "left_leg"
+              ]
+            },
+            "blanket_vars": [
+              "vy"
+            ]
+          },
+          {
+            "n_objects": 2,
+            "n_blanket": 1,
+            "eigengap": 8.0,
+            "assignment": [
+              1,
+              0,
+              1,
+              1,
+              1,
+              -1,
+              0,
+              0
+            ],
+            "objects": {
+              "0": [
+                "y",
+                "left_leg",
+                "right_leg"
+              ],
+              "1": [
+                "x",
+                "vx",
+                "vy",
+                "angle"
+              ]
+            },
+            "blanket_vars": [
+              "ang_vel"
+            ]
+          },
+          {
+            "n_objects": 2,
+            "n_blanket": 2,
+            "eigengap": 8.0,
+            "assignment": [
+              0,
+              0,
+              1,
+              -1,
+              1,
+              -1,
+              0,
+              1
+            ],
+            "objects": {
+              "0": [
+                "x",
+                "y",
+                "left_leg"
+              ],
+              "1": [
+                "vx",
+                "angle",
+                "right_leg"
+              ]
+            },
+            "blanket_vars": [
+              "vy",
+              "ang_vel"
+            ]
+          }
+        ]
+      },
+      {
+        "n_samples": 500,
+        "n_trials": 5,
+        "mean_objects": 2.0,
+        "mean_eigengap": 7.200000000000001,
+        "std_eigengap": 0.9797958971132699,
+        "stability": {
+          "mean_ari": 0.3182626997472061,
+          "std_ari": 0.3186670177172471,
+          "min_ari": -0.043478260869565216,
+          "max_ari": 1.0,
+          "n_comparisons": 10
+        },
+        "trials": [
+          {
+            "n_objects": 2,
+            "n_blanket": 1,
+            "eigengap": 8.0,
+            "assignment": [
+              1,
+              0,
+              1,
+              0,
+              1,
+              -1,
+              0,
+              0
+            ],
+            "objects": {
+              "0": [
+                "y",
+                "vy",
+                "left_leg",
+                "right_leg"
+              ],
+              "1": [
+                "x",
+                "vx",
+                "angle"
+              ]
+            },
+            "blanket_vars": [
+              "ang_vel"
+            ]
+          },
+          {
+            "n_objects": 2,
+            "n_blanket": 2,
+            "eigengap": 6.0000000000000036,
+            "assignment": [
+              0,
+              -1,
+              1,
+              1,
+              1,
+              -1,
+              0,
+              0
+            ],
+            "objects": {
+              "0": [
+                "x",
+                "left_leg",
+                "right_leg"
+              ],
+              "1": [
+                "vx",
+                "vy",
+                "angle"
+              ]
+            },
+            "blanket_vars": [
+              "y",
+              "ang_vel"
+            ]
+          },
+          {
+            "n_objects": 2,
+            "n_blanket": 2,
+            "eigengap": 8.0,
+            "assignment": [
+              0,
+              1,
+              0,
+              -1,
+              0,
+              -1,
+              1,
+              1
+            ],
+            "objects": {
+              "0": [
+                "x",
+                "vx",
+                "angle"
+              ],
+              "1": [
+                "y",
+                "left_leg",
+                "right_leg"
+              ]
+            },
+            "blanket_vars": [
+              "vy",
+              "ang_vel"
+            ]
+          },
+          {
+            "n_objects": 2,
+            "n_blanket": 2,
+            "eigengap": 6.000000000000002,
+            "assignment": [
+              0,
+              1,
+              0,
+              -1,
+              0,
+              -1,
+              1,
+              1
+            ],
+            "objects": {
+              "0": [
+                "x",
+                "vx",
+                "angle"
+              ],
+              "1": [
+                "y",
+                "left_leg",
+                "right_leg"
+              ]
+            },
+            "blanket_vars": [
+              "vy",
+              "ang_vel"
+            ]
+          },
+          {
+            "n_objects": 2,
+            "n_blanket": 1,
+            "eigengap": 8.0,
+            "assignment": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              -1,
+              0,
+              1
+            ],
+            "objects": {
+              "0": [
+                "x",
+                "vx",
+                "vy",
+                "angle",
+                "left_leg"
+              ],
+              "1": [
+                "y",
+                "right_leg"
+              ]
+            },
+            "blanket_vars": [
+              "ang_vel"
+            ]
+          }
+        ]
+      },
+      {
+        "n_samples": 1000,
+        "n_trials": 5,
+        "mean_objects": 2.0,
+        "mean_eigengap": 7.0,
+        "std_eigengap": 1.2649110640673509,
+        "stability": {
+          "mean_ari": 0.6930587337909992,
+          "std_ari": 0.16321107359540266,
+          "min_ari": 0.5087719298245614,
+          "max_ari": 1.0,
+          "n_comparisons": 10
+        },
+        "trials": [
+          {
+            "n_objects": 2,
+            "n_blanket": 2,
+            "eigengap": 8.0,
+            "assignment": [
+              0,
+              1,
+              0,
+              -1,
+              0,
+              -1,
+              1,
+              1
+            ],
+            "objects": {
+              "0": [
+                "x",
+                "vx",
+                "angle"
+              ],
+              "1": [
+                "y",
+                "left_leg",
+                "right_leg"
+              ]
+            },
+            "blanket_vars": [
+              "vy",
+              "ang_vel"
+            ]
+          },
+          {
+            "n_objects": 2,
+            "n_blanket": 1,
+            "eigengap": 8.0,
+            "assignment": [
+              1,
+              0,
+              1,
+              0,
+              1,
+              -1,
+              0,
+              0
+            ],
+            "objects": {
+              "0": [
+                "y",
+                "vy",
+                "left_leg",
+                "right_leg"
+              ],
+              "1": [
+                "x",
+                "vx",
+                "angle"
+              ]
+            },
+            "blanket_vars": [
+              "ang_vel"
+            ]
+          },
+          {
+            "n_objects": 2,
+            "n_blanket": 2,
+            "eigengap": 5.000000000000003,
+            "assignment": [
+              0,
+              1,
+              0,
+              -1,
+              0,
+              -1,
+              1,
+              1
+            ],
+            "objects": {
+              "0": [
+                "x",
+                "vx",
+                "angle"
+              ],
+              "1": [
+                "y",
+                "left_leg",
+                "right_leg"
+              ]
+            },
+            "blanket_vars": [
+              "vy",
+              "ang_vel"
+            ]
+          },
+          {
+            "n_objects": 2,
+            "n_blanket": 1,
+            "eigengap": 6.0,
+            "assignment": [
+              1,
+              0,
+              1,
+              0,
+              1,
+              -1,
+              0,
+              0
+            ],
+            "objects": {
+              "0": [
+                "y",
+                "vy",
+                "left_leg",
+                "right_leg"
+              ],
+              "1": [
+                "x",
+                "vx",
+                "angle"
+              ]
+            },
+            "blanket_vars": [
+              "ang_vel"
+            ]
+          },
+          {
+            "n_objects": 2,
+            "n_blanket": 1,
+            "eigengap": 8.0,
+            "assignment": [
+              1,
+              0,
+              1,
+              1,
+              1,
+              -1,
+              0,
+              0
+            ],
+            "objects": {
+              "0": [
+                "y",
+                "left_leg",
+                "right_leg"
+              ],
+              "1": [
+                "x",
+                "vx",
+                "vy",
+                "angle"
+              ]
+            },
+            "blanket_vars": [
+              "ang_vel"
+            ]
+          }
+        ]
+      },
+      {
+        "n_samples": 2000,
+        "n_trials": 5,
+        "mean_objects": 2.0,
+        "mean_eigengap": 5.7171572875253815,
+        "std_eigengap": 0.5656854249492397,
+        "stability": {
+          "mean_ari": 0.7913043478260869,
+          "std_ari": 0.17039928645448194,
+          "min_ari": 0.6521739130434783,
+          "max_ari": 1.0,
+          "n_comparisons": 10
+        },
+        "trials": [
+          {
+            "n_objects": 2,
+            "n_blanket": 1,
+            "eigengap": 4.585786437626902,
+            "assignment": [
+              1,
+              0,
+              1,
+              0,
+              1,
+              -1,
+              0,
+              0
+            ],
+            "objects": {
+              "0": [
+                "y",
+                "vy",
+                "left_leg",
+                "right_leg"
+              ],
+              "1": [
+                "x",
+                "vx",
+                "angle"
+              ]
+            },
+            "blanket_vars": [
+              "ang_vel"
+            ]
+          },
+          {
+            "n_objects": 2,
+            "n_blanket": 2,
+            "eigengap": 6.000000000000001,
+            "assignment": [
+              0,
+              1,
+              0,
+              -1,
+              0,
+              -1,
+              1,
+              1
+            ],
+            "objects": {
+              "0": [
+                "x",
+                "vx",
+                "angle"
+              ],
+              "1": [
+                "y",
+                "left_leg",
+                "right_leg"
+              ]
+            },
+            "blanket_vars": [
+              "vy",
+              "ang_vel"
+            ]
+          },
+          {
+            "n_objects": 2,
+            "n_blanket": 1,
+            "eigengap": 6.000000000000002,
+            "assignment": [
+              1,
+              0,
+              1,
+              0,
+              1,
+              -1,
+              0,
+              0
+            ],
+            "objects": {
+              "0": [
+                "y",
+                "vy",
+                "left_leg",
+                "right_leg"
+              ],
+              "1": [
+                "x",
+                "vx",
+                "angle"
+              ]
+            },
+            "blanket_vars": [
+              "ang_vel"
+            ]
+          },
+          {
+            "n_objects": 2,
+            "n_blanket": 2,
+            "eigengap": 6.000000000000002,
+            "assignment": [
+              0,
+              1,
+              0,
+              -1,
+              0,
+              -1,
+              1,
+              1
+            ],
+            "objects": {
+              "0": [
+                "x",
+                "vx",
+                "angle"
+              ],
+              "1": [
+                "y",
+                "left_leg",
+                "right_leg"
+              ]
+            },
+            "blanket_vars": [
+              "vy",
+              "ang_vel"
+            ]
+          },
+          {
+            "n_objects": 2,
+            "n_blanket": 1,
+            "eigengap": 6.000000000000002,
+            "assignment": [
+              1,
+              0,
+              1,
+              0,
+              1,
+              -1,
+              0,
+              0
+            ],
+            "objects": {
+              "0": [
+                "y",
+                "vy",
+                "left_leg",
+                "right_leg"
+              ],
+              "1": [
+                "x",
+                "vx",
+                "angle"
+              ]
+            },
+            "blanket_vars": [
+              "ang_vel"
+            ]
+          }
+        ]
+      },
+      {
+        "n_samples": 4000,
+        "n_trials": 5,
+        "mean_objects": 2.0,
+        "mean_eigengap": 6.600000000000001,
+        "std_eigengap": 1.1999999999999984,
+        "stability": {
+          "mean_ari": 0.7913043478260869,
+          "std_ari": 0.17039928645448194,
+          "min_ari": 0.6521739130434783,
+          "max_ari": 1.0,
+          "n_comparisons": 10
+        },
+        "trials": [
+          {
+            "n_objects": 2,
+            "n_blanket": 1,
+            "eigengap": 6.000000000000002,
+            "assignment": [
+              1,
+              0,
+              1,
+              0,
+              1,
+              -1,
+              0,
+              0
+            ],
+            "objects": {
+              "0": [
+                "y",
+                "vy",
+                "left_leg",
+                "right_leg"
+              ],
+              "1": [
+                "x",
+                "vx",
+                "angle"
+              ]
+            },
+            "blanket_vars": [
+              "ang_vel"
+            ]
+          },
+          {
+            "n_objects": 2,
+            "n_blanket": 1,
+            "eigengap": 8.0,
+            "assignment": [
+              1,
+              0,
+              1,
+              0,
+              1,
+              -1,
+              0,
+              0
+            ],
+            "objects": {
+              "0": [
+                "y",
+                "vy",
+                "left_leg",
+                "right_leg"
+              ],
+              "1": [
+                "x",
+                "vx",
+                "angle"
+              ]
+            },
+            "blanket_vars": [
+              "ang_vel"
+            ]
+          },
+          {
+            "n_objects": 2,
+            "n_blanket": 2,
+            "eigengap": 6.000000000000002,
+            "assignment": [
+              0,
+              1,
+              0,
+              -1,
+              0,
+              -1,
+              1,
+              1
+            ],
+            "objects": {
+              "0": [
+                "x",
+                "vx",
+                "angle"
+              ],
+              "1": [
+                "y",
+                "left_leg",
+                "right_leg"
+              ]
+            },
+            "blanket_vars": [
+              "vy",
+              "ang_vel"
+            ]
+          },
+          {
+            "n_objects": 2,
+            "n_blanket": 1,
+            "eigengap": 5.000000000000004,
+            "assignment": [
+              1,
+              0,
+              1,
+              0,
+              1,
+              -1,
+              0,
+              0
+            ],
+            "objects": {
+              "0": [
+                "y",
+                "vy",
+                "left_leg",
+                "right_leg"
+              ],
+              "1": [
+                "x",
+                "vx",
+                "angle"
+              ]
+            },
+            "blanket_vars": [
+              "ang_vel"
+            ]
+          },
+          {
+            "n_objects": 2,
+            "n_blanket": 2,
+            "eigengap": 8.0,
+            "assignment": [
+              0,
+              1,
+              0,
+              -1,
+              0,
+              -1,
+              1,
+              1
+            ],
+            "objects": {
+              "0": [
+                "x",
+                "vx",
+                "angle"
+              ],
+              "1": [
+                "y",
+                "left_leg",
+                "right_leg"
+              ]
+            },
+            "blanket_vars": [
+              "vy",
+              "ang_vel"
+            ]
+          }
+        ]
+      }
+    ],
+    "checkpoint_robustness": {
+      "checkpoints": {
+        "best": {
+          "n_transitions": 1772,
+          "tb_analysis": {
+            "n_objects": 2,
+            "n_blanket": 2,
+            "eigengap": 8.0,
+            "assignment": [
+              0,
+              1,
+              0,
+              -1,
+              0,
+              -1,
+              1,
+              1
+            ],
+            "objects": {
+              "0": [
+                "x",
+                "vx",
+                "angle"
+              ],
+              "1": [
+                "y",
+                "left_leg",
+                "right_leg"
+              ]
+            },
+            "blanket_vars": [
+              "vy",
+              "ang_vel"
+            ]
+          }
+        },
+        "final": {
+          "n_transitions": 1747,
+          "tb_analysis": {
+            "n_objects": 2,
+            "n_blanket": 2,
+            "eigengap": 8.0,
+            "assignment": [
+              1,
+              0,
+              1,
+              -1,
+              1,
+              -1,
+              0,
+              0
+            ],
+            "objects": {
+              "0": [
+                "y",
+                "left_leg",
+                "right_leg"
+              ],
+              "1": [
+                "x",
+                "vx",
+                "angle"
+              ]
+            },
+            "blanket_vars": [
+              "vy",
+              "ang_vel"
+            ]
+          }
+        },
+        "lambda_best": {
+          "n_transitions": 1749,
+          "tb_analysis": {
+            "n_objects": 2,
+            "n_blanket": 2,
+            "eigengap": 4.585786437626906,
+            "assignment": [
+              0,
+              1,
+              0,
+              -1,
+              0,
+              -1,
+              1,
+              1
+            ],
+            "objects": {
+              "0": [
+                "x",
+                "vx",
+                "angle"
+              ],
+              "1": [
+                "y",
+                "left_leg",
+                "right_leg"
+              ]
+            },
+            "blanket_vars": [
+              "vy",
+              "ang_vel"
+            ]
+          }
+        }
+      },
+      "cross_checkpoint_stability": {
+        "mean_ari": 1.0,
+        "std_ari": 0.0,
+        "min_ari": 1.0,
+        "max_ari": 1.0,
+        "n_comparisons": 3
+      }
+    },
+    "policy_dependence": {
+      "early": {
+        "n_objects": 2,
+        "n_blanket": 2,
+        "eigengap": 6.000000000000002,
+        "assignment": [
+          0,
+          1,
+          0,
+          -1,
+          0,
+          -1,
+          1,
+          1
+        ],
+        "objects": {
+          "0": [
+            "x",
+            "vx",
+            "angle"
+          ],
+          "1": [
+            "y",
+            "left_leg",
+            "right_leg"
+          ]
+        },
+        "blanket_vars": [
+          "vy",
+          "ang_vel"
+        ]
+      },
+      "late": {
+        "n_objects": 2,
+        "n_blanket": 1,
+        "eigengap": 6.000000000000001,
+        "assignment": [
+          1,
+          0,
+          1,
+          0,
+          1,
+          -1,
+          0,
+          0
+        ],
+        "objects": {
+          "0": [
+            "y",
+            "vy",
+            "left_leg",
+            "right_leg"
+          ],
+          "1": [
+            "x",
+            "vx",
+            "angle"
+          ]
+        },
+        "blanket_vars": [
+          "ang_vel"
+        ]
+      },
+      "full": {
+        "n_objects": 2,
+        "n_blanket": 1,
+        "eigengap": 8.0,
+        "assignment": [
+          1,
+          0,
+          1,
+          0,
+          1,
+          -1,
+          0,
+          0
+        ],
+        "objects": {
+          "0": [
+            "y",
+            "vy",
+            "left_leg",
+            "right_leg"
+          ],
+          "1": [
+            "x",
+            "vx",
+            "angle"
+          ]
+        },
+        "blanket_vars": [
+          "ang_vel"
+        ]
+      },
+      "bootstrap_stability": {
+        "mean_ari": 0.623493516399695,
+        "std_ari": 0.22733995538306348,
+        "min_ari": 0.30434782608695654,
+        "max_ari": 1.0,
+        "n_comparisons": 10
+      }
+    }
+  },
+  "notes": "US-037: TB robustness analysis. Sample efficiency, checkpoint robustness, and policy dependence on Active Inference world models."
+}

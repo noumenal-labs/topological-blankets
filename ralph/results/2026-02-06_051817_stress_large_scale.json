@@ -1,0 +1,201 @@
+{
+  "timestamp": "2026-02-06T05:18:17.436080",
+  "experiment_name": "stress_large_scale",
+  "config": {
+    "n_trials": 3,
+    "step_size": 0.003,
+    "temp": 0.1
+  },
+  "metrics": {
+    "5obj x 5var": {
+      "n_objects": 5,
+      "vars_per_object": 5,
+      "vars_per_blanket": 5,
+      "total_dimension": 30,
+      "mean_ari": 1.0,
+      "std_ari": 0.0,
+      "mean_f1": 0.9629629629629629,
+      "std_f1": 0.05237828008789243,
+      "mean_time_s": 1.23,
+      "per_trial_ari": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "per_trial_f1": [
+        1.0,
+        1.0,
+        0.8888888888888888
+      ]
+    },
+    "5obj x 10var": {
+      "n_objects": 5,
+      "vars_per_object": 10,
+      "vars_per_blanket": 5,
+      "total_dimension": 55,
+      "mean_ari": 0.713852870703611,
+      "std_ari": 0.14365045504152157,
+      "mean_f1": 0.8425925925925926,
+      "std_f1": 0.06547285010986549,
+      "mean_time_s": 1.38,
+      "per_trial_ari": [
+        0.5143198685062509,
+        0.7805570726379027,
+        0.8466816709666795
+      ],
+      "per_trial_f1": [
+        0.8888888888888888,
+        0.75,
+        0.8888888888888888
+      ]
+    },
+    "6obj x 8var": {
+      "n_objects": 6,
+      "vars_per_object": 8,
+      "vars_per_blanket": 6,
+      "total_dimension": 54,
+      "mean_ari": 0.8968619705946894,
+      "std_ari": 0.0729295999907126,
+      "mean_f1": 0.8727272727272727,
+      "std_f1": 0.05142594772265797,
+      "mean_time_s": 1.29,
+      "per_trial_ari": [
+        1.0,
+        0.8452929558920342,
+        0.8452929558920342
+      ],
+      "per_trial_f1": [
+        0.9090909090909091,
+        0.9090909090909091,
+        0.8
+      ]
+    },
+    "8obj x 5var": {
+      "n_objects": 8,
+      "vars_per_object": 5,
+      "vars_per_blanket": 8,
+      "total_dimension": 48,
+      "mean_ari": 1.0,
+      "std_ari": 0.0,
+      "mean_f1": 0.9777777777777779,
+      "std_f1": 0.03142696805273544,
+      "mean_time_s": 1.09,
+      "per_trial_ari": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "per_trial_f1": [
+        1.0,
+        0.9333333333333333,
+        1.0
+      ]
+    },
+    "8obj x 10var": {
+      "n_objects": 8,
+      "vars_per_object": 10,
+      "vars_per_blanket": 8,
+      "total_dimension": 88,
+      "mean_ari": 0.971365851359848,
+      "std_ari": 0.022939347848034225,
+      "mean_f1": 0.9777777777777779,
+      "std_f1": 0.03142696805273544,
+      "mean_time_s": 2.48,
+      "per_trial_ari": [
+        0.9438432983176684,
+        1.0,
+        0.9702542557618755
+      ],
+      "per_trial_f1": [
+        1.0,
+        1.0,
+        0.9333333333333333
+      ]
+    },
+    "10obj x 5var": {
+      "n_objects": 10,
+      "vars_per_object": 5,
+      "vars_per_blanket": 10,
+      "total_dimension": 60,
+      "mean_ari": 1.0,
+      "std_ari": 0.0,
+      "mean_f1": 0.9649122807017543,
+      "std_f1": 0.024810764252159587,
+      "mean_time_s": 1.51,
+      "per_trial_ari": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "per_trial_f1": [
+        1.0,
+        0.9473684210526315,
+        0.9473684210526315
+      ]
+    },
+    "10obj x 10var": {
+      "n_objects": 10,
+      "vars_per_object": 10,
+      "vars_per_blanket": 10,
+      "total_dimension": 110,
+      "mean_ari": 0.9776587585352526,
+      "std_ari": 0.017901637743333285,
+      "mean_f1": 0.9824561403508771,
+      "std_f1": 0.024810764252159587,
+      "mean_time_s": 3.94,
+      "per_trial_ari": [
+        0.9561752988047809,
+        1.0,
+        0.9768009768009768
+      ],
+      "per_trial_f1": [
+        1.0,
+        0.9473684210526315,
+        1.0
+      ]
+    },
+    "10obj x 15var": {
+      "n_objects": 10,
+      "vars_per_object": 15,
+      "vars_per_blanket": 10,
+      "total_dimension": 160,
+      "mean_ari": 0.9949216266308442,
+      "std_ari": 0.007181904493454488,
+      "mean_f1": 1.0,
+      "std_f1": 0.0,
+      "mean_time_s": 7.42,
+      "per_trial_ari": [
+        1.0,
+        1.0,
+        0.9847648798925326
+      ],
+      "per_trial_f1": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "10obj x 20var": {
+      "n_objects": 10,
+      "vars_per_object": 20,
+      "vars_per_blanket": 10,
+      "total_dimension": 210,
+      "mean_ari": 0.9962187262939571,
+      "std_ari": 0.005347528558130595,
+      "mean_f1": 0.9629629629629629,
+      "std_f1": 0.05237828008789243,
+      "mean_time_s": 11.56,
+      "per_trial_ari": [
+        1.0,
+        1.0,
+        0.9886561788818714
+      ],
+      "per_trial_f1": [
+        1.0,
+        1.0,
+        0.8888888888888888
+      ]
+    }
+  },
+  "notes": "Stress test: scaling to 10 objects, 20 vars/object, 200+ dims"
+}
