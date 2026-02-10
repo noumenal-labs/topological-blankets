@@ -2068,18 +2068,20 @@
     },
     {
       "id": "US-096",
-      "title": "End-to-end FetchPush demo pipeline with TB-guided planner (50 steps)",
-      "description": "As a demo presenter, I need to run the full Wednesday demo pipeline end-to-end on FetchPush-v4 using the TB-guided planner with a max episode length of 50 steps. This validates that the TB discovery pipeline (ensemble Jacobians to partition to hierarchical planner) works in a tight episode budget. The pipeline must complete successfully: TB discovers structure, the TB-guided planner decomposes the task, the agent executes, the catastrophe signal fires on perturbation, human intervenes, and the task completes within 50 steps. This is the compact version of the demo suitable for live presentation.",
+      "title": "Train FetchPush ensemble at 50-step episodes and run full TB demo pipeline",
+      "description": "As a demo presenter, I need to (1) train a fresh 5-member Bayes ensemble on FetchPush-v4 with max_episode_steps=50, then (2) run the full Wednesday demo pipeline end-to-end using the TB-guided planner with that trained model. This is the compact presentation-ready version: train, discover structure, plan with TB, demo with human-in-the-loop. Two phases: Phase A trains the ensemble (pandas repo), Phase B runs the demo (topological-blankets repo) pointing at the trained checkpoint.",
       "acceptanceCriteria": [
-        "wednesday_demo.py runs to completion with: --planner tb --max-steps 50",
-        "Phase boundaries scale correctly for 50-step episode (perturbation_step, first_goal_step, second_goal_step, release_step all proportionally adjusted)",
-        "TB-guided planner loads or discovers a partition and produces approach-then-push decomposition",
-        "Catastrophe signal fires within 5 steps of perturbation",
-        "At least 2 human goal injections occur",
-        "Task completes (goal distance < 0.15) within the 50-step budget",
-        "Output GIF and JSON artifacts saved to results/",
-        "If live mode unavailable, dry-run fallback completes with all 6 acceptance criteria passing",
-        "Results JSON includes planner_mode='tb' and max_steps=50 in metadata"
+        "Phase A (training): Ensemble trained on FetchPush-v4 with --max-episode-steps 50 --ensemble-size 5 --symbolic-task push --reward-mode dense --iterations 100",
+        "Phase A: Trained model checkpoint saved to pandas/data/fetchpush_50step/ (model.eqx, model.eqx.json, run_config.json)",
+        "Phase A: Evaluation shows >80% success rate on 20 eval episodes with the trained checkpoint",
+        "Phase B (demo): wednesday_demo.py runs to completion with: --planner tb --max-steps 50, loading the Phase A checkpoint",
+        "Phase B: Phase boundaries scale correctly for 50-step episode (perturbation ~12, first_goal ~20, second_goal ~26, release ~32)",
+        "Phase B: TB-guided planner discovers or loads a partition and produces approach-then-push decomposition",
+        "Phase B: Catastrophe signal fires within 5 steps of perturbation",
+        "Phase B: At least 2 human goal injections occur",
+        "Phase B: Task completes (goal distance < 0.15) within the 50-step budget",
+        "Phase B: Output GIF and JSON artifacts saved to results/ with planner_mode='tb' and max_steps=50 in metadata",
+        "If live mode unavailable, dry-run fallback completes with all acceptance criteria passing"
       ],
       "priority": 96,
       "passes": false,
@@ -2088,7 +2090,7 @@
         "US-081",
         "US-084"
       ],
-      "notes": "This validates the full pipeline under a tight 50-step budget. The phase boundary scaling logic (ratio = max_steps / 80.0) must produce sensible boundaries: perturbation around step 12, first_goal around step 20, second_goal around step 26, release around step 32, leaving 18 steps for task completion. If 50 steps proves too tight for the proportional controller, the acceptance criterion on task completion may need the controller gain increased or the goal threshold relaxed slightly. Run in dry-run mode first to validate, then attempt live mode if MuJoCo is available."
+      "notes": "Per Alec: train first, then demo with the trained model. Training command: cd pandas && python train.py --env-id FetchPush-v4 --max-episode-steps 50 --reward-mode dense --ensemble-size 5 --run-dir ./data/fetchpush_50step --iterations 100 --symbolic-task push --no-train-use-epistemic-bonus --no-eval-use-epistemic-bonus. Evaluation: python eval.py --run-dir ./data/fetchpush_50step --env-id FetchPush-v4 --eval-episodes 20 --symbolic-task push --no-use-epistemic-bonus. Then demo: cd topological-blankets && python ralph/experiments/wednesday_demo.py --planner tb --max-steps 50. The 50-step episode budget is tighter than the default 200; the symbolic push planner should still work since FetchPush is relatively quick to solve. If training convergence is slow at 50 steps, try increasing iterations to 150."
     }
   ]
 }

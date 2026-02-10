@@ -19,7 +19,7 @@ The paper "Topological Blankets: Extracting Discrete Markov Blanket Structure fr
 11. **Phase 11**: Literature-derived method improvements — rank-based covariance (nonparanormal), L1-regularized coupling sparsification, persistence-based blanket detection, sliced score matching for high-D, multi-scale noise hierarchy, PCCA+ fuzzy partitions, bottleneck stability guarantees, KSD goodness-of-fit validation, differentiable topological loss
 12. **Phase 12** (PRIORITY — Wednesday demo): Teleoperation demo integration — pandas Bayes ensemble as TB target, catastrophe signal bridge, human-in-the-loop goal injection, live uncertainty visualization, structure emergence during learning, end-to-end demo script, telecorder FetchPush adapter, cross-domain comparison, TB-guided learned planner, ghost trajectories for manipulation, compact 50-step end-to-end pipeline validation (US-096)
 
-**NEXT TASK: US-096** — Run the full demo pipeline end-to-end with `--planner tb --max-steps 50` on FetchPush-v4. This is the compact presentation-ready version. Start with `--dry-run` to validate, then attempt live mode.
+**NEXT TASK: US-096** — Two phases: (A) Train a 5-member ensemble on FetchPush-v4 with `--max-episode-steps 50` in the pandas repo, then (B) run the full demo pipeline with `--planner tb --max-steps 50` using the trained checkpoint. Training command: `cd C:/Users/citiz/Documents/noumenal-labs/pandas && python train.py --env-id FetchPush-v4 --max-episode-steps 50 --reward-mode dense --ensemble-size 5 --run-dir ./data/fetchpush_50step --iterations 100 --symbolic-task push --no-train-use-epistemic-bonus --no-eval-use-epistemic-bonus`. Then evaluate and demo.
 
 ### Related Posters (Patel, Pattisapu, Ramstead, Dumas 2025)
 
