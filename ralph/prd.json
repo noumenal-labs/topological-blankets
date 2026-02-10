@@ -2220,6 +2220,42 @@
         "US-102"
       ],
       "notes": "This is the payoff analysis. Expected narrative: TB discovers that the same robotic system has different internal structure depending on the task, which is correct (a gripper reaching has simpler dynamics than a gripper pushing, which is simpler than lifting, which is different from sliding). This validates TB as a task-sensitive structure discovery method, not just a static architecture analyzer."
+    },
+    {
+      "id": "US-104",
+      "title": "Evaluate Bayes ensemble on FetchPush without TB-guided planning (ablation)",
+      "description": "As a researcher, I need to evaluate the trained FetchPush ensemble using the monolithic CEM planner (no TB decomposition) to isolate the contribution of TB-guided planning. Same trained model as US-096, but plans in the full 25D observation space rather than factored TB subspaces. This is a pure inference-time ablation: no additional training required.",
+      "acceptanceCriteria": [
+        "Evaluation of US-096 checkpoint with --planner symbolic (no TB)",
+        "Success rate, mean reward, and planning time recorded over 20 eval episodes",
+        "Side-by-side comparison table: TB-guided vs monolithic CEM vs symbolic planner",
+        "Planning time comparison: does TB factorization speed up CEM optimization?",
+        "Results JSON saved to ralph/results/"
+      ],
+      "priority": 104,
+      "passes": false,
+      "phase": 14,
+      "dependencies": [
+        "US-096"
+      ],
+      "notes": "No extra training. This ablation answers: how much does TB-guided planning help? If the ensemble already captures good dynamics, does decomposing the planning problem into TB subspaces improve sample efficiency or success rate? Expected: TB-guided planner should be faster (lower-dimensional CEM) and possibly more robust (factored subgoals)."
+    },
+    {
+      "id": "US-105",
+      "title": "Train DDPG+HER baseline on FetchPush-v4 (non-active-inference comparison)",
+      "description": "As a researcher, I need a DDPG+HER agent trained on FetchPush-v4 (50-step episodes) as the standard model-free baseline. DDPG+HER is the canonical algorithm for Fetch tasks (Andrychowicz et al. 2017). Architecture-matched: 2x256 hidden layers, same as the Bayes ensemble. This provides: (1) sample efficiency comparison vs active inference, (2) a model-free policy whose learned representations can be analyzed post-hoc with TB to test whether TB discovers structure even without an explicit world model.",
+      "acceptanceCriteria": [
+        "DDPG+HER trained on FetchPush-v4 with 100k timesteps, 50-step episodes, 2x256 hidden layers",
+        "Checkpoint saved to pandas/data/ddpg_her_fetchpush/",
+        "Training metrics log (success rate every 5k steps)",
+        "Final eval: success rate and mean reward over 20 episodes",
+        "Training summary JSON with hyperparameters and results"
+      ],
+      "priority": 105,
+      "passes": false,
+      "phase": 14,
+      "dependencies": [],
+      "notes": "DDPG+HER is what Alec compared against in the Reach benchmark (the orange line). Architecture-matched: 2x256 matches the ensemble hidden_size=256 depth=2. 100k timesteps should be enough for reasonable Push performance. The interesting follow-up is running TB on the critic network gradients to see if model-free RL also learns blanket-like structure internally."
     }
   ],
   "phases": {}
