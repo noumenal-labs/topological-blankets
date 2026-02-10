@@ -1,0 +1,456 @@
+{
+  "experiment": "demo_push_visualization",
+  "timestamp": "2026-02-09T16:09:41",
+  "config": {
+    "env_id": "FetchPush-v4",
+    "max_episode_steps": 80,
+    "seed": 42,
+    "yellow_threshold": 0.35,
+    "red_threshold": 0.6,
+    "fig_size": [
+      16.0,
+      9.0
+    ],
+    "dpi": 100,
+    "gif_fps": 4
+  },
+  "episode_summary": {
+    "total_steps": 80,
+    "max_disagreement": 0.18371627085601722,
+    "max_severity": 0.7581914673218655,
+    "human_steps": 18,
+    "agent_steps": 62,
+    "key_frames": [
+      {
+        "step": 0,
+        "label": "episode_start"
+      },
+      {
+        "step": 20,
+        "label": "perturbation"
+      },
+      {
+        "step": 32,
+        "label": "inject_goal"
+      },
+      {
+        "step": 50,
+        "label": "release"
+      },
+      {
+        "step": 79,
+        "label": "episode_end"
+      }
+    ],
+    "severity_timeline": [
+      {
+        "step": 0,
+        "severity": 0.0868,
+        "level": "green"
+      },
+      {
+        "step": 1,
+        "severity": 0.1031,
+        "level": "green"
+      },
+      {
+        "step": 2,
+        "severity": 0.0627,
+        "level": "green"
+      },
+      {
+        "step": 3,
+        "severity": 0.0894,
+        "level": "green"
+      },
+      {
+        "step": 4,
+        "severity": 0.0847,
+        "level": "green"
+      },
+      {
+        "step": 5,
+        "severity": 0.1035,
+        "level": "green"
+      },
+      {
+        "step": 6,
+        "severity": 0.0974,
+        "level": "green"
+      },
+      {
+        "step": 7,
+        "severity": 0.0895,
+        "level": "green"
+      },
+      {
+        "step": 8,
+        "severity": 0.0879,
+        "level": "green"
+      },
+      {
+        "step": 9,
+        "severity": 0.0985,
+        "level": "green"
+      },
+      {
+        "step": 10,
+        "severity": 0.0841,
+        "level": "green"
+      },
+      {
+        "step": 11,
+        "severity": 0.1013,
+        "level": "green"
+      },
+      {
+        "step": 12,
+        "severity": 0.0836,
+        "level": "green"
+      },
+      {
+        "step": 13,
+        "severity": 0.0975,
+        "level": "green"
+      },
+      {
+        "step": 14,
+        "severity": 0.0967,
+        "level": "green"
+      },
+      {
+        "step": 15,
+        "severity": 0.109,
+        "level": "green"
+      },
+      {
+        "step": 16,
+        "severity": 0.08,
+        "level": "green"
+      },
+      {
+        "step": 17,
+        "severity": 0.1029,
+        "level": "green"
+      },
+      {
+        "step": 18,
+        "severity": 0.0838,
+        "level": "green"
+      },
+      {
+        "step": 19,
+        "severity": 0.2857,
+        "level": "green"
+      },
+      {
+        "step": 20,
+        "severity": 0.7582,
+        "level": "red"
+      },
+      {
+        "step": 21,
+        "severity": 0.7285,
+        "level": "red"
+      },
+      {
+        "step": 22,
+        "severity": 0.7229,
+        "level": "red"
+      },
+      {
+        "step": 23,
+        "severity": 0.7176,
+        "level": "red"
+      },
+      {
+        "step": 24,
+        "severity": 0.7022,
+        "level": "red"
+      },
+      {
+        "step": 25,
+        "severity": 0.6895,
+        "level": "red"
+      },
+      {
+        "step": 26,
+        "severity": 0.6546,
+        "level": "red"
+      },
+      {
+        "step": 27,
+        "severity": 0.6511,
+        "level": "red"
+      },
+      {
+        "step": 28,
+        "severity": 0.6548,
+        "level": "red"
+      },
+      {
+        "step": 29,
+        "severity": 0.635,
+        "level": "red"
+      },
+      {
+        "step": 30,
+        "severity": 0.6085,
+        "level": "red"
+      },
+      {
+        "step": 31,
+        "severity": 0.6224,
+        "level": "red"
+      },
+      {
+        "step": 32,
+        "severity": 0.4691,
+        "level": "yellow"
+      },
+      {
+        "step": 33,
+        "severity": 0.4408,
+        "level": "yellow"
+      },
+      {
+        "step": 34,
+        "severity": 0.4341,
+        "level": "yellow"
+      },
+      {
+        "step": 35,
+        "severity": 0.3998,
+        "level": "yellow"
+      },
+      {
+        "step": 36,
+        "severity": 0.3924,
+        "level": "yellow"
+      },
+      {
+        "step": 37,
+        "severity": 0.3849,
+        "level": "yellow"
+      },
+      {
+        "step": 38,
+        "severity": 0.3636,
+        "level": "yellow"
+      },
+      {
+        "step": 39,
+        "severity": 0.354,
+        "level": "yellow"
+      },
+      {
+        "step": 40,
+        "severity": 0.3364,
+        "level": "green"
+      },
+      {
+        "step": 41,
+        "severity": 0.3167,
+        "level": "green"
+      },
+      {
+        "step": 42,
+        "severity": 0.2992,
+        "level": "green"
+      },
+      {
+        "step": 43,
+        "severity": 0.2879,
+        "level": "green"
+      },
+      {
+        "step": 44,
+        "severity": 0.2816,
+        "level": "green"
+      },
+      {
+        "step": 45,
+        "severity": 0.2665,
+        "level": "green"
+      },
+      {
+        "step": 46,
+        "severity": 0.2447,
+        "level": "green"
+      },
+      {
+        "step": 47,
+        "severity": 0.2168,
+        "level": "green"
+      },
+      {
+        "step": 48,
+        "severity": 0.2069,
+        "level": "green"
+      },
+      {
+        "step": 49,
+        "severity": 0.2054,
+        "level": "green"
+      },
+      {
+        "step": 50,
+        "severity": 0.1691,
+        "level": "green"
+      },
+      {
+        "step": 51,
+        "severity": 0.3242,
+        "level": "green"
+      },
+      {
+        "step": 52,
+        "severity": 0.3012,
+        "level": "green"
+      },
+      {
+        "step": 53,
+        "severity": 0.2887,
+        "level": "green"
+      },
+      {
+        "step": 54,
+        "severity": 0.2868,
+        "level": "green"
+      },
+      {
+        "step": 55,
+        "severity": 0.283,
+        "level": "green"
+      },
+      {
+        "step": 56,
+        "severity": 0.2512,
+        "level": "green"
+      },
+      {
+        "step": 57,
+        "severity": 0.252,
+        "level": "green"
+      },
+      {
+        "step": 58,
+        "severity": 0.2456,
+        "level": "green"
+      },
+      {
+        "step": 59,
+        "severity": 0.2464,
+        "level": "green"
+      },
+      {
+        "step": 60,
+        "severity": 0.2114,
+        "level": "green"
+      },
+      {
+        "step": 61,
+        "severity": 0.2197,
+        "level": "green"
+      },
+      {
+        "step": 62,
+        "severity": 0.2087,
+        "level": "green"
+      },
+      {
+        "step": 63,
+        "severity": 0.1945,
+        "level": "green"
+      },
+      {
+        "step": 64,
+        "severity": 0.164,
+        "level": "green"
+      },
+      {
+        "step": 65,
+        "severity": 0.1527,
+        "level": "green"
+      },
+      {
+        "step": 66,
+        "severity": 0.1588,
+        "level": "green"
+      },
+      {
+        "step": 67,
+        "severity": 0.122,
+        "level": "green"
+      },
+      {
+        "step": 68,
+        "severity": 0.14,
+        "level": "green"
+      },
+      {
+        "step": 69,
+        "severity": 0.3583,
+        "level": "yellow"
+      },
+      {
+        "step": 70,
+        "severity": 0.3181,
+        "level": "green"
+      },
+      {
+        "step": 71,
+        "severity": 0.2993,
+        "level": "green"
+      },
+      {
+        "step": 72,
+        "severity": 0.3075,
+        "level": "green"
+      },
+      {
+        "step": 73,
+        "severity": 0.3104,
+        "level": "green"
+      },
+      {
+        "step": 74,
+        "severity": 0.3281,
+        "level": "green"
+      },
+      {
+        "step": 75,
+        "severity": 0.3079,
+        "level": "green"
+      },
+      {
+        "step": 76,
+        "severity": 0.2953,
+        "level": "green"
+      },
+      {
+        "step": 77,
+        "severity": 0.3243,
+        "level": "green"
+      },
+      {
+        "step": 78,
+        "severity": 0.3207,
+        "level": "green"
+      },
+      {
+        "step": 79,
+        "severity": 0.3007,
+        "level": "green"
+      }
+    ]
+  },
+  "saved_files": [
+    "C:\\Users\\citiz\\Documents\\noumenal-labs\\lunar-lander\\topological_blankets\\ralph\\results\\2026-02-09_160851_demo_push_visualization.gif",
+    "C:\\Users\\citiz\\Documents\\noumenal-labs\\lunar-lander\\topological_blankets\\ralph\\results\\2026-02-09_160851_keyframe_episode_start_step000.png",
+    "C:\\Users\\citiz\\Documents\\noumenal-labs\\lunar-lander\\topological_blankets\\ralph\\results\\2026-02-09_160851_keyframe_perturbation_step020.png",
+    "C:\\Users\\citiz\\Documents\\noumenal-labs\\lunar-lander\\topological_blankets\\ralph\\results\\2026-02-09_160851_keyframe_inject_goal_step032.png",
+    "C:\\Users\\citiz\\Documents\\noumenal-labs\\lunar-lander\\topological_blankets\\ralph\\results\\2026-02-09_160851_keyframe_release_step050.png",
+    "C:\\Users\\citiz\\Documents\\noumenal-labs\\lunar-lander\\topological_blankets\\ralph\\results\\2026-02-09_160851_keyframe_episode_end_step079.png"
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "timestamp": "2026-02-07T08:57:23.648423",
+  "experiment_name": "pixel_structure_comparison",
+  "config": {
+    "state_labels": [
+      "x",
+      "y",
+      "vx",
+      "vy",
+      "angle",
+      "ang_vel",
+      "left_leg",
+      "right_leg"
+    ]
+  },
+  "metrics": {
+    "comparison_table": [
+      {
+        "representation": "Active Inference (8D State)",
+        "dims": 8,
+        "n_objects": 2,
+        "n_blanket": 1,
+        "n_internal": 7,
+        "eigengap": 7.999999999999994,
+        "nmi_vs_state": null,
+        "physical_partition": {
+          "1": [
+            "x",
+            "vx",
+            "angle"
+          ],
+          "0": [
+            "y",
+            "vy",
+            "left_leg",
+            "right_leg"
+          ],
+          "-1": [
+            "ang_vel"
+          ]
+        }
+      },
+      {
+        "representation": "Pixel Encoder (64D Latent)",
+        "dims": 64,
+        "n_objects": 1,
+        "n_blanket": 19,
+        "n_internal": 45,
+        "eigengap": 29.94644750574836,
+        "nmi_vs_state": 0.2808207057333286
+      },
+      {
+        "representation": "Dreamer Autoencoder (64D Latent)",
+        "dims": 64,
+        "n_objects": 1,
+        "n_blanket": 24,
+        "n_internal": 40,
+        "eigengap": 59.785680256622506,
+        "nmi_vs_state": 0.5169950660951976
+      }
+    ],
+    "physical_recovery": {
+      "pixel_latent": {
+        "nmi": 0.2808207057333286,
+        "interpretation": "weak"
+      },
+      "dreamer_latent": {
+        "nmi": 0.5169950660951976,
+        "interpretation": "strong"
+      }
+    },
+    "key_finding": "Learned representations partially preserve physical Markov blanket structure. Dreamer (trained with reconstruction loss) preserves more structure than the pixel encoder (trained with temporal consistency loss).",
+    "representations_available": [
+      "state_space",
+      "pixel_latent",
+      "dreamer_latent"
+    ]
+  },
+  "notes": "US-044: Multi-representation comparison. State-space vs pixel-latent vs Dreamer-latent TB structure."
+}

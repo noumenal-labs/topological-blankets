@@ -1,0 +1,157 @@
+{
+  "timestamp": "2026-02-07T08:16:21.673685",
+  "experiment_name": "multi_scale_comparison",
+  "config": {
+    "state_labels": [
+      "x",
+      "y",
+      "vx",
+      "vy",
+      "angle",
+      "ang_vel",
+      "left_leg",
+      "right_leg"
+    ]
+  },
+  "metrics": {
+    "comparison_table": [
+      {
+        "name": "Active Inference Dynamics",
+        "n_dims": 8,
+        "n_objects": 2,
+        "n_blanket": 1,
+        "eigengap": 7.999999999999994
+      },
+      {
+        "name": "Ensemble Disagreement",
+        "n_dims": 8,
+        "n_objects": 2,
+        "n_blanket": 2,
+        "eigengap": 5.999999999999997
+      },
+      {
+        "name": "Dreamer 64D Latent",
+        "n_dims": 64,
+        "n_objects": 1,
+        "n_blanket": 24,
+        "eigengap": 59.785680256622506
+      }
+    ],
+    "object_correspondence": {
+      "cluster_to_physical": {
+        "-1": {
+          "n_latent_dims": 24,
+          "top_physical_vars": [
+            "angle",
+            "vx",
+            "x"
+          ],
+          "top_correlations": [
+            0.5838114049479987,
+            0.5672723235743214,
+            0.5500094218100332
+          ],
+          "all_correlations": {
+            "x": 0.5500094218100332,
+            "y": 0.3628683292984978,
+            "vx": 0.5672723235743214,
+            "vy": 0.32656759469707336,
+            "angle": 0.5838114049479987,
+            "ang_vel": 0.45322774829604123,
+            "left_leg": 0.26835207203926614,
+            "right_leg": 0.3087299298782166
+          }
+        },
+        "0": {
+          "n_latent_dims": 40,
+          "top_physical_vars": [
+            "y",
+            "right_leg",
+            "left_leg"
+          ],
+          "top_correlations": [
+            0.4103286886579064,
+            0.4087337125069944,
+            0.3869404127858132
+          ],
+          "all_correlations": {
+            "x": 0.2835317360276154,
+            "y": 0.4103286886579064,
+            "vx": 0.2992463203429879,
+            "vy": 0.35149555268851784,
+            "angle": 0.2902768029200539,
+            "ang_vel": 0.26715103949805874,
+            "left_leg": 0.3869404127858132,
+            "right_leg": 0.4087337125069944
+          }
+        }
+      },
+      "blanket_physical": {
+        "n_blanket_dims": 24,
+        "top_physical_vars": [
+          "angle",
+          "vx",
+          "x"
+        ],
+        "top_correlations": [
+          0.5838114049479987,
+          0.5672723235743214,
+          0.5500094218100332
+        ]
+      },
+      "nmi_state_vs_projected_latent": 0.5169950660951976,
+      "projected_latent_assignment": [
+        -1,
+        0,
+        0,
+        0,
+        -1,
+        -1,
+        0,
+        0
+      ],
+      "state_assignment": [
+        1,
+        0,
+        1,
+        0,
+        1,
+        -1,
+        0,
+        0
+      ]
+    },
+    "key_insight": "Learned representations partially preserve the physical Markov blanket structure",
+    "representations": {
+      "actinf_dynamics": {
+        "n_dims": 8,
+        "n_objects": 2,
+        "n_blanket": 1,
+        "eigengap": 7.999999999999994,
+        "assignment": [
+          1,
+          0,
+          1,
+          0,
+          1,
+          -1,
+          0,
+          0
+        ]
+      },
+      "dreamer_latent": {
+        "n_dims": 64,
+        "n_objects": 1,
+        "n_blanket": 24,
+        "eigengap": 59.785680256622506
+      },
+      "ensemble_disagreement": {
+        "n_dims": 8,
+        "n_objects": 2,
+        "n_blanket": 2,
+        "eigengap": 5.999999999999997
+      }
+    }
+  },
+  "notes": "US-030: Multi-scale comparison across 8D state, 8D disagreement, and 64D Dreamer latent. Coupling matrices, eigenvalue spectra, and latent-to-physical correspondence."
+}

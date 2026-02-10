@@ -1,0 +1,259 @@
+{
+  "timestamp": "2026-02-07T05:04:01.446272",
+  "experiment_name": "edge_compute_analysis",
+  "config": {
+    "dims_tested": [
+      8,
+      64,
+      256,
+      1024,
+      4096
+    ],
+    "formula": "factored = sum(n_i^2) + n_b^2 + k * n_b * max(n_i)"
+  },
+  "metrics": {
+    "AI: 3+3+2b": {
+      "n_total": 8,
+      "k_objects": 2,
+      "object_sizes": [
+        3,
+        3
+      ],
+      "blanket_size": 2,
+      "monolithic_flops": 64,
+      "factored_flops": 34,
+      "object_cost": 18,
+      "blanket_cost": 4,
+      "cross_cost": 12,
+      "speedup": 1.8823529411764706
+    },
+    "AI: 4+2+2b": {
+      "n_total": 8,
+      "k_objects": 2,
+      "object_sizes": [
+        4,
+        2
+      ],
+      "blanket_size": 2,
+      "monolithic_flops": 64,
+      "factored_flops": 40,
+      "object_cost": 20,
+      "blanket_cost": 4,
+      "cross_cost": 16,
+      "speedup": 1.6
+    },
+    "AI: no blanket": {
+      "n_total": 8,
+      "k_objects": 3,
+      "object_sizes": [
+        3,
+        3,
+        2
+      ],
+      "blanket_size": 0,
+      "monolithic_flops": 64,
+      "factored_flops": 22,
+      "object_cost": 22,
+      "blanket_cost": 0,
+      "cross_cost": 0,
+      "speedup": 2.909090909090909
+    },
+    "Dreamer: 20+20+20+4b": {
+      "n_total": 64,
+      "k_objects": 3,
+      "object_sizes": [
+        20,
+        20,
+        20
+      ],
+      "blanket_size": 4,
+      "monolithic_flops": 4096,
+      "factored_flops": 1456,
+      "object_cost": 1200,
+      "blanket_cost": 16,
+      "cross_cost": 240,
+      "speedup": 2.8131868131868134
+    },
+    "Dreamer: 4x16 no blanket": {
+      "n_total": 64,
+      "k_objects": 4,
+      "object_sizes": [
+        16,
+        16,
+        16,
+        16
+      ],
+      "blanket_size": 0,
+      "monolithic_flops": 4096,
+      "factored_flops": 1024,
+      "object_cost": 1024,
+      "blanket_cost": 0,
+      "cross_cost": 0,
+      "speedup": 4.0
+    },
+    "Dreamer: 30+30+4b": {
+      "n_total": 64,
+      "k_objects": 2,
+      "object_sizes": [
+        30,
+        30
+      ],
+      "blanket_size": 4,
+      "monolithic_flops": 4096,
+      "factored_flops": 2056,
+      "object_cost": 1800,
+      "blanket_cost": 16,
+      "cross_cost": 240,
+      "speedup": 1.9922178988326849
+    },
+    "Dreamer: 6x10+4b": {
+      "n_total": 64,
+      "k_objects": 6,
+      "object_sizes": [
+        10,
+        10,
+        10,
+        10,
+        10,
+        10
+      ],
+      "blanket_size": 4,
+      "monolithic_flops": 4096,
+      "factored_flops": 856,
+      "object_cost": 600,
+      "blanket_cost": 16,
+      "cross_cost": 240,
+      "speedup": 4.785046728971962
+    },
+    "scaling": {
+      "8": {
+        "n_total": 8,
+        "k_objects": 2,
+        "object_sizes": [
+          2,
+          2
+        ],
+        "blanket_size": 4,
+        "monolithic_flops": 64,
+        "factored_flops": 40,
+        "object_cost": 8,
+        "blanket_cost": 16,
+        "cross_cost": 16,
+        "speedup": 1.6
+      },
+      "64": {
+        "n_total": 64,
+        "k_objects": 4,
+        "object_sizes": [
+          15,
+          15,
+          15,
+          15
+        ],
+        "blanket_size": 4,
+        "monolithic_flops": 4096,
+        "factored_flops": 1156,
+        "object_cost": 900,
+        "blanket_cost": 16,
+        "cross_cost": 240,
+        "speedup": 3.5432525951557095
+      },
+      "256": {
+        "n_total": 256,
+        "k_objects": 8,
+        "object_sizes": [
+          31,
+          31,
+          31,
+          31,
+          31,
+          31,
+          31,
+          31
+        ],
+        "blanket_size": 8,
+        "monolithic_flops": 65536,
+        "factored_flops": 9736,
+        "object_cost": 7688,
+        "blanket_cost": 64,
+        "cross_cost": 1984,
+        "speedup": 6.7313064913722265
+      },
+      "1024": {
+        "n_total": 1024,
+        "k_objects": 16,
+        "object_sizes": [
+          63,
+          63,
+          63,
+          63,
+          63,
+          63,
+          63,
+          63,
+          63,
+          63,
+          63,
+          63,
+          63,
+          63,
+          63,
+          63
+        ],
+        "blanket_size": 16,
+        "monolithic_flops": 1048576,
+        "factored_flops": 79888,
+        "object_cost": 63504,
+        "blanket_cost": 256,
+        "cross_cost": 16128,
+        "speedup": 13.12557580612858
+      },
+      "4096": {
+        "n_total": 4096,
+        "k_objects": 32,
+        "object_sizes": [
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127,
+          127
+        ],
+        "blanket_size": 32,
+        "monolithic_flops": 16777216,
+        "factored_flops": 647200,
+        "object_cost": 516128,
+        "blanket_cost": 1024,
+        "cross_cost": 130048,
+        "speedup": 25.922768850432632
+      }
+    }
+  },
+  "notes": "US-034: Compute savings from TB-discovered structure. Speedup grows with dimension and number of objects."
+}

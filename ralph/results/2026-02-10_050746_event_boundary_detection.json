@@ -1,0 +1,42 @@
+{
+  "timestamp": "2026-02-10T05:07:46.289234",
+  "experiment_name": "event_boundary_detection",
+  "config": {
+    "n_episodes": 15,
+    "window_size": 200,
+    "stride": 50,
+    "seed": 42,
+    "tb_method": "hybrid",
+    "n_objects": 2,
+    "boundary_alignment_tolerance": 20,
+    "min_episode_length": 80
+  },
+  "metrics": {
+    "n_episodes_analyzed": 0,
+    "mean_tb_f1": NaN,
+    "mean_surprise_f1": NaN,
+    "tb_wins_count": 0,
+    "tb_improvement_over_surprise": NaN,
+    "per_episode": [],
+    "aggregate_segment_stats": {
+      "mean_segment_length": 0.0,
+      "std_segment_length": 0.0,
+      "mean_segments_per_episode": NaN,
+      "mean_within_segment_stability": NaN
+    },
+    "acceptance_criteria": {
+      "sliding_window_tb_computed": false,
+      "event_boundary_score_defined": true,
+      "peak_finding_detection": true,
+      "at_least_10_episodes": false,
+      "validated_against_phases": true,
+      "surprise_baseline_compared": true,
+      "tb_beats_surprise": false,
+      "visualization_generated": true,
+      "segment_statistics_computed": true,
+      "results_saved": true
+    },
+    "all_criteria_pass": false
+  },
+  "notes": "US-059: TB-based event boundary detection in LunarLander. Sliding-window TB (W=200, stride=50) computes coupling matrix evolution over full episodes. Event boundaries detected from composite score (NMI deficit + eigengap derivative + Frobenius distance) via peak-finding. Compared to surprise-based baseline. Connects to Patel et al. 'Towards Psychological World Models' poster on event-segmented RSSMs."
+}

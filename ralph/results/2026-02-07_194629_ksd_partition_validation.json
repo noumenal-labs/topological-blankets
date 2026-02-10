@@ -1,0 +1,343 @@
+{
+  "timestamp": "2026-02-07T19:46:29.402878",
+  "experiment_name": "ksd_partition_validation",
+  "config": {
+    "n_permutations": 500,
+    "max_samples": 300,
+    "quadratic_config": {
+      "n_objects": 2,
+      "vars_per_object": 3,
+      "vars_per_blanket": 3,
+      "intra_strength": 6.0,
+      "blanket_strength": 0.8,
+      "n_samples": 3000
+    }
+  },
+  "metrics": {
+    "quadratic_validation": {
+      "config": {
+        "n_objects": 2,
+        "vars_per_object": 3,
+        "vars_per_blanket": 3,
+        "intra_strength": 6.0,
+        "blanket_strength": 0.8,
+        "n_samples": 3000
+      },
+      "correct_partition": {
+        "idx_A": [
+          0,
+          1,
+          2
+        ],
+        "idx_B": [
+          3,
+          4,
+          5
+        ],
+        "idx_M": [
+          6,
+          7,
+          8
+        ],
+        "test_stat_AB": 0.0006456707087828638,
+        "test_stat_BA": 0.0007790591837981375,
+        "p_value_AB": 0.298,
+        "p_value_BA": 0.086,
+        "p_value": 0.172,
+        "reject_at_005": false,
+        "time": 1.7808811664581299
+      },
+      "random_partition": {
+        "idx_A": [
+          7,
+          0,
+          5
+        ],
+        "idx_B": [
+          6,
+          3,
+          1
+        ],
+        "idx_M": [
+          8,
+          4,
+          2
+        ],
+        "test_stat_AB": 0.0005633531995033326,
+        "test_stat_BA": 0.0007616843361524843,
+        "p_value_AB": 0.538,
+        "p_value_BA": 0.204,
+        "p_value": 0.408,
+        "reject_at_005": false,
+        "time": 1.6517910957336426
+      },
+      "tb_detected_partition": {
+        "idx_A": [
+          0,
+          1,
+          2,
+          7
+        ],
+        "idx_B": [
+          3,
+          4,
+          5
+        ],
+        "idx_M": [
+          6,
+          8
+        ],
+        "test_stat_AB": 0.0005538702622449273,
+        "test_stat_BA": 0.0004343750442829566,
+        "p_value_AB": 0.544,
+        "p_value_BA": 0.89,
+        "p_value": 1.0,
+        "reject_at_005": false,
+        "time": 1.7542250156402588
+      }
+    },
+    "power_analysis": {
+      "100": {
+        "correct_rejection_rate": 0.625,
+        "random_rejection_rate": 0.5,
+        "correct_mean_pvalue": 0.225,
+        "correct_std_pvalue": 0.32535023863181317,
+        "random_mean_pvalue": 0.245,
+        "random_std_pvalue": 0.29461368301934354,
+        "correct_pvals": [
+          0.006666666666666667,
+          0.7333333333333333,
+          0.0,
+          0.04,
+          0.82,
+          0.0,
+          0.2,
+          0.0
+        ],
+        "random_pvals": [
+          0.0,
+          0.5333333333333333,
+          0.8466666666666667,
+          0.03333333333333333,
+          0.0,
+          0.38,
+          0.0,
+          0.16666666666666666
+        ]
+      },
+      "200": {
+        "correct_rejection_rate": 0.125,
+        "random_rejection_rate": 0.25,
+        "correct_mean_pvalue": 0.4716666666666667,
+        "correct_std_pvalue": 0.3585890560392371,
+        "random_mean_pvalue": 0.3383333333333333,
+        "random_std_pvalue": 0.32392986209294683,
+        "correct_pvals": [
+          0.06,
+          1.0,
+          0.38666666666666666,
+          0.6533333333333333,
+          0.36666666666666664,
+          0.30666666666666664,
+          1.0,
+          0.0
+        ],
+        "random_pvals": [
+          0.02666666666666667,
+          1.0,
+          0.4666666666666667,
+          0.5,
+          0.06,
+          0.14,
+          0.0,
+          0.5133333333333333
+        ]
+      },
+      "500": {
+        "correct_rejection_rate": 0.125,
+        "random_rejection_rate": 0.375,
+        "correct_mean_pvalue": 0.5716666666666667,
+        "correct_std_pvalue": 0.3728680135859813,
+        "random_mean_pvalue": 0.2825,
+        "random_std_pvalue": 0.22715480526626672,
+        "correct_pvals": [
+          0.0,
+          0.3333333333333333,
+          1.0,
+          0.4266666666666667,
+          1.0,
+          1.0,
+          0.18,
+          0.6333333333333333
+        ],
+        "random_pvals": [
+          0.02666666666666667,
+          0.5066666666666667,
+          0.29333333333333333,
+          0.02666666666666667,
+          0.5866666666666667,
+          0.28,
+          0.006666666666666667,
+          0.5333333333333333
+        ]
+      },
+      "1000": {
+        "correct_rejection_rate": 0.0,
+        "random_rejection_rate": 0.25,
+        "correct_mean_pvalue": 0.40499999999999997,
+        "correct_std_pvalue": 0.2815186988066295,
+        "random_mean_pvalue": 0.5058333333333334,
+        "random_std_pvalue": 0.42083828379926547,
+        "correct_pvals": [
+          1.0,
+          0.16,
+          0.22666666666666666,
+          0.16666666666666666,
+          0.28,
+          0.20666666666666667,
+          0.5866666666666667,
+          0.6133333333333333
+        ],
+        "random_pvals": [
+          0.98,
+          0.013333333333333334,
+          0.41333333333333333,
+          0.06,
+          0.006666666666666667,
+          1.0,
+          1.0,
+          0.5733333333333334
+        ]
+      },
+      "2000": {
+        "correct_rejection_rate": 0.0,
+        "random_rejection_rate": 0.25,
+        "correct_mean_pvalue": 0.6941666666666666,
+        "correct_std_pvalue": 0.38198949229294543,
+        "random_mean_pvalue": 0.26916666666666667,
+        "random_std_pvalue": 0.2933510884778018,
+        "correct_pvals": [
+          0.44,
+          0.8933333333333333,
+          0.16666666666666666,
+          0.05333333333333334,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "random_pvals": [
+          0.3,
+          0.21333333333333335,
+          0.1,
+          0.04666666666666667,
+          0.30666666666666664,
+          0.16,
+          1.0,
+          0.02666666666666667
+        ]
+      }
+    },
+    "lunarlander_validation": {
+      "n_samples": 2000,
+      "n_vars": 8,
+      "state_labels": [
+        "x",
+        "y",
+        "vx",
+        "vy",
+        "angle",
+        "ang_vel",
+        "left_leg",
+        "right_leg"
+      ],
+      "data_source": "synthetic_lunarlander_8d",
+      "tb_partition": {
+        "assignment": [
+          -1,
+          0,
+          -1,
+          0,
+          1,
+          -1,
+          -1,
+          0
+        ],
+        "is_blanket": [
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true,
+          false
+        ],
+        "blanket_vars": [
+          0,
+          2,
+          5,
+          6
+        ]
+      },
+      "tb_validation": {
+        "partition_valid": true,
+        "min_pvalue": 0.82,
+        "mean_pvalue": 0.82,
+        "pair_results": {
+          "obj0_vs_obj1": {
+            "test_stat_AB": 0.0006201985293924665,
+            "p_value_AB": 0.41,
+            "test_stat_BA": 0.0006086846945758629,
+            "p_value_BA": 0.41333333333333333,
+            "combined_p_value": 0.82,
+            "n_samples_used": 300,
+            "dim_A": 3,
+            "dim_B": 1,
+            "dim_M": 4,
+            "reject_at_005": false,
+            "reject_at_001": false,
+            "n_permutations": 300
+          }
+        }
+      },
+      "random_validation": {
+        "partition_valid": true,
+        "min_pvalue": 0.10666666666666667,
+        "mean_pvalue": 0.10666666666666667,
+        "pair_results": {
+          "obj0_vs_obj1": {
+            "test_stat_AB": 0.0006325997591734158,
+            "p_value_AB": 0.2633333333333333,
+            "test_stat_BA": 0.0007935260434474931,
+            "p_value_BA": 0.05333333333333334,
+            "combined_p_value": 0.10666666666666667,
+            "n_samples_used": 300,
+            "dim_A": 3,
+            "dim_B": 3,
+            "dim_M": 2,
+            "reject_at_005": false,
+            "reject_at_001": false,
+            "n_permutations": 300
+          }
+        }
+      }
+    },
+    "integration_test": {
+      "partition_valid": true,
+      "mean_pvalue": 1.0,
+      "min_pvalue": 1.0
+    },
+    "summary": {
+      "acceptance_criteria": {
+        "correct_partition_not_rejected": true,
+        "random_partition_rejected": false,
+        "tb_partition_not_rejected": true,
+        "power_crossover_N": null,
+        "integration_works": true
+      },
+      "total_time_seconds": 103.52707958221436
+    }
+  },
+  "notes": "US-074: KSD goodness-of-fit test. Correct p=0.1720 (not_rej=True), random p=0.4080 (rej=False), TB p=1.0000 (not_rej=True). Power crossover N=None. Integration: valid=True."
+}

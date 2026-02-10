@@ -1,0 +1,400 @@
+{
+  "timestamp": "2026-02-05T18:11:32.048563",
+  "experiment_name": "scaling_experiment",
+  "config": {
+    "n_objects_list": [
+      2,
+      3,
+      4
+    ],
+    "vars_per_object_list": [
+      3,
+      5,
+      8
+    ],
+    "n_trials": 5,
+    "vars_per_blanket": 3,
+    "blanket_strength": 0.8
+  },
+  "metrics": {
+    "2obj_3vpo": {
+      "n_objects": 2,
+      "vars_per_object": 3,
+      "total_dimension": 9,
+      "per_trial": [
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 1.0,
+          "full_ari": 1.0,
+          "wall_time_s": 0.3798360824584961
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 1.0,
+          "full_ari": 1.0,
+          "wall_time_s": 0.4571211338043213
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 1.0,
+          "full_ari": 1.0,
+          "wall_time_s": 0.4227902889251709
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 0.8,
+          "full_ari": 0.6428571428571429,
+          "wall_time_s": 0.4513070583343506
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 1.0,
+          "full_ari": 1.0,
+          "wall_time_s": 0.41118764877319336
+        }
+      ],
+      "mean_ari": 1.0,
+      "std_ari": 0.0,
+      "mean_f1": 0.96,
+      "std_f1": 0.07999999999999999,
+      "mean_wall_time_s": 0.42444844245910646
+    },
+    "2obj_5vpo": {
+      "n_objects": 2,
+      "vars_per_object": 5,
+      "total_dimension": 13,
+      "per_trial": [
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 0.8,
+          "full_ari": 0.7920792079207921,
+          "wall_time_s": 0.46567630767822266
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 0.8,
+          "full_ari": 0.7920792079207921,
+          "wall_time_s": 0.4594001770019531
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 1.0,
+          "full_ari": 1.0,
+          "wall_time_s": 0.4808833599090576
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 1.0,
+          "full_ari": 1.0,
+          "wall_time_s": 0.4171135425567627
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 1.0,
+          "full_ari": 1.0,
+          "wall_time_s": 0.4467487335205078
+        }
+      ],
+      "mean_ari": 1.0,
+      "std_ari": 0.0,
+      "mean_f1": 0.9199999999999999,
+      "std_f1": 0.09797958971132709,
+      "mean_wall_time_s": 0.4539644241333008
+    },
+    "2obj_8vpo": {
+      "n_objects": 2,
+      "vars_per_object": 8,
+      "total_dimension": 19,
+      "per_trial": [
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 1.0,
+          "full_ari": 1.0,
+          "wall_time_s": 0.48659300804138184
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 1.0,
+          "full_ari": 1.0,
+          "wall_time_s": 0.4291679859161377
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 1.0,
+          "full_ari": 1.0,
+          "wall_time_s": 0.46686625480651855
+        },
+        {
+          "object_ari": 0.5333333333333333,
+          "blanket_f1": 0.5,
+          "full_ari": 0.40550688360450565,
+          "wall_time_s": 0.4662747383117676
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 1.0,
+          "full_ari": 1.0,
+          "wall_time_s": 0.4578230381011963
+        }
+      ],
+      "mean_ari": 0.9066666666666666,
+      "std_ari": 0.18666666666666665,
+      "mean_f1": 0.9,
+      "std_f1": 0.2,
+      "mean_wall_time_s": 0.4613450050354004
+    },
+    "3obj_3vpo": {
+      "n_objects": 3,
+      "vars_per_object": 3,
+      "total_dimension": 12,
+      "per_trial": [
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 1.0,
+          "full_ari": 1.0,
+          "wall_time_s": 0.4544224739074707
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 0.8,
+          "full_ari": 0.7533632286995515,
+          "wall_time_s": 0.437603235244751
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 0.8,
+          "full_ari": 0.7533632286995515,
+          "wall_time_s": 0.44280076026916504
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 0.8,
+          "full_ari": 0.7533632286995515,
+          "wall_time_s": 0.45041942596435547
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 1.0,
+          "full_ari": 1.0,
+          "wall_time_s": 0.47263026237487793
+        }
+      ],
+      "mean_ari": 1.0,
+      "std_ari": 0.0,
+      "mean_f1": 0.8800000000000001,
+      "std_f1": 0.09797958971132709,
+      "mean_wall_time_s": 0.45157523155212403
+    },
+    "3obj_5vpo": {
+      "n_objects": 3,
+      "vars_per_object": 5,
+      "total_dimension": 18,
+      "per_trial": [
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 0.8,
+          "full_ari": 0.8690869086908691,
+          "wall_time_s": 0.44796204566955566
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 1.0,
+          "full_ari": 1.0,
+          "wall_time_s": 0.4739081859588623
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 1.0,
+          "full_ari": 1.0,
+          "wall_time_s": 0.4888014793395996
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 1.0,
+          "full_ari": 1.0,
+          "wall_time_s": 0.4568672180175781
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 0.8,
+          "full_ari": 0.8690869086908691,
+          "wall_time_s": 0.4741549491882324
+        }
+      ],
+      "mean_ari": 1.0,
+      "std_ari": 0.0,
+      "mean_f1": 0.9199999999999999,
+      "std_f1": 0.09797958971132709,
+      "mean_wall_time_s": 0.4683387756347656
+    },
+    "3obj_8vpo": {
+      "n_objects": 3,
+      "vars_per_object": 8,
+      "total_dimension": 27,
+      "per_trial": [
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 1.0,
+          "full_ari": 1.0,
+          "wall_time_s": 0.5328333377838135
+        },
+        {
+          "object_ari": 0.7635829662261381,
+          "blanket_f1": 0.8,
+          "full_ari": 0.7204125267261979,
+          "wall_time_s": 0.49967098236083984
+        },
+        {
+          "object_ari": 0.41273172437915356,
+          "blanket_f1": 1.0,
+          "full_ari": 0.4802531491510984,
+          "wall_time_s": 0.49116039276123047
+        },
+        {
+          "object_ari": 0.7635829662261381,
+          "blanket_f1": 1.0,
+          "full_ari": 0.7892976588628763,
+          "wall_time_s": 0.49700331687927246
+        },
+        {
+          "object_ari": 0.8720800889877642,
+          "blanket_f1": 0.8,
+          "full_ari": 0.80727318803852,
+          "wall_time_s": 0.5142090320587158
+        }
+      ],
+      "mean_ari": 0.7623955491638388,
+      "std_ari": 0.1953223917604711,
+      "mean_f1": 0.9199999999999999,
+      "std_f1": 0.09797958971132709,
+      "mean_wall_time_s": 0.5069754123687744
+    },
+    "4obj_3vpo": {
+      "n_objects": 4,
+      "vars_per_object": 3,
+      "total_dimension": 15,
+      "per_trial": [
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 1.0,
+          "full_ari": 1.0,
+          "wall_time_s": 0.4775817394256592
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 0.8,
+          "full_ari": 0.8108108108108109,
+          "wall_time_s": 0.4990365505218506
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 1.0,
+          "full_ari": 1.0,
+          "wall_time_s": 0.500434160232544
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 0.8,
+          "full_ari": 0.8108108108108109,
+          "wall_time_s": 0.5173571109771729
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 1.0,
+          "full_ari": 1.0,
+          "wall_time_s": 0.4607996940612793
+        }
+      ],
+      "mean_ari": 1.0,
+      "std_ari": 0.0,
+      "mean_f1": 0.9199999999999999,
+      "std_f1": 0.0979795897113271,
+      "mean_wall_time_s": 0.4910418510437012
+    },
+    "4obj_5vpo": {
+      "n_objects": 4,
+      "vars_per_object": 5,
+      "total_dimension": 23,
+      "per_trial": [
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 0.8,
+          "full_ari": 0.9045848822800495,
+          "wall_time_s": 0.5014834403991699
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 1.0,
+          "full_ari": 1.0,
+          "wall_time_s": 0.45326828956604004
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 0.5,
+          "full_ari": 0.8434728810063931,
+          "wall_time_s": 0.47335076332092285
+        },
+        {
+          "object_ari": 0.8587943848059455,
+          "blanket_f1": 0.8,
+          "full_ari": 0.7723736438211167,
+          "wall_time_s": 0.49826598167419434
+        },
+        {
+          "object_ari": 1.0,
+          "blanket_f1": 0.8,
+          "full_ari": 0.9045848822800495,
+          "wall_time_s": 0.4875473976135254
+        }
+      ],
+      "mean_ari": 0.971758876961189,
+      "std_ari": 0.0564822460776218,
+      "mean_f1": 0.7799999999999999,
+      "std_f1": 0.16,
+      "mean_wall_time_s": 0.4827831745147705
+    },
+    "4obj_8vpo": {
+      "n_objects": 4,
+      "vars_per_object": 8,
+      "total_dimension": 35,
+      "per_trial": [
+        {
+          "object_ari": 0.8229224249124747,
+          "blanket_f1": 0.8,
+          "full_ari": 0.7899752912107306,
+          "wall_time_s": 0.4793212413787842
+        },
+        {
+          "object_ari": 0.6489304332194858,
+          "blanket_f1": 0.5,
+          "full_ari": 0.5794353665128269,
+          "wall_time_s": 0.5033926963806152
+        },
+        {
+          "object_ari": 0.4376889486059792,
+          "blanket_f1": 0.8,
+          "full_ari": 0.41691819215240483,
+          "wall_time_s": 0.5124037265777588
+        },
+        {
+          "object_ari": 0.6666666666666666,
+          "blanket_f1": 1.0,
+          "full_ari": 0.6889702038682697,
+          "wall_time_s": 0.5283510684967041
+        },
+        {
+          "object_ari": 0.7461328480436761,
+          "blanket_f1": 0.8,
+          "full_ari": 0.703114246386786,
+          "wall_time_s": 0.5160245895385742
+        }
+      ],
+      "mean_ari": 0.6644682642896564,
+      "std_ari": 0.12919128488232673,
+      "mean_f1": 0.78,
+      "std_f1": 0.16,
+      "mean_wall_time_s": 0.5078986644744873
+    }
+  },
+  "notes": "US-007: Scaling over n_objects x vars_per_object."
+}

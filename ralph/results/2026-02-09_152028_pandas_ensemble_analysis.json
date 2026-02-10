@@ -1,0 +1,258 @@
+{
+  "timestamp": "2026-02-09T15:20:28.226974",
+  "experiment_name": "pandas_ensemble_analysis",
+  "config": {
+    "n_episodes": 20,
+    "max_steps": 50,
+    "max_jacobian_samples": 300,
+    "detection_method": "hybrid",
+    "n_objects": 2,
+    "env_id": "FetchPush-v4",
+    "model_hidden_size": 256,
+    "model_depth": 2
+  },
+  "metrics": {
+    "model_status": "trained",
+    "n_samples": 1500,
+    "n_env_transitions": 1000,
+    "obs_dim": 25,
+    "ensemble_size": 5,
+    "primary_method": "fisher_coupling_3obj",
+    "primary_ari": 0.16217833632555356,
+    "primary_blanket_f1": 0.14285714285714285,
+    "primary_assignment": [
+      -1,
+      -1,
+      0,
+      -1,
+      -1,
+      -1,
+      2,
+      -1,
+      0,
+      0,
+      0,
+      -1,
+      2,
+      -1,
+      1,
+      1,
+      2,
+      -1,
+      -1,
+      -1,
+      1,
+      1,
+      2,
+      0,
+      0
+    ],
+    "primary_blankets": [
+      0,
+      1,
+      3,
+      4,
+      5,
+      7,
+      11,
+      13,
+      17,
+      18,
+      19
+    ],
+    "primary_objects": {
+      "0": [
+        2,
+        8,
+        9,
+        10,
+        23,
+        24
+      ],
+      "1": [
+        14,
+        15,
+        20,
+        21
+      ],
+      "2": [
+        6,
+        12,
+        16,
+        22
+      ]
+    },
+    "multi_method": {
+      "sensitivity_hybrid_2obj": {
+        "ari": -0.03626943005181347,
+        "blanket_f1": 0.4,
+        "n_blanket_vars": 12,
+        "n_objects": 2
+      },
+      "sensitivity_gradient_2obj": {
+        "ari": -0.03626943005181347,
+        "blanket_f1": 0.4,
+        "n_blanket_vars": 12,
+        "n_objects": 2
+      },
+      "sensitivity_coupling_2obj": {
+        "ari": -0.06874638937030618,
+        "blanket_f1": 0.26666666666666666,
+        "n_blanket_vars": 12,
+        "n_objects": 2
+      },
+      "fisher_hybrid_2obj": {
+        "ari": 0.0644789867587795,
+        "blanket_f1": 0.26666666666666666,
+        "n_blanket_vars": 12,
+        "n_objects": 2
+      },
+      "fisher_coupling_2obj": {
+        "ari": 0.13657770800627944,
+        "blanket_f1": 0.3333333333333333,
+        "n_blanket_vars": 3,
+        "n_objects": 2
+      },
+      "fisher_hybrid_3obj": {
+        "ari": 0.12597950572634117,
+        "blanket_f1": 0.3076923076923077,
+        "n_blanket_vars": 10,
+        "n_objects": 3
+      },
+      "fisher_coupling_3obj": {
+        "ari": 0.16217833632555356,
+        "blanket_f1": 0.14285714285714285,
+        "n_blanket_vars": 11,
+        "n_objects": 3
+      }
+    },
+    "disagreement_per_var": [
+      0.3793136179447174,
+      0.266804575920105,
+      0.49104979634284973,
+      0.37260913848876953,
+      0.48258092999458313,
+      0.6554705500602722,
+      0.3688388764858246,
+      0.25834837555885315,
+      0.40291377902030945,
+      10.27558708190918,
+      12.520565032958984,
+      0.22259902954101562,
+      0.29681840538978577,
+      0.24452918767929077,
+      4.659079074859619,
+      5.379358768463135,
+      8.945380210876465,
+      2.8587870597839355,
+      3.271589994430542,
+      3.6291704177856445,
+      7.364599704742432,
+      5.4583234786987305,
+      8.682214736938477,
+      7.320316791534424,
+      8.563637733459473
+    ],
+    "mean_sensitivity_per_var": [
+      1.811998724937439,
+      1.297181248664856,
+      1.9140818119049072,
+      2.0747272968292236,
+      2.182042121887207,
+      3.431008815765381,
+      1.7208482027053833,
+      1.2553627490997314,
+      2.0383427143096924,
+      44.580078125,
+      78.552001953125,
+      1.0911802053451538,
+      1.4204471111297607,
+      1.1467196941375732,
+      55.6032829284668,
+      48.22898483276367,
+      64.76937103271484,
+      27.601032257080078,
+      36.3738899230957,
+      39.34716796875,
+      66.15214538574219,
+      55.56080627441406,
+      80.04292297363281,
+      54.003173828125,
+      50.07057571411133
+    ],
+    "obs_labels": [
+      "grip_x",
+      "grip_y",
+      "grip_z",
+      "obj_x",
+      "obj_y",
+      "obj_z",
+      "rel_x",
+      "rel_y",
+      "rel_z",
+      "grip_state_0",
+      "grip_state_1",
+      "obj_rot_0",
+      "obj_rot_1",
+      "obj_rot_2",
+      "obj_velp_x",
+      "obj_velp_y",
+      "obj_velp_z",
+      "obj_velr_x",
+      "obj_velr_y",
+      "obj_velr_z",
+      "grip_velp_x",
+      "grip_velp_y",
+      "extra_0",
+      "extra_1",
+      "extra_2"
+    ],
+    "semantic_interpretation": {
+      "object_0": {
+        "variables": [
+          "grip_z",
+          "rel_z",
+          "grip_state_0",
+          "grip_state_1",
+          "extra_1",
+          "extra_2"
+        ],
+        "dominant_group": "gripper"
+      },
+      "object_1": {
+        "variables": [
+          "obj_velp_x",
+          "obj_velp_y",
+          "grip_velp_x",
+          "grip_velp_y"
+        ],
+        "dominant_group": "gripper"
+      },
+      "object_2": {
+        "variables": [
+          "rel_x",
+          "obj_rot_1",
+          "obj_velp_z",
+          "extra_0"
+        ],
+        "dominant_group": "object"
+      },
+      "blanket": {
+        "variables": [
+          "grip_x",
+          "grip_y",
+          "obj_x",
+          "obj_y",
+          "obj_z",
+          "rel_y",
+          "obj_rot_0",
+          "obj_rot_2",
+          "obj_velr_x",
+          "obj_velr_y",
+          "obj_velr_z"
+        ]
+      }
+    }
+  },
+  "notes": "TB analysis of pandas Bayes ensemble (trained) on FetchPush-v4. Primary method: fisher_coupling_3obj. ARI=0.162, Blanket F1=0.143. Discovered 3 objects and 11 blanket variables."
+}

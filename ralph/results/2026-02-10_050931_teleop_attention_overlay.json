@@ -1,0 +1,203 @@
+{
+  "timestamp": "2026-02-10T05:09:31.859907",
+  "experiment_name": "teleop_attention_overlay",
+  "config": {
+    "n_episodes": 5,
+    "n_episodes_visualized": 3,
+    "attention_formula": "(blanket_score + disagreement_score + blanket_proximity) / 3",
+    "domains": [
+      "LunarLander-v3",
+      "FetchPush-v4"
+    ]
+  },
+  "metrics": {
+    "lunarlander_structural_attention": {
+      "x": 0.0,
+      "y": 0.4133925375248884,
+      "vx": 0.14164494646956957,
+      "vy": 0.21368976659102612,
+      "angle": 0.2417051238948399,
+      "ang_vel": 0.7489385312729463,
+      "left_leg": 0.3259717173842797,
+      "right_leg": 0.19169330669714582
+    },
+    "lunarlander_blanket_vars": [
+      "ang_vel"
+    ],
+    "lunarlander_attention_components": {
+      "blanket_score": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      "disagreement_score": [
+        0.0,
+        1.0,
+        0.159135552011704,
+        0.5074042132005488,
+        0.2300085469346209,
+        0.24681559381883883,
+        0.37370309718373673,
+        0.2887594813581063
+      ],
+      "blanket_proximity": [
+        0.0,
+        0.24017761257466536,
+        0.2657992873970047,
+        0.13366508657252948,
+        0.49510682474989876,
+        1.0,
+        0.6042120549691024,
+        0.2863204387333312
+      ]
+    },
+    "episode_summaries": [
+      {
+        "episode": 0,
+        "length": 78,
+        "total_reward": -134.34907469879832
+      },
+      {
+        "episode": 1,
+        "length": 70,
+        "total_reward": -84.91433603740525
+      },
+      {
+        "episode": 2,
+        "length": 60,
+        "total_reward": -94.50191869178852
+      },
+      {
+        "episode": 3,
+        "length": 119,
+        "total_reward": -185.56108020878787
+      },
+      {
+        "episode": 4,
+        "length": 68,
+        "total_reward": -101.55845246354356
+      }
+    ],
+    "fetchpush_group_attention": {
+      "gripper_pos": {
+        "mean_disagreement": 0.367738276720047,
+        "blanket_fraction": 0.3333333333333333,
+        "structural_attention": 0.1961270809173584
+      },
+      "object_pos": {
+        "mean_disagreement": 0.511084665854772,
+        "blanket_fraction": 1.0,
+        "structural_attention": 0.511084665854772
+      },
+      "relative_pos": {
+        "mean_disagreement": 0.33966248234113056,
+        "blanket_fraction": 0.3333333333333333,
+        "structural_attention": 0.18115332391526962
+      },
+      "gripper_state": {
+        "mean_disagreement": 11.891967296600342,
+        "blanket_fraction": 0.0,
+        "structural_attention": 3.5675901889801023
+      },
+      "object_rot": {
+        "mean_disagreement": 0.2569387157758077,
+        "blanket_fraction": 0.6666666666666666,
+        "structural_attention": 0.19698634876145255
+      },
+      "object_velp": {
+        "mean_disagreement": 6.292736212412517,
+        "blanket_fraction": 0.0,
+        "structural_attention": 1.8878208637237548
+      },
+      "object_velr": {
+        "mean_disagreement": 3.1657700538635254,
+        "blanket_fraction": 1.0,
+        "structural_attention": 3.1657700538635254
+      },
+      "gripper_velp": {
+        "mean_disagreement": 6.324641227722168,
+        "blanket_fraction": 0.0,
+        "structural_attention": 1.8973923683166503
+      },
+      "extra": {
+        "mean_disagreement": 8.17354408899943,
+        "blanket_fraction": 0.0,
+        "structural_attention": 2.452063226699829
+      }
+    },
+    "fetchpush_structural_attention": {
+      "grip_x": 0.007805422271918783,
+      "grip_y": 0.6675139074259331,
+      "grip_z": 0.01091797170704692,
+      "obj_x": 0.6709463204035163,
+      "obj_y": 0.6729786772072884,
+      "obj_z": 0.67784318227702,
+      "rel_x": 0.006505347725375823,
+      "rel_y": 0.6673007529002043,
+      "rel_z": 0.010443092823751927,
+      "grip_state_0": 0.4194121549753253,
+      "grip_state_1": 0.5555359746122536,
+      "obj_rot_0": 0.6666666666666666,
+      "obj_rot_1": 0.001989874952417239,
+      "obj_rot_2": 0.6669895209800831,
+      "obj_velp_x": 0.2918008976147004,
+      "obj_velp_y": 0.2892782395232758,
+      "obj_velp_z": 0.4238105091281197,
+      "obj_velr_x": 0.7330872595174123,
+      "obj_velr_y": 0.7427806899086121,
+      "obj_velr_z": 0.7491224359200338,
+      "grip_velp_x": 0.3793169386906574,
+      "grip_velp_y": 0.3099796626128698,
+      "extra_0": 0.44362213473019924,
+      "extra_1": 0.350738002345802,
+      "extra_2": 0.38140122578415553
+    },
+    "phase_attention_summary": {
+      "descent": {
+        "mean": 1.5680653669907938,
+        "std": 0.11361388534443684,
+        "count": 247
+      },
+      "approach": {
+        "mean": 1.5589738237916482,
+        "std": 0.04639646615342175,
+        "count": 42
+      },
+      "tilted": {
+        "mean": 1.6389114529834123,
+        "std": 0.10735548838778367,
+        "count": 60
+      },
+      "landed": {
+        "mean": 1.7888509371433736,
+        "std": 0.13562591250325934,
+        "count": 13
+      },
+      "ascent": {
+        "mean": 1.5753089968969658,
+        "std": 0.11794527892768923,
+        "count": 38
+      }
+    },
+    "highest_attention_phase": "landed",
+    "attention_interpretation": "Highest structural attention during 'landed' phase. Blanket variables (ang_vel) amplify uncertainty at structural boundaries, especially during flight phase transitions where the world model is most uncertain.",
+    "gif_path": "C:\\Users\\citiz\\Documents\\noumenal-labs\\lunar-lander\\topological_blankets\\ralph\\results\\2026-02-10_050928_teleop_attention_overlay_demo.gif",
+    "n_episodes_visualized": 3,
+    "saved_files": [
+      "2026-02-10_050916_teleop_attention_overlay_episode_0_attention.png",
+      "2026-02-10_050918_teleop_attention_overlay_episode_1_attention.png",
+      "2026-02-10_050921_teleop_attention_overlay_episode_2_attention.png",
+      "2026-02-10_050923_teleop_attention_overlay_structural_vs_raw_ll.png",
+      "2026-02-10_050926_teleop_attention_overlay_fetchpush_group_attention.png",
+      "2026-02-10_050927_teleop_attention_overlay_structural_vs_raw_fp.png",
+      "2026-02-10_050928_teleop_attention_overlay_phase_attention_summary.png",
+      "2026-02-10_050928_teleop_attention_overlay_demo.gif"
+    ]
+  },
+  "notes": "US-054: Structure-aware teleoperation attention overlay. Combines TB blanket membership, ensemble disagreement, and blanket proximity in coupling space to produce per-variable structural attention scores. Visualized on LunarLander episodes with phase annotations and on FetchPush observation groups. Highest attention phase: landed."
+}

@@ -1,0 +1,233 @@
+{
+  "timestamp": "2026-02-09T15:14:10.871834",
+  "experiment_name": "pandas_ensemble_analysis",
+  "config": {
+    "n_episodes": 20,
+    "max_steps": 50,
+    "max_jacobian_samples": 300,
+    "detection_method": "hybrid",
+    "n_objects": 2,
+    "env_id": "FetchPush-v4",
+    "model_hidden_size": 256,
+    "model_depth": 2
+  },
+  "metrics": {
+    "model_status": "trained",
+    "n_samples": 42000,
+    "n_env_transitions": 1000,
+    "obs_dim": 25,
+    "ensemble_size": 5,
+    "primary_method": "hybrid",
+    "primary_ari": -0.005025125628140704,
+    "primary_blanket_f1": 0.4,
+    "primary_assignment": [
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      1,
+      1,
+      -1,
+      -1,
+      -1,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      0,
+      1,
+      1,
+      1,
+      1
+    ],
+    "primary_blankets": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      11,
+      12,
+      13
+    ],
+    "primary_objects": {
+      "0": [
+        14,
+        20
+      ],
+      "1": [
+        9,
+        10,
+        15,
+        16,
+        17,
+        18,
+        19,
+        21,
+        22,
+        23,
+        24
+      ]
+    },
+    "multi_method": {
+      "hybrid": {
+        "ari": -0.005025125628140704,
+        "blanket_f1": 0.4,
+        "n_blanket_vars": 12,
+        "n_objects": 2
+      },
+      "gradient": {
+        "ari": -0.005025125628140704,
+        "blanket_f1": 0.4,
+        "n_blanket_vars": 12,
+        "n_objects": 2
+      },
+      "spectral": {
+        "ari": -0.024496336996336996,
+        "blanket_f1": 0.23076923076923078,
+        "n_blanket_vars": 23,
+        "n_objects": 2
+      },
+      "coupling": {
+        "ari": -0.02040816326530612,
+        "blanket_f1": 0.19047619047619047,
+        "n_blanket_vars": 18,
+        "n_objects": 2
+      }
+    },
+    "disagreement_per_var": [
+      0.3369452953338623,
+      0.2773255705833435,
+      0.48164689540863037,
+      0.38721972703933716,
+      0.6456325054168701,
+      1.2991282939910889,
+      0.30975261330604553,
+      0.2437545508146286,
+      0.3972616195678711,
+      8.095394134521484,
+      10.105779647827148,
+      0.2733684480190277,
+      0.6410437226295471,
+      0.5741039514541626,
+      3.926356315612793,
+      3.5188534259796143,
+      4.031406402587891,
+      2.9833083152770996,
+      5.1377272605896,
+      7.5288567543029785,
+      4.704360485076904,
+      3.8551876544952393,
+      5.04958963394165,
+      7.2410569190979,
+      8.698650360107422
+    ],
+    "mean_sensitivity_per_var": [
+      1.687086582183838,
+      1.1550908088684082,
+      1.9793444871902466,
+      2.0257515907287598,
+      2.6706063747406006,
+      4.998378276824951,
+      1.511692762374878,
+      1.063813328742981,
+      1.932010293006897,
+      35.440059661865234,
+      48.968101501464844,
+      1.8664559125900269,
+      2.3158018589019775,
+      1.5587127208709717,
+      39.866641998291016,
+      38.02950668334961,
+      44.99361801147461,
+      31.265029907226562,
+      65.7729721069336,
+      57.83904266357422,
+      40.20558547973633,
+      41.16289138793945,
+      53.49364471435547,
+      39.98728561401367,
+      41.32025909423828
+    ],
+    "obs_labels": [
+      "grip_x",
+      "grip_y",
+      "grip_z",
+      "obj_x",
+      "obj_y",
+      "obj_z",
+      "rel_x",
+      "rel_y",
+      "rel_z",
+      "grip_state_0",
+      "grip_state_1",
+      "obj_rot_0",
+      "obj_rot_1",
+      "obj_rot_2",
+      "obj_velp_x",
+      "obj_velp_y",
+      "obj_velp_z",
+      "obj_velr_x",
+      "obj_velr_y",
+      "obj_velr_z",
+      "grip_velp_x",
+      "grip_velp_y",
+      "extra_0",
+      "extra_1",
+      "extra_2"
+    ],
+    "semantic_interpretation": {
+      "object_0": {
+        "variables": [
+          "obj_velp_x",
+          "grip_velp_x"
+        ],
+        "dominant_group": "object"
+      },
+      "object_1": {
+        "variables": [
+          "grip_state_0",
+          "grip_state_1",
+          "obj_velp_y",
+          "obj_velp_z",
+          "obj_velr_x",
+          "obj_velr_y",
+          "obj_velr_z",
+          "grip_velp_y",
+          "extra_0",
+          "extra_1",
+          "extra_2"
+        ],
+        "dominant_group": "object"
+      },
+      "blanket": {
+        "variables": [
+          "grip_x",
+          "grip_y",
+          "grip_z",
+          "obj_x",
+          "obj_y",
+          "obj_z",
+          "rel_x",
+          "rel_y",
+          "rel_z",
+          "obj_rot_0",
+          "obj_rot_1",
+          "obj_rot_2"
+        ]
+      }
+    }
+  },
+  "notes": "TB analysis of pandas Bayes ensemble (trained) on FetchPush-v4. Primary ARI=-0.005, Blanket F1=0.400. Discovered 2 objects and 12 blanket variables."
+}

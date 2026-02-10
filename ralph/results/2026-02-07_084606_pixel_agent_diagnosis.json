@@ -1,0 +1,46 @@
+{
+  "timestamp": "2026-02-07T08:46:06.279822",
+  "experiment_name": "pixel_agent_diagnosis",
+  "config": {
+    "checkpoint": "C:\\Users\\citiz\\Documents\\lunar-lander\\trained_agents\\pixel_lunarlander_best.tar",
+    "agent_version": "V1"
+  },
+  "metrics": {
+    "checkpoint": {
+      "path": "C:\\Users\\citiz\\Documents\\lunar-lander\\trained_agents\\pixel_lunarlander_best.tar",
+      "exists": true,
+      "issues": [
+        "Failed to load checkpoint: No module named 'src'"
+      ],
+      "loaded": false
+    },
+    "imports": {
+      "issues": [],
+      "all_pass": true
+    },
+    "agent_loading": {
+      "issues": [
+        "No checkpoint to load"
+      ],
+      "loaded": false
+    },
+    "environment": {
+      "issues": [],
+      "all_pass": true
+    },
+    "encoding": {
+      "issues": [
+        "No agent to test"
+      ],
+      "all_pass": false
+    },
+    "status": "ISSUES_FOUND",
+    "summary": "3 issues found during diagnosis.",
+    "all_issues": [
+      "Failed to load checkpoint: No module named 'src'",
+      "No checkpoint to load",
+      "No agent to test"
+    ]
+  },
+  "notes": "US-040: Pixel agent V1 diagnosis. Tested checkpoint loading, imports, encoding, and episode collection."
+}

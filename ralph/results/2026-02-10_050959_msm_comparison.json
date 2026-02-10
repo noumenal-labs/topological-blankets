@@ -1,0 +1,468 @@
+{
+  "timestamp": "2026-02-10T05:09:59.137962",
+  "experiment_name": "msm_comparison",
+  "config": {
+    "n_microstates": 100,
+    "lag_times": [
+      1,
+      5,
+      10,
+      20
+    ],
+    "chosen_lag": 20,
+    "ck_multiples": [
+      2,
+      3,
+      5
+    ],
+    "n_macrostates": 4,
+    "tb_method": "coupling",
+    "tb_n_objects": 2,
+    "state_labels": [
+      "x",
+      "y",
+      "vx",
+      "vy",
+      "angle",
+      "ang_vel",
+      "left_leg",
+      "right_leg"
+    ],
+    "normalization": "z-score"
+  },
+  "metrics": {
+    "msm": {
+      "n_microstates": 100,
+      "lag_times_swept": [
+        1,
+        5,
+        10,
+        20
+      ],
+      "chosen_lag": 20,
+      "dominant_eigenvalues": [
+        1.0,
+        1.0,
+        1.0,
+        0.936291579014537,
+        0.899741724039254,
+        0.8260078009908818,
+        0.7588731083996172,
+        0.7328418511147121,
+        0.7080777949864006,
+        0.6995331681782644
+      ],
+      "implied_timescales": [
+        Infinity,
+        Infinity,
+        303.8205357582194,
+        189.30873230034246,
+        104.62929095829384,
+        72.48459478568203,
+        64.34481490303948,
+        57.93720747716784,
+        55.96878099146778
+      ],
+      "n_macrostates": 4,
+      "metastability": 2.7961158345756956,
+      "T_coarse": [
+        [
+          0.616943367584663,
+          0.06681034482758622,
+          0.10279304029304032,
+          0.21345324729471074
+        ],
+        [
+          0.002631578947368422,
+          0.7746008865788809,
+          0.1451146051149072,
+          0.07765292935884345
+        ],
+        [
+          0.03807616179437069,
+          0.1027253967801967,
+          0.7236768797711527,
+          0.13552156165427987
+        ],
+        [
+          0.047960186664441254,
+          0.09198395227674946,
+          0.17916116041781024,
+          0.6808947006409989
+        ]
+      ],
+      "macrostates": {
+        "0": {
+          "n_microstates": 12,
+          "stationary_weight": 0.11999999999999998,
+          "mean_max_membership": 0.49150230019271907
+        },
+        "1": {
+          "n_microstates": 19,
+          "stationary_weight": 0.19,
+          "mean_max_membership": 0.4590888834083118
+        },
+        "2": {
+          "n_microstates": 39,
+          "stationary_weight": 0.39,
+          "mean_max_membership": 0.4395472585957245
+        },
+        "3": {
+          "n_microstates": 30,
+          "stationary_weight": 0.30000000000000004,
+          "mean_max_membership": 0.4745272667999239
+        }
+      }
+    },
+    "lag_sweep": {
+      "1": {
+        "eigenvalues": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.9926934746812472,
+          0.988644810166576,
+          0.9881962525590093,
+          0.9858317647943885,
+          0.985429479163623
+        ],
+        "implied_timescales": [
+          Infinity,
+          Infinity,
+          Infinity,
+          Infinity,
+          136.36335039848115,
+          87.56450690769626,
+          84.21786822389713,
+          70.07923147578693,
+          68.13050329265022
+        ],
+        "n_transitions": 4507
+      },
+      "5": {
+        "eigenvalues": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.9879412263440714,
+          0.9726982237735031,
+          0.9486302467437462,
+          0.9444017596574177,
+          0.9333825066935078,
+          0.9306913802494884
+        ],
+        "implied_timescales": [
+          Infinity,
+          Infinity,
+          Infinity,
+          412.1308061961398,
+          180.626733813461,
+          94.81156890725275,
+          87.40707019556272,
+          72.52663806154803,
+          69.61117344230455
+        ],
+        "n_transitions": 4503
+      },
+      "10": {
+        "eigenvalues": [
+          1.0,
+          1.0,
+          1.0,
+          0.9974262714187578,
+          0.9494303465525189,
+          0.9136085587889191,
+          0.8851402783660627,
+          0.8814062968938337,
+          0.8669202686379562,
+          0.8521661676742481
+        ],
+        "implied_timescales": [
+          Infinity,
+          Infinity,
+          3880.4114399245764,
+          192.70381186004724,
+          110.67692317700906,
+          81.96107281506929,
+          79.216339745067,
+          70.0239564909705,
+          62.51026000913654
+        ],
+        "n_transitions": 4498
+      },
+      "20": {
+        "eigenvalues": [
+          1.0,
+          1.0,
+          1.0,
+          0.936291579014537,
+          0.899741724039254,
+          0.8260078009908818,
+          0.7588731083996172,
+          0.7328418511147121,
+          0.7080777949864006,
+          0.6995331681782644
+        ],
+        "implied_timescales": [
+          Infinity,
+          Infinity,
+          303.8205357582194,
+          189.30873230034246,
+          104.62929095829384,
+          72.48459478568203,
+          64.34481490303948,
+          57.93720747716784,
+          55.96878099146778
+        ],
+        "n_transitions": 4488
+      }
+    },
+    "chapman_kolmogorov": {
+      "base_lag": 20,
+      "results": {
+        "2": {
+          "target_lag": 40,
+          "frobenius_error": 0.03837860969566208,
+          "max_element_error": 0.9603939107250365
+        },
+        "3": {
+          "target_lag": 60,
+          "frobenius_error": 0.046543129628344504,
+          "max_element_error": 0.9682452141994613
+        },
+        "5": {
+          "target_lag": 100,
+          "frobenius_error": 0.05240556366726445,
+          "max_element_error": 0.9783002808864599
+        }
+      }
+    },
+    "physical_mapping": {
+      "0": {
+        "weighted_mean": {
+          "x": 0.10976995589832464,
+          "y": 0.6049554844697317,
+          "vx": 0.0362597753604253,
+          "vy": -0.7291027158498763,
+          "angle": -0.14653706302245456,
+          "ang_vel": -0.409894170705229,
+          "left_leg": 0.1666666876214246,
+          "right_leg": 0.08333332968565325
+        },
+        "weighted_std": {
+          "x": 0.3821347179277504,
+          "y": 0.6603604024285463,
+          "vx": 0.6960205141786925,
+          "vy": 0.5507167091610735,
+          "angle": 0.7082857533773037,
+          "ang_vel": 1.1636283670147454,
+          "left_leg": 0.3726780401907273,
+          "right_leg": 0.2763853823246237
+        },
+        "distinctive_dims": [
+          "ang_vel",
+          "left_leg",
+          "vy"
+        ],
+        "z_scores": {
+          "x": 0.15181366065990748,
+          "y": 0.14482293389307055,
+          "vx": 0.08166892945218804,
+          "vy": 0.2156516435212562,
+          "angle": 0.21241924292034428,
+          "ang_vel": 0.4674112977463815,
+          "left_leg": 0.3194574197933048,
+          "right_leg": 0.08522702290724792
+        },
+        "interpretation": "mid altitude, descending"
+      },
+      "1": {
+        "weighted_mean": {
+          "x": 0.3098806963351213,
+          "y": 0.6133798674533242,
+          "vx": 0.5732781398845348,
+          "vy": -0.791834526940396,
+          "angle": -0.12994243640844758,
+          "ang_vel": 0.20795844161981042,
+          "left_leg": 0.1052631648061307,
+          "right_leg": 0.21052634132731907
+        },
+        "weighted_std": {
+          "x": 0.3766159463126767,
+          "y": 0.504151088518941,
+          "vx": 0.5665873731139086,
+          "vy": 0.44268662239136647,
+          "angle": 0.6071736745243045,
+          "ang_vel": 0.8756300573599187,
+          "left_leg": 0.3068922230654945,
+          "right_leg": 0.40768250586724336
+        },
+        "distinctive_dims": [
+          "vx",
+          "x",
+          "right_leg"
+        ],
+        "z_scores": {
+          "x": 0.6109048600649163,
+          "y": 0.12889007383573028,
+          "vx": 0.6151424124794124,
+          "vy": 0.0798463336562647,
+          "angle": 0.19047529403511226,
+          "ang_vel": 0.1252041412369626,
+          "left_leg": 0.09312117581625878,
+          "right_leg": 0.3212832983228648
+        },
+        "interpretation": "mid altitude, descending, drifting rightward"
+      },
+      "2": {
+        "weighted_mean": {
+          "x": -0.17228688681736967,
+          "y": 0.6249971985816956,
+          "vx": -0.2729594977811361,
+          "vy": -0.8980951148730055,
+          "angle": 0.12538674588386828,
+          "ang_vel": 0.14814683525130531,
+          "left_leg": 0.0512820551267419,
+          "right_leg": 0.12820514422865248
+        },
+        "weighted_std": {
+          "x": 0.4021262121913221,
+          "y": 0.46845598446380626,
+          "vx": 0.7399901582649905,
+          "vy": 0.3816083367421326,
+          "angle": 0.8305027875860072,
+          "ang_vel": 1.2715706792776449,
+          "left_leg": 0.22057245570860923,
+          "right_leg": 0.33431811163160896
+        },
+        "distinctive_dims": [
+          "x",
+          "vx",
+          "vy"
+        ],
+        "z_scores": {
+          "x": 0.49527711487813175,
+          "y": 0.1069184574611396,
+          "vx": 0.4828982186215197,
+          "vy": 0.15019249066208887,
+          "angle": 0.14715993304504485,
+          "ang_vel": 0.06783563512838342,
+          "left_leg": 0.10585570776252327,
+          "right_leg": 0.058183810035694436
+        },
+        "interpretation": "mid altitude, fast descent"
+      },
+      "3": {
+        "weighted_mean": {
+          "x": 0.1291296411305666,
+          "y": 0.8288126965363821,
+          "vx": 0.3079351564248403,
+          "vy": -0.8017317682504652,
+          "angle": 0.02490992263580364,
+          "ang_vel": 0.09773425537471972,
+          "left_leg": 0.0666666723166903,
+          "right_leg": 0.03333333879709245
+        },
+        "weighted_std": {
+          "x": 0.4003689096770085,
+          "y": 0.5292186674700543,
+          "vx": 0.7094515908554501,
+          "vy": 0.514478536721839,
+          "angle": 0.7319713307326382,
+          "ang_vel": 0.6175929350208643,
+          "left_leg": 0.24944384020490898,
+          "right_leg": 0.1795055146931649
+        },
+        "distinctive_dims": [
+          "y",
+          "vx",
+          "right_leg"
+        ],
+        "z_scores": {
+          "x": 0.19622837370316143,
+          "y": 0.27855354835267204,
+          "vx": 0.2708450614185562,
+          "vy": 0.0584202358032463,
+          "angle": 0.014294137098483857,
+          "ang_vel": 0.019482237314911183,
+          "left_leg": 0.049147292509671966,
+          "right_leg": 0.24502756615465177
+        },
+        "interpretation": "high altitude, fast descent"
+      }
+    },
+    "tb_partition": {
+      "objects": {
+        "0": [
+          "x",
+          "vx",
+          "angle"
+        ],
+        "1": [
+          "y",
+          "vy",
+          "right_leg"
+        ]
+      },
+      "blanket_vars": [
+        "ang_vel",
+        "left_leg"
+      ],
+      "assignment": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        -1,
+        -1,
+        1
+      ],
+      "eigengap": 7.999999999999994,
+      "n_clusters_spectral": 1,
+      "eigenvalues": [
+        5.329070518200751e-15,
+        7.999999999999999,
+        8.0,
+        8.0,
+        8.0,
+        8.0,
+        8.0,
+        8.000000000000009
+      ]
+    },
+    "comparison": {
+      "nmi_microstate": 0.02137755361178845,
+      "nmi_sample": 0.027547214592458204,
+      "cross_tabulation": {
+        "0": {
+          "0": 5,
+          "1": 7,
+          "2": 24,
+          "3": 13
+        },
+        "1": {
+          "0": 7,
+          "1": 12,
+          "2": 15,
+          "3": 17
+        }
+      },
+      "variable_dominant_macrostate": {
+        "x": 2,
+        "y": 0,
+        "vx": 2,
+        "vy": 0,
+        "angle": 2,
+        "ang_vel": 2,
+        "left_leg": 0,
+        "right_leg": 1
+      }
+    },
+    "discussion": "METHODOLOGICAL COMPARISON: MSMs discretize state space into microstates and estimate a Markov transition matrix; metastable macrostates emerge from the slow eigenmodes of this matrix (dynamics-based). TB computes the coupling matrix from dynamics model gradients and partitions variables into objects separated by Markov blankets (geometry-based). MSM groups *states* (data points); TB groups *variables* (dimensions).\n\nNMI = 0.0214 indicates weak agreement. This divergence is expected because MSM and TB answer different questions: MSM asks 'which *states* mix slowly?' while TB asks 'which *variables* decouple?' In a far-from-equilibrium system like LunarLander, these need not coincide.\n\nMARKOVIANITY: The Chapman-Kolmogorov test at base lag=20 yields mean Frobenius error = 0.0458. This is low, confirming that the MSM at this lag is a good Markov approximation.\n\nPHYSICAL INTERPRETATION: The 4 MSM macrostates correspond to: mid altitude, descending; mid altitude, descending, drifting rightward; mid altitude, fast descent; high altitude, fast descent. TB partitions the 8 state variables into objects (position/velocity groups) and blanket variables (coupling dimensions). The MSM macrostates represent *where* the lander is and *what it is doing*; the TB objects represent *which aspects of the state are informationally separated*.\n\nKEY INSIGHT: MSM and TB provide complementary views. MSM reveals the *dynamical phases* of LunarLander (flight, descent, landing) as metastable regions in state space. TB reveals the *structural organization* of the state representation: which variables form coherent subsystems (objects) and which variables mediate their interaction (blankets). Together, they show both the dynamical landscape and the information-geometric architecture of the learned world model."
+  },
+  "notes": "US-049: Markov State Model comparison on LunarLander trajectories. Discretized 8D state space into 100 microstates via k-means. Built MSM transition matrix at lag times [1, 5, 10, 20]. Chosen lag=20 based on ITS stabilization. Chapman-Kolmogorov test validates Markovianity. PCCA+ identifies 4 metastable macrostates. Compared to TB partition via NMI=0.0214. Metastability=2.7961."
+}

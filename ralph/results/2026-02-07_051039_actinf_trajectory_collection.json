@@ -1,0 +1,33 @@
+{
+  "timestamp": "2026-02-07T05:10:39.338234",
+  "experiment_name": "actinf_trajectory_collection",
+  "config": {},
+  "metrics": {
+    "n_episodes": 50,
+    "n_transitions": 4508,
+    "mean_return": -181.98689392893854,
+    "std_return": 110.95299208331578,
+    "mean_length": 90.16,
+    "dynamics_grad_magnitude": [
+      0.02917373925447464,
+      0.051143042743206024,
+      0.039186298847198486,
+      0.05744368955492973,
+      0.03771350160241127,
+      0.10134202241897583,
+      0.03578950837254524,
+      0.03636939823627472
+    ],
+    "state_labels": [
+      "x",
+      "y",
+      "vx",
+      "vy",
+      "angle",
+      "ang_vel",
+      "left_leg",
+      "right_leg"
+    ]
+  },
+  "notes": "US-024: Active Inference trajectory collection. 50 episodes, dynamics/reward/disagreement gradients."
+}

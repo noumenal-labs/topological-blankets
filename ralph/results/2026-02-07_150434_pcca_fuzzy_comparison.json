@@ -1,0 +1,301 @@
+{
+  "timestamp": "2026-02-07T15:04:34.913802",
+  "experiment_name": "pcca_fuzzy_comparison",
+  "config": {
+    "standard_n_trials": 10,
+    "asymmetric_n_trials": 5,
+    "ambiguity_threshold": 0.6,
+    "normalized_laplacian": true
+  },
+  "metrics": {
+    "membership_properties": {
+      "n_trials": 10,
+      "all_non_negative": true,
+      "all_sums_to_one": true,
+      "worst_negative": 0.0,
+      "worst_sum_deviation": 2.220446049250313e-16
+    },
+    "class_api": {
+      "has_hard_partition": true,
+      "has_memberships": true,
+      "memberships_shape": [
+        9,
+        3
+      ],
+      "blanket_indices": [
+        0
+      ],
+      "n_objects": 2,
+      "detection_info_keys": [
+        "method_used",
+        "memberships",
+        "hard_labels",
+        "max_membership",
+        "membership_entropy",
+        "eigvals",
+        "eigvecs",
+        "simplex_vertices",
+        "ambiguity_threshold"
+      ],
+      "has_detection_info": true
+    },
+    "detailed_analysis": {
+      "n_vars": 9,
+      "detected_blanket": [
+        3,
+        4
+      ],
+      "true_blanket": [
+        6,
+        7,
+        8
+      ],
+      "max_membership": [
+        1.0,
+        0.9999999999999999,
+        1.0,
+        0.6263919319241499,
+        0.9999999999999999,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "membership_entropy": [
+        -0.0,
+        1.8970457052158212e-15,
+        -0.0,
+        0.6608480683328724,
+        2.6735288173931485e-15,
+        -0.0,
+        -0.0,
+        -0.0,
+        -0.0
+      ],
+      "memberships": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          4.8317783561706063e-17,
+          0.9999999999999999,
+          3.392890329349257e-18
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.37360806807585023,
+          0.0,
+          0.6263919319241499
+        ],
+        [
+          3.8999849136149566e-17,
+          3.519231348221755e-17,
+          0.9999999999999999
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "non_negative": true,
+      "sums_to_one": true,
+      "metrics": {
+        "object_ari": 0.7058823529411765,
+        "blanket_f1": 0.0,
+        "full_ari": 0.6428571428571429
+      }
+    },
+    "standard_comparison": {
+      "config": {
+        "n_objects": 2,
+        "vars_per_object": 3,
+        "vars_per_blanket": 3,
+        "intra_strength": 6.0,
+        "blanket_strength": 0.8,
+        "n_trials": 10
+      },
+      "methods": {
+        "gradient": {
+          "mean_object_ari": 1.0,
+          "std_object_ari": 0.0,
+          "mean_blanket_f1": 0.9400000000000001,
+          "std_blanket_f1": 0.09165151389911678,
+          "mean_full_ari": 0.8928571428571427,
+          "std_full_ari": 0.16366341767699427
+        },
+        "coupling": {
+          "mean_object_ari": 1.0,
+          "std_object_ari": 0.0,
+          "mean_blanket_f1": 1.0,
+          "std_blanket_f1": 0.0,
+          "mean_full_ari": 1.0,
+          "std_full_ari": 0.0
+        },
+        "persistence": {
+          "mean_object_ari": 0.13216505275328805,
+          "std_object_ari": 0.09287717641999889,
+          "mean_blanket_f1": 0.5391414141414141,
+          "std_blanket_f1": 0.12017342202877435,
+          "mean_full_ari": 0.06708898944193062,
+          "std_full_ari": 0.086138783005354
+        },
+        "pcca": {
+          "mean_object_ari": 0.7058823529411765,
+          "std_object_ari": 0.0,
+          "mean_blanket_f1": 0.3,
+          "std_blanket_f1": 0.3674234614174767,
+          "mean_full_ari": 0.5025752236378423,
+          "std_full_ari": 0.08012323390358736
+        }
+      }
+    },
+    "asymmetric_comparison": {
+      "2 objects: 3+8 vars": {
+        "obj_sizes": [
+          3,
+          8
+        ],
+        "blanket_size": 3,
+        "n_objects": 2,
+        "methods": {
+          "gradient": {
+            "mean_object_ari": 0.4398672601272984,
+            "std_object_ari": 0.11206664900745111,
+            "mean_blanket_f1": 0.6833333333333332
+          },
+          "coupling": {
+            "mean_object_ari": 0.8399024072869226,
+            "std_object_ari": 0.2177558375467912,
+            "mean_blanket_f1": 0.4800000000000001
+          },
+          "persistence": {
+            "mean_object_ari": 0.28893605218077123,
+            "std_object_ari": 0.2445851160255574,
+            "mean_blanket_f1": 0.20955710955710954
+          },
+          "pcca": {
+            "mean_object_ari": 0.3034464182000346,
+            "std_object_ari": 0.1619710453123335,
+            "mean_blanket_f1": 0.45575757575757575
+          }
+        }
+      },
+      "3 objects: 2+2+10 vars": {
+        "obj_sizes": [
+          2,
+          2,
+          10
+        ],
+        "blanket_size": 3,
+        "n_objects": 3,
+        "methods": {
+          "gradient": {
+            "mean_object_ari": 0.2279020934223584,
+            "std_object_ari": 0.00841082191580681,
+            "mean_blanket_f1": 0.6
+          },
+          "coupling": {
+            "mean_object_ari": 0.7881473742949165,
+            "std_object_ari": 0.2595523408190449,
+            "mean_blanket_f1": 0.7944444444444445
+          },
+          "persistence": {
+            "mean_object_ari": 0.18045044640491653,
+            "std_object_ari": 0.047247211040476314,
+            "mean_blanket_f1": 0.25142857142857145
+          },
+          "pcca": {
+            "mean_object_ari": 0.3663849325157214,
+            "std_object_ari": 0.20655493863792976,
+            "mean_blanket_f1": 0.3351648351648352
+          }
+        }
+      },
+      "3 objects: 3+5+7 vars": {
+        "obj_sizes": [
+          3,
+          5,
+          7
+        ],
+        "blanket_size": 4,
+        "n_objects": 3,
+        "methods": {
+          "gradient": {
+            "mean_object_ari": 0.9252164784659627,
+            "std_object_ari": 0.12862324640147213,
+            "mean_blanket_f1": 0.8914285714285715
+          },
+          "coupling": {
+            "mean_object_ari": 0.9057873485868102,
+            "std_object_ari": 0.1153864616385077,
+            "mean_blanket_f1": 0.52
+          },
+          "persistence": {
+            "mean_object_ari": 0.22041548916208914,
+            "std_object_ari": 0.10898085285806329,
+            "mean_blanket_f1": 0.2280529755761954
+          },
+          "pcca": {
+            "mean_object_ari": 0.3429593412484938,
+            "std_object_ari": 0.1858480879332422,
+            "mean_blanket_f1": 0.3962292609351433
+          }
+        }
+      },
+      "3 equal objects (regression)": {
+        "obj_sizes": [
+          5,
+          5,
+          5
+        ],
+        "blanket_size": 3,
+        "n_objects": 3,
+        "methods": {
+          "gradient": {
+            "mean_object_ari": 1.0,
+            "std_object_ari": 0.0,
+            "mean_blanket_f1": 0.82
+          },
+          "coupling": {
+            "mean_object_ari": 0.9391304347826086,
+            "std_object_ari": 0.12173913043478261,
+            "mean_blanket_f1": 0.5333333333333333
+          },
+          "persistence": {
+            "mean_object_ari": 0.05969705510619213,
+            "std_object_ari": 0.04820682197104452,
+            "mean_blanket_f1": 0.16600732600732598
+          },
+          "pcca": {
+            "mean_object_ari": 0.38519801325780195,
+            "std_object_ari": 0.24491327968396656,
+            "mean_blanket_f1": 0.38106060606060604
+          }
+        }
+      }
+    }
+  },
+  "notes": "US-072: PCCA+ fuzzy partition for soft blanket membership. Compares PCCA+ against Otsu, coupling, and persistence methods on both standard symmetric and asymmetric quadratic landscapes. PCCA+ produces fuzzy membership vectors where blanket variables naturally emerge as having high membership in multiple clusters."
+}

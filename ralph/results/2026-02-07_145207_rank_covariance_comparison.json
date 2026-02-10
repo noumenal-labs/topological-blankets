@@ -1,0 +1,92 @@
+{
+  "timestamp": "2026-02-07T14:52:07.284257",
+  "experiment_name": "rank_covariance_comparison",
+  "config": {
+    "n_trials": 10,
+    "gaussian_n_objects": 2,
+    "gaussian_vars_per_object": 3,
+    "gaussian_vars_per_blanket": 3,
+    "student_t_df": 3,
+    "skew_strength": 2.0,
+    "timing_dims": [
+      50,
+      200,
+      500
+    ],
+    "timing_n_samples": 2000
+  },
+  "metrics": {
+    "gaussian_quadratic": {
+      "pearson": {
+        "mean_ari": 1.0,
+        "std_ari": 0.0,
+        "mean_f1": 0.9400000000000001,
+        "mean_frobenius": 0.3192921656140123
+      },
+      "rank": {
+        "mean_ari": 1.0,
+        "std_ari": 0.0,
+        "mean_f1": 0.9400000000000001,
+        "mean_frobenius": 0.15694672021459052
+      },
+      "ari_diff": 0.0,
+      "regression_ok": true
+    },
+    "student_t_df3": {
+      "pearson": {
+        "mean_ari": 0.3621621621621622,
+        "std_ari": 0.3484705180818637,
+        "mean_f1": 0.8200000000000001,
+        "mean_frobenius": 2.53752305485868
+      },
+      "rank": {
+        "mean_ari": 1.0,
+        "std_ari": 0.0,
+        "mean_f1": 0.8200000000000001,
+        "mean_frobenius": 0.15694675529126345
+      },
+      "df": 3,
+      "rank_competitive": true
+    },
+    "skewed_power2": {
+      "pearson": {
+        "mean_ari": 0.2756756756756757,
+        "std_ari": 0.40029207743942957,
+        "mean_f1": 0.95,
+        "mean_frobenius": 2.4611267395794747
+      },
+      "rank": {
+        "mean_ari": 1.0,
+        "std_ari": 0.0,
+        "mean_f1": 0.95,
+        "mean_frobenius": 0.15694672157708928
+      },
+      "skew_strength": 2.0,
+      "rank_competitive": true
+    },
+    "wall_clock": {
+      "50": {
+        "pearson_mean_s": 0.0009212000295519829,
+        "pearson_std_s": 0.00022044422433912365,
+        "rank_mean_s": 0.016550700025012095,
+        "rank_std_s": 0.004742574930405748,
+        "ratio": 17.96645429594259
+      },
+      "200": {
+        "pearson_mean_s": 0.005141966626979411,
+        "pearson_std_s": 0.0004154824846160521,
+        "rank_mean_s": 0.05124683336665233,
+        "rank_std_s": 0.0027934956062713153,
+        "ratio": 9.966387588189763
+      },
+      "500": {
+        "pearson_mean_s": 0.016101699982148904,
+        "pearson_std_s": 0.0012412255055882638,
+        "rank_mean_s": 0.17233966667360315,
+        "rank_std_s": 0.0022933483666954693,
+        "ratio": 10.703196916744645
+      }
+    }
+  },
+  "notes": "US-067: Rank-based (Spearman) vs Pearson covariance for Hessian estimation. Nonparanormal extension (Liu, Lafferty, Wasserman 2009)."
+}

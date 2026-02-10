@@ -1,0 +1,399 @@
+{
+  "timestamp": "2026-02-07T19:22:11.508957",
+  "experiment_name": "transfer_operator_metastable",
+  "config": {
+    "n_microstates": 80,
+    "bandwidth_method": "silverman",
+    "bandwidth": 0.45955726504325867,
+    "n_dominant_eigs": 10,
+    "lag_times": [
+      1,
+      2,
+      5,
+      10,
+      20
+    ],
+    "n_metastable": 4,
+    "tb_method": "coupling",
+    "tb_n_objects": 2,
+    "state_labels": [
+      "x",
+      "y",
+      "vx",
+      "vy",
+      "angle",
+      "ang_vel",
+      "left_leg",
+      "right_leg"
+    ]
+  },
+  "metrics": {
+    "transfer_operator": {
+      "n_microstates": 80,
+      "bandwidth_silverman": 0.45955726504325867,
+      "bandwidth_median": 2.808976472974572,
+      "dominant_eigenvalues": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.9920750706627961,
+        0.9881814217192726,
+        0.9800138392426184,
+        0.9430944112096165,
+        0.9272240721602383
+      ],
+      "implied_timescales": [
+        Infinity,
+        Infinity,
+        Infinity,
+        Infinity,
+        125.68342737185937,
+        84.11155538721245,
+        49.532939692986226,
+        17.06808427611914,
+        13.234511223110704
+      ],
+      "row_stochastic": true,
+      "stationary_entropy": 4.053595102767593
+    },
+    "implied_timescales_vs_lag": {
+      "lag_times": [
+        1,
+        2,
+        5,
+        10,
+        20
+      ],
+      "eigenvalues_per_lag": {
+        "1": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.9996268436375975,
+          0.9881147105268772
+        ],
+        "2": [
+          1.0,
+          1.0,
+          0.9422228852150879,
+          0.9330914437057781,
+          0.9246468915795761,
+          0.9131703124251337
+        ],
+        "5": [
+          1.0,
+          0.9907217267142869,
+          0.9077535035706175,
+          0.8912569248165363,
+          0.873966094791899,
+          0.8605448753212479
+        ],
+        "10": [
+          1.0,
+          0.871373301354721,
+          0.845098723864753,
+          0.8241998339057554,
+          0.7965402944384373,
+          0.7832463096982737
+        ],
+        "20": [
+          1.0,
+          0.7984397483566308,
+          0.714028134306276,
+          0.6748621783870807,
+          0.6484232148328566,
+          0.5989825260468629
+        ]
+      },
+      "timescales_per_lag": {
+        "1": [
+          Infinity,
+          Infinity,
+          Infinity,
+          2679.341720922583,
+          83.63662621343111
+        ],
+        "2": [
+          Infinity,
+          33.60586350869741,
+          28.88000209664243,
+          25.528649447995424,
+          22.018459909226326
+        ],
+        "5": [
+          536.3894904612757,
+          51.66228086087521,
+          43.43198220278709,
+          37.11575068502498,
+          33.291272162617275
+        ],
+        "10": [
+          72.62965605960385,
+          59.41706200674925,
+          51.72174938518836,
+          43.960379795343336,
+          40.93192820546062
+        ],
+        "20": [
+          88.85106984237297,
+          59.37662024933497,
+          50.858647935884186,
+          46.16680625919123,
+          39.022650163610976
+        ]
+      }
+    },
+    "metastable_decomposition": {
+      "n_metastable": 4,
+      "metastability": 3.8142930538378508,
+      "T_coarse": [
+        [
+          0.9518329230385721,
+          8.593401617479456e-33,
+          1.093662830495282e-15,
+          0.04816707696142684
+        ],
+        [
+          1.4800406257633567e-60,
+          0.9999999999991239,
+          2.465857161429151e-24,
+          8.760619861640425e-13
+        ],
+        [
+          1.0522804186828798e-16,
+          1.7598655369228623e-12,
+          0.8810154520211337,
+          0.11898454797710632
+        ],
+        [
+          0.0013826766176314928,
+          0.0004970984092649252,
+          0.016675546194082496,
+          0.9814446787790211
+        ]
+      ],
+      "metastable_sets": {
+        "0": {
+          "n_microstates": 4,
+          "stationary_weight": 0.011855432629075464,
+          "mean_max_membership": 0.535006780313187
+        },
+        "1": {
+          "n_microstates": 2,
+          "stationary_weight": 0.0022280294557134785,
+          "mean_max_membership": 0.7846546631197024
+        },
+        "2": {
+          "n_microstates": 16,
+          "stationary_weight": 0.0895027023026923,
+          "mean_max_membership": 0.4191798430486691
+        },
+        "3": {
+          "n_microstates": 58,
+          "stationary_weight": 0.8964138356125188,
+          "mean_max_membership": 0.32244158618707336
+        }
+      }
+    },
+    "physical_mapping": {
+      "0": {
+        "weighted_mean": {
+          "x": 0.35794503347151235,
+          "y": 0.8529134229243698,
+          "vx": 0.7460440519976236,
+          "vy": -1.051152563147099,
+          "angle": -1.6046077386295823,
+          "ang_vel": -0.9027059328771468,
+          "left_leg": 0.05637996972372091,
+          "right_leg": 2.184225905720599e-09
+        },
+        "weighted_std": {
+          "x": 0.09631730181165682,
+          "y": 0.4104402386773863,
+          "vx": 0.16984720864652217,
+          "vy": 0.39597437583971545,
+          "angle": 0.33390819924917853,
+          "ang_vel": 0.8132896619711165,
+          "left_leg": 0.23065401380263764,
+          "right_leg": 1.5450636594730266e-09
+        },
+        "distinctive_dims": [
+          "angle",
+          "vx",
+          "ang_vel"
+        ],
+        "z_scores": {
+          "x": 0.779477885600015,
+          "y": 0.21036034135312962,
+          "vx": 0.9258917844910797,
+          "vy": 0.789360228926232,
+          "angle": 2.0384403770636994,
+          "ang_vel": 0.7984756683400659,
+          "left_leg": 0.17768299394507509,
+          "right_leg": 0.0390741802807793
+        }
+      },
+      "1": {
+        "weighted_mean": {
+          "x": 0.8930778801456399,
+          "y": 0.16256195306880422,
+          "vx": 1.126053303477502,
+          "vy": -0.35738836228752585,
+          "angle": 0.4783203601865495,
+          "ang_vel": 0.5444813966509143,
+          "left_leg": 0.0,
+          "right_leg": 1.0000001192092898
+        },
+        "weighted_std": {
+          "x": 0.08525839447975159,
+          "y": 0.05744880437850953,
+          "vx": 0.14836683869361877,
+          "vy": 0.0532190352678299,
+          "angle": 0.15887099504470825,
+          "ang_vel": 1.3565341234207153,
+          "left_leg": 0.0,
+          "right_leg": 2.220446049250313e-16
+        },
+        "distinctive_dims": [
+          "right_leg",
+          "x",
+          "y"
+        ],
+        "z_scores": {
+          "x": 1.9866828368325666,
+          "y": 1.497476267007845,
+          "vx": 1.4198975631776551,
+          "vy": 0.7090118019109,
+          "angle": 0.6255787643105705,
+          "ang_vel": 0.4728446404342233,
+          "left_leg": 0.036371024970253456,
+          "right_leg": 2.984641768816988
+        }
+      },
+      "2": {
+        "weighted_mean": {
+          "x": -0.5145764106997105,
+          "y": 0.3713791424197844,
+          "vx": -0.8595618773630955,
+          "vy": -1.127831241416205,
+          "angle": 0.919155711645568,
+          "ang_vel": 0.4105547796856674,
+          "left_leg": 6.035258022704664e-10,
+          "right_leg": 0.10205023576981685
+        },
+        "weighted_std": {
+          "x": 0.22601683754445087,
+          "y": 0.2621617323848268,
+          "vx": 0.4683638987689251,
+          "vy": 0.4041781182405644,
+          "angle": 0.5070995665105146,
+          "ang_vel": 0.7782845767879223,
+          "left_leg": 1.4319710018289384e-09,
+          "right_leg": 0.3027143809562933
+        },
+        "distinctive_dims": [
+          "angle",
+          "x",
+          "vx"
+        ],
+        "z_scores": {
+          "x": 1.188841222461572,
+          "y": 1.1081500444963828,
+          "vx": 1.1613695237763688,
+          "vy": 0.9549686398785915,
+          "angle": 1.1893974650851031,
+          "ang_vel": 0.35519323169166755,
+          "left_leg": 0.036371022678887845,
+          "right_leg": 0.26949670251059743
+        }
+      },
+      "3": {
+        "weighted_mean": {
+          "x": 0.05827520312002239,
+          "y": 1.028574065370072,
+          "vx": 0.11087529670474533,
+          "vy": -0.6375038111071715,
+          "angle": -0.08379267210574504,
+          "ang_vel": -0.023460950971020637,
+          "left_leg": 0.009941170905844897,
+          "right_leg": 0.0017411286766338884
+        },
+        "weighted_std": {
+          "x": 0.2644554324981865,
+          "y": 0.41678308584036255,
+          "vx": 0.594441834349088,
+          "vy": 0.4373794857950189,
+          "angle": 0.3855043518610129,
+          "ang_vel": 0.2647971872455961,
+          "left_leg": 0.09920857798723037,
+          "right_leg": 0.04169047756729369
+        },
+        "distinctive_dims": [
+          "y",
+          "vy",
+          "x"
+        ],
+        "z_scores": {
+          "x": 0.1034534083441173,
+          "y": 0.1171476314334066,
+          "vx": 0.1001828462642011,
+          "vy": 0.10402648644388973,
+          "angle": 0.09335141791402211,
+          "ang_vel": 0.026079462902263675,
+          "left_leg": 0.0013719464351557881,
+          "right_leg": 0.033809508952387136
+        }
+      }
+    },
+    "tb_partition": {
+      "objects": {
+        "0": [
+          "x",
+          "vx",
+          "angle"
+        ],
+        "1": [
+          "y",
+          "vy",
+          "right_leg"
+        ]
+      },
+      "blanket_vars": [
+        "ang_vel",
+        "left_leg"
+      ],
+      "assignment": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        -1,
+        -1,
+        1
+      ]
+    },
+    "comparison": {
+      "nmi_microstate": 0.03770681904786118,
+      "nmi_sample": 0.07550669153428725,
+      "cross_tabulation": {
+        "0": {
+          "0": 3,
+          "2": 9,
+          "3": 26
+        },
+        "1": {
+          "0": 1,
+          "1": 2,
+          "2": 7,
+          "3": 32
+        }
+      }
+    },
+    "discussion": "AGREEMENT/DISAGREEMENT ANALYSIS: TB identifies objects as energy basins in the landscape defined by dynamics model gradients (geometry-aware). The transfer operator identifies metastable sets as slow-mixing regions of the state space (dynamics-aware).\n\nThe NMI of 0.0377 indicates weak agreement. This divergence is informative: it suggests that the energy geometry (TB) and the actual dynamics (transfer operator) partition the state space differently, possibly because the LunarLander dynamics are far from equilibrium.\n\nThe metastability score of 3.8143 (trace of the coarse-grained T) indicates how well-separated the metastable sets are. A value near 4 (number of sets) would indicate perfect separation; a value near 1 indicates strong mixing.\n\nThe slowest implied timescale is 2679.3 steps, meaning the slowest dynamical process in the system takes about 2679 timesteps to equilibrate. Faster processes (smaller timescales) correspond to within-basin relaxation.\n\nPHYSICAL INTERPRETATION: The metastable sets partition the state space into regions where the lander tends to spend extended time before transitioning. These typically correspond to flight phases (high altitude, active control), descent (decreasing altitude), and landing/crash states (near ground, low velocity).\n\nKEY INSIGHT: TB and the transfer operator are complementary. TB reveals *which state variables couple* (the structure of the Markov blanket), while the transfer operator reveals *which state configurations are dynamically persistent* (metastable basins). Together, they provide both the structural and dynamical perspectives on the system's organization."
+  },
+  "notes": "US-048: Transfer operator estimation and metastable decomposition. Estimated the transfer operator from LunarLander trajectory data using Gaussian kernel-based soft assignment to microstates. Computed dominant eigenvalues/eigenvectors (top 10), implied timescales vs lag time for Markovianity validation, and applied PCCA+ for metastable decomposition. Compared metastable sets to TB static partition via NMI. NMI = 0.0377, metastability = 3.8143."
+}

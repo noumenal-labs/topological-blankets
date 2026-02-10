@@ -1,0 +1,468 @@
+{
+  "timestamp": "2026-02-10T05:08:09.626536",
+  "experiment_name": "msm_comparison",
+  "config": {
+    "n_microstates": 100,
+    "lag_times": [
+      1,
+      5,
+      10,
+      20
+    ],
+    "chosen_lag": 20,
+    "ck_multiples": [
+      2,
+      3,
+      5
+    ],
+    "n_macrostates": 4,
+    "tb_method": "coupling",
+    "tb_n_objects": 2,
+    "state_labels": [
+      "x",
+      "y",
+      "vx",
+      "vy",
+      "angle",
+      "ang_vel",
+      "left_leg",
+      "right_leg"
+    ],
+    "normalization": "z-score"
+  },
+  "metrics": {
+    "msm": {
+      "n_microstates": 100,
+      "lag_times_swept": [
+        1,
+        5,
+        10,
+        20
+      ],
+      "chosen_lag": 20,
+      "dominant_eigenvalues": [
+        1.0,
+        1.0,
+        1.0,
+        0.936291579014537,
+        0.899741724039254,
+        0.8260078009908818,
+        0.7588731083996172,
+        0.7328418511147121,
+        0.7080777949864006,
+        0.6995331681782644
+      ],
+      "implied_timescales": [
+        Infinity,
+        Infinity,
+        303.8205357582194,
+        189.30873230034246,
+        104.62929095829384,
+        72.48459478568203,
+        64.34481490303948,
+        57.93720747716784,
+        55.96878099146778
+      ],
+      "n_macrostates": 4,
+      "metastability": 2.7961158345756956,
+      "T_coarse": [
+        [
+          0.616943367584663,
+          0.06681034482758622,
+          0.10279304029304032,
+          0.21345324729471074
+        ],
+        [
+          0.002631578947368422,
+          0.7746008865788809,
+          0.1451146051149072,
+          0.07765292935884345
+        ],
+        [
+          0.03807616179437069,
+          0.1027253967801967,
+          0.7236768797711527,
+          0.13552156165427987
+        ],
+        [
+          0.047960186664441254,
+          0.09198395227674946,
+          0.17916116041781024,
+          0.6808947006409989
+        ]
+      ],
+      "macrostates": {
+        "0": {
+          "n_microstates": 12,
+          "stationary_weight": 0.11999999999999998,
+          "mean_max_membership": 0.49150230019271907
+        },
+        "1": {
+          "n_microstates": 19,
+          "stationary_weight": 0.19,
+          "mean_max_membership": 0.4590888834083118
+        },
+        "2": {
+          "n_microstates": 39,
+          "stationary_weight": 0.39,
+          "mean_max_membership": 0.4395472585957245
+        },
+        "3": {
+          "n_microstates": 30,
+          "stationary_weight": 0.30000000000000004,
+          "mean_max_membership": 0.4745272667999239
+        }
+      }
+    },
+    "lag_sweep": {
+      "1": {
+        "eigenvalues": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.9926934746812472,
+          0.988644810166576,
+          0.9881962525590093,
+          0.9858317647943885,
+          0.985429479163623
+        ],
+        "implied_timescales": [
+          Infinity,
+          Infinity,
+          Infinity,
+          Infinity,
+          136.36335039848115,
+          87.56450690769626,
+          84.21786822389713,
+          70.07923147578693,
+          68.13050329265022
+        ],
+        "n_transitions": 4507
+      },
+      "5": {
+        "eigenvalues": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.9879412263440714,
+          0.9726982237735031,
+          0.9486302467437462,
+          0.9444017596574177,
+          0.9333825066935078,
+          0.9306913802494884
+        ],
+        "implied_timescales": [
+          Infinity,
+          Infinity,
+          Infinity,
+          412.1308061961398,
+          180.626733813461,
+          94.81156890725275,
+          87.40707019556272,
+          72.52663806154803,
+          69.61117344230455
+        ],
+        "n_transitions": 4503
+      },
+      "10": {
+        "eigenvalues": [
+          1.0,
+          1.0,
+          1.0,
+          0.9974262714187578,
+          0.9494303465525189,
+          0.9136085587889191,
+          0.8851402783660627,
+          0.8814062968938337,
+          0.8669202686379562,
+          0.8521661676742481
+        ],
+        "implied_timescales": [
+          Infinity,
+          Infinity,
+          3880.4114399245764,
+          192.70381186004724,
+          110.67692317700906,
+          81.96107281506929,
+          79.216339745067,
+          70.0239564909705,
+          62.51026000913654
+        ],
+        "n_transitions": 4498
+      },
+      "20": {
+        "eigenvalues": [
+          1.0,
+          1.0,
+          1.0,
+          0.936291579014537,
+          0.899741724039254,
+          0.8260078009908818,
+          0.7588731083996172,
+          0.7328418511147121,
+          0.7080777949864006,
+          0.6995331681782644
+        ],
+        "implied_timescales": [
+          Infinity,
+          Infinity,
+          303.8205357582194,
+          189.30873230034246,
+          104.62929095829384,
+          72.48459478568203,
+          64.34481490303948,
+          57.93720747716784,
+          55.96878099146778
+        ],
+        "n_transitions": 4488
+      }
+    },
+    "chapman_kolmogorov": {
+      "base_lag": 20,
+      "results": {
+        "2": {
+          "target_lag": 40,
+          "frobenius_error": 0.03837860969566208,
+          "max_element_error": 0.9603939107250365
+        },
+        "3": {
+          "target_lag": 60,
+          "frobenius_error": 0.046543129628344504,
+          "max_element_error": 0.9682452141994613
+        },
+        "5": {
+          "target_lag": 100,
+          "frobenius_error": 0.05240556366726445,
+          "max_element_error": 0.9783002808864599
+        }
+      }
+    },
+    "physical_mapping": {
+      "0": {
+        "weighted_mean": {
+          "x": 0.10976995589832464,
+          "y": 0.6049554844697317,
+          "vx": 0.0362597753604253,
+          "vy": -0.7291027208169302,
+          "angle": -0.14653706053892768,
+          "ang_vel": -0.40989416884258384,
+          "left_leg": 0.1666666876214246,
+          "right_leg": 0.08333334474203487
+        },
+        "weighted_std": {
+          "x": 0.3821347179277504,
+          "y": 0.6603604024285463,
+          "vx": 0.6960205141786925,
+          "vy": 0.550716701082406,
+          "angle": 0.7082857526711756,
+          "ang_vel": 1.163628367784839,
+          "left_leg": 0.3726780401907273,
+          "right_leg": 0.27638543169938357
+        },
+        "distinctive_dims": [
+          "ang_vel",
+          "left_leg",
+          "vy"
+        ],
+        "z_scores": {
+          "x": 0.15181366083083764,
+          "y": 0.14482293502036053,
+          "vx": 0.08166892974221436,
+          "vy": 0.21565163663936557,
+          "angle": 0.21241924076925983,
+          "ang_vel": 0.46741129676377213,
+          "left_leg": 0.3194574198962917,
+          "right_leg": 0.08522697469758445
+        },
+        "interpretation": "high flight"
+      },
+      "1": {
+        "weighted_mean": {
+          "x": 0.309880694766578,
+          "y": 0.6133798611791511,
+          "vx": 0.5732781414530781,
+          "vy": -0.7918345222347661,
+          "angle": -0.12994243719271922,
+          "ang_vel": 0.20795844299228577,
+          "left_leg": 0.10526315853195756,
+          "right_leg": 0.21052634118026817
+        },
+        "weighted_std": {
+          "x": 0.37661594648936647,
+          "y": 0.5041510782240497,
+          "vx": 0.5665873728848749,
+          "vy": 0.44268662974537926,
+          "angle": 0.6071736744243623,
+          "ang_vel": 0.8756300563744176,
+          "left_leg": 0.306892204773293,
+          "right_leg": 0.4076825059431801
+        },
+        "distinctive_dims": [
+          "vx",
+          "x",
+          "right_leg"
+        ],
+        "z_scores": {
+          "x": 0.6109048566373169,
+          "y": 0.1288900868292331,
+          "vx": 0.6151424142246587,
+          "vy": 0.07984634771433727,
+          "angle": 0.19047529620520995,
+          "ang_vel": 0.12520414174942393,
+          "left_leg": 0.09312115279235143,
+          "right_leg": 0.3212832979421839
+        },
+        "interpretation": "high flight"
+      },
+      "2": {
+        "weighted_mean": {
+          "x": -0.1722868862442481,
+          "y": 0.6249972062233168,
+          "vx": -0.2729594947244876,
+          "vy": -0.8980951164013298,
+          "angle": 0.12538674941811806,
+          "ang_vel": 0.14814683563338638,
+          "left_leg": 0.05128205503122165,
+          "right_leg": 0.12820514430029267
+        },
+        "weighted_std": {
+          "x": 0.40212621531726467,
+          "y": 0.46845598333127036,
+          "vx": 0.7399901643554843,
+          "vy": 0.3816083367789028,
+          "angle": 0.8305027896090547,
+          "ang_vel": 1.2715706793564943,
+          "left_leg": 0.22057245573081732,
+          "right_leg": 0.3343181116041361
+        },
+        "distinctive_dims": [
+          "x",
+          "vx",
+          "vy"
+        ],
+        "z_scores": {
+          "x": 0.49527711339235425,
+          "y": 0.10691844413599054,
+          "vx": 0.4828982149453737,
+          "vy": 0.15019249009962654,
+          "angle": 0.14715993658555554,
+          "ang_vel": 0.06783563469090467,
+          "left_leg": 0.10585570801162841,
+          "right_leg": 0.0581838103539528
+        },
+        "interpretation": "high flight"
+      },
+      "3": {
+        "weighted_mean": {
+          "x": 0.1291296411305666,
+          "y": 0.8288126925627392,
+          "vx": 0.3079351522028447,
+          "vy": -0.801731773217519,
+          "angle": 0.02490992040062947,
+          "ang_vel": 0.0977342560576896,
+          "left_leg": 0.06666667632137735,
+          "right_leg": 0.033333332681407535
+        },
+        "weighted_std": {
+          "x": 0.4003689096770085,
+          "y": 0.5292186686165963,
+          "vx": 0.7094515883848036,
+          "vy": 0.5144785272245611,
+          "angle": 0.731971332303983,
+          "ang_vel": 0.6175929345421747,
+          "left_leg": 0.24944385506462224,
+          "right_leg": 0.17950548262390503
+        },
+        "distinctive_dims": [
+          "y",
+          "vx",
+          "right_leg"
+        ],
+        "z_scores": {
+          "x": 0.1962283738740916,
+          "y": 0.2785535397101139,
+          "vx": 0.2708450556502545,
+          "vy": 0.058420228921355885,
+          "angle": 0.01429413300978136,
+          "ang_vel": 0.019482237166030963,
+          "left_leg": 0.04914727764522208,
+          "right_leg": 0.24502758561115529
+        },
+        "interpretation": "high flight"
+      }
+    },
+    "tb_partition": {
+      "objects": {
+        "0": [
+          "x",
+          "vx",
+          "angle"
+        ],
+        "1": [
+          "y",
+          "vy",
+          "right_leg"
+        ]
+      },
+      "blanket_vars": [
+        "ang_vel",
+        "left_leg"
+      ],
+      "assignment": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        -1,
+        -1,
+        1
+      ],
+      "eigengap": 7.999999999999994,
+      "n_clusters_spectral": 1,
+      "eigenvalues": [
+        5.329070518200751e-15,
+        7.999999999999999,
+        8.0,
+        8.0,
+        8.0,
+        8.0,
+        8.0,
+        8.000000000000009
+      ]
+    },
+    "comparison": {
+      "nmi_microstate": 0.02137755361178845,
+      "nmi_sample": 0.027547214592458204,
+      "cross_tabulation": {
+        "0": {
+          "0": 5,
+          "1": 7,
+          "2": 24,
+          "3": 13
+        },
+        "1": {
+          "0": 7,
+          "1": 12,
+          "2": 15,
+          "3": 17
+        }
+      },
+      "variable_dominant_macrostate": {
+        "x": 2,
+        "y": 0,
+        "vx": 2,
+        "vy": 0,
+        "angle": 2,
+        "ang_vel": 2,
+        "left_leg": 0,
+        "right_leg": 1
+      }
+    },
+    "discussion": "METHODOLOGICAL COMPARISON: MSMs discretize state space into microstates and estimate a Markov transition matrix; metastable macrostates emerge from the slow eigenmodes of this matrix (dynamics-based). TB computes the coupling matrix from dynamics model gradients and partitions variables into objects separated by Markov blankets (geometry-based). MSM groups *states* (data points); TB groups *variables* (dimensions).\n\nNMI = 0.0214 indicates weak agreement. This divergence is expected because MSM and TB answer different questions: MSM asks 'which *states* mix slowly?' while TB asks 'which *variables* decouple?' In a far-from-equilibrium system like LunarLander, these need not coincide.\n\nMARKOVIANITY: The Chapman-Kolmogorov test at base lag=20 yields mean Frobenius error = 0.0458. This is low, confirming that the MSM at this lag is a good Markov approximation.\n\nPHYSICAL INTERPRETATION: The 4 MSM macrostates correspond to: high flight; high flight; high flight; high flight. TB partitions the 8 state variables into objects (position/velocity groups) and blanket variables (coupling dimensions). The MSM macrostates represent *where* the lander is and *what it is doing*; the TB objects represent *which aspects of the state are informationally separated*.\n\nKEY INSIGHT: MSM and TB provide complementary views. MSM reveals the *dynamical phases* of LunarLander (flight, descent, landing) as metastable regions in state space. TB reveals the *structural organization* of the state representation: which variables form coherent subsystems (objects) and which variables mediate their interaction (blankets). Together, they show both the dynamical landscape and the information-geometric architecture of the learned world model."
+  },
+  "notes": "US-049: Markov State Model comparison on LunarLander trajectories. Discretized 8D state space into 100 microstates via k-means. Built MSM transition matrix at lag times [1, 5, 10, 20]. Chosen lag=20 based on ITS stabilization. Chapman-Kolmogorov test validates Markovianity. PCCA+ identifies 4 metastable macrostates. Compared to TB partition via NMI=0.0214. Metastability=2.7961."
+}

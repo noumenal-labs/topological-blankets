@@ -1,0 +1,456 @@
+{
+  "generated": "2026-02-07T08:23:18.022616",
+  "n_experiments": 50,
+  "experiments": [
+    {
+      "filename": "2026-02-05_181108_strength_sweep_10trials.json",
+      "experiment_name": "strength_sweep_10trials",
+      "timestamp": "2026-02-05T18:11:08.377100",
+      "phase": 1,
+      "type": "Strength Sweep",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-05_181110_spectral_friston_comparison.json",
+      "experiment_name": "spectral_friston_comparison",
+      "timestamp": "2026-02-05T18:11:10.579292",
+      "phase": 1,
+      "type": "Spectral Detection",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-05_181132_scaling_experiment.json",
+      "experiment_name": "scaling_experiment",
+      "timestamp": "2026-02-05T18:11:32.048563",
+      "phase": 1,
+      "type": "Scaling",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-05_181159_temperature_sensitivity.json",
+      "experiment_name": "temperature_sensitivity",
+      "timestamp": "2026-02-05T18:11:59.509176",
+      "phase": 1,
+      "type": "Temperature Sensitivity",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-05_183830_quadratic_toy_demo.json",
+      "experiment_name": "quadratic_toy_demo",
+      "timestamp": "2026-02-05T18:38:30.241905",
+      "phase": 1,
+      "type": "Synthetic Validation",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-05_183903_quadratic_toy_strength_sweep.json",
+      "experiment_name": "quadratic_toy_strength_sweep",
+      "timestamp": "2026-02-05T18:39:03.136949",
+      "phase": 1,
+      "type": "Synthetic Validation",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-05_183928_spectral_friston_comparison.json",
+      "experiment_name": "spectral_friston_comparison",
+      "timestamp": "2026-02-05T18:39:28.170971",
+      "phase": 1,
+      "type": "Spectral Detection",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-06_045352_quadratic_toy_demo.json",
+      "experiment_name": "quadratic_toy_demo",
+      "timestamp": "2026-02-06T04:53:52.547873",
+      "phase": 1,
+      "type": "Synthetic Validation",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-06_045540_quadratic_toy_strength_sweep.json",
+      "experiment_name": "quadratic_toy_strength_sweep",
+      "timestamp": "2026-02-06T04:55:40.936270",
+      "phase": 1,
+      "type": "Synthetic Validation",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-06_050115_strength_sweep_10trials.json",
+      "experiment_name": "strength_sweep_10trials",
+      "timestamp": "2026-02-06T05:01:15.092274",
+      "phase": 1,
+      "type": "Strength Sweep",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-06_050117_spectral_friston_comparison.json",
+      "experiment_name": "spectral_friston_comparison",
+      "timestamp": "2026-02-06T05:01:17.199684",
+      "phase": 1,
+      "type": "Spectral Detection",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-06_050137_scaling_experiment.json",
+      "experiment_name": "scaling_experiment",
+      "timestamp": "2026-02-06T05:01:37.168145",
+      "phase": 1,
+      "type": "Scaling",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-06_050202_temperature_sensitivity.json",
+      "experiment_name": "temperature_sensitivity",
+      "timestamp": "2026-02-06T05:02:02.615566",
+      "phase": 1,
+      "type": "Temperature Sensitivity",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-06_050344_spectral_friston_comparison.json",
+      "experiment_name": "spectral_friston_comparison",
+      "timestamp": "2026-02-06T05:03:44.643226",
+      "phase": 1,
+      "type": "Spectral Detection",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-06_050437_spectral_friston_comparison.json",
+      "experiment_name": "spectral_friston_comparison",
+      "timestamp": "2026-02-06T05:04:37.166453",
+      "phase": 1,
+      "type": "Spectral Detection",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-06_050614_quadratic_toy_demo.json",
+      "experiment_name": "quadratic_toy_demo",
+      "timestamp": "2026-02-06T05:06:14.851159",
+      "phase": 1,
+      "type": "Synthetic Validation",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-06_050645_quadratic_toy_strength_sweep.json",
+      "experiment_name": "quadratic_toy_strength_sweep",
+      "timestamp": "2026-02-06T05:06:45.894214",
+      "phase": 1,
+      "type": "Synthetic Validation",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-06_051413_spectral_friston_comparison.json",
+      "experiment_name": "spectral_friston_comparison",
+      "timestamp": "2026-02-06T05:14:13.106841",
+      "phase": 1,
+      "type": "Spectral Detection",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-06_051422_spectral_friston_comparison.json",
+      "experiment_name": "spectral_friston_comparison",
+      "timestamp": "2026-02-06T05:14:22.464230",
+      "phase": 1,
+      "type": "Spectral Detection",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-06_051817_stress_large_scale.json",
+      "experiment_name": "stress_large_scale",
+      "timestamp": "2026-02-06T05:18:17.436080",
+      "phase": 1,
+      "type": "Stress Test",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-06_051906_stress_hard_regime.json",
+      "experiment_name": "stress_hard_regime",
+      "timestamp": "2026-02-06T05:19:06.975952",
+      "phase": 1,
+      "type": "Stress Test",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-06_051929_stress_asymmetric.json",
+      "experiment_name": "stress_asymmetric",
+      "timestamp": "2026-02-06T05:19:29.544644",
+      "phase": 1,
+      "type": "Stress Test",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-06_052022_stress_blanket_ratio.json",
+      "experiment_name": "stress_blanket_ratio",
+      "timestamp": "2026-02-06T05:20:22.285908",
+      "phase": 1,
+      "type": "Stress Test",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-06_052048_stress_hessian_validation.json",
+      "experiment_name": "stress_hessian_validation",
+      "timestamp": "2026-02-06T05:20:48.184638",
+      "phase": 1,
+      "type": "Stress Test",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-06_055201_quadratic_toy_demo.json",
+      "experiment_name": "quadratic_toy_demo",
+      "timestamp": "2026-02-06T05:52:01.758419",
+      "phase": 1,
+      "type": "Synthetic Validation",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-06_055202_spectral_friston_comparison.json",
+      "experiment_name": "spectral_friston_comparison",
+      "timestamp": "2026-02-06T05:52:02.293696",
+      "phase": 1,
+      "type": "Spectral Detection",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-06_055256_quadratic_toy_strength_sweep.json",
+      "experiment_name": "quadratic_toy_strength_sweep",
+      "timestamp": "2026-02-06T05:52:56.206227",
+      "phase": 1,
+      "type": "Synthetic Validation",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-06_055336_strength_sweep_10trials.json",
+      "experiment_name": "strength_sweep_10trials",
+      "timestamp": "2026-02-06T05:53:36.362396",
+      "phase": 1,
+      "type": "Strength Sweep",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-06_055338_spectral_friston_comparison.json",
+      "experiment_name": "spectral_friston_comparison",
+      "timestamp": "2026-02-06T05:53:38.702976",
+      "phase": 1,
+      "type": "Spectral Detection",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-06_055401_scaling_experiment.json",
+      "experiment_name": "scaling_experiment",
+      "timestamp": "2026-02-06T05:54:01.321498",
+      "phase": 1,
+      "type": "Scaling",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-06_055429_temperature_sensitivity.json",
+      "experiment_name": "temperature_sensitivity",
+      "timestamp": "2026-02-06T05:54:29.117380",
+      "phase": 1,
+      "type": "Temperature Sensitivity",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-07_043904_v2_strength_sweep.json",
+      "experiment_name": "v2_strength_sweep",
+      "timestamp": "2026-02-07T04:39:04.706455",
+      "phase": 1,
+      "type": "Strength Sweep",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-07_044000_v2_scaling_experiment.json",
+      "experiment_name": "v2_scaling_experiment",
+      "timestamp": "2026-02-07T04:40:00.789682",
+      "phase": 1,
+      "type": "Scaling",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-07_044027_v2_temperature_sensitivity.json",
+      "experiment_name": "v2_temperature_sensitivity",
+      "timestamp": "2026-02-07T04:40:27.523918",
+      "phase": 1,
+      "type": "Temperature Sensitivity",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-07_044239_v2_ablation_study.json",
+      "experiment_name": "v2_ablation_study",
+      "timestamp": "2026-02-07T04:42:39.031056",
+      "phase": 2,
+      "type": "v2 Ablation",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-07_045625_ising_model.json",
+      "experiment_name": "ising_model",
+      "timestamp": "2026-02-07T04:56:25.596494",
+      "phase": 3,
+      "type": "Ising Model",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-07_045630_ggm_benchmark.json",
+      "experiment_name": "ggm_benchmark",
+      "timestamp": "2026-02-07T04:56:30.531931",
+      "phase": 3,
+      "type": "GGM Benchmark",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-07_045642_non_gaussian_landscapes.json",
+      "experiment_name": "non_gaussian_landscapes",
+      "timestamp": "2026-02-07T04:56:42.237828",
+      "phase": 3,
+      "type": "Non-Gaussian",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-07_045647_score_model_2d.json",
+      "experiment_name": "score_model_2d",
+      "timestamp": "2026-02-07T04:56:47.501329",
+      "phase": 3,
+      "type": "2D Score Model",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-07_045811_cross_validation_100trials.json",
+      "experiment_name": "cross_validation_100trials",
+      "timestamp": "2026-02-07T04:58:11.894977",
+      "phase": 3,
+      "type": "Cross-Validation",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-07_045906_scaling_benchmark.json",
+      "experiment_name": "scaling_benchmark",
+      "timestamp": "2026-02-07T04:59:06.434580",
+      "phase": 3,
+      "type": "Scaling Benchmark",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-07_050401_edge_compute_analysis.json",
+      "experiment_name": "edge_compute_analysis",
+      "timestamp": "2026-02-07T05:04:01.446272",
+      "phase": 5,
+      "type": "Edge Compute",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-07_051039_actinf_trajectory_collection.json",
+      "experiment_name": "actinf_trajectory_collection",
+      "timestamp": "2026-02-07T05:10:39.338234",
+      "phase": 4,
+      "type": "Active Inference Data",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-07_051042_actinf_tb_analysis.json",
+      "experiment_name": "actinf_tb_analysis",
+      "timestamp": "2026-02-07T05:10:42.405571",
+      "phase": 4,
+      "type": "Active Inference TB",
+      "key_metric": "eigengap=8.0000",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-07_081307_dreamer_autoencoder_training.json",
+      "experiment_name": "dreamer_autoencoder_training",
+      "timestamp": "2026-02-07T08:13:07.780885",
+      "phase": 4,
+      "type": "Dreamer Training",
+      "key_metric": "mse=0.0004",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-07_081312_dreamer_tb_analysis.json",
+      "experiment_name": "dreamer_tb_analysis",
+      "timestamp": "2026-02-07T08:13:12.925792",
+      "phase": 4,
+      "type": "Dreamer TB",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-07_081621_multi_scale_comparison.json",
+      "experiment_name": "multi_scale_comparison",
+      "timestamp": "2026-02-07T08:16:21.673685",
+      "phase": 4,
+      "type": "Multi-Scale Comparison",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-07_081747_temperature_sensitivity_worldmodels.json",
+      "experiment_name": "temperature_sensitivity_worldmodels",
+      "timestamp": "2026-02-07T08:17:47.532491",
+      "phase": 1,
+      "type": "Temperature Sensitivity",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-07_082012_notears_comparison.json",
+      "experiment_name": "notears_comparison",
+      "timestamp": "2026-02-07T08:20:12.297095",
+      "phase": 5,
+      "type": "NOTEARS Comparison",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    },
+    {
+      "filename": "2026-02-07_082200_robustness_analysis.json",
+      "experiment_name": "robustness_analysis",
+      "timestamp": "2026-02-07T08:22:00.091819",
+      "phase": 5,
+      "type": "Robustness Analysis",
+      "key_metric": "status=complete",
+      "status": "PASS"
+    }
+  ]
+}

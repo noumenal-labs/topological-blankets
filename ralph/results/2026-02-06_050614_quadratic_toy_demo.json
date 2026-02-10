@@ -1,0 +1,29 @@
+{
+  "timestamp": "2026-02-06T05:06:14.851159",
+  "experiment_name": "quadratic_toy_demo",
+  "config": {
+    "n_objects": 2,
+    "vars_per_object": 3,
+    "vars_per_blanket": 3,
+    "intra_strength": 6.0,
+    "blanket_strength": 0.8
+  },
+  "metrics": {
+    "tc": {
+      "object_ari": 1.0,
+      "blanket_f1": 1.0,
+      "full_ari": 1.0
+    },
+    "dmbd": {
+      "object_ari": 0.7058823529411765,
+      "blanket_f1": 0.0,
+      "full_ari": 0.4838709677419355
+    },
+    "axiom": {
+      "object_ari": 0.24242424242424243,
+      "blanket_f1": 0.0,
+      "full_ari": 0.26666666666666666
+    }
+  },
+  "notes": "Single example: 2 objects, blanket_strength=0.8"
+}
