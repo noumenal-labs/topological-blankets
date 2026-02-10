@@ -19,7 +19,22 @@ The paper "Topological Blankets: Extracting Discrete Markov Blanket Structure fr
 11. **Phase 11**: Literature-derived method improvements — rank-based covariance (nonparanormal), L1-regularized coupling sparsification, persistence-based blanket detection, sliced score matching for high-D, multi-scale noise hierarchy, PCCA+ fuzzy partitions, bottleneck stability guarantees, KSD goodness-of-fit validation, differentiable topological loss
 12. **Phase 12** (PRIORITY — Wednesday demo): Teleoperation demo integration — pandas Bayes ensemble as TB target, catastrophe signal bridge, human-in-the-loop goal injection, live uncertainty visualization, structure emergence during learning, end-to-end demo script, telecorder FetchPush adapter, cross-domain comparison, TB-guided learned planner, ghost trajectories for manipulation, compact 50-step end-to-end pipeline validation (US-096)
 
-**NEXT TASK: US-096** — Two phases: (A) Train a 5-member ensemble on FetchPush-v4 with `--max-episode-steps 50` in the pandas repo, then (B) run the full demo pipeline with `--planner tb --max-steps 50` using the trained checkpoint. Training command: `cd C:/Users/citiz/Documents/noumenal-labs/pandas && python train.py --env-id FetchPush-v4 --max-episode-steps 50 --reward-mode dense --ensemble-size 5 --run-dir ./data/fetchpush_50step --iterations 100 --symbolic-task push --no-train-use-epistemic-bonus --no-eval-use-epistemic-bonus`. Then evaluate and demo.
+13. **Phase 13** (complete): Rigorous benchmarking — TB vs Graphical Lasso (US-090), NOTEARS (US-091), MI Clustering (US-092), ICA (US-093), Spectral Covariance (US-094). All committed with results.
+14. **Phase 14** (in progress): Cross-environment comparison — architecture-matched ensembles on Reach/Push/PickAndPlace/Slide + DDPG+HER baseline + no-TB ablation. Training running on GPU (DO NOT train models, GPU access is reserved).
+15. **Phase 15** (NEW): Factored World Hypothesis validation — inspired by Shai et al. (2602.02385) "Transformers learn factored representations". Tests whether TB detects the orthogonal factor subspaces that neural networks learn. See US-107 through US-111.
+
+**GPU TRAINING STATUS**: FetchPush (US-096) COMPLETE (100% success). FetchReach, PickAndPlace, Slide, DDPG+HER, and structure emergence all training on Lambda GPU. DO NOT launch any training; checkpoints will be available in `pandas/data/` when done.
+
+**NEXT TASKS (CPU only)**:
+- **US-097**: Split demo GIFs into 3-phase segments (CPU, viz only)
+- **US-098**: Action trajectory visualization improvements (CPU, viz only)
+- **US-099**: CEM rollout viz improvements (CPU, viz only)
+- **US-104**: Evaluate ensemble without TB planning (CPU, needs fetchpush_50step checkpoint from `pandas/data/`)
+- **US-107**: Replicate Shai et al. GHMM with TB detection (CPU, train small GPT-2 on synthetic data)
+- **US-108-109**: Layer-by-layer TB on transformer + FWH dimensionality test (CPU, depends on US-107)
+- **US-110**: FWH for ensemble world models (CPU, needs fetchpush_50step checkpoint)
+
+Pick the first available story with satisfied dependencies. Prefer Phase 15 (US-107+) as highest scientific value.
 
 ### Related Posters (Patel, Pattisapu, Ramstead, Dumas 2025)
 
