@@ -2256,6 +2256,27 @@
       "phase": 14,
       "dependencies": [],
       "notes": "DDPG+HER is what Alec compared against in the Reach benchmark (the orange line). Architecture-matched: 2x256 matches the ensemble hidden_size=256 depth=2. 100k timesteps should be enough for reasonable Push performance. The interesting follow-up is running TB on the critic network gradients to see if model-free RL also learns blanket-like structure internally."
+    },
+    {
+      "id": "US-106",
+      "title": "Post-hoc TB analysis of DDPG+HER critic network",
+      "description": "As a researcher, I need to apply TB to the learned Q-function gradients of the DDPG+HER agent to test whether model-free RL implicitly learns Markov blanket structure. Compute dQ/d(obs) via finite differences, run TB.fit(), and compare the discovered partition to (a) ground-truth FetchPush structure and (b) the Bayes ensemble TB partition. This validates TB as a universal structure discovery tool across learning paradigms.",
+      "acceptanceCriteria": [
+        "Critic gradients collected from trained DDPG+HER model (2000 samples)",
+        "TB analysis run on critic gradients with hybrid method",
+        "Comparison table: ARI, NMI, blanket_F1 for critic vs ensemble",
+        "Side-by-side coupling matrix figure (critic vs ensemble)",
+        "Key finding documented: does model-free RL learn implicit blanket structure?",
+        "Results JSON and comparison figure saved to ralph/results/"
+      ],
+      "priority": 106,
+      "passes": false,
+      "phase": 14,
+      "dependencies": [
+        "US-105",
+        "US-096"
+      ],
+      "notes": "Hypothesis: the DDPG critic should learn that gripper and object positions are coupled through relative position (the blanket), because Q-value depends on whether the gripper can reach and push the object. If confirmed, TB works across learning paradigms. Can run on CPU after training completes."
     }
   ],
   "phases": {}
