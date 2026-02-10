@@ -2277,6 +2277,104 @@
         "US-096"
       ],
       "notes": "Hypothesis: the DDPG critic should learn that gripper and object positions are coupled through relative position (the blanket), because Q-value depends on whether the gripper can reach and push the object. If confirmed, TB works across learning paradigms. Can run on CPU after training completes."
+    },
+    {
+      "id": "US-107",
+      "title": "Replicate Shai et al. GHMM factored representations with TB detection",
+      "description": "Train a small GPT-2 on Shai et al. (2602.02385) synthetic GHMM data (5 factors: 3 Mess3 + 2 Bloch Walk, vocab 433). Apply TB to residual stream activations instead of PCA. FWH predicts N orthogonal subspaces; TB should detect block-diagonal coupling with eigengap=5. Validates TB as principled alternative to PCA vary-one analysis.",
+      "acceptanceCriteria": [
+        "GPT-2 trained on 5-factor GHMM synthetic data",
+        "TB applied to residual stream at multiple layers",
+        "TB eigengap correctly detects N=5 factors",
+        "Coupling matrix shows block-diagonal structure",
+        "Comparison: TB vs PCA partition (NMI, ARI)",
+        "Results JSON saved"
+      ],
+      "priority": 107,
+      "passes": false,
+      "phase": 15,
+      "dependencies": [],
+      "notes": "Reference: Shai et al. Transformers learn factored representations (2602.02385v1). 4-layer transformer, d_model=120, d_MLP=480, L=8."
+    },
+    {
+      "id": "US-108",
+      "title": "TB on transformer residual stream: layer-by-layer factored structure",
+      "description": "Apply TB to each transformer layer to trace factored structure emergence through depth. TB should show coupling matrix from dense (embedding) to block-diagonal (later layers). Also identifies blanket variables mediating cross-factor info flow, which PCA cannot.",
+      "acceptanceCriteria": [
+        "TB at each of 4 layers + embedding",
+        "Layer-by-layer eigengap trajectory",
+        "5-panel coupling matrix figure",
+        "Blanket variable identification per layer",
+        "Results JSON saved"
+      ],
+      "priority": 108,
+      "passes": false,
+      "phase": 15,
+      "dependencies": [
+        "US-107"
+      ],
+      "notes": "Blanket variables in residual stream = dimensions where cross-factor information flows."
+    },
+    {
+      "id": "US-109",
+      "title": "FWH dimensionality test: TB eigengap tracks factored-to-joint transition",
+      "description": "Test whether TB detects the factored-to-joint representation transition. Train on clean (eps=0) and corrupted (eps=0.2) GHMM data. TB eigengap should stay high for clean, decrease for corrupted. Detects the factored attractor phenomenon.",
+      "acceptanceCriteria": [
+        "Two runs: clean and corrupted GHMM data",
+        "TB at 10 training checkpoints each",
+        "Eigengap trajectory comparison",
+        "Coupling sparsity trajectory",
+        "Overlay with CEV dimensionality",
+        "Results and training curves saved"
+      ],
+      "priority": 109,
+      "passes": false,
+      "phase": 15,
+      "dependencies": [
+        "US-107"
+      ],
+      "notes": "Tests the inductive bias: transformers dwell at factored solution. TB eigengap quantifies this."
+    },
+    {
+      "id": "US-110",
+      "title": "FWH for ensemble world models: are Bayes ensembles factored?",
+      "description": "Test whether FWH extends to ensemble world models. Apply TB to FetchPush ensemble Jacobians. Compare to FWH predictions: linear effective dimensionality, orthogonal factor subspaces, preference for factoring under noise.",
+      "acceptanceCriteria": [
+        "TB on FetchPush ensemble Jacobians",
+        "Effective dimensionality vs FWH prediction",
+        "Orthogonality test between TB-detected objects",
+        "Noise robustness at eps=0.1,0.2,0.5",
+        "Comparison table: FWH predictions vs TB findings",
+        "Results JSON saved"
+      ],
+      "priority": 110,
+      "passes": false,
+      "phase": 15,
+      "dependencies": [
+        "US-096"
+      ],
+      "notes": "Bridges Shai et al. theory to robotics. If confirmed: neural networks modeling structured worlds converge on factored representations detected by TB."
+    },
+    {
+      "id": "US-111",
+      "title": "Cross-architecture factoring: transformer vs RNN vs ensemble",
+      "description": "Compare TB-detected factored structure across architectures on equivalent data. Train transformer, RNN, and ensemble on same data. TB should find similar partitions if structure is data-driven not architecture-driven.",
+      "acceptanceCriteria": [
+        "3+ architectures on equivalent data",
+        "TB analysis on each",
+        "Cross-architecture NMI comparison",
+        "Eigengap comparison",
+        "Blanket variable comparison",
+        "Summary table saved"
+      ],
+      "priority": 111,
+      "passes": false,
+      "phase": 15,
+      "dependencies": [
+        "US-107",
+        "US-110"
+      ],
+      "notes": "If TB finds same structure across architectures, factored structure is a property of data, not architecture. TB becomes universal detector."
     }
   ],
   "phases": {}
