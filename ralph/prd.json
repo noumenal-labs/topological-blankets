@@ -2139,7 +2139,7 @@
         "Red dashed vertical line at perturbation timestep visible across all 6 panels",
         "Panel group labels added: 'Gripper (TB Object 0)' for top row (obs[0:2]), 'Object (TB Object 1)' for bottom row (achieved goal)",
         "Mode badge switches between green 'AUTO' and red 'HUMAN' at the appropriate timesteps",
-        "Ensemble disagreement bands (±1sigma) visibly widen at perturbation and narrow after intervention",
+        "Ensemble disagreement bands (\u00c2\u00b11sigma) visibly widen at perturbation and narrow after intervention",
         "Output GIF saved at 3 fps for each of the 3 phase segments"
       ],
       "priority": 99,
@@ -2149,6 +2149,78 @@
         "US-096"
       ],
       "notes": "Per Alec: the 6-panel dark background design already looks good. These enhancements connect the visualization to the TB narrative (the panels group by discovered partition) and make the perturbation event visually anchored. The mode indicator already exists as a green AUTO badge; adding the HUMAN variant and transition is straightforward. Coordinate with Alec on whether these changes go into eval.py or a separate post-processing script."
+    },
+    {
+      "id": "US-100",
+      "title": "Train FetchReach ensemble for cross-environment TB comparison",
+      "description": "As a researcher, I need a trained 5-member Bayes ensemble on FetchReach-v4 (50-step episodes) to serve as an architecture-matched baseline for cross-environment TB analysis. FetchReach is the simplest Fetch task: the gripper moves to a target position with no object manipulation. TB should discover minimal structure (single object, no or trivial blanket) since there is only one entity (the gripper). This provides a lower-complexity anchor for the cross-environment comparison.",
+      "acceptanceCriteria": [
+        "Ensemble trained on FetchReach-v4 with --max-episode-steps 50 --ensemble-size 5 --reward-mode dense --iterations 100",
+        "Checkpoint saved to pandas/data/fetchreach_50step/ (model.eqx, model.eqx.json, run_config.json)",
+        "Evaluation shows >80% success rate on 20 eval episodes",
+        "Training log saved"
+      ],
+      "priority": 100,
+      "passes": false,
+      "phase": 14,
+      "dependencies": [],
+      "notes": "Architecture-matched to US-096 (same ensemble size, hidden dims, depth). FetchReach obs_dim=10 (no object state), action_dim=4. Expected TB result: 1 object (gripper), minimal blanket. Provides simplest-case anchor for cross-env comparison."
+    },
+    {
+      "id": "US-101",
+      "title": "Train FetchPickAndPlace ensemble for cross-environment TB comparison",
+      "description": "As a researcher, I need a trained 5-member Bayes ensemble on FetchPickAndPlace-v4 (50-step episodes) for cross-environment TB analysis. PickAndPlace requires the gripper to lift the object off the table and move it to a target in 3D space. This involves richer coupling structure than Push: gravity requires active grip maintenance, introducing a persistent coupling between gripper and object that Push does not have. TB should discover gripper-object structure with stronger blanket coupling than Push.",
+      "acceptanceCriteria": [
+        "Ensemble trained on FetchPickAndPlace-v4 with --max-episode-steps 50 --ensemble-size 5 --reward-mode dense --symbolic-task push --iterations 100",
+        "Checkpoint saved to pandas/data/fetchpickandplace_50step/ (model.eqx, model.eqx.json, run_config.json)",
+        "Training log saved",
+        "Evaluation success rate documented (may be lower than Push due to task difficulty)"
+      ],
+      "priority": 101,
+      "passes": false,
+      "phase": 14,
+      "dependencies": [],
+      "notes": "Architecture-matched to US-096 (obs_dim=25, action_dim=4, same ensemble). PickAndPlace is harder than Push; success rate may be lower but the learned dynamics model should still capture gripper-object coupling. The key question: does TB detect stronger blanket coupling (grip force as mediator) compared to Push (contact-only coupling)?"
+    },
+    {
+      "id": "US-102",
+      "title": "Train FetchSlide ensemble for cross-environment TB comparison",
+      "description": "As a researcher, I need a trained 5-member Bayes ensemble on FetchSlide-v4 (50-step episodes) for cross-environment TB analysis. Slide requires the gripper to hit the object so it slides to a distant target. After the initial impulse, gripper and object are decoupled. This tests whether TB can detect transient vs persistent coupling: the blanket should be thin (brief contact) compared to Push (sustained contact) and PickAndPlace (continuous grip).",
+      "acceptanceCriteria": [
+        "Ensemble trained on FetchSlide-v4 with --max-episode-steps 50 --ensemble-size 5 --reward-mode dense --symbolic-task push --iterations 100",
+        "Checkpoint saved to pandas/data/fetchslide_50step/ (model.eqx, model.eqx.json, run_config.json)",
+        "Training log saved",
+        "Evaluation success rate documented (may be lower than Push due to task difficulty)"
+      ],
+      "priority": 102,
+      "passes": false,
+      "phase": 14,
+      "dependencies": [],
+      "notes": "Architecture-matched to US-096 (obs_dim=25, action_dim=4, same ensemble). Slide has impulsive coupling (hit and release) rather than sustained contact. TB should find the same 2-object partition (gripper + puck) but with weaker or sparser blanket variables. This is the most interesting case: can TB distinguish sustained vs transient interaction from learned dynamics alone?"
+    },
+    {
+      "id": "US-103",
+      "title": "Cross-environment TB comparison across Fetch task family",
+      "description": "As a researcher, I need a systematic comparison of TB-discovered structure across the four Fetch environments (Reach, Push, PickAndPlace, Slide) using architecture-matched ensembles. This demonstrates that TB discovers qualitatively different Markov blanket structure that reflects the actual physics of each task, not just an artifact of the architecture. The comparison should show: (1) Reach has trivial structure, (2) Push has contact-mediated coupling, (3) PickAndPlace has grip-mediated coupling, (4) Slide has impulse-mediated coupling.",
+      "acceptanceCriteria": [
+        "TB analysis run on all 4 trained checkpoints using identical parameters",
+        "Side-by-side coupling matrix figure (4 panels)",
+        "Table: n_objects, n_blanket_vars, eigengap, coupling_strength per environment",
+        "Blanket variable comparison: which variables are classified as blanket in each task",
+        "Statistical comparison of blanket coupling strength across tasks",
+        "Results JSON and publication-quality figure saved to ralph/results/"
+      ],
+      "priority": 103,
+      "passes": false,
+      "phase": 14,
+      "dependencies": [
+        "US-096",
+        "US-100",
+        "US-101",
+        "US-102"
+      ],
+      "notes": "This is the payoff analysis. Expected narrative: TB discovers that the same robotic system has different internal structure depending on the task, which is correct (a gripper reaching has simpler dynamics than a gripper pushing, which is simpler than lifting, which is different from sliding). This validates TB as a task-sensitive structure discovery method, not just a static architecture analyzer."
     }
-  ]
+  ],
+  "phases": {}
 }
