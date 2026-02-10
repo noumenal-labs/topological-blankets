@@ -2065,6 +2065,30 @@
         "US-094"
       ],
       "notes": "This is the capstone story for Phase 13. The output should be directly insertable into the paper's experiments section. The narrative should be honest: acknowledge datasets where TB underperforms and explain why (e.g., 'on purely Gaussian data, Graphical Lasso's parametric assumption is correct and TB's nonparametric gradient approach adds unnecessary noise'). This strengthens the paper by showing TB's niche: non-Gaussian, high-dimensional, dynamics-derived structure where gradient geometry captures what covariance alone misses."
+    },
+    {
+      "id": "US-096",
+      "title": "End-to-end FetchPush demo pipeline with TB-guided planner (50 steps)",
+      "description": "As a demo presenter, I need to run the full Wednesday demo pipeline end-to-end on FetchPush-v4 using the TB-guided planner with a max episode length of 50 steps. This validates that the TB discovery pipeline (ensemble Jacobians to partition to hierarchical planner) works in a tight episode budget. The pipeline must complete successfully: TB discovers structure, the TB-guided planner decomposes the task, the agent executes, the catastrophe signal fires on perturbation, human intervenes, and the task completes within 50 steps. This is the compact version of the demo suitable for live presentation.",
+      "acceptanceCriteria": [
+        "wednesday_demo.py runs to completion with: --planner tb --max-steps 50",
+        "Phase boundaries scale correctly for 50-step episode (perturbation_step, first_goal_step, second_goal_step, release_step all proportionally adjusted)",
+        "TB-guided planner loads or discovers a partition and produces approach-then-push decomposition",
+        "Catastrophe signal fires within 5 steps of perturbation",
+        "At least 2 human goal injections occur",
+        "Task completes (goal distance < 0.15) within the 50-step budget",
+        "Output GIF and JSON artifacts saved to results/",
+        "If live mode unavailable, dry-run fallback completes with all 6 acceptance criteria passing",
+        "Results JSON includes planner_mode='tb' and max_steps=50 in metadata"
+      ],
+      "priority": 96,
+      "passes": false,
+      "phase": 12,
+      "dependencies": [
+        "US-081",
+        "US-084"
+      ],
+      "notes": "This validates the full pipeline under a tight 50-step budget. The phase boundary scaling logic (ratio = max_steps / 80.0) must produce sensible boundaries: perturbation around step 12, first_goal around step 20, second_goal around step 26, release around step 32, leaving 18 steps for task completion. If 50 steps proves too tight for the proportional controller, the acceptance criterion on task completion may need the controller gain increased or the goal threshold relaxed slightly. Run in dry-run mode first to validate, then attempt live mode if MuJoCo is available."
     }
   ]
 }

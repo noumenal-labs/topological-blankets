@@ -17,7 +17,9 @@ The paper "Topological Blankets: Extracting Discrete Markov Blanket Structure fr
 9. **Phase 9**: Continuous monitoring — online sliding-window TB with drift detection, planning graph from recursive blankets
 10. **Phase 10**: Poster integration — event boundary detection (Psychological World Models, Patel et al.), surprise-weighted TB and epistemic foraging (SDWM, Patel et al.), two-timescale TB, context-conditioned coupling, TB-segmented replay buffer, paper update
 11. **Phase 11**: Literature-derived method improvements — rank-based covariance (nonparanormal), L1-regularized coupling sparsification, persistence-based blanket detection, sliced score matching for high-D, multi-scale noise hierarchy, PCCA+ fuzzy partitions, bottleneck stability guarantees, KSD goodness-of-fit validation, differentiable topological loss
-12. **Phase 12** (PRIORITY — Wednesday demo): Teleoperation demo integration — pandas Bayes ensemble as TB target, catastrophe signal bridge, human-in-the-loop goal injection, live uncertainty visualization, structure emergence during learning, end-to-end demo script, telecorder FetchPush adapter, cross-domain comparison, TB-guided learned planner, ghost trajectories for manipulation
+12. **Phase 12** (PRIORITY — Wednesday demo): Teleoperation demo integration — pandas Bayes ensemble as TB target, catastrophe signal bridge, human-in-the-loop goal injection, live uncertainty visualization, structure emergence during learning, end-to-end demo script, telecorder FetchPush adapter, cross-domain comparison, TB-guided learned planner, ghost trajectories for manipulation, compact 50-step end-to-end pipeline validation (US-096)
+
+**NEXT TASK: US-096** — Run the full demo pipeline end-to-end with `--planner tb --max-steps 50` on FetchPush-v4. This is the compact presentation-ready version. Start with `--dry-run` to validate, then attempt live mode.
 
 ### Related Posters (Patel, Pattisapu, Ramstead, Dumas 2025)
 
