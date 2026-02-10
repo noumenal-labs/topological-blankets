@@ -1,0 +1,873 @@
+{
+  "timestamp": "2026-02-10T12:03:24.295913",
+  "experiment_name": "benchmark_vs_mi_clustering",
+  "config": {
+    "n_seeds": 3,
+    "methods": [
+      "TB_hybrid",
+      "MI_clustering"
+    ],
+    "datasets": [
+      "quadratic_ebm_8d",
+      "quadratic_ebm_50d",
+      "lunarlander_8d",
+      "fetchpush_25d",
+      "ising_6x6"
+    ]
+  },
+  "metrics": {
+    "raw": {
+      "TB_hybrid|quadratic_ebm_8d": [
+        {
+          "ARI": 1.0,
+          "blanket_F1": 0.8,
+          "NMI": 0.786013103263073,
+          "wall_clock_seconds": 5.188804500037804,
+          "peak_memory_mb": 0.7685146331787109,
+          "seed": 0
+        },
+        {
+          "ARI": 1.0,
+          "blanket_F1": 1.0,
+          "NMI": 1.0,
+          "wall_clock_seconds": 0.8706843999680132,
+          "peak_memory_mb": 0.2747173309326172,
+          "seed": 1
+        },
+        {
+          "ARI": 0.7058823529411765,
+          "blanket_F1": 0.0,
+          "NMI": 0.786013103263073,
+          "wall_clock_seconds": 0.7132491000229493,
+          "peak_memory_mb": 0.27470970153808594,
+          "seed": 2
+        }
+      ],
+      "MI_clustering|quadratic_ebm_8d": [
+        {
+          "ARI": 0.7058823529411765,
+          "blanket_F1": 0.8,
+          "NMI": 0.765605931494015,
+          "wall_clock_seconds": 7.907593199983239,
+          "peak_memory_mb": 0.4989013671875,
+          "seed": 0
+        },
+        {
+          "ARI": 0.32432432432432434,
+          "blanket_F1": 0.0,
+          "NMI": 0.786013103263073,
+          "wall_clock_seconds": 4.077696799999103,
+          "peak_memory_mb": 0.39061641693115234,
+          "seed": 1
+        },
+        {
+          "ARI": 0.7058823529411765,
+          "blanket_F1": 0.0,
+          "NMI": 0.9119400080526284,
+          "wall_clock_seconds": 7.510003700037487,
+          "peak_memory_mb": 0.4534130096435547,
+          "seed": 2
+        }
+      ],
+      "TB_hybrid|quadratic_ebm_50d": [
+        {
+          "ARI": 0.03772241992882562,
+          "blanket_F1": 0.0,
+          "NMI": 0.3230152802821364,
+          "wall_clock_seconds": 0.5606437999522313,
+          "peak_memory_mb": 2.051450729370117,
+          "seed": 0
+        },
+        {
+          "ARI": 0.19310344827586207,
+          "blanket_F1": 1.0,
+          "NMI": 0.6700130387970169,
+          "wall_clock_seconds": 0.5302258000010625,
+          "peak_memory_mb": 2.071035385131836,
+          "seed": 1
+        },
+        {
+          "ARI": 0.19310344827586207,
+          "blanket_F1": 1.0,
+          "NMI": 0.6700130387970169,
+          "wall_clock_seconds": 0.46548870007973164,
+          "peak_memory_mb": 2.0701684951782227,
+          "seed": 2
+        }
+      ],
+      "MI_clustering|quadratic_ebm_50d": [
+        {
+          "ARI": -0.002671118530884808,
+          "blanket_F1": 0.0,
+          "NMI": 0.20007549375933412,
+          "wall_clock_seconds": 310.2082454999909,
+          "peak_memory_mb": 0.8095951080322266,
+          "seed": 0
+        },
+        {
+          "ARI": -0.01761761761761762,
+          "blanket_F1": 0.41025641025641024,
+          "NMI": 0.04129325090811966,
+          "wall_clock_seconds": 279.82217599998694,
+          "peak_memory_mb": 0.8160505294799805,
+          "seed": 1
+        },
+        {
+          "ARI": 0.0012764260071798962,
+          "blanket_F1": 0.1111111111111111,
+          "NMI": 0.08168918178166575,
+          "wall_clock_seconds": 275.91131450003013,
+          "peak_memory_mb": 0.8159894943237305,
+          "seed": 2
+        }
+      ],
+      "TB_hybrid|lunarlander_8d": [
+        {
+          "ARI": 0.4444444444444444,
+          "blanket_F1": 0.6666666666666666,
+          "NMI": 0.6358654960676691,
+          "wall_clock_seconds": 0.3274602999445051,
+          "peak_memory_mb": 0.19020652770996094,
+          "seed": 0
+        },
+        {
+          "ARI": 0.4444444444444444,
+          "blanket_F1": 0.6666666666666666,
+          "NMI": 0.6786620902057692,
+          "wall_clock_seconds": 0.31030739995185286,
+          "peak_memory_mb": 0.19019126892089844,
+          "seed": 1
+        },
+        {
+          "ARI": 1.0,
+          "blanket_F1": 0.0,
+          "NMI": 0.8571428571428573,
+          "wall_clock_seconds": 0.2986127999611199,
+          "peak_memory_mb": 0.1901836395263672,
+          "seed": 2
+        }
+      ],
+      "MI_clustering|lunarlander_8d": [
+        {
+          "ARI": 1.0,
+          "blanket_F1": 0.0,
+          "NMI": 1.0,
+          "wall_clock_seconds": 7.0212262000422925,
+          "peak_memory_mb": 0.4379711151123047,
+          "seed": 0
+        },
+        {
+          "ARI": 1.0,
+          "blanket_F1": 0.0,
+          "NMI": 1.0,
+          "wall_clock_seconds": 5.026122199953534,
+          "peak_memory_mb": 0.4239768981933594,
+          "seed": 1
+        },
+        {
+          "ARI": 1.0,
+          "blanket_F1": 0.0,
+          "NMI": 1.0,
+          "wall_clock_seconds": 6.577555699972436,
+          "peak_memory_mb": 0.41004371643066406,
+          "seed": 2
+        }
+      ],
+      "TB_hybrid|fetchpush_25d": [
+        {
+          "ARI": 0.62,
+          "blanket_F1": 0.8888888888888888,
+          "NMI": 0.6366587740093792,
+          "wall_clock_seconds": 0.49298380000982434,
+          "peak_memory_mb": 0.4673442840576172,
+          "seed": 0
+        },
+        {
+          "ARI": 0.46434494195688225,
+          "blanket_F1": 0.8888888888888888,
+          "NMI": 0.6208321952972298,
+          "wall_clock_seconds": 0.4584276999812573,
+          "peak_memory_mb": 0.46733665466308594,
+          "seed": 1
+        },
+        {
+          "ARI": 0.3303964757709251,
+          "blanket_F1": 1.0,
+          "NMI": 0.7043877260104356,
+          "wall_clock_seconds": 0.6125129000283778,
+          "peak_memory_mb": 0.4673290252685547,
+          "seed": 2
+        }
+      ],
+      "MI_clustering|fetchpush_25d": [
+        {
+          "ARI": -0.0034071550255536627,
+          "blanket_F1": 0.2222222222222222,
+          "NMI": 0.07647568625386512,
+          "wall_clock_seconds": 71.3133039000677,
+          "peak_memory_mb": 0.5890541076660156,
+          "seed": 0
+        },
+        {
+          "ARI": -0.05555555555555555,
+          "blanket_F1": 0.42105263157894735,
+          "NMI": 0.03599571665383853,
+          "wall_clock_seconds": 76.18077770003583,
+          "peak_memory_mb": 0.5957307815551758,
+          "seed": 1
+        },
+        {
+          "ARI": 0.002308136180034622,
+          "blanket_F1": 0.25,
+          "NMI": 0.11702364617871305,
+          "wall_clock_seconds": 70.96917149994988,
+          "peak_memory_mb": 0.6094427108764648,
+          "seed": 2
+        }
+      ],
+      "TB_hybrid|ising_6x6": [
+        {
+          "ARI": 0.0,
+          "blanket_F1": 0.0,
+          "NMI": 0.0,
+          "wall_clock_seconds": 0.419439599965699,
+          "peak_memory_mb": 0.3265361785888672,
+          "seed": 0
+        },
+        {
+          "ARI": 0.0,
+          "blanket_F1": 0.0,
+          "NMI": 0.0,
+          "wall_clock_seconds": 1.3221137000946328,
+          "peak_memory_mb": 0.32652854919433594,
+          "seed": 1
+        },
+        {
+          "ARI": 0.0,
+          "blanket_F1": 0.0,
+          "NMI": 0.0,
+          "wall_clock_seconds": 1.0233289999887347,
+          "peak_memory_mb": 0.3265209197998047,
+          "seed": 2
+        }
+      ],
+      "MI_clustering|ising_6x6": [
+        {
+          "ARI": 0.0,
+          "blanket_F1": 0.0,
+          "NMI": 0.0,
+          "wall_clock_seconds": 92.56228800001554,
+          "peak_memory_mb": 0.461456298828125,
+          "seed": 0
+        },
+        {
+          "ARI": 0.0,
+          "blanket_F1": 0.0,
+          "NMI": 0.0,
+          "wall_clock_seconds": 82.32810939999763,
+          "peak_memory_mb": 0.4682931900024414,
+          "seed": 1
+        },
+        {
+          "ARI": 0.0,
+          "blanket_F1": 0.0,
+          "NMI": 0.0,
+          "wall_clock_seconds": 77.71649010002147,
+          "peak_memory_mb": 0.4682321548461914,
+          "seed": 2
+        }
+      ]
+    },
+    "summary": {
+      "TB_hybrid|quadratic_ebm_8d": {
+        "method": "TB_hybrid",
+        "dataset": "quadratic_ebm_8d",
+        "n_seeds": 3,
+        "ARI_mean": 0.9019607843137255,
+        "ARI_std": 0.13864838846795047,
+        "ARI_values": [
+          1.0,
+          1.0,
+          0.7058823529411765
+        ],
+        "blanket_F1_mean": 0.6,
+        "blanket_F1_std": 0.43204937989385733,
+        "blanket_F1_values": [
+          0.8,
+          1.0,
+          0.0
+        ],
+        "NMI_mean": 0.8573420688420487,
+        "NMI_std": 0.10087439051183103,
+        "NMI_values": [
+          0.786013103263073,
+          1.0,
+          0.786013103263073
+        ],
+        "wall_clock_seconds_mean": 2.2575793333429224,
+        "wall_clock_seconds_std": 2.0736854794971964,
+        "wall_clock_seconds_values": [
+          5.188804500037804,
+          0.8706843999680132,
+          0.7132491000229493
+        ],
+        "peak_memory_mb_mean": 0.4393138885498047,
+        "peak_memory_mb_std": 0.23278007891959837,
+        "peak_memory_mb_values": [
+          0.7685146331787109,
+          0.2747173309326172,
+          0.27470970153808594
+        ]
+      },
+      "MI_clustering|quadratic_ebm_8d": {
+        "method": "MI_clustering",
+        "dataset": "quadratic_ebm_8d",
+        "n_seeds": 3,
+        "ARI_mean": 0.5786963434022258,
+        "ARI_std": 0.17986817963409796,
+        "ARI_values": [
+          0.7058823529411765,
+          0.32432432432432434,
+          0.7058823529411765
+        ],
+        "blanket_F1_mean": 0.26666666666666666,
+        "blanket_F1_std": 0.3771236166328254,
+        "blanket_F1_values": [
+          0.8,
+          0.0,
+          0.0
+        ],
+        "NMI_mean": 0.8211863476032387,
+        "NMI_std": 0.06471106720711321,
+        "NMI_values": [
+          0.765605931494015,
+          0.786013103263073,
+          0.9119400080526284
+        ],
+        "wall_clock_seconds_mean": 6.498431233339943,
+        "wall_clock_seconds_std": 1.719396357289049,
+        "wall_clock_seconds_values": [
+          7.907593199983239,
+          4.077696799999103,
+          7.510003700037487
+        ],
+        "peak_memory_mb_mean": 0.44764359792073566,
+        "peak_memory_mb_std": 0.04439498617881282,
+        "peak_memory_mb_values": [
+          0.4989013671875,
+          0.39061641693115234,
+          0.4534130096435547
+        ]
+      },
+      "TB_hybrid|quadratic_ebm_50d": {
+        "method": "TB_hybrid",
+        "dataset": "quadratic_ebm_50d",
+        "n_seeds": 3,
+        "ARI_mean": 0.14130977216018326,
+        "ARI_std": 0.07324731920795242,
+        "ARI_values": [
+          0.03772241992882562,
+          0.19310344827586207,
+          0.19310344827586207
+        ],
+        "blanket_F1_mean": 0.6666666666666666,
+        "blanket_F1_std": 0.4714045207910317,
+        "blanket_F1_values": [
+          0.0,
+          1.0,
+          1.0
+        ],
+        "NMI_mean": 0.5543471192920567,
+        "NMI_std": 0.1635763120682694,
+        "NMI_values": [
+          0.3230152802821364,
+          0.6700130387970169,
+          0.6700130387970169
+        ],
+        "wall_clock_seconds_mean": 0.5187861000110084,
+        "wall_clock_seconds_std": 0.039680165572849944,
+        "wall_clock_seconds_values": [
+          0.5606437999522313,
+          0.5302258000010625,
+          0.46548870007973164
+        ],
+        "peak_memory_mb_mean": 2.064218203226725,
+        "peak_memory_mb_std": 0.00903490144042523,
+        "peak_memory_mb_values": [
+          2.051450729370117,
+          2.071035385131836,
+          2.0701684951782227
+        ]
+      },
+      "MI_clustering|quadratic_ebm_50d": {
+        "method": "MI_clustering",
+        "dataset": "quadratic_ebm_50d",
+        "n_seeds": 3,
+        "ARI_mean": -0.006337436713774177,
+        "ARI_std": 0.008137470445930021,
+        "ARI_values": [
+          -0.002671118530884808,
+          -0.01761761761761762,
+          0.0012764260071798962
+        ],
+        "blanket_F1_mean": 0.17378917378917377,
+        "blanket_F1_std": 0.17325123413687488,
+        "blanket_F1_values": [
+          0.0,
+          0.41025641025641024,
+          0.1111111111111111
+        ],
+        "NMI_mean": 0.10768597548303983,
+        "NMI_std": 0.0673786569732551,
+        "NMI_values": [
+          0.20007549375933412,
+          0.04129325090811966,
+          0.08168918178166575
+        ],
+        "wall_clock_seconds_mean": 288.647245333336,
+        "wall_clock_seconds_std": 15.329302127142654,
+        "wall_clock_seconds_values": [
+          310.2082454999909,
+          279.82217599998694,
+          275.91131450003013
+        ],
+        "peak_memory_mb_mean": 0.8138783772786459,
+        "peak_memory_mb_std": 0.003028831226789793,
+        "peak_memory_mb_values": [
+          0.8095951080322266,
+          0.8160505294799805,
+          0.8159894943237305
+        ]
+      },
+      "TB_hybrid|lunarlander_8d": {
+        "method": "TB_hybrid",
+        "dataset": "lunarlander_8d",
+        "n_seeds": 3,
+        "ARI_mean": 0.6296296296296297,
+        "ARI_std": 0.2618914004394621,
+        "ARI_values": [
+          0.4444444444444444,
+          0.4444444444444444,
+          1.0
+        ],
+        "blanket_F1_mean": 0.4444444444444444,
+        "blanket_F1_std": 0.31426968052735443,
+        "blanket_F1_values": [
+          0.6666666666666666,
+          0.6666666666666666,
+          0.0
+        ],
+        "NMI_mean": 0.7238901478054318,
+        "NMI_std": 0.09583005974737646,
+        "NMI_values": [
+          0.6358654960676691,
+          0.6786620902057692,
+          0.8571428571428573
+        ],
+        "wall_clock_seconds_mean": 0.31212683328582597,
+        "wall_clock_seconds_std": 0.011847005727621127,
+        "wall_clock_seconds_values": [
+          0.3274602999445051,
+          0.31030739995185286,
+          0.2986127999611199
+        ],
+        "peak_memory_mb_mean": 0.19019381205240884,
+        "peak_memory_mb_std": 9.51552680148809e-06,
+        "peak_memory_mb_values": [
+          0.19020652770996094,
+          0.19019126892089844,
+          0.1901836395263672
+        ]
+      },
+      "MI_clustering|lunarlander_8d": {
+        "method": "MI_clustering",
+        "dataset": "lunarlander_8d",
+        "n_seeds": 3,
+        "ARI_mean": 1.0,
+        "ARI_std": 0.0,
+        "ARI_values": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "blanket_F1_mean": 0.0,
+        "blanket_F1_std": 0.0,
+        "blanket_F1_values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "NMI_mean": 1.0,
+        "NMI_std": 0.0,
+        "NMI_values": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "wall_clock_seconds_mean": 6.208301366656087,
+        "wall_clock_seconds_std": 0.8553251096502107,
+        "wall_clock_seconds_values": [
+          7.0212262000422925,
+          5.026122199953534,
+          6.577555699972436
+        ],
+        "peak_memory_mb_mean": 0.4239972432454427,
+        "peak_memory_mb_std": 0.011401321845051823,
+        "peak_memory_mb_values": [
+          0.4379711151123047,
+          0.4239768981933594,
+          0.41004371643066406
+        ]
+      },
+      "TB_hybrid|fetchpush_25d": {
+        "method": "TB_hybrid",
+        "dataset": "fetchpush_25d",
+        "n_seeds": 3,
+        "ARI_mean": 0.47158047257593577,
+        "ARI_std": 0.11834079316104974,
+        "ARI_values": [
+          0.62,
+          0.46434494195688225,
+          0.3303964757709251
+        ],
+        "blanket_F1_mean": 0.9259259259259259,
+        "blanket_F1_std": 0.05237828008789243,
+        "blanket_F1_values": [
+          0.8888888888888888,
+          0.8888888888888888,
+          1.0
+        ],
+        "NMI_mean": 0.6539595651056815,
+        "NMI_std": 0.03623874268983214,
+        "NMI_values": [
+          0.6366587740093792,
+          0.6208321952972298,
+          0.7043877260104356
+        ],
+        "wall_clock_seconds_mean": 0.5213081333398198,
+        "wall_clock_seconds_std": 0.06601647830823151,
+        "wall_clock_seconds_values": [
+          0.49298380000982434,
+          0.4584276999812573,
+          0.6125129000283778
+        ],
+        "peak_memory_mb_mean": 0.46733665466308594,
+        "peak_memory_mb_std": 6.229374549314316e-06,
+        "peak_memory_mb_values": [
+          0.4673442840576172,
+          0.46733665466308594,
+          0.4673290252685547
+        ]
+      },
+      "MI_clustering|fetchpush_25d": {
+        "method": "MI_clustering",
+        "dataset": "fetchpush_25d",
+        "n_seeds": 3,
+        "ARI_mean": -0.01888485813369153,
+        "ARI_std": 0.026034863490399393,
+        "ARI_values": [
+          -0.0034071550255536627,
+          -0.05555555555555555,
+          0.002308136180034622
+        ],
+        "blanket_F1_mean": 0.29775828460038983,
+        "blanket_F1_std": 0.08791671525642739,
+        "blanket_F1_values": [
+          0.2222222222222222,
+          0.42105263157894735,
+          0.25
+        ],
+        "NMI_mean": 0.07649834969547224,
+        "NMI_std": 0.03307951759015133,
+        "NMI_values": [
+          0.07647568625386512,
+          0.03599571665383853,
+          0.11702364617871305
+        ],
+        "wall_clock_seconds_mean": 72.82108436668447,
+        "wall_clock_seconds_std": 2.3798124923092727,
+        "wall_clock_seconds_values": [
+          71.3133039000677,
+          76.18077770003583,
+          70.96917149994988
+        ],
+        "peak_memory_mb_mean": 0.5980758666992188,
+        "peak_memory_mb_std": 0.0084871806652894,
+        "peak_memory_mb_values": [
+          0.5890541076660156,
+          0.5957307815551758,
+          0.6094427108764648
+        ]
+      },
+      "TB_hybrid|ising_6x6": {
+        "method": "TB_hybrid",
+        "dataset": "ising_6x6",
+        "n_seeds": 3,
+        "ARI_mean": 0.0,
+        "ARI_std": 0.0,
+        "ARI_values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "blanket_F1_mean": 0.0,
+        "blanket_F1_std": 0.0,
+        "blanket_F1_values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "NMI_mean": 0.0,
+        "NMI_std": 0.0,
+        "NMI_values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "wall_clock_seconds_mean": 0.9216274333496889,
+        "wall_clock_seconds_std": 0.37546641150576293,
+        "wall_clock_seconds_values": [
+          0.419439599965699,
+          1.3221137000946328,
+          1.0233289999887347
+        ],
+        "peak_memory_mb_mean": 0.32652854919433594,
+        "peak_memory_mb_std": 6.229374549314316e-06,
+        "peak_memory_mb_values": [
+          0.3265361785888672,
+          0.32652854919433594,
+          0.3265209197998047
+        ]
+      },
+      "MI_clustering|ising_6x6": {
+        "method": "MI_clustering",
+        "dataset": "ising_6x6",
+        "n_seeds": 3,
+        "ARI_mean": 0.0,
+        "ARI_std": 0.0,
+        "ARI_values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "blanket_F1_mean": 0.0,
+        "blanket_F1_std": 0.0,
+        "blanket_F1_values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "NMI_mean": 0.0,
+        "NMI_std": 0.0,
+        "NMI_values": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "wall_clock_seconds_mean": 84.20229583334488,
+        "wall_clock_seconds_std": 6.2039696921715235,
+        "wall_clock_seconds_values": [
+          92.56228800001554,
+          82.32810939999763,
+          77.71649010002147
+        ],
+        "peak_memory_mb_mean": 0.46599388122558594,
+        "peak_memory_mb_std": 0.00320865203607217,
+        "peak_memory_mb_values": [
+          0.461456298828125,
+          0.4682931900024414,
+          0.4682321548461914
+        ]
+      }
+    },
+    "statistical_comparisons": {
+      "TB_hybrid_vs_MI_clustering|quadratic_ebm_8d": {
+        "ARI": {
+          "metric": "ARI",
+          "n_seeds": 3,
+          "mean_diff": 0.3232644409114997,
+          "std_diff": 0.33877950996018485,
+          "cohens_d": 0.9542030477270937,
+          "effect_size": "large",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 0.5
+        },
+        "blanket_F1": {
+          "metric": "blanket_F1",
+          "n_seeds": 3,
+          "mean_diff": 0.3333333333333333,
+          "std_diff": 0.5773502691896258,
+          "cohens_d": 0.5773502691896256,
+          "effect_size": "medium",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 1.0
+        },
+        "NMI": {
+          "metric": "NMI",
+          "n_seeds": 3,
+          "mean_diff": 0.03615572123880987,
+          "std_diff": 0.1705032572265032,
+          "cohens_d": 0.2120529650103939,
+          "effect_size": "small",
+          "test": "wilcoxon",
+          "statistic": 2.0,
+          "p_value": 0.75
+        }
+      },
+      "TB_hybrid_vs_MI_clustering|quadratic_ebm_50d": {
+        "ARI": {
+          "metric": "ARI",
+          "n_seeds": 3,
+          "mean_diff": 0.14764720887395744,
+          "std_diff": 0.09336358275109133,
+          "cohens_d": 1.581421840543406,
+          "effect_size": "large",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 0.25
+        },
+        "blanket_F1": {
+          "metric": "blanket_F1",
+          "n_seeds": 3,
+          "mean_diff": 0.4928774928774929,
+          "std_diff": 0.45229210112391405,
+          "cohens_d": 1.089732700731954,
+          "effect_size": "large",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 0.5
+        },
+        "NMI": {
+          "metric": "NMI",
+          "n_seeds": 3,
+          "mean_diff": 0.4466611438090169,
+          "std_diff": 0.28107756168041387,
+          "cohens_d": 1.589102812542796,
+          "effect_size": "large",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 0.25
+        }
+      },
+      "TB_hybrid_vs_MI_clustering|lunarlander_8d": {
+        "ARI": {
+          "metric": "ARI",
+          "n_seeds": 3,
+          "mean_diff": -0.3703703703703704,
+          "std_diff": 0.3207501495497921,
+          "cohens_d": -1.1547005383792517,
+          "effect_size": "large",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 0.5
+        },
+        "blanket_F1": {
+          "metric": "blanket_F1",
+          "n_seeds": 3,
+          "mean_diff": 0.4444444444444444,
+          "std_diff": 0.3849001794597505,
+          "cohens_d": 1.1547005383792515,
+          "effect_size": "large",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 0.5
+        },
+        "NMI": {
+          "metric": "NMI",
+          "n_seeds": 3,
+          "mean_diff": -0.27610985219456813,
+          "std_diff": 0.11736737420074887,
+          "cohens_d": -2.35252645017261,
+          "effect_size": "large",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 0.25
+        }
+      },
+      "TB_hybrid_vs_MI_clustering|fetchpush_25d": {
+        "ARI": {
+          "metric": "ARI",
+          "n_seeds": 3,
+          "mean_diff": 0.49046533070962733,
+          "std_diff": 0.14984366009599845,
+          "cohens_d": 3.27318039612358,
+          "effect_size": "large",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 0.25
+        },
+        "blanket_F1": {
+          "metric": "blanket_F1",
+          "n_seeds": 3,
+          "mean_diff": 0.628167641325536,
+          "std_diff": 0.14496801590826214,
+          "cohens_d": 4.333146435025017,
+          "effect_size": "large",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 0.25
+        },
+        "NMI": {
+          "metric": "NMI",
+          "n_seeds": 3,
+          "mean_diff": 0.5774612154102093,
+          "std_diff": 0.015016572957261975,
+          "cohens_d": 38.45492690334186,
+          "effect_size": "large",
+          "test": "wilcoxon",
+          "statistic": 0.0,
+          "p_value": 0.25
+        }
+      },
+      "TB_hybrid_vs_MI_clustering|ising_6x6": {
+        "ARI": {
+          "metric": "ARI",
+          "n_seeds": 3,
+          "mean_diff": 0.0,
+          "std_diff": 0.0,
+          "cohens_d": 0.0,
+          "effect_size": "negligible",
+          "test": "all_equal",
+          "p_value": 1.0
+        },
+        "blanket_F1": {
+          "metric": "blanket_F1",
+          "n_seeds": 3,
+          "mean_diff": 0.0,
+          "std_diff": 0.0,
+          "cohens_d": 0.0,
+          "effect_size": "negligible",
+          "test": "all_equal",
+          "p_value": 1.0
+        },
+        "NMI": {
+          "metric": "NMI",
+          "n_seeds": 3,
+          "mean_diff": 0.0,
+          "std_diff": 0.0,
+          "cohens_d": 0.0,
+          "effect_size": "negligible",
+          "test": "all_equal",
+          "p_value": 1.0
+        }
+      }
+    },
+    "config": {
+      "n_seeds": 3,
+      "methods": [
+        "TB_hybrid",
+        "MI_clustering"
+      ],
+      "datasets": [
+        "quadratic_ebm_8d",
+        "quadratic_ebm_50d",
+        "lunarlander_8d",
+        "fetchpush_25d",
+        "ising_6x6"
+      ]
+    }
+  },
+  "notes": "US-092: TB hybrid vs MI clustering comparison, 3 seeds across 5 datasets"
+}

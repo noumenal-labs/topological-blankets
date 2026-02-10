@@ -1,0 +1,854 @@
+{
+  "raw": {
+    "TB_hybrid|quadratic_ebm_8d": [
+      {
+        "ARI": 1.0,
+        "blanket_F1": 0.8,
+        "NMI": 0.786013103263073,
+        "wall_clock_seconds": 4.292575299972668,
+        "peak_memory_mb": 0.7754974365234375,
+        "seed": 0
+      },
+      {
+        "ARI": 1.0,
+        "blanket_F1": 1.0,
+        "NMI": 1.0,
+        "wall_clock_seconds": 0.1851867000805214,
+        "peak_memory_mb": 0.2747173309326172,
+        "seed": 1
+      },
+      {
+        "ARI": 0.7058823529411765,
+        "blanket_F1": 0.0,
+        "NMI": 0.786013103263073,
+        "wall_clock_seconds": 0.5312256999313831,
+        "peak_memory_mb": 0.27470970153808594,
+        "seed": 2
+      }
+    ],
+    "MI_clustering|quadratic_ebm_8d": [
+      {
+        "ARI": 0.0,
+        "blanket_F1": 0.8571428571428571,
+        "NMI": 0.5318068284955993,
+        "wall_clock_seconds": 9.484932399936952,
+        "peak_memory_mb": 0.46257686614990234,
+        "seed": 0
+      },
+      {
+        "ARI": 1.0,
+        "blanket_F1": 0.6666666666666666,
+        "NMI": 0.7336804366512113,
+        "wall_clock_seconds": 9.576552900020033,
+        "peak_memory_mb": 0.42398834228515625,
+        "seed": 1
+      },
+      {
+        "ARI": 1.0,
+        "blanket_F1": 1.0,
+        "NMI": 1.0,
+        "wall_clock_seconds": 9.396724399994127,
+        "peak_memory_mb": 0.45133018493652344,
+        "seed": 2
+      }
+    ],
+    "TB_hybrid|quadratic_ebm_50d": [
+      {
+        "ARI": 0.03772241992882562,
+        "blanket_F1": 0.0,
+        "NMI": 0.3230152802821364,
+        "wall_clock_seconds": 0.5378024999517947,
+        "peak_memory_mb": 2.051450729370117,
+        "seed": 0
+      },
+      {
+        "ARI": 0.19310344827586207,
+        "blanket_F1": 1.0,
+        "NMI": 0.6700130387970169,
+        "wall_clock_seconds": 0.6944861999945715,
+        "peak_memory_mb": 2.0705366134643555,
+        "seed": 1
+      },
+      {
+        "ARI": 0.19310344827586207,
+        "blanket_F1": 1.0,
+        "NMI": 0.6700130387970169,
+        "wall_clock_seconds": 0.2530545999761671,
+        "peak_memory_mb": 2.0708723068237305,
+        "seed": 2
+      }
+    ],
+    "MI_clustering|quadratic_ebm_50d": [
+      {
+        "ARI": 0.15908001916626738,
+        "blanket_F1": 0.16,
+        "NMI": 0.25545150841899394,
+        "wall_clock_seconds": 275.27242209995165,
+        "peak_memory_mb": 0.831146240234375,
+        "seed": 0
+      },
+      {
+        "ARI": 0.028731233441271712,
+        "blanket_F1": 0.22727272727272727,
+        "NMI": 0.07925230056988136,
+        "wall_clock_seconds": 295.21752579999156,
+        "peak_memory_mb": 0.8299570083618164,
+        "seed": 1
+      },
+      {
+        "ARI": 0.026294820717131476,
+        "blanket_F1": 0.13333333333333333,
+        "NMI": 0.07420674261977393,
+        "wall_clock_seconds": 149.28178700001445,
+        "peak_memory_mb": 0.8282899856567383,
+        "seed": 2
+      }
+    ],
+    "TB_hybrid|lunarlander_8d": [
+      {
+        "ARI": 0.4444444444444444,
+        "blanket_F1": 0.6666666666666666,
+        "NMI": 0.6358654960676691,
+        "wall_clock_seconds": 0.2149762000190094,
+        "peak_memory_mb": 0.19020652770996094,
+        "seed": 0
+      },
+      {
+        "ARI": 0.4444444444444444,
+        "blanket_F1": 0.6666666666666666,
+        "NMI": 0.6786620902057692,
+        "wall_clock_seconds": 0.20422820001840591,
+        "peak_memory_mb": 0.19019126892089844,
+        "seed": 1
+      },
+      {
+        "ARI": 1.0,
+        "blanket_F1": 0.0,
+        "NMI": 0.8571428571428573,
+        "wall_clock_seconds": 0.2851010999875143,
+        "peak_memory_mb": 0.1901836395263672,
+        "seed": 2
+      }
+    ],
+    "MI_clustering|lunarlander_8d": [
+      {
+        "ARI": 1.0,
+        "blanket_F1": 0.0,
+        "NMI": 1.0,
+        "wall_clock_seconds": 4.323353599989787,
+        "peak_memory_mb": 0.4055662155151367,
+        "seed": 0
+      },
+      {
+        "ARI": 1.0,
+        "blanket_F1": 0.0,
+        "NMI": 1.0,
+        "wall_clock_seconds": 3.6103530999971554,
+        "peak_memory_mb": 0.3914918899536133,
+        "seed": 1
+      },
+      {
+        "ARI": 1.0,
+        "blanket_F1": 1.0,
+        "NMI": 1.0,
+        "wall_clock_seconds": 3.16041139990557,
+        "peak_memory_mb": 0.3770284652709961,
+        "seed": 2
+      }
+    ],
+    "TB_hybrid|fetchpush_25d": [
+      {
+        "ARI": 0.62,
+        "blanket_F1": 0.8888888888888888,
+        "NMI": 0.6366587740093792,
+        "wall_clock_seconds": 0.1926633999682963,
+        "peak_memory_mb": 0.4673442840576172,
+        "seed": 0
+      },
+      {
+        "ARI": 0.46434494195688225,
+        "blanket_F1": 0.8888888888888888,
+        "NMI": 0.6208321952972298,
+        "wall_clock_seconds": 0.2004175999900326,
+        "peak_memory_mb": 0.46733665466308594,
+        "seed": 1
+      },
+      {
+        "ARI": 0.3303964757709251,
+        "blanket_F1": 1.0,
+        "NMI": 0.7043877260104356,
+        "wall_clock_seconds": 0.18772919999901205,
+        "peak_memory_mb": 0.4673290252685547,
+        "seed": 2
+      }
+    ],
+    "MI_clustering|fetchpush_25d": [
+      {
+        "ARI": 0.01119194180190263,
+        "blanket_F1": 0.3157894736842105,
+        "NMI": 0.09639189955357831,
+        "wall_clock_seconds": 33.5103532000212,
+        "peak_memory_mb": 0.5980873107910156,
+        "seed": 0
+      },
+      {
+        "ARI": -0.046255506607929514,
+        "blanket_F1": 0.34782608695652173,
+        "NMI": 0.005074893349378001,
+        "wall_clock_seconds": 34.23799399996642,
+        "peak_memory_mb": 0.6054697036743164,
+        "seed": 1
+      },
+      {
+        "ARI": -0.02434782608695652,
+        "blanket_F1": 0.5714285714285714,
+        "NMI": 0.2805978136919733,
+        "wall_clock_seconds": 28.165996700059623,
+        "peak_memory_mb": 0.6123485565185547,
+        "seed": 2
+      }
+    ],
+    "TB_hybrid|ising_6x6": [
+      {
+        "ARI": 0.0,
+        "blanket_F1": 0.0,
+        "NMI": 0.0,
+        "wall_clock_seconds": 0.10735579999163747,
+        "peak_memory_mb": 0.3265361785888672,
+        "seed": 0
+      },
+      {
+        "ARI": 0.0,
+        "blanket_F1": 0.0,
+        "NMI": 0.0,
+        "wall_clock_seconds": 0.21066560002509505,
+        "peak_memory_mb": 0.32652854919433594,
+        "seed": 1
+      },
+      {
+        "ARI": 0.0,
+        "blanket_F1": 0.0,
+        "NMI": 0.0,
+        "wall_clock_seconds": 0.1725929999956861,
+        "peak_memory_mb": 0.32647705078125,
+        "seed": 2
+      }
+    ],
+    "MI_clustering|ising_6x6": [
+      {
+        "ARI": 0.0,
+        "blanket_F1": 0.0,
+        "NMI": 0.0,
+        "wall_clock_seconds": 62.71131260006223,
+        "peak_memory_mb": 0.4750556945800781,
+        "seed": 0
+      },
+      {
+        "ARI": 0.0,
+        "blanket_F1": 0.0,
+        "NMI": 0.0,
+        "wall_clock_seconds": 64.38426860002801,
+        "peak_memory_mb": 0.47873401641845703,
+        "seed": 1
+      },
+      {
+        "ARI": 0.0,
+        "blanket_F1": 0.0,
+        "NMI": 0.0,
+        "wall_clock_seconds": 111.83446359995287,
+        "peak_memory_mb": 0.47862911224365234,
+        "seed": 2
+      }
+    ]
+  },
+  "summary": {
+    "TB_hybrid|quadratic_ebm_8d": {
+      "method": "TB_hybrid",
+      "dataset": "quadratic_ebm_8d",
+      "n_seeds": 3,
+      "ARI_mean": 0.9019607843137255,
+      "ARI_std": 0.13864838846795047,
+      "ARI_values": [
+        1.0,
+        1.0,
+        0.7058823529411765
+      ],
+      "blanket_F1_mean": 0.6,
+      "blanket_F1_std": 0.43204937989385733,
+      "blanket_F1_values": [
+        0.8,
+        1.0,
+        0.0
+      ],
+      "NMI_mean": 0.8573420688420487,
+      "NMI_std": 0.10087439051183103,
+      "NMI_values": [
+        0.786013103263073,
+        1.0,
+        0.786013103263073
+      ],
+      "wall_clock_seconds_mean": 1.6696625666615243,
+      "wall_clock_seconds_std": 1.860051818682972,
+      "wall_clock_seconds_values": [
+        4.292575299972668,
+        0.1851867000805214,
+        0.5312256999313831
+      ],
+      "peak_memory_mb_mean": 0.44164148966471356,
+      "peak_memory_mb_std": 0.23607180398380667,
+      "peak_memory_mb_values": [
+        0.7754974365234375,
+        0.2747173309326172,
+        0.27470970153808594
+      ]
+    },
+    "MI_clustering|quadratic_ebm_8d": {
+      "method": "MI_clustering",
+      "dataset": "quadratic_ebm_8d",
+      "n_seeds": 3,
+      "ARI_mean": 0.6666666666666666,
+      "ARI_std": 0.4714045207910317,
+      "ARI_values": [
+        0.0,
+        1.0,
+        1.0
+      ],
+      "blanket_F1_mean": 0.8412698412698413,
+      "blanket_F1_std": 0.13654484550861315,
+      "blanket_F1_values": [
+        0.8571428571428571,
+        0.6666666666666666,
+        1.0
+      ],
+      "NMI_mean": 0.7551624217156035,
+      "NMI_std": 0.19174169816460085,
+      "NMI_values": [
+        0.5318068284955993,
+        0.7336804366512113,
+        1.0
+      ],
+      "wall_clock_seconds_mean": 9.486069899983704,
+      "wall_clock_seconds_std": 0.07341908373694613,
+      "wall_clock_seconds_values": [
+        9.484932399936952,
+        9.576552900020033,
+        9.396724399994127
+      ],
+      "peak_memory_mb_mean": 0.44596513112386066,
+      "peak_memory_mb_std": 0.01620404055217083,
+      "peak_memory_mb_values": [
+        0.46257686614990234,
+        0.42398834228515625,
+        0.45133018493652344
+      ]
+    },
+    "TB_hybrid|quadratic_ebm_50d": {
+      "method": "TB_hybrid",
+      "dataset": "quadratic_ebm_50d",
+      "n_seeds": 3,
+      "ARI_mean": 0.14130977216018326,
+      "ARI_std": 0.07324731920795242,
+      "ARI_values": [
+        0.03772241992882562,
+        0.19310344827586207,
+        0.19310344827586207
+      ],
+      "blanket_F1_mean": 0.6666666666666666,
+      "blanket_F1_std": 0.4714045207910317,
+      "blanket_F1_values": [
+        0.0,
+        1.0,
+        1.0
+      ],
+      "NMI_mean": 0.5543471192920567,
+      "NMI_std": 0.1635763120682694,
+      "NMI_values": [
+        0.3230152802821364,
+        0.6700130387970169,
+        0.6700130387970169
+      ],
+      "wall_clock_seconds_mean": 0.4951144333075111,
+      "wall_clock_seconds_std": 0.18272414116927235,
+      "wall_clock_seconds_values": [
+        0.5378024999517947,
+        0.6944861999945715,
+        0.2530545999761671
+      ],
+      "peak_memory_mb_mean": 2.064286549886068,
+      "peak_memory_mb_std": 0.009077330325088406,
+      "peak_memory_mb_values": [
+        2.051450729370117,
+        2.0705366134643555,
+        2.0708723068237305
+      ]
+    },
+    "MI_clustering|quadratic_ebm_50d": {
+      "method": "MI_clustering",
+      "dataset": "quadratic_ebm_50d",
+      "n_seeds": 3,
+      "ARI_mean": 0.07136869110822353,
+      "ARI_std": 0.062029250245455074,
+      "ARI_values": [
+        0.15908001916626738,
+        0.028731233441271712,
+        0.026294820717131476
+      ],
+      "blanket_F1_mean": 0.17353535353535354,
+      "blanket_F1_std": 0.039526841343745275,
+      "blanket_F1_values": [
+        0.16,
+        0.22727272727272727,
+        0.13333333333333333
+      ],
+      "NMI_mean": 0.13630351720288308,
+      "NMI_std": 0.08427552935414802,
+      "NMI_values": [
+        0.25545150841899394,
+        0.07925230056988136,
+        0.07420674261977393
+      ],
+      "wall_clock_seconds_mean": 239.92391163331922,
+      "wall_clock_seconds_std": 64.60881188058381,
+      "wall_clock_seconds_values": [
+        275.27242209995165,
+        295.21752579999156,
+        149.28178700001445
+      ],
+      "peak_memory_mb_mean": 0.8297977447509766,
+      "peak_memory_mb_std": 0.0011714865844646527,
+      "peak_memory_mb_values": [
+        0.831146240234375,
+        0.8299570083618164,
+        0.8282899856567383
+      ]
+    },
+    "TB_hybrid|lunarlander_8d": {
+      "method": "TB_hybrid",
+      "dataset": "lunarlander_8d",
+      "n_seeds": 3,
+      "ARI_mean": 0.6296296296296297,
+      "ARI_std": 0.2618914004394621,
+      "ARI_values": [
+        0.4444444444444444,
+        0.4444444444444444,
+        1.0
+      ],
+      "blanket_F1_mean": 0.4444444444444444,
+      "blanket_F1_std": 0.31426968052735443,
+      "blanket_F1_values": [
+        0.6666666666666666,
+        0.6666666666666666,
+        0.0
+      ],
+      "NMI_mean": 0.7238901478054318,
+      "NMI_std": 0.09583005974737646,
+      "NMI_values": [
+        0.6358654960676691,
+        0.6786620902057692,
+        0.8571428571428573
+      ],
+      "wall_clock_seconds_mean": 0.23476850000830987,
+      "wall_clock_seconds_std": 0.03585998551313335,
+      "wall_clock_seconds_values": [
+        0.2149762000190094,
+        0.20422820001840591,
+        0.2851010999875143
+      ],
+      "peak_memory_mb_mean": 0.19019381205240884,
+      "peak_memory_mb_std": 9.51552680148809e-06,
+      "peak_memory_mb_values": [
+        0.19020652770996094,
+        0.19019126892089844,
+        0.1901836395263672
+      ]
+    },
+    "MI_clustering|lunarlander_8d": {
+      "method": "MI_clustering",
+      "dataset": "lunarlander_8d",
+      "n_seeds": 3,
+      "ARI_mean": 1.0,
+      "ARI_std": 0.0,
+      "ARI_values": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "blanket_F1_mean": 0.3333333333333333,
+      "blanket_F1_std": 0.4714045207910317,
+      "blanket_F1_values": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "NMI_mean": 1.0,
+      "NMI_std": 0.0,
+      "NMI_values": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "wall_clock_seconds_mean": 3.6980393666308373,
+      "wall_clock_seconds_std": 0.4788007944864576,
+      "wall_clock_seconds_values": [
+        4.323353599989787,
+        3.6103530999971554,
+        3.16041139990557
+      ],
+      "peak_memory_mb_mean": 0.39136219024658203,
+      "peak_memory_mb_std": 0.011650848717575329,
+      "peak_memory_mb_values": [
+        0.4055662155151367,
+        0.3914918899536133,
+        0.3770284652709961
+      ]
+    },
+    "TB_hybrid|fetchpush_25d": {
+      "method": "TB_hybrid",
+      "dataset": "fetchpush_25d",
+      "n_seeds": 3,
+      "ARI_mean": 0.47158047257593577,
+      "ARI_std": 0.11834079316104974,
+      "ARI_values": [
+        0.62,
+        0.46434494195688225,
+        0.3303964757709251
+      ],
+      "blanket_F1_mean": 0.9259259259259259,
+      "blanket_F1_std": 0.05237828008789243,
+      "blanket_F1_values": [
+        0.8888888888888888,
+        0.8888888888888888,
+        1.0
+      ],
+      "NMI_mean": 0.6539595651056815,
+      "NMI_std": 0.03623874268983214,
+      "NMI_values": [
+        0.6366587740093792,
+        0.6208321952972298,
+        0.7043877260104356
+      ],
+      "wall_clock_seconds_mean": 0.19360339998578033,
+      "wall_clock_seconds_std": 0.005222488143129041,
+      "wall_clock_seconds_values": [
+        0.1926633999682963,
+        0.2004175999900326,
+        0.18772919999901205
+      ],
+      "peak_memory_mb_mean": 0.46733665466308594,
+      "peak_memory_mb_std": 6.229374549314316e-06,
+      "peak_memory_mb_values": [
+        0.4673442840576172,
+        0.46733665466308594,
+        0.4673290252685547
+      ]
+    },
+    "MI_clustering|fetchpush_25d": {
+      "method": "MI_clustering",
+      "dataset": "fetchpush_25d",
+      "n_seeds": 3,
+      "ARI_mean": -0.0198037969643278,
+      "ARI_std": 0.023671902932950628,
+      "ARI_values": [
+        0.01119194180190263,
+        -0.046255506607929514,
+        -0.02434782608695652
+      ],
+      "blanket_F1_mean": 0.41168137735643456,
+      "blanket_F1_std": 0.11371297392391255,
+      "blanket_F1_values": [
+        0.3157894736842105,
+        0.34782608695652173,
+        0.5714285714285714
+      ],
+      "NMI_mean": 0.12735486886497652,
+      "NMI_std": 0.11459275430835339,
+      "NMI_values": [
+        0.09639189955357831,
+        0.005074893349378001,
+        0.2805978136919733
+      ],
+      "wall_clock_seconds_mean": 31.971447966682415,
+      "wall_clock_seconds_std": 2.7072076376981737,
+      "wall_clock_seconds_values": [
+        33.5103532000212,
+        34.23799399996642,
+        28.165996700059623
+      ],
+      "peak_memory_mb_mean": 0.6053018569946289,
+      "peak_memory_mb_std": 0.005823338779212739,
+      "peak_memory_mb_values": [
+        0.5980873107910156,
+        0.6054697036743164,
+        0.6123485565185547
+      ]
+    },
+    "TB_hybrid|ising_6x6": {
+      "method": "TB_hybrid",
+      "dataset": "ising_6x6",
+      "n_seeds": 3,
+      "ARI_mean": 0.0,
+      "ARI_std": 0.0,
+      "ARI_values": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "blanket_F1_mean": 0.0,
+      "blanket_F1_std": 0.0,
+      "blanket_F1_values": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "NMI_mean": 0.0,
+      "NMI_std": 0.0,
+      "NMI_values": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "wall_clock_seconds_mean": 0.16353813333747289,
+      "wall_clock_seconds_std": 0.04265928311154767,
+      "wall_clock_seconds_values": [
+        0.10735579999163747,
+        0.21066560002509505,
+        0.1725929999956861
+      ],
+      "peak_memory_mb_mean": 0.32651392618815106,
+      "peak_memory_mb_std": 2.626021884671959e-05,
+      "peak_memory_mb_values": [
+        0.3265361785888672,
+        0.32652854919433594,
+        0.32647705078125
+      ]
+    },
+    "MI_clustering|ising_6x6": {
+      "method": "MI_clustering",
+      "dataset": "ising_6x6",
+      "n_seeds": 3,
+      "ARI_mean": 0.0,
+      "ARI_std": 0.0,
+      "ARI_values": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "blanket_F1_mean": 0.0,
+      "blanket_F1_std": 0.0,
+      "blanket_F1_values": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "NMI_mean": 0.0,
+      "NMI_std": 0.0,
+      "NMI_values": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "wall_clock_seconds_mean": 79.64334826668103,
+      "wall_clock_seconds_std": 22.772799933904512,
+      "wall_clock_seconds_values": [
+        62.71131260006223,
+        64.38426860002801,
+        111.83446359995287
+      ],
+      "peak_memory_mb_mean": 0.4774729410807292,
+      "peak_memory_mb_std": 0.0017097878435944703,
+      "peak_memory_mb_values": [
+        0.4750556945800781,
+        0.47873401641845703,
+        0.47862911224365234
+      ]
+    }
+  },
+  "statistical_comparisons": {
+    "TB_hybrid_vs_MI_clustering|quadratic_ebm_8d": {
+      "ARI": {
+        "metric": "ARI",
+        "n_seeds": 3,
+        "mean_diff": 0.23529411764705885,
+        "std_diff": 0.678386034980635,
+        "cohens_d": 0.3468439878096481,
+        "effect_size": "small",
+        "test": "wilcoxon",
+        "statistic": 1.0,
+        "p_value": 1.0
+      },
+      "blanket_F1": {
+        "metric": "blanket_F1",
+        "n_seeds": 3,
+        "mean_diff": -0.24126984126984122,
+        "std_diff": 0.6854717384088264,
+        "cohens_d": -0.35197635110368913,
+        "effect_size": "small",
+        "test": "wilcoxon",
+        "statistic": 2.0,
+        "p_value": 0.75
+      },
+      "NMI": {
+        "metric": "NMI",
+        "n_seeds": 3,
+        "mean_diff": 0.10217964712644516,
+        "std_diff": 0.2738752371682145,
+        "cohens_d": 0.37308830174991797,
+        "effect_size": "small",
+        "test": "wilcoxon",
+        "statistic": 1.0,
+        "p_value": 0.5
+      }
+    },
+    "TB_hybrid_vs_MI_clustering|quadratic_ebm_50d": {
+      "ARI": {
+        "metric": "ARI",
+        "n_seeds": 3,
+        "mean_diff": 0.06994108105195973,
+        "std_diff": 0.16567399565740717,
+        "cohens_d": 0.42216088755768905,
+        "effect_size": "small",
+        "test": "wilcoxon",
+        "statistic": 1.0,
+        "p_value": 0.5
+      },
+      "blanket_F1": {
+        "metric": "blanket_F1",
+        "n_seeds": 3,
+        "mean_diff": 0.49313131313131314,
+        "std_diff": 0.5675751373852631,
+        "cohens_d": 0.8688388208882758,
+        "effect_size": "large",
+        "test": "wilcoxon",
+        "statistic": 1.0,
+        "p_value": 0.5
+      },
+      "NMI": {
+        "metric": "NMI",
+        "n_seeds": 3,
+        "mean_diff": 0.41804360208917374,
+        "std_diff": 0.3035349204954971,
+        "cohens_d": 1.377250437632514,
+        "effect_size": "large",
+        "test": "wilcoxon",
+        "statistic": 0.0,
+        "p_value": 0.25
+      }
+    },
+    "TB_hybrid_vs_MI_clustering|lunarlander_8d": {
+      "ARI": {
+        "metric": "ARI",
+        "n_seeds": 3,
+        "mean_diff": -0.3703703703703704,
+        "std_diff": 0.3207501495497921,
+        "cohens_d": -1.1547005383792517,
+        "effect_size": "large",
+        "test": "wilcoxon",
+        "statistic": 0.0,
+        "p_value": 0.5
+      },
+      "blanket_F1": {
+        "metric": "blanket_F1",
+        "n_seeds": 3,
+        "mean_diff": 0.11111111111111109,
+        "std_diff": 0.9622504486493764,
+        "cohens_d": 0.11547005383792512,
+        "effect_size": "negligible",
+        "test": "wilcoxon",
+        "statistic": 3.0,
+        "p_value": 1.0
+      },
+      "NMI": {
+        "metric": "NMI",
+        "n_seeds": 3,
+        "mean_diff": -0.27610985219456813,
+        "std_diff": 0.11736737420074887,
+        "cohens_d": -2.35252645017261,
+        "effect_size": "large",
+        "test": "wilcoxon",
+        "statistic": 0.0,
+        "p_value": 0.25
+      }
+    },
+    "TB_hybrid_vs_MI_clustering|fetchpush_25d": {
+      "ARI": {
+        "metric": "ARI",
+        "n_seeds": 3,
+        "mean_diff": 0.49138426954026365,
+        "std_diff": 0.1281173064954643,
+        "cohens_d": 3.835424604072987,
+        "effect_size": "large",
+        "test": "wilcoxon",
+        "statistic": 0.0,
+        "p_value": 0.25
+      },
+      "blanket_F1": {
+        "metric": "blanket_F1",
+        "n_seeds": 3,
+        "mean_diff": 0.5142445485694914,
+        "std_diff": 0.07590453718416147,
+        "cohens_d": 6.774885502849698,
+        "effect_size": "large",
+        "test": "wilcoxon",
+        "statistic": 0.0,
+        "p_value": 0.25
+      },
+      "NMI": {
+        "metric": "NMI",
+        "n_seeds": 3,
+        "mean_diff": 0.5266046962407049,
+        "std_diff": 0.09671019080462115,
+        "cohens_d": 5.445183096625034,
+        "effect_size": "large",
+        "test": "wilcoxon",
+        "statistic": 0.0,
+        "p_value": 0.25
+      }
+    },
+    "TB_hybrid_vs_MI_clustering|ising_6x6": {
+      "ARI": {
+        "metric": "ARI",
+        "n_seeds": 3,
+        "mean_diff": 0.0,
+        "std_diff": 0.0,
+        "cohens_d": 0.0,
+        "effect_size": "negligible",
+        "test": "all_equal",
+        "p_value": 1.0
+      },
+      "blanket_F1": {
+        "metric": "blanket_F1",
+        "n_seeds": 3,
+        "mean_diff": 0.0,
+        "std_diff": 0.0,
+        "cohens_d": 0.0,
+        "effect_size": "negligible",
+        "test": "all_equal",
+        "p_value": 1.0
+      },
+      "NMI": {
+        "metric": "NMI",
+        "n_seeds": 3,
+        "mean_diff": 0.0,
+        "std_diff": 0.0,
+        "cohens_d": 0.0,
+        "effect_size": "negligible",
+        "test": "all_equal",
+        "p_value": 1.0
+      }
+    }
+  },
+  "config": {
+    "n_seeds": 3,
+    "methods": [
+      "TB_hybrid",
+      "MI_clustering"
+    ],
+    "datasets": [
+      "quadratic_ebm_8d",
+      "quadratic_ebm_50d",
+      "lunarlander_8d",
+      "fetchpush_25d",
+      "ising_6x6"
+    ]
+  }
+}
