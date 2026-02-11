@@ -2395,7 +2395,7 @@
       "dependencies": [
         "US-107"
       ],
-      "notes": "Phase 16: TB-Structured Bayesian Transformer. The key insight is that TB provides the structural prior that transformers converge toward anyway (Shai et al.), so providing it upfront should accelerate learning and improve uncertainty quantification. Potential patent target: 'Method for structurally-informed attention in neural sequence models using topological blanket decomposition.'"
+      "notes": "Phase 16: TB-Structured Bayesian Transformer. DEBUGGED: Original attention-score mask was a no-op (uniform scalar bias on attention logits is softmax-shift-invariant). Fixed by applying TB factor mask as a soft multiplicative gate on QKV projection weights (where dimension-level interactions actually occur). Also reduced dropout 0.1->0.05, added 15-epoch curriculum annealing, fixed eigengap regularizer shape mismatch. Result: CE improved 4.56->3.62 but still above vanilla 1.73. Loss still declining steeply at epoch 40; longer training likely needed. The GHMM benchmark may be too easy for the structural prior to provide advantage. Results in ralph/results/us112_bayesformer_tb.json."
     },
     {
       "id": "US-113",
@@ -2440,6 +2440,25 @@
         "US-077"
       ],
       "notes": "COMPLETED: Simulated FetchPush with TB-annotated handoff. With matched thresholds, factored and scalar handoff rates are comparable (16.2% vs 15.8%), but factored provides annotated requests: gripper (41), object (12), relation (1), multi-factor (11). Key value is cognitive load reduction, not rate reduction. Results in ralph/results/us114_surprise_teleop.json."
+    },
+    {
+      "id": "US-115",
+      "title": "Add 3D trajectory inset to Wednesday demo GIF",
+      "description": "As a presenter, I need a 3D spatial visualization of the gripper-object dynamics so that the demo GIF conveys depth and physical intuition alongside the existing 2D panels. The current render_demo_frame() returns (h, w, 3) uint8 arrays via matplotlib. Add an optional 3D inset (approximately 300x300px, bottom-right of the left panel) using matplotlib mplot3d that shows: (1) gripper XYZ trajectory as a colored line with current-position marker, (2) object XYZ trajectory as a second colored line with current-position marker, (3) goal position as a star marker, (4) ghost ensemble trajectories in 3D when phase >= 3. The 3D inset must be gated by a --show-3d CLI flag (default off) so existing behavior is unchanged. Phase-dependent camera angle rotation (slow azimuth drift) is a nice-to-have. No new dependencies; mplot3d ships with matplotlib.",
+      "acceptanceCriteria": [
+        "render_demo_frame() accepts optional show_3d=False parameter",
+        "--show-3d CLI flag added, default off; existing output unchanged when off",
+        "3D inset shows gripper trajectory (blue), object trajectory (orange), goal (red star) in XYZ",
+        "Ghost trajectories render in 3D during phases 3-5 with per-member colors",
+        "Inset fits within existing 16:9 frame layout without overlapping uncertainty panel",
+        "Dry-run mode works with 3D inset enabled",
+        "GIF file size increase < 50% compared to baseline"
+      ],
+      "priority": 2,
+      "passes": false,
+      "phase": 17,
+      "dependencies": ["US-081"],
+      "notes": "TIME-SENSITIVE: Nice-to-have for Wednesday demo but not a blocker. Use mplot3d only (no pyvista/plotly). StepRecord already carries grip_pos and obj_pos as 3D arrays. Ghost trajectories from generate_synthetic_ghosts() are currently 2D (n_members, horizon, 2); extend to 3D by including Z or create a generate_synthetic_ghosts_3d() variant. Camera azimuth drift: start at 30deg, rotate ~90deg over 80 steps. Keep rendering overhead under 0.5s per frame."
     }
   ],
   "phases": {}

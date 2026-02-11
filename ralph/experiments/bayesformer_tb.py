@@ -89,15 +89,21 @@ from fwh_ghmm_tb_detection import (
 
 def build_factor_mask(assignment, is_blanket, d_model):
     """
-    Build a soft factor mask from the TB partition.
+    Build a soft multiplicative weight mask from the TB partition.
 
-    The mask encodes which dimension pairs are permitted to attend to
-    each other. Dimension i can attend to dimension j if:
+    The mask controls which dimension pairs can interact through the QKV
+    projection weights. Dimension i can freely interact with dimension j if:
       (a) they belong to the same TB object, OR
-      (b) either i or j is a blanket variable.
+      (b) either i or j is a blanket variable, OR
+      (c) i == j (self-interaction).
 
-    Non-permitted pairs get a large negative bias (effectively gating
-    cross-factor direct attention), while permitted pairs get 0.
+    Permitted pairs get mask value 1.0 (no attenuation). Cross-factor
+    pairs get mask value 0.0, which will be mixed with 1.0 via a learned
+    gate: effective_mask = gate * 1.0 + (1 - gate) * base_mask.
+
+    This mask is applied to the QKV projection weight matrices, where
+    dimension-level interactions actually occur, not to attention scores
+    (which operate in sequence space and are softmax-shift-invariant).
 
     Args:
         assignment: Array of length d_model. Each entry is an object ID
@@ -106,22 +112,20 @@ def build_factor_mask(assignment, is_blanket, d_model):
         d_model: Dimensionality of the residual stream.
 
     Returns:
-        mask: Float tensor of shape (d_model, d_model). Values are 0.0
-            for permitted pairs and -1.0 for blocked pairs.
+        mask: Float tensor of shape (d_model, d_model). Values are 1.0
+            for permitted (within-factor/blanket) pairs and 0.0 for
+            cross-factor blocked pairs.
     """
-    mask = np.full((d_model, d_model), -1.0, dtype=np.float32)
+    mask = np.zeros((d_model, d_model), dtype=np.float32)
 
     for i in range(d_model):
         for j in range(d_model):
-            # Same object
             if assignment[i] >= 0 and assignment[i] == assignment[j]:
-                mask[i, j] = 0.0
-            # Either is blanket
+                mask[i, j] = 1.0
             elif is_blanket[i] or is_blanket[j]:
-                mask[i, j] = 0.0
-            # Diagonal (self-attention always permitted)
+                mask[i, j] = 1.0
             elif i == j:
-                mask[i, j] = 0.0
+                mask[i, j] = 1.0
 
     return torch.tensor(mask, dtype=torch.float32)
 
@@ -164,31 +168,35 @@ def run_tb_for_mask(model, tokens, n_samples=2000, device='cpu',
 
 class TBMaskedAttention(nn.Module):
     """
-    Multi-head self-attention with TB-derived factor masking.
+    Multi-head self-attention with TB-derived factor masking on QKV weights.
 
-    The factor mask operates on the *dimension* axis of the residual
-    stream, not the sequence axis. Concretely, after computing standard
-    QKV attention scores over the sequence dimension, the mask biases
-    the effective attention weights by discouraging information flow
-    between dimensions belonging to different TB objects.
+    The factor mask operates on the QKV projection weight matrices, where
+    dimension-level interactions actually occur. Standard attention scores
+    operate in sequence space (which positions attend to which); applying
+    a uniform scalar bias there is softmax-shift-invariant and has no effect.
+    Instead, the TB mask modulates which input dimensions can contribute to
+    each head's queries, keys, and values.
 
-    Implementation: the mask is applied as a soft additive bias to the
-    attention logits. This is analogous to the causal mask but operates
-    on a learned structural prior rather than temporal ordering.
+    Implementation: the mask is a soft multiplicative gate on the QKV
+    projection weights. A learned gate parameter (initialized to 1.0,
+    meaning no mask effect) controls the strength:
 
-    Because standard multi-head attention operates on (batch, heads,
-    seq_len, d_head), the factor mask must be projected into head space.
-    Each head covers a contiguous d_head-dimensional slice of d_model,
-    so the mask is partitioned accordingly: head h covers dimensions
-    [h*d_head, (h+1)*d_head). The per-head mask is the submatrix of
-    the full d_model x d_model mask corresponding to that head's slice.
+        effective_weight = W_QKV * (gate + (1 - gate) * factor_mask)
+
+    When gate = 1.0: effective_weight = W_QKV (standard attention).
+    When gate = 0.0: effective_weight = W_QKV * factor_mask (full masking).
+    The gate is annealed during training via set_mask_strength().
+
+    Each head covers a contiguous d_head-dimensional slice of d_model.
+    The weight mask for the QKV projection (shape 3*d_model x d_model)
+    is built by tiling the full d_model x d_model factor mask: for each
+    row in the QKV weight corresponding to head h's output dimensions,
+    the mask allows input from same-factor and blanket dimensions.
 
     Attributes:
-        alpha: Learned scalar that gates the mask's influence. Initialized
-            to 1.0. During the warm-up phase, alpha is effectively ignored
-            because no mask is registered yet.
-        factor_mask_per_head: List of per-head mask tensors, or None if
-            no mask is active (warm-up phase).
+        gate: Learned scalar controlling mask strength. Higher = weaker mask.
+        weight_mask: Full QKV weight mask (3*d_model, d_model), or None.
+        mask_strength: External annealing factor in [0, 1].
     """
 
     def __init__(self, d_model, n_heads, dropout_p=0.1):
@@ -201,40 +209,60 @@ class TBMaskedAttention(nn.Module):
         self.qkv_proj = nn.Linear(d_model, 3 * d_model, bias=False)
         self.out_proj = nn.Linear(d_model, d_model, bias=False)
 
-        # Learned mask gating scalar
-        self.alpha = nn.Parameter(torch.tensor(1.0))
+        # Learned gate: controls how much the mask attenuates cross-factor weights.
+        # sigmoid(gate_logit) = effective gate. Init at 2.0 so sigmoid ~ 0.88,
+        # meaning the mask starts mild and the model can learn to strengthen it.
+        self.gate_logit = nn.Parameter(torch.tensor(2.0))
 
         # Dropout for MC Dropout Bayesian inference
         self.attn_dropout = nn.Dropout(p=dropout_p)
 
-        # Factor mask (set externally via update_mask)
-        self.factor_mask_per_head = None
+        # Weight-space factor mask (set externally via update_mask)
+        self.weight_mask = None
+
+        # External annealing: 0.0 = mask off, 1.0 = mask fully active
+        self.mask_strength = 0.0
 
     def update_mask(self, full_mask):
         """
         Update the factor mask from a full d_model x d_model mask.
 
-        Partitions the mask into per-head submatrices.
+        Builds the QKV weight mask by tiling the factor mask for Q, K, V
+        sub-matrices. The mask shape is (3*d_model, d_model).
 
         Args:
             full_mask: Tensor of shape (d_model, d_model) with values
-                in {0.0, -1.0}. 0.0 = permitted, -1.0 = blocked.
+                in {0.0, 1.0}. 1.0 = permitted, 0.0 = blocked.
         """
-        masks = []
-        for h in range(self.n_heads):
-            start = h * self.d_head
-            end = (h + 1) * self.d_head
-            head_mask = full_mask[start:end, start:end]
-            masks.append(head_mask)
-        self.factor_mask_per_head = masks
+        # Tile for Q, K, V blocks
+        self.weight_mask = full_mask.repeat(3, 1)  # (3*d_model, d_model)
 
     def clear_mask(self):
         """Remove the factor mask (revert to standard attention)."""
-        self.factor_mask_per_head = None
+        self.weight_mask = None
+        self.mask_strength = 0.0
+
+    def set_mask_strength(self, strength):
+        """Set the external annealing factor for the mask."""
+        self.mask_strength = max(0.0, min(1.0, strength))
 
     def forward(self, x):
         B, L, D = x.shape
-        qkv = self.qkv_proj(x).reshape(B, L, 3, self.n_heads, self.d_head)
+
+        # Apply factor mask to QKV weights (dimension-space structural prior)
+        if self.weight_mask is not None and self.mask_strength > 0:
+            gate = torch.sigmoid(self.gate_logit)
+            wm = self.weight_mask.to(x.device)
+            # Effective mask: interpolate between all-ones (gate=1) and
+            # factor mask (gate=0), scaled by external annealing strength.
+            # effective = 1 - strength * (1 - gate) * (1 - factor_mask)
+            effective_mask = 1.0 - self.mask_strength * (1.0 - gate) * (1.0 - wm)
+            effective_weight = self.qkv_proj.weight * effective_mask
+            qkv = F.linear(x, effective_weight)
+        else:
+            qkv = self.qkv_proj(x)
+
+        qkv = qkv.reshape(B, L, 3, self.n_heads, self.d_head)
         q, k, v = qkv.unbind(dim=2)
         q = q.transpose(1, 2)  # (B, H, L, D_h)
         k = k.transpose(1, 2)
@@ -248,29 +276,6 @@ class TBMaskedAttention(nn.Module):
             torch.ones(L, L, device=x.device, dtype=torch.bool), diagonal=1
         )
         scores.masked_fill_(causal_mask.unsqueeze(0).unsqueeze(0), float('-inf'))
-
-        # TB factor mask (dimension/head dimension)
-        # The factor mask biases attention scores to discourage cross-factor
-        # information flow. For each head, the mask is applied as a learned
-        # scalar * mask_bias, where mask_bias is -1 for blocked pairs and
-        # 0 for permitted pairs.
-        #
-        # This creates a soft structural prior: the model can still attend
-        # across factors, but has to overcome a learned penalty to do so.
-        if self.factor_mask_per_head is not None:
-            # Aggregate per-head mask effect into a scalar bias on
-            # the attention scores. Each head h has a d_head x d_head
-            # factor mask. We compute the mean mask value per head
-            # and apply it as a uniform bias to that head's scores.
-            # This is a computationally efficient approximation: rather
-            # than a full d_head x d_head interaction, each head gets
-            # a scalar bias reflecting how "blocked" its dimension
-            # slice is.
-            for h in range(self.n_heads):
-                head_mask = self.factor_mask_per_head[h].to(x.device)
-                # Mean mask value: 0 if all permitted, -1 if all blocked
-                mask_bias = head_mask.mean()
-                scores[:, h, :, :] = scores[:, h, :, :] + self.alpha * mask_bias
 
         attn = F.softmax(scores, dim=-1)
         attn = self.attn_dropout(attn)
@@ -355,7 +360,8 @@ class BayesformerTB(nn.Module):
         Update the TB factor mask across all attention layers.
 
         Args:
-            full_mask: Tensor of shape (d_model, d_model).
+            full_mask: Tensor of shape (d_model, d_model) with values in
+                {0.0, 1.0}. 1.0 = permitted, 0.0 = blocked.
         """
         for block in self.blocks:
             block.attn.update_mask(full_mask)
@@ -364,6 +370,11 @@ class BayesformerTB(nn.Module):
         """Remove the TB factor mask from all layers."""
         for block in self.blocks:
             block.attn.clear_mask()
+
+    def set_mask_strength(self, strength):
+        """Set external mask annealing strength across all layers."""
+        for block in self.blocks:
+            block.attn.set_mask_strength(strength)
 
     def forward(self, x, return_residual_stream=False):
         """
@@ -660,7 +671,8 @@ def compute_per_factor_uncertainty(logits_ensemble, assignment, is_blanket,
 
 def train_bayesformer_tb(model, tokens, n_epochs=40, batch_size=256, lr=1e-3,
                          device='cpu', warmup_epochs=5, tb_update_freq=5,
-                         lambda_reg=0.01, n_objects=5, verbose=True):
+                         lambda_reg=0.005, n_objects=5, verbose=True,
+                         mask_anneal_epochs=15):
     """
     Train the BayesformerTB model with periodic TB mask updates and
     eigengap regularization.
@@ -671,8 +683,10 @@ def train_bayesformer_tb(model, tokens, n_epochs=40, batch_size=256, lr=1e-3,
        structural constraints.
     2. At epoch warmup_epochs, and every tb_update_freq epochs thereafter:
        run TB on the residual stream and update the factor mask.
-    3. EigengapRegularizer is active from epoch 0.
-    4. Checkpoints (TB analysis) saved every 5 epochs for eigengap tracking.
+    3. Mask strength is annealed linearly from 0 to 1 over mask_anneal_epochs
+       after the warmup, so the structural prior is introduced gradually.
+    4. EigengapRegularizer is active from epoch warmup_epochs onward.
+    5. Checkpoints (TB analysis) saved every 5 epochs for eigengap tracking.
 
     Args:
         model: BayesformerTB instance.
@@ -752,6 +766,14 @@ def train_bayesformer_tb(model, tokens, n_epochs=40, batch_size=256, lr=1e-3,
                     print(f"    [TB Update] Failed: {e}. Continuing without mask update.")
             model.train()
 
+        # -- Mask strength annealing (curriculum) --
+        if epoch >= warmup_epochs and tb_mask_active:
+            epochs_since_warmup = epoch - warmup_epochs
+            strength = min(1.0, epochs_since_warmup / max(mask_anneal_epochs, 1))
+            model.set_mask_strength(strength)
+        else:
+            model.set_mask_strength(0.0)
+
         # -- Training epoch --
         for inputs, targets in loader:
             inputs = inputs.to(device)
@@ -763,16 +785,15 @@ def train_bayesformer_tb(model, tokens, n_epochs=40, batch_size=256, lr=1e-3,
                 targets.reshape(-1)
             )
 
-            # Eigengap regularization
+            # Eigengap regularization on residual stream activations
             reg_loss = torch.tensor(0.0, device=device)
             if regularizer.assignment is not None:
-                # Use the last-position activations as the proxy
-                with torch.no_grad():
-                    _, stream = model(inputs, return_residual_stream=True)
-                acts = stream[2][:, -1, :]  # layer_2 last position
-                # Re-enable grad for regularizer computation
-                acts_live = logits[:, -1, :]  # Use logits as differentiable proxy
-                reg_loss = regularizer.compute(acts_live)
+                # Forward pass with residual stream to get layer_2 activations
+                _, stream = model(inputs, return_residual_stream=True)
+                # stream[2] = layer_2 activations (B, L, d_model)
+                # Use last-position activations for covariance computation
+                acts_layer2 = stream[2][:, -1, :]  # (B, d_model)
+                reg_loss = regularizer.compute(acts_layer2)
 
             total_loss = ce_loss + reg_loss
 
@@ -791,7 +812,11 @@ def train_bayesformer_tb(model, tokens, n_epochs=40, batch_size=256, lr=1e-3,
 
         if verbose and (epoch + 1) % 5 == 0:
             elapsed = time.time() - t0
-            mask_status = "ON" if tb_mask_active else "OFF"
+            if tb_mask_active:
+                cur_strength = min(1.0, (epoch - warmup_epochs) / max(mask_anneal_epochs, 1))
+                mask_status = f"ON({cur_strength:.2f})"
+            else:
+                mask_status = "OFF"
             print(f"  Epoch {epoch+1}/{n_epochs}: CE={avg_loss:.4f}, "
                   f"reg={avg_reg:.6f}, mask={mask_status} ({elapsed:.1f}s)")
 
@@ -1146,9 +1171,10 @@ def main():
     lr = 1e-3
     warmup_epochs = 5
     tb_update_freq = 5
-    lambda_reg = 0.01
+    lambda_reg = 0.005
     mc_K = 10
-    dropout_p = 0.1
+    dropout_p = 0.05      # reduced from 0.1; 0.1 added too much training noise
+    mask_anneal_epochs = 15  # curriculum: ramp mask strength over 15 epochs
     n_objects = 5
     d_model = 120
     n_layers = 4
@@ -1159,6 +1185,7 @@ def main():
     print(f"  n_sequences={n_sequences}, n_epochs={n_epochs}")
     print(f"  warmup_epochs={warmup_epochs}, tb_update_freq={tb_update_freq}")
     print(f"  lambda_reg={lambda_reg}, dropout_p={dropout_p}, mc_K={mc_K}")
+    print(f"  mask_anneal_epochs={mask_anneal_epochs}")
 
     # ---- Step 1: Generate GHMM data ----
     print(f"\n[1/6] Generating 5-factor GHMM dataset ({n_sequences} seqs)...")
@@ -1193,6 +1220,7 @@ def main():
         lambda_reg=lambda_reg,
         n_objects=n_objects,
         verbose=True,
+        mask_anneal_epochs=mask_anneal_epochs,
     )
 
     # ---- Step 3: Train vanilla GPT-2 ----
@@ -1368,6 +1396,7 @@ def main():
             'tb_update_freq': tb_update_freq,
             'lambda_reg': lambda_reg,
             'dropout_p': dropout_p,
+            'mask_anneal_epochs': mask_anneal_epochs,
             'mc_K': mc_K,
             'n_objects': n_objects,
             'd_model': d_model,
