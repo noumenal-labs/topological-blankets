@@ -21,7 +21,8 @@ The paper "Topological Blankets: Extracting Discrete Markov Blanket Structure fr
 
 13. **Phase 13** (complete): Rigorous benchmarking — TB vs Graphical Lasso (US-090), NOTEARS (US-091), MI Clustering (US-092), ICA (US-093), Spectral Covariance (US-094). All committed with results.
 14. **Phase 14** (in progress): Cross-environment comparison — architecture-matched ensembles on Reach/Push/PickAndPlace/Slide + DDPG+HER baseline + no-TB ablation. Training running on GPU (DO NOT train models, GPU access is reserved).
-15. **Phase 15** (NEW): Factored World Hypothesis validation — inspired by Shai et al. (2602.02385) "Transformers learn factored representations". Tests whether TB detects the orthogonal factor subspaces that neural networks learn. See US-107 through US-111.
+15. **Phase 15** (in progress): Factored World Hypothesis validation — inspired by Shai et al. (2602.02385) "Transformers learn factored representations". Tests whether TB detects the orthogonal factor subspaces that neural networks learn. See US-107 through US-111.
+16. **Phase 16** (NEW): TB-Structured Bayesian Transformer — TB-masked attention (US-112), surprise-weighted learning with TB decomposition (US-113), surprise-based data annotation for teleoperation handoff (US-114). See `ralph/FWH_TB_DETECTION.md` for technical documentation and IP considerations.
 
 **GPU TRAINING STATUS**: FetchPush (US-096) COMPLETE (100% success). FetchReach, PickAndPlace, Slide, DDPG+HER, and structure emergence all training on Lambda GPU. DO NOT launch any training; checkpoints will be available in `pandas/data/` when done.
 

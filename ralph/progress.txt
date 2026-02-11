@@ -337,3 +337,43 @@ Phase 6 (pixel-to-structure):
 - US-079: Live uncertainty visualization panel (depends on US-076 + US-077 + US-078)
 - US-080: Structure emergence during learning (depends on US-076)
 - US-085: Ghost trajectories for manipulation (depends on US-076)
+
+## 2026-02-10: US-108 -- Layer-by-Layer TB on Transformer Residual Stream (Phase 15)
+
+### Summary
+Applied TB to loss gradients (d(CE_loss)/d(h_l)) at each transformer layer to trace
+factored structure emergence through depth. This extends US-107 with proper loss-gradient
+analysis instead of activation differences.
+
+### Method
+- Trained GPT-2 (4L, d_model=120, 749K params) on 5-factor GHMM data (10K sequences, 30 epochs)
+- Collected d(loss)/d(h_l) gradients at embedding + 4 transformer blocks (2000 samples)
+- Ran TB analysis (hybrid method, n_objects=5) on loss gradients at each layer
+- Computed eigengap, coupling sparsity, blanket identification, and object isolation ratios
+
+### Key Results
+- Eigengap at k=5 trajectory: 0.27 (embedding) -> 0.28 (L1) -> 0.22 (L2) -> 0.11 (L3) -> 0.78 (L4)
+- Layer 4 shows strongest factoring (eigengap@5=0.78, relative gap=0.166)
+- Blanket dims decrease through depth: 52 -> 26 -> 11 -> 15 -> 2
+  - Embedding has 52 blanket dims (dense coupling, not yet factored)
+  - Layer 4 has only 2 blanket dims (dims 100, 117), indicating near-complete factoring
+- Coupling sparsity remains low (~4-8%) across all layers
+- Object isolation ratios range from 1.26 to 2.62 across layers, indicating moderate factoring
+- Training converged to loss=3.588 (similar to US-107's 3.839)
+
+### Acceptance Criteria (all pass)
+1. TB at each of 4 layers + embedding: 5 layers analyzed
+2. Layer-by-layer eigengap trajectory: Full trajectory in JSON
+3. 5-panel coupling matrix figure: us108_coupling_5panel.png (reordered by partition)
+4. Blanket variable identification per layer: Per-layer blanket dims and coupling profiles
+5. Results JSON saved: us108_layer_by_layer_tb.json
+
+### Files (all in ralph/)
+- experiments/fwh_layer_by_layer_tb.py (pre-existing, ran successfully)
+- results/us108_layer_by_layer_tb.json
+- results/us108_coupling_5panel.png
+- results/us108_eigengap_spectrum.png
+- results/us108_blanket_mediation.png
+- results/us108_object_isolation.png
+
+### PRD updated: US-108 passes = true

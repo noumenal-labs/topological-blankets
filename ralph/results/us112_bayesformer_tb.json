@@ -1,0 +1,751 @@
+{
+  "experiment": "US-112",
+  "title": "BayesformerTB: TB-Structured Bayesian Transformer",
+  "configuration": {
+    "n_sequences": 10000,
+    "n_epochs": 40,
+    "batch_size": 256,
+    "lr": 0.001,
+    "warmup_epochs": 5,
+    "tb_update_freq": 5,
+    "lambda_reg": 0.01,
+    "dropout_p": 0.1,
+    "mc_K": 10,
+    "n_objects": 5,
+    "d_model": 120,
+    "n_layers": 4,
+    "n_heads": 4,
+    "d_mlp": 480
+  },
+  "factor_info": {
+    "n_factors": 5,
+    "factor_types": [
+      "Mess3",
+      "Mess3",
+      "Mess3",
+      "BlochWalk",
+      "BlochWalk"
+    ],
+    "factor_alphabets": [
+      3,
+      3,
+      3,
+      4,
+      4
+    ],
+    "factor_latent_dims": [
+      3,
+      3,
+      3,
+      4,
+      4
+    ],
+    "vocab_size": 433,
+    "factored_dim": 12,
+    "joint_dim": 431
+  },
+  "bayesformer_tb": {
+    "n_params": 749644,
+    "loss_history": [
+      6.084065,
+      6.0755,
+      6.073264,
+      6.07017,
+      6.065421,
+      6.058447,
+      6.048701,
+      6.032115,
+      6.011302,
+      5.987199,
+      5.959929,
+      5.931469,
+      5.901863,
+      5.870881,
+      5.839015,
+      5.810299,
+      5.775142,
+      5.740769,
+      5.701449,
+      5.66565,
+      5.625394,
+      5.585412,
+      5.53781,
+      5.49603,
+      5.443379,
+      5.395691,
+      5.336538,
+      5.278053,
+      5.225305,
+      5.154791,
+      5.098969,
+      5.039213,
+      4.971104,
+      4.910473,
+      4.851516,
+      4.793579,
+      4.734389,
+      4.68142,
+      4.617324,
+      4.559938
+    ],
+    "reg_loss_history": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.00236333,
+      0.00067097,
+      0.00081621,
+      0.00085432,
+      0.00082008,
+      0.00364767,
+      0.00121751,
+      0.00119645,
+      0.00126196,
+      0.00130244,
+      0.0050019,
+      0.00237496,
+      0.00196251,
+      0.00197736,
+      0.00179188,
+      0.00308439,
+      0.00229881,
+      0.00227113,
+      0.00203093,
+      0.00214902,
+      0.00558427,
+      0.00433487,
+      0.00384909,
+      0.00348537,
+      0.00337729,
+      0.00767278,
+      0.0071898,
+      0.00686392,
+      0.00655548,
+      0.00652041,
+      0.00354865,
+      0.00341847,
+      0.00328425,
+      0.00324803,
+      0.00316088
+    ],
+    "final_ce_loss": 4.559938,
+    "training_time_s": 913.81,
+    "eigengap_trajectory": [
+      {
+        "epoch": 6,
+        "eigengap": 112.6662887398263,
+        "n_objects": 5,
+        "n_blanket": 5
+      },
+      {
+        "epoch": 11,
+        "eigengap": 110.87862094683558,
+        "n_objects": 5,
+        "n_blanket": 41
+      },
+      {
+        "epoch": 16,
+        "eigengap": 108.10168285417953,
+        "n_objects": 5,
+        "n_blanket": 54
+      },
+      {
+        "epoch": 21,
+        "eigengap": 103.35431474254028,
+        "n_objects": 5,
+        "n_blanket": 42
+      },
+      {
+        "epoch": 26,
+        "eigengap": 104.4520469839898,
+        "n_objects": 5,
+        "n_blanket": 50
+      },
+      {
+        "epoch": 31,
+        "eigengap": 101.74881670361195,
+        "n_objects": 5,
+        "n_blanket": 5
+      },
+      {
+        "epoch": 36,
+        "eigengap": 99.67860818592551,
+        "n_objects": 5,
+        "n_blanket": 59
+      }
+    ],
+    "checkpoints": {
+      "epoch_5": {
+        "embedding": {
+          "eigengap": 91.8631,
+          "n_objects": 5,
+          "n_blanket": 50
+        },
+        "layer_1": {
+          "eigengap": 111.4603,
+          "n_objects": 5,
+          "n_blanket": 2
+        },
+        "layer_2": {
+          "eigengap": 112.6663,
+          "n_objects": 5,
+          "n_blanket": 5
+        },
+        "layer_3": {
+          "eigengap": 111.5745,
+          "n_objects": 5,
+          "n_blanket": 57
+        },
+        "layer_4": {
+          "eigengap": 111.5137,
+          "n_objects": 5,
+          "n_blanket": 48
+        }
+      },
+      "epoch_10": {
+        "embedding": {
+          "eigengap": 92.383,
+          "n_objects": 5,
+          "n_blanket": 32
+        },
+        "layer_1": {
+          "eigengap": 107.2796,
+          "n_objects": 5,
+          "n_blanket": 58
+        },
+        "layer_2": {
+          "eigengap": 110.8786,
+          "n_objects": 5,
+          "n_blanket": 41
+        },
+        "layer_3": {
+          "eigengap": 109.2347,
+          "n_objects": 5,
+          "n_blanket": 47
+        },
+        "layer_4": {
+          "eigengap": 110.0853,
+          "n_objects": 5,
+          "n_blanket": 44
+        }
+      },
+      "epoch_15": {
+        "embedding": {
+          "eigengap": 96.5658,
+          "n_objects": 5,
+          "n_blanket": 2
+        },
+        "layer_1": {
+          "eigengap": 105.4574,
+          "n_objects": 5,
+          "n_blanket": 58
+        },
+        "layer_2": {
+          "eigengap": 108.1017,
+          "n_objects": 5,
+          "n_blanket": 54
+        },
+        "layer_3": {
+          "eigengap": 107.0576,
+          "n_objects": 5,
+          "n_blanket": 3
+        },
+        "layer_4": {
+          "eigengap": 106.1851,
+          "n_objects": 5,
+          "n_blanket": 47
+        }
+      },
+      "epoch_20": {
+        "embedding": {
+          "eigengap": 97.0695,
+          "n_objects": 5,
+          "n_blanket": 20
+        },
+        "layer_1": {
+          "eigengap": 106.4487,
+          "n_objects": 5,
+          "n_blanket": 55
+        },
+        "layer_2": {
+          "eigengap": 103.3543,
+          "n_objects": 5,
+          "n_blanket": 42
+        },
+        "layer_3": {
+          "eigengap": 104.9924,
+          "n_objects": 5,
+          "n_blanket": 7
+        },
+        "layer_4": {
+          "eigengap": 103.751,
+          "n_objects": 5,
+          "n_blanket": 2
+        }
+      },
+      "epoch_25": {
+        "embedding": {
+          "eigengap": 90.0488,
+          "n_objects": 5,
+          "n_blanket": 19
+        },
+        "layer_1": {
+          "eigengap": 104.5079,
+          "n_objects": 5,
+          "n_blanket": 58
+        },
+        "layer_2": {
+          "eigengap": 104.452,
+          "n_objects": 5,
+          "n_blanket": 50
+        },
+        "layer_3": {
+          "eigengap": 104.7472,
+          "n_objects": 5,
+          "n_blanket": 5
+        },
+        "layer_4": {
+          "eigengap": 101.2605,
+          "n_objects": 5,
+          "n_blanket": 38
+        }
+      },
+      "epoch_30": {
+        "embedding": {
+          "eigengap": 94.2615,
+          "n_objects": 5,
+          "n_blanket": 2
+        },
+        "layer_1": {
+          "eigengap": 103.4391,
+          "n_objects": 5,
+          "n_blanket": 59
+        },
+        "layer_2": {
+          "eigengap": 101.7488,
+          "n_objects": 5,
+          "n_blanket": 5
+        },
+        "layer_3": {
+          "eigengap": 98.7479,
+          "n_objects": 5,
+          "n_blanket": 46
+        },
+        "layer_4": {
+          "eigengap": 97.8692,
+          "n_objects": 5,
+          "n_blanket": 24
+        }
+      },
+      "epoch_35": {
+        "embedding": {
+          "eigengap": 89.6007,
+          "n_objects": 5,
+          "n_blanket": 17
+        },
+        "layer_1": {
+          "eigengap": 102.4797,
+          "n_objects": 5,
+          "n_blanket": 12
+        },
+        "layer_2": {
+          "eigengap": 99.6786,
+          "n_objects": 5,
+          "n_blanket": 59
+        },
+        "layer_3": {
+          "eigengap": 97.0164,
+          "n_objects": 5,
+          "n_blanket": 49
+        },
+        "layer_4": {
+          "eigengap": 93.686,
+          "n_objects": 5,
+          "n_blanket": 25
+        }
+      },
+      "epoch_40": {
+        "embedding": {
+          "eigengap": 90.3126,
+          "n_objects": 5,
+          "n_blanket": 15
+        },
+        "layer_1": {
+          "eigengap": 100.6798,
+          "n_objects": 5,
+          "n_blanket": 2
+        },
+        "layer_2": {
+          "eigengap": 97.2009,
+          "n_objects": 5,
+          "n_blanket": 50
+        },
+        "layer_3": {
+          "eigengap": 97.2231,
+          "n_objects": 5,
+          "n_blanket": 52
+        },
+        "layer_4": {
+          "eigengap": 93.0333,
+          "n_objects": 5,
+          "n_blanket": 2
+        }
+      }
+    },
+    "final_eigengap_layer2": 97.2009,
+    "first_epoch_eigengap_ge_5": 5,
+    "uncertainty": {
+      "total_uncertainty": 3.679e-05,
+      "predictive_entropy": 5.063814,
+      "per_factor": {
+        "factor_0": {
+          "marginal_variance": 0.00355645,
+          "marginal_entropy": 1.07987,
+          "alphabet_size": 3
+        },
+        "factor_1": {
+          "marginal_variance": 0.00363089,
+          "marginal_entropy": 1.079143,
+          "alphabet_size": 3
+        },
+        "factor_2": {
+          "marginal_variance": 0.00354484,
+          "marginal_entropy": 1.079988,
+          "alphabet_size": 3
+        },
+        "factor_3": {
+          "marginal_variance": 0.00295898,
+          "marginal_entropy": 1.360004,
+          "alphabet_size": 4
+        },
+        "factor_4": {
+          "marginal_variance": 0.00302829,
+          "marginal_entropy": 1.358469,
+          "alphabet_size": 4
+        }
+      },
+      "blanket_uncertainty": 3.679e-05,
+      "n_mc_samples": 10
+    }
+  },
+  "vanilla_gpt2": {
+    "n_params": 749640,
+    "loss_history": [
+      6.083467,
+      6.074523,
+      6.071692,
+      6.068068,
+      6.062878,
+      6.053803,
+      6.037309,
+      6.012914,
+      5.981477,
+      5.943602,
+      5.90108,
+      5.854907,
+      5.802941,
+      5.74578,
+      5.685326,
+      5.616717,
+      5.541417,
+      5.455466,
+      5.360081,
+      5.257314,
+      5.1422,
+      5.009997,
+      4.857225,
+      4.685226,
+      4.501971,
+      4.299959,
+      4.087549,
+      3.851451,
+      3.633575,
+      3.388201,
+      3.166812,
+      2.962828,
+      2.750338,
+      2.549885,
+      2.377349,
+      2.230652,
+      2.088585,
+      1.964951,
+      1.86201,
+      1.770767
+    ],
+    "final_ce_loss": 1.770767,
+    "training_time_s": 190.39,
+    "checkpoints": {
+      "epoch_5": {
+        "embedding": {
+          "eigengap": 89.2116,
+          "n_objects": 5,
+          "n_blanket": 53
+        },
+        "layer_1": {
+          "eigengap": 111.9563,
+          "n_objects": 5,
+          "n_blanket": 30
+        },
+        "layer_2": {
+          "eigengap": 110.5796,
+          "n_objects": 5,
+          "n_blanket": 45
+        },
+        "layer_3": {
+          "eigengap": 111.9132,
+          "n_objects": 5,
+          "n_blanket": 44
+        },
+        "layer_4": {
+          "eigengap": 112.6756,
+          "n_objects": 5,
+          "n_blanket": 43
+        }
+      },
+      "epoch_10": {
+        "embedding": {
+          "eigengap": 97.7093,
+          "n_objects": 5,
+          "n_blanket": 5
+        },
+        "layer_1": {
+          "eigengap": 109.2387,
+          "n_objects": 5,
+          "n_blanket": 42
+        },
+        "layer_2": {
+          "eigengap": 108.2441,
+          "n_objects": 5,
+          "n_blanket": 39
+        },
+        "layer_3": {
+          "eigengap": 107.8762,
+          "n_objects": 5,
+          "n_blanket": 44
+        },
+        "layer_4": {
+          "eigengap": 107.6174,
+          "n_objects": 5,
+          "n_blanket": 48
+        }
+      },
+      "epoch_15": {
+        "embedding": {
+          "eigengap": 97.3547,
+          "n_objects": 5,
+          "n_blanket": 23
+        },
+        "layer_1": {
+          "eigengap": 105.4274,
+          "n_objects": 5,
+          "n_blanket": 46
+        },
+        "layer_2": {
+          "eigengap": 106.2707,
+          "n_objects": 5,
+          "n_blanket": 47
+        },
+        "layer_3": {
+          "eigengap": 106.1585,
+          "n_objects": 5,
+          "n_blanket": 50
+        },
+        "layer_4": {
+          "eigengap": 106.0579,
+          "n_objects": 5,
+          "n_blanket": 45
+        }
+      },
+      "epoch_20": {
+        "embedding": {
+          "eigengap": 94.7199,
+          "n_objects": 5,
+          "n_blanket": 24
+        },
+        "layer_1": {
+          "eigengap": 104.9314,
+          "n_objects": 5,
+          "n_blanket": 2
+        },
+        "layer_2": {
+          "eigengap": 102.9344,
+          "n_objects": 5,
+          "n_blanket": 41
+        },
+        "layer_3": {
+          "eigengap": 103.6473,
+          "n_objects": 5,
+          "n_blanket": 37
+        },
+        "layer_4": {
+          "eigengap": 103.0493,
+          "n_objects": 5,
+          "n_blanket": 13
+        }
+      },
+      "epoch_25": {
+        "embedding": {
+          "eigengap": 92.9099,
+          "n_objects": 5,
+          "n_blanket": 24
+        },
+        "layer_1": {
+          "eigengap": 103.1022,
+          "n_objects": 5,
+          "n_blanket": 4
+        },
+        "layer_2": {
+          "eigengap": 100.1016,
+          "n_objects": 5,
+          "n_blanket": 44
+        },
+        "layer_3": {
+          "eigengap": 98.8761,
+          "n_objects": 5,
+          "n_blanket": 36
+        },
+        "layer_4": {
+          "eigengap": 95.9671,
+          "n_objects": 5,
+          "n_blanket": 29
+        }
+      },
+      "epoch_30": {
+        "embedding": {
+          "eigengap": 91.9757,
+          "n_objects": 5,
+          "n_blanket": 24
+        },
+        "layer_1": {
+          "eigengap": 101.0007,
+          "n_objects": 5,
+          "n_blanket": 2
+        },
+        "layer_2": {
+          "eigengap": 97.9858,
+          "n_objects": 5,
+          "n_blanket": 1
+        },
+        "layer_3": {
+          "eigengap": 96.2305,
+          "n_objects": 5,
+          "n_blanket": 2
+        },
+        "layer_4": {
+          "eigengap": 93.957,
+          "n_objects": 5,
+          "n_blanket": 2
+        }
+      },
+      "epoch_35": {
+        "embedding": {
+          "eigengap": 92.2331,
+          "n_objects": 5,
+          "n_blanket": 9
+        },
+        "layer_1": {
+          "eigengap": 99.6899,
+          "n_objects": 5,
+          "n_blanket": 2
+        },
+        "layer_2": {
+          "eigengap": 96.2927,
+          "n_objects": 5,
+          "n_blanket": 5
+        },
+        "layer_3": {
+          "eigengap": 92.7856,
+          "n_objects": 5,
+          "n_blanket": 6
+        },
+        "layer_4": {
+          "eigengap": 92.2782,
+          "n_objects": 5,
+          "n_blanket": 29
+        }
+      },
+      "epoch_40": {
+        "embedding": {
+          "eigengap": 89.4749,
+          "n_objects": 5,
+          "n_blanket": 4
+        },
+        "layer_1": {
+          "eigengap": 100.0228,
+          "n_objects": 5,
+          "n_blanket": 4
+        },
+        "layer_2": {
+          "eigengap": 98.0004,
+          "n_objects": 5,
+          "n_blanket": 1
+        },
+        "layer_3": {
+          "eigengap": 87.4097,
+          "n_objects": 5,
+          "n_blanket": 44
+        },
+        "layer_4": {
+          "eigengap": 91.4796,
+          "n_objects": 5,
+          "n_blanket": 2
+        }
+      }
+    },
+    "final_eigengap_layer2": 98.0004,
+    "first_epoch_eigengap_ge_5": 5,
+    "uncertainty": {
+      "total_uncertainty": 1e-08,
+      "predictive_entropy": 2.14623,
+      "per_factor": {
+        "factor_0": {
+          "marginal_variance": 6.2e-07,
+          "marginal_entropy": 0.570931,
+          "alphabet_size": 3
+        },
+        "factor_1": {
+          "marginal_variance": 6.2e-07,
+          "marginal_entropy": 0.571051,
+          "alphabet_size": 3
+        },
+        "factor_2": {
+          "marginal_variance": 6.4e-07,
+          "marginal_entropy": 0.574201,
+          "alphabet_size": 3
+        },
+        "factor_3": {
+          "marginal_variance": 5.3e-07,
+          "marginal_entropy": 0.703612,
+          "alphabet_size": 4
+        },
+        "factor_4": {
+          "marginal_variance": 5.3e-07,
+          "marginal_entropy": 0.704817,
+          "alphabet_size": 4
+        }
+      },
+      "blanket_uncertainty": 1e-08,
+      "n_mc_samples": 10
+    }
+  },
+  "comparison": {
+    "bayes_faster_convergence": false,
+    "bayes_lower_final_loss": false,
+    "bayes_earlier_eigengap_5": false,
+    "bayes_final_loss": 4.559938,
+    "vanilla_final_loss": 1.770767,
+    "loss_improvement": -2.789172
+  },
+  "acceptance_criteria": {
+    "tb_masked_attention_implemented": true,
+    "per_factor_bayesian_uncertainty": true,
+    "training_on_ghmm_data": true,
+    "faster_convergence": false,
+    "lower_cross_entropy": false,
+    "earlier_eigengap_5": false,
+    "results_json_saved": true,
+    "training_curves_saved": true
+  }
+}

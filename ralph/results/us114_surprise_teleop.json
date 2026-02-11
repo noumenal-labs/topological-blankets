@@ -1,0 +1,175 @@
+{
+  "experiment": "US-114",
+  "title": "Surprise-Based Data Annotation for Teleop Handoff",
+  "fetchpush_partition": {
+    "gripper": [
+      0,
+      1,
+      2,
+      9,
+      10,
+      20,
+      21
+    ],
+    "object": [
+      3,
+      4,
+      5,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "relation": [
+      6,
+      7,
+      8
+    ]
+  },
+  "thresholds": {
+    "gripper": 1.5,
+    "object": 1.0,
+    "relation": 2.0
+  },
+  "simulation": {
+    "n_episodes": 10,
+    "n_steps_per_episode": 50,
+    "statistics": {
+      "total_steps": 500,
+      "n_handoffs": 65,
+      "handoff_rate": 0.13,
+      "reason_distribution": {
+        "operating_normally": 435,
+        "object_dynamics_unexpected": 12,
+        "approach_strategy_unexpected": 1,
+        "multiple_factors_surprising": 11,
+        "gripper_dynamics_unexpected": 41
+      },
+      "mean_surprise": {
+        "gripper": 0.000185,
+        "object": 0.001003,
+        "relation": 0.000809
+      }
+    }
+  },
+  "comparison": {
+    "scalar": {
+      "handoff_rate": 0.158,
+      "total_handoffs": 158,
+      "total_steps": 1000
+    },
+    "factored": {
+      "handoff_rate": 0.162,
+      "total_handoffs": 162,
+      "total_steps": 1000,
+      "stats": {
+        "total_steps": 1000,
+        "n_handoffs": 162,
+        "handoff_rate": 0.162,
+        "reason_distribution": {
+          "operating_normally": 838,
+          "object_dynamics_unexpected": 49,
+          "gripper_dynamics_unexpected": 77,
+          "multiple_factors_surprising": 32,
+          "approach_strategy_unexpected": 4
+        },
+        "mean_surprise": {
+          "gripper": 0.000186,
+          "object": 0.001005,
+          "relation": 0.000504
+        }
+      }
+    }
+  },
+  "sample_handoffs": [
+    [
+      {
+        "step": 5,
+        "reason": "object_dynamics_unexpected",
+        "primary_factor": "object",
+        "annotation": "Unexpected object behavior. Please demonstrate how to manipulate the object.",
+        "demo_type": "demonstrate_object_manipulation",
+        "confidence": 1.0
+      },
+      {
+        "step": 6,
+        "reason": "object_dynamics_unexpected",
+        "primary_factor": "object",
+        "annotation": "Unexpected object behavior. Please demonstrate how to manipulate the object.",
+        "demo_type": "demonstrate_object_manipulation",
+        "confidence": 1.0
+      },
+      {
+        "step": 7,
+        "reason": "approach_strategy_unexpected",
+        "primary_factor": "relation",
+        "annotation": "Unexpected gripper-object relationship. Please demonstrate the approach strategy.",
+        "demo_type": "demonstrate_approach_strategy",
+        "confidence": 1.0
+      }
+    ],
+    [
+      {
+        "step": 13,
+        "reason": "gripper_dynamics_unexpected",
+        "primary_factor": "gripper",
+        "annotation": "Unexpected gripper dynamics detected. Please demonstrate the desired gripper movement.",
+        "demo_type": "demonstrate_gripper_control",
+        "confidence": 1.0
+      },
+      {
+        "step": 26,
+        "reason": "multiple_factors_surprising",
+        "primary_factor": "relation",
+        "annotation": "Multiple aspects of the task are uncertain. Full demonstration requested.",
+        "demo_type": "demonstrate_approach_strategy",
+        "confidence": 1.0
+      },
+      {
+        "step": 28,
+        "reason": "gripper_dynamics_unexpected",
+        "primary_factor": "gripper",
+        "annotation": "Unexpected gripper dynamics detected. Please demonstrate the desired gripper movement.",
+        "demo_type": "demonstrate_gripper_control",
+        "confidence": 1.0
+      }
+    ],
+    [
+      {
+        "step": 24,
+        "reason": "gripper_dynamics_unexpected",
+        "primary_factor": "gripper",
+        "annotation": "Unexpected gripper dynamics detected. Please demonstrate the desired gripper movement.",
+        "demo_type": "demonstrate_gripper_control",
+        "confidence": 1.0
+      },
+      {
+        "step": 26,
+        "reason": "multiple_factors_surprising",
+        "primary_factor": "relation",
+        "annotation": "Multiple aspects of the task are uncertain. Full demonstration requested.",
+        "demo_type": "demonstrate_approach_strategy",
+        "confidence": 1.0
+      },
+      {
+        "step": 29,
+        "reason": "gripper_dynamics_unexpected",
+        "primary_factor": "gripper",
+        "annotation": "Unexpected gripper dynamics detected. Please demonstrate the desired gripper movement.",
+        "demo_type": "demonstrate_gripper_control",
+        "confidence": 1.0
+      }
+    ]
+  ],
+  "summary": {
+    "factored_handoff_rate": 0.162,
+    "scalar_handoff_rate": 0.158,
+    "handoff_reduction_pct": -2.53,
+    "factored_is_more_selective": false
+  }
+}
