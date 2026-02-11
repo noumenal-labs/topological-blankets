@@ -1,0 +1,431 @@
+{
+  "experiment": "US-110",
+  "title": "FWH for Ensemble World Models",
+  "description": "Tests whether the Factored World Hypothesis (Shai et al. 2602.02385) extends to ensemble world models. Applies TB to FetchPush Bayes ensemble Jacobians and compares to FWH predictions.",
+  "model": {
+    "path": "C:/Users/citiz/Documents/noumenal-labs/pandas\\data\\fetchpush_50step",
+    "obs_dim": 25,
+    "action_dim": 4,
+    "achieved_goal_dim": 3,
+    "ensemble_size": 5,
+    "hidden_size": 256,
+    "depth": 2,
+    "env_id": "FetchPush-v4"
+  },
+  "data": {
+    "n_transitions": 2500,
+    "n_jacobian_samples": 500,
+    "jacobian_shape": [
+      5,
+      500,
+      25,
+      25
+    ]
+  },
+  "best_method": "sensitivity",
+  "best_ari": 0.154,
+  "best_blanket_f1": 0.4444,
+  "method_results": {
+    "sensitivity": {
+      "ari": 0.154,
+      "blanket_f1": 0.4444,
+      "assignment": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        -1,
+        0,
+        -1,
+        1,
+        1,
+        0,
+        -1,
+        -1,
+        -1,
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      "blankets": [
+        6,
+        8,
+        12,
+        13,
+        14,
+        18
+      ],
+      "objects": {
+        "0": [
+          0,
+          1,
+          3,
+          4,
+          5,
+          7,
+          11,
+          15,
+          16,
+          17,
+          19,
+          20,
+          21,
+          22
+        ],
+        "1": [
+          2,
+          9,
+          10,
+          23,
+          24
+        ]
+      },
+      "semantic_interpretation": {
+        "object_0": {
+          "variables": [
+            "grip_x",
+            "grip_y",
+            "obj_x",
+            "obj_y",
+            "obj_z",
+            "rel_y",
+            "obj_rot_0",
+            "obj_velp_y",
+            "obj_velp_z",
+            "obj_velr_x",
+            "obj_velr_z",
+            "grip_velp_x",
+            "grip_velp_y",
+            "extra_0"
+          ],
+          "dominant_group": "object"
+        },
+        "object_1": {
+          "variables": [
+            "grip_z",
+            "grip_state_0",
+            "grip_state_1",
+            "extra_1",
+            "extra_2"
+          ],
+          "dominant_group": "gripper"
+        },
+        "blanket": {
+          "variables": [
+            "rel_x",
+            "rel_z",
+            "obj_rot_1",
+            "obj_rot_2",
+            "obj_velp_x",
+            "obj_velr_y"
+          ]
+        }
+      }
+    },
+    "fisher": {
+      "ari": -0.0399,
+      "blanket_f1": 0.2667,
+      "assignment": [
+        -1,
+        0,
+        -1,
+        0,
+        0,
+        -1,
+        -1,
+        -1,
+        1,
+        1,
+        1,
+        -1,
+        1,
+        -1,
+        1,
+        0,
+        -1,
+        -1,
+        -1,
+        0,
+        1,
+        0,
+        -1,
+        -1,
+        1
+      ],
+      "blankets": [
+        0,
+        2,
+        5,
+        6,
+        7,
+        11,
+        13,
+        16,
+        17,
+        18,
+        22,
+        23
+      ],
+      "objects": {
+        "0": [
+          1,
+          3,
+          4,
+          15,
+          19,
+          21
+        ],
+        "1": [
+          8,
+          9,
+          10,
+          12,
+          14,
+          20,
+          24
+        ]
+      },
+      "semantic_interpretation": {
+        "object_0": {
+          "variables": [
+            "grip_y",
+            "obj_x",
+            "obj_y",
+            "obj_velp_y",
+            "obj_velr_z",
+            "grip_velp_y"
+          ],
+          "dominant_group": "object"
+        },
+        "object_1": {
+          "variables": [
+            "rel_z",
+            "grip_state_0",
+            "grip_state_1",
+            "obj_rot_1",
+            "obj_velp_x",
+            "grip_velp_x",
+            "extra_2"
+          ],
+          "dominant_group": "gripper"
+        },
+        "blanket": {
+          "variables": [
+            "grip_x",
+            "grip_z",
+            "obj_z",
+            "rel_x",
+            "rel_y",
+            "obj_rot_0",
+            "obj_rot_2",
+            "obj_velp_z",
+            "obj_velr_x",
+            "obj_velr_y",
+            "extra_0",
+            "extra_1"
+          ]
+        }
+      }
+    },
+    "jac_covariance": {
+      "ari": 0.0111,
+      "blanket_f1": 0.1818,
+      "assignment": [
+        -1,
+        -1,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1,
+        -1,
+        0,
+        -1,
+        -1,
+        0,
+        0,
+        1,
+        -1,
+        -1,
+        0,
+        0,
+        -1,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "blankets": [
+        0,
+        1,
+        8,
+        10,
+        11,
+        15,
+        16,
+        19
+      ],
+      "objects": {
+        "0": [
+          2,
+          5,
+          9,
+          12,
+          13,
+          17,
+          18,
+          21,
+          22,
+          23,
+          24
+        ],
+        "1": [
+          3,
+          4,
+          6,
+          7,
+          14,
+          20
+        ]
+      },
+      "semantic_interpretation": {
+        "object_0": {
+          "variables": [
+            "grip_z",
+            "obj_z",
+            "grip_state_0",
+            "obj_rot_1",
+            "obj_rot_2",
+            "obj_velr_x",
+            "obj_velr_y",
+            "grip_velp_y",
+            "extra_0",
+            "extra_1",
+            "extra_2"
+          ],
+          "dominant_group": "object"
+        },
+        "object_1": {
+          "variables": [
+            "obj_x",
+            "obj_y",
+            "rel_x",
+            "rel_y",
+            "obj_velp_x",
+            "grip_velp_x"
+          ],
+          "dominant_group": "object"
+        },
+        "blanket": {
+          "variables": [
+            "grip_x",
+            "grip_y",
+            "rel_z",
+            "grip_state_1",
+            "obj_rot_0",
+            "obj_velp_y",
+            "obj_velp_z",
+            "obj_velr_z"
+          ]
+        }
+      }
+    }
+  },
+  "fwh_predictions": {
+    "prediction_1_effective_dimensionality": {
+      "sensitivity": {
+        "n_clusters": 1,
+        "participation_ratio": 24.0,
+        "eigengap_value": 25.0,
+        "linear_in_N": true
+      },
+      "fisher": {
+        "n_clusters": 1,
+        "participation_ratio": 24.0,
+        "eigengap_value": 25.0,
+        "linear_in_N": true
+      },
+      "jac_covariance": {
+        "n_clusters": 1,
+        "participation_ratio": 24.0,
+        "eigengap_value": 25.0,
+        "linear_in_N": true
+      }
+    },
+    "prediction_2_orthogonal_subspaces": {
+      "sensitivity": {
+        "mean_min_angle_deg": 1.26,
+        "near_orthogonal": false
+      },
+      "fisher": {
+        "mean_min_angle_deg": 24.09,
+        "near_orthogonal": false
+      },
+      "jac_covariance": {
+        "mean_min_angle_deg": 16.87,
+        "near_orthogonal": false
+      }
+    },
+    "prediction_3_structure_recovery": {
+      "sensitivity": {
+        "ari": 0.15397631133671744,
+        "blanket_f1": 0.4444444444444444
+      },
+      "fisher": {
+        "ari": -0.03986135181975736,
+        "blanket_f1": 0.26666666666666666
+      },
+      "jac_covariance": {
+        "ari": 0.011052937754508435,
+        "blanket_f1": 0.18181818181818182
+      }
+    }
+  },
+  "ground_truth": {
+    "object_0_gripper": [
+      0,
+      1,
+      2,
+      9,
+      10,
+      20,
+      21
+    ],
+    "object_1_manipulated": [
+      3,
+      4,
+      5,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "blanket_relational": [
+      6,
+      7,
+      8
+    ],
+    "unstructured": [
+      22,
+      23,
+      24
+    ]
+  },
+  "runtime_s": 10.3
+}
