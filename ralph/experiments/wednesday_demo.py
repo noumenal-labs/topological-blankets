@@ -186,6 +186,17 @@ PHASE_COLORS = {
 # Member colors for ghost trajectories
 MEMBER_COLORS = ["#e6194b", "#3cb44b", "#4363d8", "#f58231", "#911eb4"]
 
+# Trajectory color-coding by demo phase (per Alec's viz recommendations)
+# Green = autonomous, yellow = elevated uncertainty, red = human/spike, green = resumed
+_TRAJECTORY_PHASE_COLORS = {
+    1: "#27ae60",   # green  - autonomous
+    2: "#f39c12",   # yellow - elevated uncertainty (advisory)
+    3: "#e74c3c",   # red    - uncertainty spike
+    4: "#e74c3c",   # red    - human takeover
+    5: "#27ae60",   # green  - resumed autonomous
+    6: "#27ae60",   # green  - analysis
+}
+
 # Gripper/object indices in 25D observation
 GRIP_X, GRIP_Y, GRIP_Z = 0, 1, 2
 OBJ_X, OBJ_Y, OBJ_Z = 3, 4, 5
@@ -441,8 +452,17 @@ def render_demo_frame(
         tb_update_interval=config.tb_update_interval,
     )
 
+    # Phase-colored trajectory with fading trail (Alec's viz recommendations)
+    _phase_color_fn = lambda r: _TRAJECTORY_PHASE_COLORS.get(
+        get_current_phase(r.step, config), "#3498db")
+
     # Render the base frame from US-079
-    base_frame = render_frame(step_record, history, tb_grouping, viz_config)
+    base_frame = render_frame(
+        step_record, history, tb_grouping, viz_config,
+        perturbation_step=config.perturbation_step,
+        phase_color_fn=_phase_color_fn,
+        trail_length=10,
+    )
 
     # Now overlay the phase banner and optional ghost trajectories.
     # We use a fresh figure with the imshow axis limits locked to the
@@ -484,6 +504,42 @@ def render_demo_frame(
         ha="right", va="center",
         zorder=200,
         clip_on=True,
+    )
+
+    # Mode indicator badge: AUTO (green) / HUMAN (red)
+    if step_record.teleop_mode == "human":
+        badge_text, badge_color = "HUMAN", "#e74c3c"
+    else:
+        badge_text, badge_color = "AUTO", "#27ae60"
+
+    ax.text(
+        w * 0.06, h * 0.035,
+        badge_text,
+        fontsize=11, fontweight="bold", color="white",
+        ha="center", va="center",
+        bbox=dict(
+            boxstyle="round,pad=0.3",
+            facecolor=badge_color,
+            edgecolor="white",
+            alpha=0.90,
+            linewidth=1.5,
+        ),
+        zorder=200,
+        clip_on=True,
+    )
+
+    # TB object group labels (bottom-left of trajectory panel)
+    ax.text(
+        w * 0.08, h * 0.935,
+        "Gripper (TB Object 0)",
+        fontsize=7, color="#3498db", fontstyle="italic",
+        ha="left", va="center", zorder=200, clip_on=True,
+    )
+    ax.text(
+        w * 0.08, h * 0.965,
+        "Object (TB Object 1)",
+        fontsize=7, color="#e67e22", fontstyle="italic",
+        ha="left", va="center", zorder=200, clip_on=True,
     )
 
     # Ghost trajectory overlay on the trajectory panel (left half)

@@ -357,6 +357,10 @@ def render_frame(
     history: list[StepRecord],
     tb_grouping: dict,
     config: DemoVizConfig,
+    *,
+    perturbation_step: Optional[int] = None,
+    phase_color_fn=None,
+    trail_length: int = 0,
 ) -> np.ndarray:
     """Render a single visualization frame as an RGB numpy array.
 
@@ -396,7 +400,8 @@ def render_frame(
     # ==================================================================
     # (A) State-space trajectory plot
     # ==================================================================
-    _draw_trajectory(ax_traj, step_record, history)
+    _draw_trajectory(ax_traj, step_record, history,
+                     phase_color_fn=phase_color_fn, trail_length=trail_length)
 
     # ==================================================================
     # (B1) Ensemble disagreement time series
@@ -407,6 +412,7 @@ def render_frame(
         label="Ensemble Disagreement",
         color="#3474a7",
         ylabel="Disagreement",
+        perturbation_step=perturbation_step,
     )
 
     # ==================================================================
@@ -418,6 +424,7 @@ def render_frame(
         label="CEM Plan Spread",
         color="#d6604d",
         ylabel="Plan Spread",
+        perturbation_step=perturbation_step,
     )
 
     # ==================================================================
@@ -480,16 +487,57 @@ def render_frame(
 # Sub-panel drawing helpers
 # ---------------------------------------------------------------------------
 
-def _draw_trajectory(ax, current: StepRecord, history: list[StepRecord]):
-    """Draw XY state-space trajectory for gripper and object."""
+def _draw_trajectory(ax, current: StepRecord, history: list[StepRecord],
+                     phase_color_fn=None, trail_length: int = 0):
+    """Draw XY state-space trajectory for gripper and object.
+
+    Parameters
+    ----------
+    phase_color_fn : callable, optional
+        Maps a StepRecord to a hex color string for phase-based coloring.
+        When provided, each gripper path segment is colored by phase.
+    trail_length : int
+        Number of recent steps rendered with fading-opacity trail.
+        0 (default) disables trail rendering.
+    """
     grip_xs = [r.grip_pos[0] for r in history]
     grip_ys = [r.grip_pos[1] for r in history]
     obj_xs = [r.obj_pos[0] for r in history]
     obj_ys = [r.obj_pos[1] for r in history]
 
-    # Trajectory lines
-    ax.plot(grip_xs, grip_ys, "-", color="#3498db", alpha=0.5, linewidth=1.2, label="Gripper path")
+    # Object path (always orange, uniform)
     ax.plot(obj_xs, obj_ys, "-", color="#e67e22", alpha=0.5, linewidth=1.2, label="Object path")
+
+    # Gripper path: phase-colored with optional fading trail
+    if phase_color_fn is not None and len(history) > 1:
+        n = len(history)
+        for i in range(1, n):
+            seg_color = phase_color_fn(history[i])
+            if trail_length > 0:
+                age = n - 1 - i
+                if age < trail_length:
+                    alpha = 0.20 + 0.80 * (1.0 - age / trail_length)
+                    lw = 1.2 + 1.3 * (1.0 - age / trail_length)
+                else:
+                    alpha = 0.15
+                    lw = 1.0
+            else:
+                alpha = 0.5
+                lw = 1.2
+            ax.plot(
+                [grip_xs[i - 1], grip_xs[i]], [grip_ys[i - 1], grip_ys[i]],
+                "-", color=seg_color, alpha=alpha, linewidth=lw, zorder=3,
+            )
+        ax.plot([], [], "-", color="#27ae60", linewidth=1.5, label="Gripper path")
+    else:
+        # Default: uniform blue path with purple for human segments
+        ax.plot(grip_xs, grip_ys, "-", color="#3498db", alpha=0.5, linewidth=1.2, label="Gripper path")
+        for i in range(1, len(history)):
+            if history[i].teleop_mode == "human":
+                ax.plot(
+                    [grip_xs[i - 1], grip_xs[i]], [grip_ys[i - 1], grip_ys[i]],
+                    "-", color="#9b59b6", alpha=0.6, linewidth=2.5, zorder=5,
+                )
 
     # Current positions
     ax.plot(current.grip_pos[0], current.grip_pos[1], "o",
@@ -509,18 +557,9 @@ def _draw_trajectory(ax, current: StepRecord, history: list[StepRecord]):
         ax.plot(current.human_goal[0], current.human_goal[1], "D",
                 color="#9b59b6", markersize=12, markeredgecolor="white",
                 markeredgewidth=1.5, zorder=11, label="Human target")
-        # Draw a line from gripper to human goal
         ax.plot([current.grip_pos[0], current.human_goal[0]],
                 [current.grip_pos[1], current.human_goal[1]],
                 "--", color="#9b59b6", alpha=0.6, linewidth=1.5)
-
-    # Color trajectory segments by teleop mode
-    for i in range(1, len(history)):
-        if history[i].teleop_mode == "human":
-            ax.plot(
-                [grip_xs[i-1], grip_xs[i]], [grip_ys[i-1], grip_ys[i]],
-                "-", color="#9b59b6", alpha=0.6, linewidth=2.5, zorder=5,
-            )
 
     ax.set_xlabel("X position", fontsize=9)
     ax.set_ylabel("Y position", fontsize=9)
@@ -544,7 +583,8 @@ def _draw_trajectory(ax, current: StepRecord, history: list[StepRecord]):
     ax.set_aspect("equal", adjustable="box")
 
 
-def _draw_time_series(ax, history, value_fn, label, color, ylabel):
+def _draw_time_series(ax, history, value_fn, label, color, ylabel,
+                      perturbation_step=None):
     """Draw a time-series line chart on the given axes."""
     steps = [r.step for r in history]
     values = [value_fn(r) for r in history]
@@ -560,6 +600,13 @@ def _draw_time_series(ax, history, value_fn, label, color, ylabel):
             xytext=(5, 5), textcoords="offset points",
             fontsize=7, color=color, fontweight="bold",
         )
+
+    # Perturbation marker (red dashed vertical line)
+    if perturbation_step is not None:
+        ax.axvline(x=perturbation_step, color="#e74c3c", linestyle="--",
+                   linewidth=1.0, alpha=0.7, zorder=50)
+        ax.text(perturbation_step, ax.get_ylim()[1] * 0.92, " perturb",
+                fontsize=6, color="#e74c3c", alpha=0.8, va="top")
 
     ax.set_ylabel(ylabel, fontsize=8)
     ax.set_title(label, fontsize=9, fontweight="bold", pad=4)
