@@ -66,6 +66,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import matplotlib.gridspec as gridspec
 from matplotlib.colors import LinearSegmentedColormap
+from mpl_toolkits.mplot3d import Axes3D  # noqa: F401 (registers '3d' projection)
 import numpy as np
 
 # ---------------------------------------------------------------------------
@@ -247,6 +248,9 @@ class WednesdayDemoConfig:
     ghost_horizon: int = 15
     n_ghost_members: int = 5
 
+    # 3D trajectory inset
+    show_3d: bool = False
+
 
 # ---------------------------------------------------------------------------
 # Scenario timeline builder
@@ -364,6 +368,52 @@ def generate_synthetic_ghosts(
     return ghost_positions
 
 
+def generate_synthetic_ghosts_3d(
+    grip_pos: np.ndarray,
+    obj_pos: np.ndarray,
+    phase: int,
+    n_members: int = 5,
+    horizon: int = 15,
+    rng: np.random.Generator = None,
+) -> np.ndarray:
+    """Generate synthetic ghost trajectories in full 3D (XYZ).
+
+    Same phase-dependent spread logic as the 2D variant but preserves Z.
+
+    Returns:
+        ghost_positions: shape (n_members, horizon, 3)
+    """
+    if rng is None:
+        rng = np.random.default_rng(42)
+
+    direction = obj_pos[:3] - grip_pos[:3]
+    direction_norm = np.linalg.norm(direction)
+    if direction_norm > 1e-6:
+        direction = direction / direction_norm
+    else:
+        direction = np.array([1.0, 0.0, 0.0])
+
+    if phase == 3:
+        spread_scale = 0.08
+    elif phase == 4:
+        spread_scale = 0.04
+    elif phase == 2:
+        spread_scale = 0.05
+    else:
+        spread_scale = 0.01
+
+    ghost_positions = np.zeros((n_members, horizon, 3))
+    for m in range(n_members):
+        pos = grip_pos[:3].copy()
+        member_bias = rng.normal(0, spread_scale, size=3)
+        for t in range(horizon):
+            step_noise = rng.normal(0, spread_scale * 0.3, size=3)
+            pos = pos + direction * 0.005 + member_bias * (t / horizon) + step_noise
+            ghost_positions[m, t] = pos
+
+    return ghost_positions
+
+
 # ---------------------------------------------------------------------------
 # Synthetic coupling matrix generator (for structure analysis phase)
 # ---------------------------------------------------------------------------
@@ -419,6 +469,88 @@ def generate_synthetic_coupling(phase: str, n_vars: int = 25, seed: int = 42) ->
 
 
 # ---------------------------------------------------------------------------
+# 3D trajectory inset renderer
+# ---------------------------------------------------------------------------
+def _render_3d_inset(
+    history: list[StepRecord],
+    config: WednesdayDemoConfig,
+    phase: int,
+    step: int,
+    ghost_3d: Optional[np.ndarray] = None,
+) -> np.ndarray:
+    """Render a small 3D trajectory inset as an RGBA numpy array.
+
+    Shows gripper path (blue), object path (orange), goal (red star),
+    and ghost ensemble trajectories during uncertainty phases.
+    Camera azimuth drifts slowly over the episode for spatial context.
+    """
+    size_px = 250
+    dpi = config.dpi
+    fig_size = size_px / dpi
+
+    fig = plt.figure(figsize=(fig_size, fig_size), dpi=dpi)
+    ax = fig.add_axes([0.05, 0.08, 0.90, 0.88], projection="3d")
+    ax.set_facecolor((0.97, 0.97, 0.95, 0.85))
+    fig.patch.set_alpha(0.0)
+
+    # Trajectory data from history
+    gx = [r.grip_pos[0] for r in history]
+    gy = [r.grip_pos[1] for r in history]
+    gz = [r.grip_pos[2] for r in history]
+    ox = [r.obj_pos[0] for r in history]
+    oy = [r.obj_pos[1] for r in history]
+    oz = [r.obj_pos[2] for r in history]
+
+    # Gripper trail (blue)
+    ax.plot(gx, gy, gz, "-", color="#3498db", linewidth=1.2, alpha=0.7, label="Gripper")
+    if gx:
+        ax.scatter([gx[-1]], [gy[-1]], [gz[-1]], c="#3498db", s=30, zorder=10,
+                   edgecolors="white", linewidths=0.5)
+
+    # Object trail (orange)
+    ax.plot(ox, oy, oz, "-", color="#e67e22", linewidth=1.2, alpha=0.7, label="Object")
+    if ox:
+        ax.scatter([ox[-1]], [oy[-1]], [oz[-1]], c="#e67e22", s=30, zorder=10,
+                   edgecolors="white", linewidths=0.5, marker="s")
+
+    # Goal (red star)
+    if history:
+        g = history[-1].desired_goal
+        ax.scatter([g[0]], [g[1]], [g[2]], c="#e74c3c", s=60, marker="*", zorder=11)
+
+    # Ghost trajectories in 3D
+    if ghost_3d is not None and phase in (2, 3, 4, 5):
+        alpha_base = 0.35 if phase == 3 else 0.2
+        for m in range(ghost_3d.shape[0]):
+            color = MEMBER_COLORS[m % len(MEMBER_COLORS)]
+            traj = ghost_3d[m]  # (horizon, 3)
+            ax.plot(traj[:, 0], traj[:, 1], traj[:, 2], "-",
+                    color=color, alpha=alpha_base, linewidth=0.8)
+
+    # Camera: slow azimuth drift, fixed elevation
+    azimuth = 30 + (step / max(config.max_steps, 1)) * 90
+    ax.view_init(elev=25, azim=azimuth)
+
+    # Minimal axis styling
+    ax.tick_params(labelsize=4, pad=-4)
+    ax.set_xlabel("X", fontsize=5, labelpad=-10)
+    ax.set_ylabel("Y", fontsize=5, labelpad=-10)
+    ax.set_zlabel("Z", fontsize=5, labelpad=-10)
+    ax.xaxis.pane.fill = False
+    ax.yaxis.pane.fill = False
+    ax.zaxis.pane.fill = False
+    ax.xaxis.pane.set_edgecolor((0.8, 0.8, 0.8, 0.3))
+    ax.yaxis.pane.set_edgecolor((0.8, 0.8, 0.8, 0.3))
+    ax.zaxis.pane.set_edgecolor((0.8, 0.8, 0.8, 0.3))
+    ax.grid(True, alpha=0.15)
+    fig.canvas.draw()
+    buf = fig.canvas.buffer_rgba()
+    inset = np.asarray(buf).copy()  # (h, w, 4) RGBA
+    plt.close(fig)
+    return inset
+
+
+# ---------------------------------------------------------------------------
 # Enhanced frame renderer (extends US-079 with phase banner + ghost overlay)
 # ---------------------------------------------------------------------------
 def render_demo_frame(
@@ -428,6 +560,7 @@ def render_demo_frame(
     config: WednesdayDemoConfig,
     phase: int,
     ghost_positions: Optional[np.ndarray] = None,
+    ghost_3d: Optional[np.ndarray] = None,
 ) -> np.ndarray:
     """Render a single frame with phase narrative banner and ghost overlay.
 
@@ -435,6 +568,7 @@ def render_demo_frame(
       - Large phase label banner across the top
       - Ghost trajectory overlay during phases 2-4
       - Phase-colored border accent
+      - Optional 3D trajectory inset (when config.show_3d is True)
     """
     viz_config = DemoVizConfig(
         env_id=config.env_id,
@@ -550,6 +684,30 @@ def render_demo_frame(
     buf = fig.canvas.buffer_rgba()
     img = np.asarray(buf)[:, :, :3].copy()
     plt.close(fig)
+
+    # 3D trajectory inset (composited via alpha blending)
+    if config.show_3d and len(history) >= 2:
+        inset_rgba = _render_3d_inset(
+            history, config, phase, step_record.step, ghost_3d=ghost_3d,
+        )
+        ih, iw = inset_rgba.shape[:2]
+        # Position: bottom-right of the left trajectory panel, above TB labels
+        # Left panel spans roughly x=[0.06, 0.50] of image width
+        x_off = int(0.50 * w) - iw - 6
+        y_off = h - ih - int(0.10 * h)
+        # Clamp to image bounds
+        x_off = max(0, x_off)
+        y_off = max(0, y_off)
+        x_end = min(w, x_off + iw)
+        y_end = min(h, y_off + ih)
+        crop_iw = x_end - x_off
+        crop_ih = y_end - y_off
+        # Alpha-blend the RGBA inset onto the RGB frame
+        alpha = inset_rgba[:crop_ih, :crop_iw, 3:4].astype(np.float32) / 255.0
+        inset_rgb = inset_rgba[:crop_ih, :crop_iw, :3].astype(np.float32)
+        bg = img[y_off:y_end, x_off:x_end].astype(np.float32)
+        blended = (inset_rgb * alpha + bg * (1.0 - alpha))
+        img[y_off:y_end, x_off:x_end] = blended.astype(np.uint8)
 
     # Phase-colored accent bar at bottom (directly paint onto the image array)
     bar_h = max(2, int(img.shape[0] * 0.008))
@@ -934,6 +1092,7 @@ def run_dry_run_demo(cfg: WednesdayDemoConfig) -> tuple[list[StepRecord], list[n
 
         # Generate ghost trajectories for phases 2-4
         ghost_pos = None
+        ghost_3d = None
         if phase in (2, 3, 4):
             ghost_pos = generate_synthetic_ghosts(
                 grip_pos, obj_pos, phase,
@@ -941,11 +1100,19 @@ def run_dry_run_demo(cfg: WednesdayDemoConfig) -> tuple[list[StepRecord], list[n
                 horizon=cfg.ghost_horizon,
                 rng=rng,
             )
+            if cfg.show_3d:
+                ghost_3d = generate_synthetic_ghosts_3d(
+                    grip_pos, obj_pos, phase,
+                    n_members=cfg.n_ghost_members,
+                    horizon=cfg.ghost_horizon,
+                    rng=rng,
+                )
 
         # Render frame (phases 1-5 use the enhanced demo frame)
         if phase <= 5:
             frame = render_demo_frame(
-                record, records, tb_grouping, cfg, phase, ghost_pos
+                record, records, tb_grouping, cfg, phase, ghost_pos,
+                ghost_3d=ghost_3d,
             )
         else:
             # Phase 6: structure analysis frame
@@ -1174,6 +1341,7 @@ def run_live_demo(
 
         # Ghost trajectories for phases 2-4
         ghost_pos = None
+        ghost_3d = None
         if phase in (2, 3, 4):
             ghost_pos = generate_synthetic_ghosts(
                 grip_pos, obj_pos, phase,
@@ -1181,10 +1349,20 @@ def run_live_demo(
                 horizon=cfg.ghost_horizon,
                 rng=rng,
             )
+            if cfg.show_3d:
+                ghost_3d = generate_synthetic_ghosts_3d(
+                    grip_pos, obj_pos, phase,
+                    n_members=cfg.n_ghost_members,
+                    horizon=cfg.ghost_horizon,
+                    rng=rng,
+                )
 
         # Render frame
         if phase <= 5:
-            frame = render_demo_frame(record, records, tb_grouping, cfg, phase, ghost_pos)
+            frame = render_demo_frame(
+                record, records, tb_grouping, cfg, phase, ghost_pos,
+                ghost_3d=ghost_3d,
+            )
         else:
             frame = render_structure_frame(coupling_before, coupling_after, cfg, step)
         frames.append(frame)
@@ -1401,6 +1579,8 @@ def main():
                         choices=["symbolic", "tb", "tb-discover"],
                         help="Planner mode: symbolic (default), tb (ground-truth "
                              "partition), or tb-discover (full pipeline)")
+    parser.add_argument("--show-3d", action="store_true", default=False,
+                        help="Enable 3D trajectory inset in demo frames")
     args = parser.parse_args()
 
     # Auto-detect dry-run if gym is unavailable
@@ -1412,6 +1592,7 @@ def main():
         dry_run=dry_run,
         gif_fps=args.gif_fps,
         dpi=args.dpi,
+        show_3d=args.show_3d,
     )
 
     # Adjust phase boundaries proportionally if max_steps differs from default
@@ -1435,6 +1616,7 @@ def main():
     print(f"  Goal inject #1: step {cfg.first_goal_step}")
     print(f"  Goal inject #2: step {cfg.second_goal_step}")
     print(f"  Human release:  step {cfg.release_step}")
+    print(f"  3D inset:       {'ON' if cfg.show_3d else 'OFF'}")
     print()
 
     t0 = time.time()

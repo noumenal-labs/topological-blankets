@@ -1,0 +1,201 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=0.9in]{geometry}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\lstset{basicstyle=\ttfamily\small, backgroundcolor=\color{gray!8},
+  frame=single, breaklines=true, columns=fullflexible, keepspaces=true}
+
+\title{Wednesday Demo: What's Ready}
+\author{Noumenal Labs}
+\date{February 11, 2026}
+
+\begin{document}
+\maketitle
+
+\section{Quick Start}
+
+\begin{lstlisting}[language=bash]
+cd topological-blankets
+
+# Dry-run (numpy + matplotlib only)
+python ralph/experiments/wednesday_demo.py --dry-run
+
+# Live (needs gymnasium-robotics + MuJoCo)
+python ralph/experiments/wednesday_demo.py --live --planner symbolic
+
+# Live with TB-discovery pipeline
+python ralph/experiments/wednesday_demo.py --live --planner tb-discover
+
+# With 3D trajectory inset (works with any mode)
+python ralph/experiments/wednesday_demo.py --dry-run --show-3d
+\end{lstlisting}
+
+Outputs go to \texttt{ralph/results/}: timestamped GIF, JSON, and 8 key-frame PNGs.
+
+\section{The Six Phases}
+
+\begin{tabular}{clll}
+\toprule
+\textbf{\#} & \textbf{Phase} & \textbf{Steps} & \textbf{What Happens} \\
+\midrule
+1 & Autonomous Push     & 0--19  & Ensemble solves push, low uncertainty \\
+2 & Novel Configuration & 20     & Object displaced to unfamiliar position \\
+3 & Uncertainty Spike   & 21--31 & Ensemble disagrees, catastrophe fires \\
+4 & Human Takeover      & 32--51 & Two goal injections (steps 32, 42) \\
+5 & Collaborative       & 52--79 & Agent resumes, task completes \\
+6 & Structure Analysis  & final  & TB coupling: pre vs.\ post perturbation \\
+\bottomrule
+\end{tabular}
+
+\medskip\noindent
+All 6/6 acceptance criteria pass. Planner options: \texttt{symbolic} (default),
+\texttt{tb} (ground-truth partition), \texttt{tb-discover} (full pipeline).
+
+\section{Integration Surface}
+
+Single file: \texttt{ralph/experiments/wednesday\_demo.py} (1500 lines).
+
+\subsection{Config}
+
+\begin{lstlisting}[language=python]
+@dataclass
+class WednesdayDemoConfig:
+    max_steps: int = 80
+    env_id: str = "FetchPush-v4"
+    perturbation_step: int = 20
+    first_goal_step: int = 32
+    second_goal_step: int = 42
+    release_step: int = 52
+    yellow_threshold: float = 0.35
+    red_threshold: float = 0.60
+    ghost_horizon: int = 15
+    n_ghost_members: int = 5
+    fig_width: float = 16.0
+    fig_height: float = 9.0
+    dpi: int = 100
+    gif_fps: int = 2
+    show_3d: bool = False
+\end{lstlisting}
+
+\subsection{Run and Save}
+
+\begin{lstlisting}[language=python]
+records, frames = run_dry_run_demo(cfg)
+# or
+records, frames = run_live_demo(cfg, planner_mode="symbolic")
+
+# records: list[StepRecord] -- per-step state
+#   .grip_pos, .obj_pos, .desired_goal   (3D arrays)
+#   .obs_vec                             (25D)
+#   .ensemble_disagreement, .cem_plan_spread
+#   .catastrophe_severity, .catastrophe_level
+#   .phase_name, .teleop_mode, .human_goal
+#   .is_key_frame, .key_frame_label
+#
+# frames: list[np.ndarray] -- (h, w, 3) uint8
+
+summary = save_demo_outputs(records, frames, cfg)
+# Writes GIF + PNGs + JSON to ralph/results/
+\end{lstlisting}
+
+\subsection{Frame Rendering}
+
+Two functions return raw RGB numpy arrays:
+
+\begin{lstlisting}[language=python]
+def render_demo_frame(step_record, history, tb_grouping,
+                      config, phase, ghost_positions=None,
+                      ghost_3d=None) -> np.ndarray:
+    """(h, w, 3) uint8 frame for phases 1-5.
+    Replace this to plug in a custom renderer."""
+
+def render_structure_frame(coupling_before, coupling_after,
+                           config, step) -> np.ndarray:
+    """(h, w, 3) uint8 frame for phase 6."""
+\end{lstlisting}
+
+\subsection{Ghost Trajectories}
+
+\begin{lstlisting}[language=python]
+def generate_synthetic_ghosts(grip_pos, obj_pos, phase,
+    n_members=5, horizon=15, rng=None) -> np.ndarray:
+    """(n_members, horizon, 2) XY. Spread: 0.08 spike, 0.01 normal."""
+
+def generate_synthetic_ghosts_3d(grip_pos, obj_pos, phase,
+    n_members=5, horizon=15, rng=None) -> np.ndarray:
+    """(n_members, horizon, 3) XYZ. Same spread logic."""
+
+def generate_synthetic_coupling(phase, n_vars=25, seed=42
+    ) -> np.ndarray:
+    """(25, 25) symmetric. phase='before': block-diagonal,
+    phase='after': diffuse (perturbation breaks structure)."""
+\end{lstlisting}
+
+\section{Available Components}
+
+Importable if \texttt{panda} and \texttt{topological\_blankets} are on
+\texttt{sys.path}:
+
+\begin{lstlisting}[language=python]
+# Catastrophe detection
+from panda.catastrophe_bridge import (
+    CatastropheBridge, CatastropheSignal, HandoverState)
+
+# Planners
+from panda.symbolic_planner import make_symbolic_planner
+from panda.learned_planner import (
+    TBGuidedPlanner, make_fetchpush_ground_truth_partition)
+
+# TB discovery from ensemble Jacobians
+from panda.tb_discovery import discover_or_fallback
+
+# Core TB library (v0.2.0)
+from topological_blankets import TopologicalBlankets, compute_eigengap
+\end{lstlisting}
+
+\section{BayesformerTB: Negative Result (Not a Blocker)}
+
+TB-masked attention transformer on the GHMM task (5-factor, 433-vocab,
+10k sequences, 40 epochs). Architecture is implemented correctly; the
+performance hypothesis is falsified.
+
+\begin{tabular}{lcc}
+\toprule
+& \textbf{BayesformerTB} & \textbf{Vanilla GPT-2} \\
+\midrule
+Final CE loss        & 4.56   & 1.77 \\
+Training time        & 914\,s & 190\,s \\
+Predictive entropy   & 5.06   & 2.15 \\
+\bottomrule
+\end{tabular}
+
+\medskip\noindent
+TB detects factored structure post-hoc (eigengap works), but imposing it as an
+architectural constraint during training hurts performance. The soft attention
+mask plus eigengap regularization ($\lambda=0.01$) is too restrictive.
+
+The \texttt{SmallGPT2} model (4 layers, $d=120$, 4 heads, 750k params) and
+\texttt{GHMMDataset} from \texttt{fwh\_ghmm\_tb\_detection.py} are reusable.
+
+\section{File Map}
+
+\begin{lstlisting}
+ralph/
+  experiments/
+    wednesday_demo.py          # main demo
+    bayesformer_tb.py          # BayesformerTB experiment
+    fwh_ghmm_tb_detection.py   # GHMM + TB detection
+    demo_push_visualization.py # shared viz utilities
+  results/                     # all outputs land here
+  WEDNESDAY_DEMO_GUIDE.md      # detailed guide + troubleshooting
+  FWH_TB_DETECTION.md          # TB <-> FWH bridge document
+  prd.json                     # full PRD (114 user stories)
+
+topological_blankets/          # core TB library v0.2.0
+  core.py, spectral.py, detection.py, clustering.py, ...
+\end{lstlisting}
+
+\end{document}

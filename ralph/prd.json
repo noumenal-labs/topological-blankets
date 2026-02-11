@@ -2459,6 +2459,25 @@
       "phase": 17,
       "dependencies": ["US-081"],
       "notes": "TIME-SENSITIVE: Nice-to-have for Wednesday demo but not a blocker. Use mplot3d only (no pyvista/plotly). StepRecord already carries grip_pos and obj_pos as 3D arrays. Ghost trajectories from generate_synthetic_ghosts() are currently 2D (n_members, horizon, 2); extend to 3D by including Z or create a generate_synthetic_ghosts_3d() variant. Camera azimuth drift: start at 30deg, rotate ~90deg over 80 steps. Keep rendering overhead under 0.5s per frame."
+    },
+    {
+      "id": "US-116",
+      "title": "Generate FetchPush sample efficiency comparison plot vs DDPG+HER baseline",
+      "description": "As a researcher presenting results, I need a success-rate-vs-environment-steps plot for FetchPush that mirrors the existing Reach comparison (wandb_compare_reach.png), so that we can quantify and communicate our Push sample efficiency advantage. The trained Push model exists (lambda_models/fetchpush/train_summary.json, 55k env steps, completed 2026-02-10). The demo proves the agent works (6/6 acceptance criteria pass), but there is no equivalent plot showing 'Push is Nx more sample-efficient than DDPG+HER'. This is a critical gap for the demo presentation.",
+      "acceptanceCriteria": [
+        "Extract per-iteration success rate from the existing FetchPush training logs or replay the saved checkpoints to compute rollout_success_rate at each eval checkpoint",
+        "Run or reference a DDPG+HER FetchPush-v4 baseline (stable-baselines3 or published curve) for comparison",
+        "Generate a plot matching the style of wandb_compare_reach.png: x-axis = environment steps, y-axis = rollout_success_rate, two curves (ours vs DDPG+HER)",
+        "Save plot to ralph/results/ as fetchpush_sample_efficiency_comparison.png",
+        "Save a companion JSON with the raw data points for both curves",
+        "Plot title: 'Push: Rollout Mean Success Rate'",
+        "Copy the final plot to sharing/alec_2026-02-11/ for handoff"
+      ],
+      "priority": 1,
+      "passes": false,
+      "phase": 17,
+      "dependencies": [],
+      "notes": "TIME-SENSITIVE: Needed for today's demo. The Reach plot already shows ~6x advantage (100% at 1,500 vs 10,000 steps). We need the Push equivalent. Check lambda_models/fetchpush/ for eval logs, lambda_models/fetchpush/train_summary.json for config. If no per-checkpoint eval data exists, reconstruct from the training log or re-run eval on saved checkpoints. For the DDPG+HER baseline, stable-baselines3 zoo benchmarks report FetchPush convergence; use published numbers if running a fresh baseline isn't feasible in time."
     }
   ],
   "phases": {}
