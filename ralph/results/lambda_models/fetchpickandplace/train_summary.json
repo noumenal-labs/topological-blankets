@@ -1,0 +1,9 @@
+{
+  "finished_at": "2026-02-11T01:40:22",
+  "total_env_steps": 55000,
+  "total_train_updates": 50500,
+  "reward_mode": "dense",
+  "train_use_epistemic_bonus": false,
+  "eval_use_epistemic_bonus": false,
+  "symbolic_task": "push"
+}

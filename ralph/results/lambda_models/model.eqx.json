@@ -1,0 +1,14 @@
+{
+  "obs_dim": 25,
+  "action_dim": 4,
+  "achieved_goal_dim": 3,
+  "ensemble_size": 5,
+  "hidden_size": 256,
+  "depth": 2,
+  "obs_key": "observation",
+  "achieved_goal_key": "achieved_goal",
+  "desired_goal_key": "desired_goal",
+  "env_id": "FetchSlide-v4",
+  "reward_mode": "dense",
+  "max_episode_steps": 50
+}

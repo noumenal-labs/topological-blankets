@@ -1,0 +1,119 @@
+{
+  "experiment": "wednesday_demo",
+  "timestamp": "2026-02-11T06:14:45",
+  "config": {
+    "max_steps": 10,
+    "seed": 42,
+    "env_id": "FetchPush-v4",
+    "dry_run": true,
+    "gif_fps": 1,
+    "perturbation_step": 5,
+    "first_goal_step": 14,
+    "second_goal_step": 19,
+    "release_step": 24
+  },
+  "demo_metrics": {
+    "total_steps": 10,
+    "total_frames": 10,
+    "gif_duration_sec": 10.0,
+    "max_disagreement": 0.21439698987431413,
+    "max_severity": 0.9864371287214437,
+    "human_steps": 0,
+    "agent_steps": 10,
+    "catastrophe_within_5_of_perturbation": true,
+    "first_red_step": 5,
+    "goal_injections": 0,
+    "final_goal_distance": 0.2864,
+    "task_complete": false,
+    "phases_covered": [
+      1,
+      2,
+      3
+    ]
+  },
+  "narrative_events": [
+    {
+      "step": 0,
+      "label": "autonomous_start",
+      "phase": 1
+    },
+    {
+      "step": 5,
+      "label": "perturbation",
+      "phase": 2
+    },
+    {
+      "step": 9,
+      "label": "episode_end",
+      "phase": 3
+    }
+  ],
+  "severity_timeline": [
+    {
+      "step": 0,
+      "severity": 0.0315,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 1,
+      "severity": 0.0338,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 2,
+      "severity": 0.0202,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 3,
+      "severity": 0.0306,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 4,
+      "severity": 0.0299,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 5,
+      "severity": 0.636,
+      "level": "red",
+      "phase": 2
+    },
+    {
+      "step": 6,
+      "severity": 0.6123,
+      "level": "red",
+      "phase": 2
+    },
+    {
+      "step": 7,
+      "severity": 0.6042,
+      "level": "red",
+      "phase": 2
+    },
+    {
+      "step": 8,
+      "severity": 0.9864,
+      "level": "red",
+      "phase": 3
+    },
+    {
+      "step": 9,
+      "severity": 0.9781,
+      "level": "red",
+      "phase": 3
+    }
+  ],
+  "saved_files": [
+    "C:\\Users\\citiz\\Documents\\noumenal-labs\\topological-blankets\\ralph\\results\\2026-02-11_061443_wednesday_demo.gif",
+    "C:\\Users\\citiz\\Documents\\noumenal-labs\\topological-blankets\\ralph\\results\\2026-02-11_061443_wednesday_autonomous_start_step000.png",
+    "C:\\Users\\citiz\\Documents\\noumenal-labs\\topological-blankets\\ralph\\results\\2026-02-11_061443_wednesday_perturbation_step005.png",
+    "C:\\Users\\citiz\\Documents\\noumenal-labs\\topological-blankets\\ralph\\results\\2026-02-11_061443_wednesday_episode_end_step009.png"
+  ]
+}

@@ -1,0 +1,566 @@
+{
+  "experiment": "wednesday_demo",
+  "timestamp": "2026-02-11T05:57:58",
+  "config": {
+    "max_steps": 80,
+    "seed": 42,
+    "env_id": "FetchPush-v4",
+    "dry_run": true,
+    "gif_fps": 2,
+    "perturbation_step": 20,
+    "first_goal_step": 32,
+    "second_goal_step": 42,
+    "release_step": 52
+  },
+  "demo_metrics": {
+    "total_steps": 80,
+    "total_frames": 80,
+    "gif_duration_sec": 40.0,
+    "max_disagreement": 0.21371627085601722,
+    "max_severity": 0.9952339936140933,
+    "human_steps": 20,
+    "agent_steps": 60,
+    "catastrophe_within_5_of_perturbation": true,
+    "first_red_step": 20,
+    "goal_injections": 2,
+    "final_goal_distance": 0.0908,
+    "task_complete": true,
+    "phases_covered": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "narrative_events": [
+    {
+      "step": 0,
+      "label": "autonomous_start",
+      "phase": 1
+    },
+    {
+      "step": 20,
+      "label": "perturbation",
+      "phase": 2
+    },
+    {
+      "step": 23,
+      "label": "uncertainty_spike",
+      "phase": 3
+    },
+    {
+      "step": 32,
+      "label": "human_takeover",
+      "phase": 4
+    },
+    {
+      "step": 42,
+      "label": "second_goal",
+      "phase": 4
+    },
+    {
+      "step": 52,
+      "label": "collaborative_completion",
+      "phase": 5
+    },
+    {
+      "step": 79,
+      "label": "episode_end",
+      "phase": 6
+    }
+  ],
+  "severity_timeline": [
+    {
+      "step": 0,
+      "severity": 0.0315,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 1,
+      "severity": 0.0338,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 2,
+      "severity": 0.0202,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 3,
+      "severity": 0.0306,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 4,
+      "severity": 0.0299,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 5,
+      "severity": 0.0344,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 6,
+      "severity": 0.0303,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 7,
+      "severity": 0.0323,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 8,
+      "severity": 0.0318,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 9,
+      "severity": 0.0344,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 10,
+      "severity": 0.0291,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 11,
+      "severity": 0.0361,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 12,
+      "severity": 0.0279,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 13,
+      "severity": 0.0327,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 14,
+      "severity": 0.0321,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 15,
+      "severity": 0.0407,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 16,
+      "severity": 0.0274,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 17,
+      "severity": 0.0331,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 18,
+      "severity": 0.0294,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 19,
+      "severity": 0.0259,
+      "level": "green",
+      "phase": 1
+    },
+    {
+      "step": 20,
+      "severity": 0.6343,
+      "level": "red",
+      "phase": 2
+    },
+    {
+      "step": 21,
+      "severity": 0.6032,
+      "level": "red",
+      "phase": 2
+    },
+    {
+      "step": 22,
+      "severity": 0.5999,
+      "level": "yellow",
+      "phase": 2
+    },
+    {
+      "step": 23,
+      "severity": 0.9952,
+      "level": "red",
+      "phase": 3
+    },
+    {
+      "step": 24,
+      "severity": 0.9746,
+      "level": "red",
+      "phase": 3
+    },
+    {
+      "step": 25,
+      "severity": 0.9511,
+      "level": "red",
+      "phase": 3
+    },
+    {
+      "step": 26,
+      "severity": 0.9043,
+      "level": "red",
+      "phase": 3
+    },
+    {
+      "step": 27,
+      "severity": 0.9058,
+      "level": "red",
+      "phase": 3
+    },
+    {
+      "step": 28,
+      "severity": 0.8939,
+      "level": "red",
+      "phase": 3
+    },
+    {
+      "step": 29,
+      "severity": 0.8688,
+      "level": "red",
+      "phase": 3
+    },
+    {
+      "step": 30,
+      "severity": 0.8401,
+      "level": "red",
+      "phase": 3
+    },
+    {
+      "step": 31,
+      "severity": 0.8585,
+      "level": "red",
+      "phase": 3
+    },
+    {
+      "step": 32,
+      "severity": 0.1664,
+      "level": "green",
+      "phase": 4
+    },
+    {
+      "step": 33,
+      "severity": 0.1569,
+      "level": "green",
+      "phase": 4
+    },
+    {
+      "step": 34,
+      "severity": 0.1594,
+      "level": "green",
+      "phase": 4
+    },
+    {
+      "step": 35,
+      "severity": 0.1445,
+      "level": "green",
+      "phase": 4
+    },
+    {
+      "step": 36,
+      "severity": 0.1428,
+      "level": "green",
+      "phase": 4
+    },
+    {
+      "step": 37,
+      "severity": 0.1449,
+      "level": "green",
+      "phase": 4
+    },
+    {
+      "step": 38,
+      "severity": 0.1385,
+      "level": "green",
+      "phase": 4
+    },
+    {
+      "step": 39,
+      "severity": 0.1407,
+      "level": "green",
+      "phase": 4
+    },
+    {
+      "step": 40,
+      "severity": 0.1367,
+      "level": "green",
+      "phase": 4
+    },
+    {
+      "step": 41,
+      "severity": 0.1293,
+      "level": "green",
+      "phase": 4
+    },
+    {
+      "step": 42,
+      "severity": 0.1219,
+      "level": "green",
+      "phase": 4
+    },
+    {
+      "step": 43,
+      "severity": 0.1228,
+      "level": "green",
+      "phase": 4
+    },
+    {
+      "step": 44,
+      "severity": 0.125,
+      "level": "green",
+      "phase": 4
+    },
+    {
+      "step": 45,
+      "severity": 0.1233,
+      "level": "green",
+      "phase": 4
+    },
+    {
+      "step": 46,
+      "severity": 0.1149,
+      "level": "green",
+      "phase": 4
+    },
+    {
+      "step": 47,
+      "severity": 0.1057,
+      "level": "green",
+      "phase": 4
+    },
+    {
+      "step": 48,
+      "severity": 0.1051,
+      "level": "green",
+      "phase": 4
+    },
+    {
+      "step": 49,
+      "severity": 0.1117,
+      "level": "green",
+      "phase": 4
+    },
+    {
+      "step": 50,
+      "severity": 0.1053,
+      "level": "green",
+      "phase": 4
+    },
+    {
+      "step": 51,
+      "severity": 0.1031,
+      "level": "green",
+      "phase": 4
+    },
+    {
+      "step": 52,
+      "severity": 0.0457,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 53,
+      "severity": 0.045,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 54,
+      "severity": 0.0534,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 55,
+      "severity": 0.0508,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 56,
+      "severity": 0.0451,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 57,
+      "severity": 0.0479,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 58,
+      "severity": 0.0481,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 59,
+      "severity": 0.0545,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 60,
+      "severity": 0.0409,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 61,
+      "severity": 0.0466,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 62,
+      "severity": 0.0492,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 63,
+      "severity": 0.0519,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 64,
+      "severity": 0.0409,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 65,
+      "severity": 0.0418,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 66,
+      "severity": 0.0465,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 67,
+      "severity": 0.0355,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 68,
+      "severity": 0.0441,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 69,
+      "severity": 0.0521,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 70,
+      "severity": 0.0438,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 71,
+      "severity": 0.0308,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 72,
+      "severity": 0.037,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 73,
+      "severity": 0.0377,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 74,
+      "severity": 0.0458,
+      "level": "green",
+      "phase": 5
+    },
+    {
+      "step": 75,
+      "severity": 0.0393,
+      "level": "green",
+      "phase": 6
+    },
+    {
+      "step": 76,
+      "severity": 0.0314,
+      "level": "green",
+      "phase": 6
+    },
+    {
+      "step": 77,
+      "severity": 0.0392,
+      "level": "green",
+      "phase": 6
+    },
+    {
+      "step": 78,
+      "severity": 0.0399,
+      "level": "green",
+      "phase": 6
+    },
+    {
+      "step": 79,
+      "severity": 0.0365,
+      "level": "green",
+      "phase": 6
+    }
+  ],
+  "saved_files": [
+    "C:\\Users\\citiz\\Documents\\noumenal-labs\\topological-blankets\\ralph\\results\\2026-02-11_055750_wednesday_demo.gif",
+    "C:\\Users\\citiz\\Documents\\noumenal-labs\\topological-blankets\\ralph\\results\\2026-02-11_055750_wednesday_autonomous_start_step000.png",
+    "C:\\Users\\citiz\\Documents\\noumenal-labs\\topological-blankets\\ralph\\results\\2026-02-11_055750_wednesday_perturbation_step020.png",
+    "C:\\Users\\citiz\\Documents\\noumenal-labs\\topological-blankets\\ralph\\results\\2026-02-11_055750_wednesday_uncertainty_spike_step023.png",
+    "C:\\Users\\citiz\\Documents\\noumenal-labs\\topological-blankets\\ralph\\results\\2026-02-11_055750_wednesday_human_takeover_step032.png",
+    "C:\\Users\\citiz\\Documents\\noumenal-labs\\topological-blankets\\ralph\\results\\2026-02-11_055750_wednesday_second_goal_step042.png",
+    "C:\\Users\\citiz\\Documents\\noumenal-labs\\topological-blankets\\ralph\\results\\2026-02-11_055750_wednesday_collaborative_completion_step052.png",
+    "C:\\Users\\citiz\\Documents\\noumenal-labs\\topological-blankets\\ralph\\results\\2026-02-11_055750_wednesday_episode_end_step079.png"
+  ]
+}

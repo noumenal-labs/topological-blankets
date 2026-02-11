@@ -1,0 +1,37 @@
+============================================================
+US-078: Structure Emergence During Training
+============================================================
+  Iterations: 100
+  Checkpoint every: 10 iterations
+  Output: data/fetchpush_emergence
+
+Phase 1: Training with periodic checkpoints...
+  Checkpoint saved: iter 0 (489s elapsed)
+  Checkpoint saved: iter 10 (2308s elapsed)
+  Checkpoint saved: iter 20 (2308s elapsed)
+  Checkpoint saved: iter 30 (4721s elapsed)
+  Checkpoint saved: iter 40 (4721s elapsed)
+  Checkpoint saved: iter 50 (7236s elapsed)
+  Checkpoint saved: iter 60 (7236s elapsed)
+  Checkpoint saved: iter 70 (7236s elapsed)
+  Checkpoint saved: iter 80 (9321s elapsed)
+  Checkpoint saved: iter 90 (9321s elapsed)
+  Checkpoint saved: iter 100 (9321s elapsed)
+
+Training complete in 9325s
+
+Phase 2: Collecting observation data for TB analysis...
+Traceback (most recent call last):
+  File "/home/ubuntu/pandas/train_with_tb_checkpoints.py", line 489, in <module>
+    main()
+  File "/home/ubuntu/pandas/train_with_tb_checkpoints.py", line 419, in main
+    env = gym.make("FetchPush-v4", max_episode_steps=50)
+  File "/home/ubuntu/pandas_env/lib/python3.10/site-packages/gymnasium/envs/registration.py", line 681, in make
+    env_spec = _find_spec(id)
+  File "/home/ubuntu/pandas_env/lib/python3.10/site-packages/gymnasium/envs/registration.py", line 526, in _find_spec
+    _check_version_exists(ns, name, version)
+  File "/home/ubuntu/pandas_env/lib/python3.10/site-packages/gymnasium/envs/registration.py", line 392, in _check_version_exists
+    _check_name_exists(ns, name)
+  File "/home/ubuntu/pandas_env/lib/python3.10/site-packages/gymnasium/envs/registration.py", line 369, in _check_name_exists
+    raise error.NameNotFound(
+gymnasium.error.NameNotFound: Environment `FetchPush` doesn't exist.
